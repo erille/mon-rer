@@ -5,7 +5,7 @@ timetable for the 6 next trains in any way I can imagine" theme.  Only this
 time, it tries to be classy.  Its aim is to be compatible with small (mobile)
 screens, medium (tablet/desktop) screens and large screens (TVs).
 
-See it in action at (http://x0r.fr/rer)[http://x0r.fr/rer].
+See it in action at [http://x0r.fr/rer](http://x0r.fr/rer).
 
 I know the SNCF's website does the same thing, but let's face it, this
 interface is sexier.
