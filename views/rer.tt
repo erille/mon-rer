@@ -1,0 +1,242 @@
+<%- USE Decode %>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="/rer/css/rer.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/rer/css/rer-mobile.css" media="handheld, screen and (max-width: 480px)" />
+	<link href='http://fonts.googleapis.com/css?family=Tauri' rel='stylesheet' media="screen" type='text/css' />
+	<title><% origin_station %> &bull; Prochains départs</title>
+
+<script type="text/javascript">
+
+
+var numFrames = 20;
+var scrollTimeout = 3000;
+
+var originCode = "<% origin_code %>";
+
+var origTrains = [1, 1, 1, 1, 1, 1];
+
+
+function extract_number(str) {
+	var num = 0;
+	if (str) {
+		num = str.toString().match(/-?\d+/);
+		num = num ? parseInt(num[0]) : 0;
+	}
+	return num;
+}
+
+function get_data(obj) {
+	if (obj.readyState == 4 && obj.status == 200) {
+		var text = obj.responseText;
+		var trains = JSON.parse(text);
+	
+		var trains_div = document.getElementsByClassName("train");
+
+		var i;
+		for (i = 0; i < trains.length; i++) {
+			var div = trains_div[i];
+			var train = trains[i];
+
+			div.className = train.trainclass;
+
+			div.childNodes[1].innerHTML 
+				= "<span class='mission-train'>" + train.mission 
+					+ "</span> <span class='numero-train'>"
+						+ train.numero + "</span>";
+			div.childNodes[3].className = train.col2class;
+			div.childNodes[3].innerHTML = train.time;
+
+			if (origTrains[i] != train.numero) {
+				var dest = train.destination;
+				if (i < 2) {
+					dest += "<div class='desserte'>"
+						+ "<p style='bottom: 5px'>" + train.dessertes + '</p></div>';
+				}
+				div.childNodes[5].innerHTML = dest;
+			}
+
+			div.childNodes[7].innerHTML = '<span class="voie">' + train.platform + '</span>';
+			origTrains[i] = train.numero;
+		}
+		for (; i < 6; i++)
+		{
+			var div = trains_div[i];
+			div.className = "train";
+			div.childNodes[1].innerHTML = "";
+			div.childNodes[3].className = "col2";
+			div.childNodes[3].innerHTML = "";
+
+			var dest = "&nbsp;";
+			if (i < 2) {
+				dest += "<div class='desserte'><p>&nbsp;</p></div>";
+			}
+			div.childNodes[5].innerHTML = dest;
+
+			div.childNodes[7].innerHTML = "";
+			origTrains[i] = -1;
+		}
+
+		window.setTimeout(init_data, 12000, 0);
+	}
+	else if (obj.status >= 400) {
+//		alert("error " + obj.status);
+	}
+}
+
+
+function init_data(b) {
+	if (b) {
+		var trains_div = document.getElementsByClassName("train");
+		for (var i = 0; i < trains_div.length; i++) {
+			var div = trains_div[i];
+			div.className = "train";
+			div.childNodes[1].innerHTML = "&nbsp;";
+			div.childNodes[3].className = "col2";
+			div.childNodes[3].innerHTML = "&nbsp;";
+			if (i < 2) {
+				div.childNodes[5].innerHTML = "Chargement... "
+					+ "<div class='desserte'>"
+					+ "<p style='bottom: 5px'>"
+					+ "Chargement en cours..."
+					+ "</p></div>";
+			}
+			else {
+				div.childNodes[5].innerHTML = "&nbsp;";
+			}
+			div.childNodes[7].innerHTML = '&nbsp;';
+			origTrains[i] = -1;
+		}
+	}
+
+
+	var xmlHttp = new XMLHttpRequest();
+
+	xmlHttp.open("GET", "/rer/json?s=" + originCode, true);
+	xmlHttp.send();
+
+	xmlHttp.onreadystatechange = function() { get_data(xmlHttp); };
+}
+
+
+function init_scroll() {
+	var list = document.getElementsByClassName("desserte");
+	
+	for (var i = 0; i < list.length; i++) {
+		var pNode = list[i].childNodes[0];
+		pNode.style.bottom = "5px";
+		window.setTimeout(train_scroll, scrollTimeout, i);
+	}
+}
+
+function init_other() {
+	var button = document.getElementById("station_submit");
+	button.style.display = "none";
+}
+
+function train_scroll(num) {
+	var list = document.getElementsByClassName("desserte");
+
+	/* scrolls obj */
+	var pNode = list[num].childNodes[0];
+
+	var scroll = extract_number(pNode.style.bottom);
+	var height = extract_number(pNode.clientHeight);
+
+	if (height > 45) {
+		scroll += 2;
+		pNode.style.bottom = scroll + "px"; 
+	}
+	else {
+		pNode.style.bottom = "5px"; 
+	}
+
+	if ((scroll % 42) != 5) {
+		window.setTimeout(train_scroll, 50, num);
+	}
+	else {
+		/* have we scrolled beyond an element's max height? */
+		if (scroll >= height) {
+			scroll = -37;
+			pNode.style.bottom = scroll + "px";
+		}
+
+		window.setTimeout(train_scroll, scrollTimeout, num);
+	} 
+}
+
+function change_station(do_push_state) {
+	var sel = document.getElementById("station_list");
+	var new_code 	= sel.options[sel.selectedIndex].value;
+	var new_station = sel.options[sel.selectedIndex].text;
+
+	if (do_push_state !== false) {
+		window.history.pushState(
+			new_code, new_station, "/rer?s=" + new_code);
+	}
+
+	originCode = new_code;
+	init_data(1);
+	document.title = new_station + " &bull; Prochains départs";
+	document.getElementById("departure-station").innerHTML = new_station;
+
+}
+
+window.addEventListener("load", function() { init_data(1); init_scroll(); init_other(); }, false);
+
+window.onpopstate = function(e) {
+	if (e.state) {
+		document.getElementById("station_list").value = e.state;
+		change_station(false);
+	}
+}
+
+</script>
+</head>
+
+<body>
+<h1>Départ : <span class="departure-station" id="departure-station"><% origin_station %></span></h1>
+
+<div class="listetrains">
+
+<% FOR i in [0..5] %>
+<div class="train">
+	<div class="col1">&nbsp;</div>
+	<div class="col2">&nbsp;</div>
+	<div class="col3"><% IF i <= 1 %>Chargement...<br />
+	<div class="desserte"><p>Chargement en cours...</p>
+	</div><% END %>
+	</div>
+	<div class="col4">&nbsp;</div>
+</div>
+<% END %>
+
+
+</div>
+
+
+<div id="otherstation">
+<a href="#">Une autre gare ?</a>
+<form method="GET" action="#">
+	<select id="station_list" name="s" onchange="change_station()">
+<%- FOREACH s IN stations %>
+		<option value="<% s.code %>" <%- IF s.code == origin_code %> selected="selected"<%- END -%>><% s.name | decode %></option>
+<% END -%>
+	</select>
+	<input id="station_submit" type="submit" value="valider" />
+</form>
+</div>
+
+<div id="disclaimer">
+<p>Cette application Web est expérimentale. Elle n'est pas officielle et n'est
+donc ni prise en charge, ni approuvée par la SNCF.</p>
+<p>Pour tout bugreport, <a href="/contact">contactez-moi</a>.</p>
+</div>
+
+</body>
+
+</html>
+

@@ -1,0 +1,133 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Tauri', sans-serif;
+	font-size: 20px;
+
+	background: #222;
+	color: #eee;
+}
+
+p { margin: 0; padding: 0; }
+
+a { color: #ccc; }
+
+
+h1 {
+	display: block;
+	text-align: center;
+	font-weight: normal;
+	padding: 20px 10px 10px;
+}
+
+div.listetrains { 
+	display: table; 
+	width: 100%;
+}
+
+div.train {
+	display: table-row;
+	font-size: 22px;
+	padding: 5px;
+}
+
+div.train:nth-child(2n) {
+	background-color: #043a6b;
+}
+
+div.train:nth-child(2n+1) {
+	background-color: #0c5da5;
+}
+
+div.train div {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 3px 6px 3px 3px;
+}
+
+div.train div.col1 { width: 4em; text-align: center; }
+div.train div.col2 { width: 4em; text-align: center; font-size: 140%; }
+
+div.train div.col3 {
+	font-size: 40px;
+	letter-spacing: 0.5px;
+}
+
+div.train div.col4 {
+	width: 2em;
+}
+
+span.voie {
+	display: inline-block;
+	text-align: center;
+
+	width: 1.2em;
+	border: 3px solid #ccc;
+	border-radius: 3px;
+	font-size: 155%;
+
+	padding-right: 2px;
+
+	letter-spacing: -2px;
+}
+
+div.train div.col3 div.desserte {
+	display: block;
+	padding: 0;
+
+	font-size: 28px;
+	letter-spacing: 0px;
+	color: #679fd2;
+
+	height: 34px;
+	line-height: 42px;
+	overflow: hidden;
+
+/*	white-space: nowrap;  */
+	word-wrap: break-word;
+}
+
+div.train div.col3 div.desserte p {
+	position: relative;
+	/*bottom: 5px;*/ 		/* scroll: 40n + 4 px */
+}
+
+div.train div.col2.approche { text-decoration: blink; line-height: 0.9; font-size: 100% }
+div.train div.col2.texte { font-size: 120%; line-height: 0.9 }
+
+div.train.delayed:nth-child(2n)   { background-color: #a05522; }
+div.train.delayed:nth-child(2n+1) { background-color: #b63; }
+div.train.canceled { background-color: #b44; }
+
+div.train.delayed div.col3 div.desserte, 
+	div.train.delayed div.col1 span.numero-train { color: #d9a45a; }
+div.train.canceled div.col3 div.desserte, 
+	div.train.canceled div.col1 span.numero-train { color: #d27272; }
+
+
+span.numero-train {
+	color: #679fd2;
+}
+
+div#otherstation {
+	padding: 1em;
+	font-size: 14px;
+	text-align: center;
+}
+
+div#disclaimer {
+	text-align: center;
+	font-size: 12px;
+}
+
+select {
+	background-color: #444;
+	border-color: #666;
+	border-radius: 3px;
+	color: white;
+}
+
+select option {
+	background-color: #444;
+	color: white;
+}
