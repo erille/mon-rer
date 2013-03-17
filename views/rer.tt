@@ -54,7 +54,7 @@ function get_data(obj) {
 				var dest = train.destination;
 				if (i < 2) {
 					dest += "<div class='desserte'>"
-						+ "<p style='bottom: 5px'>" + train.dessertes + '</p></div>';
+						+ "<p style='bottom: 2px'>" + train.dessertes + '</p></div>';
 				}
 				div.childNodes[5].innerHTML = dest;
 			}
@@ -100,7 +100,7 @@ function init_data(b) {
 			if (i < 2) {
 				div.childNodes[5].innerHTML = "Chargement... "
 					+ "<div class='desserte'>"
-					+ "<p style='bottom: 5px'>"
+					+ "<p style='bottom: 2px'>"
 					+ "Chargement en cours..."
 					+ "</p></div>";
 			}
@@ -127,7 +127,7 @@ function init_scroll() {
 	
 	for (var i = 0; i < list.length; i++) {
 		var pNode = list[i].childNodes[0];
-		pNode.style.bottom = "5px";
+		pNode.style.bottom = "2px";
 		window.setTimeout(train_scroll, scrollTimeout, i);
 	}
 }
@@ -151,16 +151,16 @@ function train_scroll(num) {
 		pNode.style.bottom = scroll + "px"; 
 	}
 	else {
-		pNode.style.bottom = "5px"; 
+		pNode.style.bottom = "2px"; 
 	}
 
-	if ((scroll % 42) != 5) {
+	if ((scroll % 42) != 2) {
 		window.setTimeout(train_scroll, 50, num);
 	}
 	else {
 		/* have we scrolled beyond an element's max height? */
 		if (scroll >= height) {
-			scroll = -37;
+			scroll = -36;
 			pNode.style.bottom = scroll + "px";
 		}
 

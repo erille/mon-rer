@@ -27,7 +27,7 @@ div.listetrains {
 
 div.train {
 	display: table-row;
-	font-size: 22px;
+	font-size: 25px;
 	padding: 5px;
 }
 
@@ -79,7 +79,7 @@ div.train div.col3 div.desserte {
 	letter-spacing: 0px;
 	color: #679fd2;
 
-	height: 34px;
+	height: 37px;
 	line-height: 42px;
 	overflow: hidden;
 
