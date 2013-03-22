@@ -46,7 +46,7 @@ div.train div {
 }
 
 div.train div.col1 { width: 4em; text-align: center; }
-div.train div.col2 { width: 4em; text-align: center; font-size: 140%; }
+div.train div.col2 { width: 3.5em; text-align: center; font-size: 150%; line-height: 0.9 }
 
 div.train div.col3 {
 	font-size: 40px;
@@ -105,9 +105,11 @@ div.train.canceled div.col3 div.desserte,
 	div.train.canceled div.col1 span.numero-train { color: #d27272; }
 
 
-span.numero-train {
+span.numero-train, span.retard {
 	color: #679fd2;
 }
+
+div.col2 span.retard { font-size: 66%; }
 
 div#otherstation {
 	padding: 1em;

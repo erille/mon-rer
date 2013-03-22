@@ -3,6 +3,7 @@ use Dancer ':syntax';
 
 use RER::Transilien;
 use RER::Trains;
+use RER::Gares;
 use Data::Dumper;
 
 our $VERSION = '0.1';
@@ -28,6 +29,13 @@ sub check_code {
         return undef;
     }
 }
+
+hook 'before' => sub {
+    $RER::Gares::config{dsn} = config->{'db_dsn'};
+    $RER::Gares::config{username} = config->{'db_username'};
+    $RER::Gares::config{password} = config->{'db_password'};
+    RER::Gares::db_connect();
+};
 
 get '/' => sub {
     my $origin_code = check_code(params->{'s'}) || 'EVC';

@@ -87,6 +87,10 @@ sub new {
             } ($mission, $time, $destination, $dessertes, $platform);
         };
 
+        # Obtention du retard
+        my $delay = RER::Gares::get_delay($numero, $trig_from, $time);
+        $delay = RER::Gares::format_delay($delay);
+
         push @trains, { 
             mission => $mission, 
             numero  => $numero,
@@ -95,7 +99,8 @@ sub new {
             dessertes   => $dessertes,
             platform => $platform,
             col2class => $col2class,
-            trainclass => $trainclass
+            trainclass => $trainclass,
+            retard => $delay,
         };
     }
 

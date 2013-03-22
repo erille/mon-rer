@@ -48,7 +48,14 @@ function get_data(obj) {
 					+ "</span> <span class='numero-train'>"
 						+ train.numero + "</span>";
 			div.childNodes[3].className = train.col2class;
-			div.childNodes[3].innerHTML = train.time;
+
+			var train_time = train.time;
+			if (i < 2 && train.time.match(/\d\d:\d\d/)) {
+				train_time += " <span class='retard'>"
+					   + train.retard
+					   + "</span>";
+			}
+			div.childNodes[3].innerHTML = train_time;
 
 			if (origTrains[i] != train.numero) {
 				var dest = train.destination;
@@ -233,7 +240,9 @@ window.onpopstate = function(e) {
 <div id="disclaimer">
 <p>Cette application Web est expérimentale. Elle n'est pas officielle et n'est
 donc ni prise en charge, ni approuvée par la SNCF.</p>
+<p>Les informations de retard peuvent être manquantes ou inexactes.</p>
 <p>Pour tout bugreport, <a href="/contact">contactez-moi</a>.</p>
+<p><a href="https://code.x0r.fr/rer-web">Code source</a> • <a href="http://test.data-sncf.com/index.php?p=transilien">SNCF Open Data Transilien</a></p>
 </div>
 
 </body>
