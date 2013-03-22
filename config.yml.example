@@ -25,3 +25,7 @@ engines:
      start_tag: '<%'
      end_tag:   '%>'
 
+# database settings
+db_dsn: "dbi:mysql:dbname=sncf_gtfs;host=localhost;"
+db_username: "rer-web"
+db_password: "secret"

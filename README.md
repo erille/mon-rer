@@ -17,6 +17,8 @@ remarks.
 
 # Installing
 
+Copy `config.yml.example` to `config.yml` and edit it to suit your needs.
+
 Initialize the station database as follows:
 
 	% sqlite3 gares.db < db.sql
