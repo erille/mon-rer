@@ -15,6 +15,22 @@ interface is sexier.  Also, because this was an AJAX and Javascript exercise
 for myself, please try not to be too harsh on the "but this is useless"
 remarks.
 
+# Dependencies
+
+Perl modules:
+
+ * DBI
+ * DBD::MySQL
+ * Dancer
+ * WWW::Mechanize
+ * Text::CSV
+ * Tie::Handle::CSV
+
+Software: Any kind of DBMS will do; however, you will need to load SNCF's
+rather massive GTFS data into it and therefore, I recommend MySQL, PostgreSQL
+or anything somewhat beefy.  I have tested this with MySQL without any
+problems.
+
 # Installing
 
 Copy `config.yml.example` to `config.yml` and edit it to suit your needs.
