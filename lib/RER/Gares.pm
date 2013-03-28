@@ -69,7 +69,7 @@ sub get_delay {
 		FROM train_times 
 		WHERE code = ? AND train_number = ? LIMIT 1;
 		});
-	$sth->execute($time, $from, $numero);
+	$sth->execute($time, $from, $numero) or die $DBI::errstr;
 
 	my $result = $sth->fetchall_arrayref([0]);
 

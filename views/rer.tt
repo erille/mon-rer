@@ -48,23 +48,22 @@ function get_data(obj) {
 					+ "</span> <span class='numero-train'>"
 						+ train.numero + "</span>";
 			div.childNodes[3].className = train.col2class;
+			div.childNodes[3].innerHTML = train.time;
 
-			var train_time = train.time;
-			if (i < 2 && train.time.match(/\d\d:\d\d/)) {
-				train_time += " <span class='retard'>"
-					   + train.retard
-					   + "</span>";
-			}
-			div.childNodes[3].innerHTML = train_time;
-
-			if (origTrains[i] != train.numero) {
-				var dest = train.destination;
-				if (i < 2) {
-					dest += "<div class='desserte'>"
-						+ "<p style='bottom: 2px'>" + train.dessertes + '</p></div>';
+			if (i < 2) {
+				div.childNodes[5].childNodes[2].childNodes[0].innerHTML = train.dessertes;
+				if (origTrains[i] != trains.numero) {
+					div.childNodes[5].childNodes[2].childNodes[0].style = "bottom: 2px;";
 				}
-				div.childNodes[5].innerHTML = dest;
 			}
+			div.childNodes[5].childNodes[0].nodeValue = train.destination;
+			if (train.time != 'Supprimé' && train.time != 'Retardé') {
+				div.childNodes[5].childNodes[1].innerHTML = train.retard;
+			}
+			else {
+				div.childNodes[5].childNodes[1].innerHTML = '&nbsp;'
+			}
+				
 
 			div.childNodes[7].innerHTML = '<span class="voie">' + train.platform + '</span>';
 			origTrains[i] = train.numero;
@@ -79,7 +78,7 @@ function get_data(obj) {
 
 			var dest = "&nbsp;";
 			if (i < 2) {
-				dest += "<div class='desserte'><p>&nbsp;</p></div>";
+				dest += "<div class='desserte'><p style='bottom: 2px'>&nbsp;</p></div>";
 			}
 			div.childNodes[5].innerHTML = dest;
 
@@ -106,13 +105,14 @@ function init_data(b) {
 			div.childNodes[3].innerHTML = "&nbsp;";
 			if (i < 2) {
 				div.childNodes[5].innerHTML = "Chargement... "
+					+ "<span class='retard'></span>" 
 					+ "<div class='desserte'>"
 					+ "<p style='bottom: 2px'>"
 					+ "Chargement en cours..."
 					+ "</p></div>";
 			}
 			else {
-				div.childNodes[5].innerHTML = "&nbsp;";
+				div.childNodes[5].innerHTML = "&nbsp;<span class='retard'></span>";
 			}
 			div.childNodes[7].innerHTML = '&nbsp;';
 			origTrains[i] = -1;
@@ -150,7 +150,15 @@ function train_scroll(num) {
 	/* scrolls obj */
 	var pNode = list[num].childNodes[0];
 
-	var scroll = extract_number(pNode.style.bottom);
+	var scroll;
+	if (pNode.style) {
+		scroll = extract_number(pNode.style.bottom);
+	}
+	else {
+		console.log("bottom undefined");
+		pNode.style = "bottom: 0px;";
+		scroll = 0;
+	}
 	var height = extract_number(pNode.clientHeight);
 
 	if (height > 45) {
@@ -213,7 +221,8 @@ window.onpopstate = function(e) {
 <div class="train">
 	<div class="col1">&nbsp;</div>
 	<div class="col2">&nbsp;</div>
-	<div class="col3"><% IF i <= 1 %>Chargement...<br />
+	<div class="col3"><% IF i <= 1 %>Chargement...<% END %> <span class="retard"></span>
+	<% IF i <= 1 %>
 	<div class="desserte"><p>Chargement en cours...</p>
 	</div><% END %>
 	</div>

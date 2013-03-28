@@ -68,13 +68,14 @@ sub new {
         my $dessertes = join ' &bull; ', @arr_dessertes;
 
         # L'attribut "mention" indique si le train est retardé, supprimé...
+        my $time_info;
         given ($train->{mention}) {
-            when ('N') { 1; } # N = Normal
-            when ([qw(T I)]) { $time = 'Retardé'; }
-            when ('S') { $time = 'Supprimé'; }
-            when ('P') { $time = 'À l\'approche'; }
-            when ('Q') { $time = 'À quai'; }
-            default { $time = "$time (MENTION '" . $train->{mention} . "' INCONNUE)"; }
+            when ('N') { $time_info = $time } # N = Normal
+            when ([qw(T I)]) { $time_info = 'Retardé'; }
+            when ('S') { $time_info = 'Supprimé'; }
+            when ('P') { $time_info = 'À l\'approche'; }
+            when ('Q') { $time_info = 'À quai'; }
+            default { $time_info = "$time (MENTION '" . $train->{mention} . "' INCONNUE)"; }
         }
 
         # Un peu de nettoyage (et de passage en UTF-8) pour les infos concernant
@@ -94,7 +95,7 @@ sub new {
         push @trains, { 
             mission => $mission, 
             numero  => $numero,
-            time    => $time,
+            time    => $time_info,
             destination => $destination,
             dessertes   => $dessertes,
             platform => $platform,

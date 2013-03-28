@@ -109,7 +109,9 @@ span.numero-train, span.retard {
 	color: #679fd2;
 }
 
-div.col2 span.retard { font-size: 66%; }
+span.retard { margin-left: 0.5em; }
+
+div.col3 span.retard { font-size: 66%; position: relative; bottom: 0.1em; }
 
 div#otherstation {
 	padding: 1em;

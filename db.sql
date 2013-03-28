@@ -1,9 +1,9 @@
-PRAGMA encoding="UTF-8";
+-- PRAGMA encoding="UTF-8";
 
-DROP TABLE gares;
+DROP TABLE IF EXISTS gares;
 CREATE TABLE IF NOT EXISTS gares (
-	code STRING PRIMARY KEY,
-	name STRING NOT NULL,
+	code VARCHAR(3) PRIMARY KEY,
+	name VARCHAR(60) NOT NULL,
 	uic  INTEGER,
 	is_transilien INTEGER DEFAULT 1
 );
@@ -494,3 +494,53 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('VTP', 'La Villette - Saint-Prest', 0),
 	('VVG', 'Villeneuve la Guyard', 0),
 	('VYE', 'Villeneuve sur Yonne', 0);
+
+CREATE INDEX index_uic ON gares (uic);
+
+CREATE OR REPLACE VIEW train_dates AS 
+	SELECT trip_id, 
+		SUBSTR(trip_id, 6, 6) AS train_number, 
+		t.service_id, 
+		(c.sunday + (c.monday << 1) 
+			+ (c.tuesday << 2) 
+			+ (c.wednesday << 3) 
+			+ (c.thursday << 4) 
+			+ (c.friday << 5) 
+			+ (c.saturday << 6)) AS day_mask, 
+		c.start_date, 
+		c.end_date, 
+		cd.date, 
+		cd.exception_type 
+	FROM trips AS t 
+		LEFT JOIN calendar AS c USING (service_id) 
+		LEFT JOIN calendar_dates AS cd USING (service_id);
+
+CREATE OR REPLACE VIEW train_times_temp1 AS 
+	SELECT td.trip_id, 
+		td.train_number, 
+		IF(departure_time >= '24:00:00', SUBDATE(CURDATE(), INTERVAL 1 DAY), CURDATE()) 
+			AS cur_date, 
+		stop_times.departure_time, 
+		stop_times.stop_sequence, 
+		gares.code, 
+		gares.uic, 
+		gares.name, 
+		start_date, 
+		end_date, 
+		date, 
+		exception_type  
+	FROM train_dates AS td   
+		NATURAL JOIN stop_times   
+		JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic);
+
+CREATE OR REPLACE VIEW train_times AS 
+	SELECT trip_id, train_number, cur_date, departure_time, code, uic, name 
+	FROM train_times_temp1 
+	WHERE (
+		(start_date <= cur_date 
+		AND cur_date <= end_date 
+		AND (date <> cur_date OR date IS NULL OR exception_type <> 2)
+		) 
+	OR (
+		date = cur_date AND exception_type = 1)
+	);
