@@ -55,7 +55,7 @@ sub get_station_by_code($)
 		return $result->[0][0];
 	}
 	else {
-		return "<i>Gare inconnue ($code)</i>";
+		return "Gare inconnue ($code)";
 	}
 }
 
@@ -96,10 +96,10 @@ sub format_delay {
 
 	my $str;
 	if ($abs >= 60) {
-		$str = sprintf "+%d h %02d", $hours, $min;
+		$str = sprintf "%+d h %02d", $hours, $min;
 	}
 	else {
-		$str = sprintf "+%d min", $min;
+		$str = sprintf "%+d min", $min;
 	}
 	return $str;
 }
