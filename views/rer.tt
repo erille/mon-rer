@@ -195,7 +195,7 @@ function change_station(do_push_state) {
 
 	originCode = new_code;
 	init_data(1);
-	document.title = new_station + " &bull; Prochains départs";
+	document.title = new_station + " \u2022 Prochains départs";
 	document.getElementById("departure-station").innerHTML = new_station;
 
 }
