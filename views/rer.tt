@@ -143,6 +143,11 @@ function init_other() {
 	button.style.display = "none";
 }
 
+/* Warning, this function contains ugly hacks with vendor-proprietary CSS
+ * attributes.  The Webkit guys usually do a good job, but messed this up
+ * big time.  It is frustrating to see a standards-compliant design break on
+ * mobile devices because of that.
+ */
 function train_scroll(num) {
 	var list = document.getElementsByClassName("desserte");
 
@@ -162,11 +167,15 @@ function train_scroll(num) {
 	if (scroll < 4) {
 		pNode.style.transitionDuration = "0.9s";
 		pNode.style.transitionProperty = "bottom";
+		pNode.style['-webkit-transition-duration'] = "0.9s";
+		pNode.style['-webkit-transition-property'] = "bottom";
 	}
 
 	if (scroll >= height) {
 		pNode.style.transitionDuration = "0s";
 		pNode.style.transitionProperty = "none";
+		pNode.style['-webkit-transition-duration'] = "0s";
+		pNode.style['-webkit-transition-property'] = "none";
 		scroll = -40;
 		pNode.style.bottom = scroll + "px";
 		

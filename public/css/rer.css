@@ -94,7 +94,10 @@ div.train div.col3 div.desserte p {
 
 	transition-property: bottom;
 	transition-duration: 0.9s;
-	transition-timing-function: linear;
+	transition-property: bottom;
+	-webkit-transition-duration: 0.9s;
+	-webkit-transition-timing-function: linear;
+	-webkit-transition-timing-function: linear;
 }
 
 div.train div.col2.approche { text-decoration: blink; line-height: 0.9; font-size: 100% }
