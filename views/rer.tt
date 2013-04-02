@@ -12,7 +12,6 @@
 <script type="text/javascript">
 
 
-var numFrames = 20;
 var scrollTimeout = 3000;
 
 var originCode = "<% origin_code %>";
@@ -155,32 +154,36 @@ function train_scroll(num) {
 		scroll = extract_number(pNode.style.bottom);
 	}
 	else {
-		console.log("bottom undefined");
 		pNode.style = "bottom: 0px;";
 		scroll = 0;
 	}
 	var height = extract_number(pNode.clientHeight);
 
+	if (scroll < 4) {
+		pNode.style.transitionDuration = "0.9s";
+		pNode.style.transitionProperty = "bottom";
+	}
+
+	if (scroll >= height) {
+		pNode.style.transitionDuration = "0s";
+		pNode.style.transitionProperty = "none";
+		scroll = -40;
+		pNode.style.bottom = scroll + "px";
+		
+		return train_scroll(num);
+	}
+
 	if (height > 45) {
-		scroll += 2;
+		scroll += 42;
 		pNode.style.bottom = scroll + "px"; 
 	}
 	else {
 		pNode.style.bottom = "2px"; 
 	}
 
-	if ((scroll % 42) != 2) {
-		window.setTimeout(train_scroll, 50, num);
-	}
-	else {
-		/* have we scrolled beyond an element's max height? */
-		if (scroll >= height) {
-			scroll = -36;
-			pNode.style.bottom = scroll + "px";
-		}
+	/* have we scrolled beyond an element's max height? */
 
-		window.setTimeout(train_scroll, scrollTimeout, num);
-	} 
+	window.setTimeout(train_scroll, scrollTimeout, num);
 }
 
 function change_station(do_push_state) {
