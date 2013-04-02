@@ -453,6 +453,7 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('AVY', 'Avrechy', 0),
 	('BEB', 'Breteuil-Embranchement', 0),
 	('BLG', 'Brive la Gaillarde', 0),
+	('BNR', 'Bonnières', 0),
 	('BO',  'Bonneval', 0),
 	('BZN', 'Briouze', 0),
 	('CDO', 'Clermont-de-l''Oise', 0),
@@ -463,6 +464,7 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('CUN', 'Châteaudun', 0),
 	('CVE', 'Chevrières', 0),
 	('FL',  'Flers', 0),
+	('GAA', 'Gaillon Aubevoye', 0),
 	('GAI', 'Gaillac', 0),
 	('GRV', 'Granville', 0),
 	('JOI', 'Joigny', 0),
@@ -479,12 +481,15 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('LXS', 'Lemeux la Croix Saint-Ouen', 0),
 	('NCO', 'Nonancourt', 0),
 	('NOY', 'Noyon', 0),
+	('OI',  'Oissel', 0),
 	('PNB', 'Paris Nord', 0), -- banlieue, redondant (UIC 8727103)
 	('PNO', 'Paris Nord', 0), -- grandes ligne, redondant 
 	('PUY', 'Pont-sur-Yonne', 0),
 	('PVA', 'Paris Vaugirard', 0), -- redondant avec PMP
 	('PXE', 'Pont Sainte-Maxence', 0),
 	('RIA', 'Rieux Angicourt', 0),
+	('RN',  'Rouen Rive Droite', 0),
+	('RSS', 'Rosny sur Seine', 0),
 	('SDN', 'Surdon', 0),
 	('SES', 'Sens', 0),
 	('SGG', 'Sainte-Gauburge', 0),
@@ -494,9 +499,11 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('SQ',  'Saint-Quentin', 0),
 	('TGR', 'Tergnier', 0),
 	('VCT', 'Villers-Cotterets', 0),
+	('VDR', 'Val-de-Reuil', 0),
 	('VDS', 'Villedieu-les-Poêles', 0),
 	('VEA', 'Verneuil sur Avre', 0),
 	('VIR', 'Vire', 0),
+	('VN',  'Vernon', 0),
 	('VO',  'Voves', 0),
 	('VPL', 'Villers-Saint-Paul', 0),
 	('VTP', 'La Villette - Saint-Prest', 0),
@@ -508,6 +515,7 @@ CREATE INDEX index_uic ON gares (uic);
 CREATE OR REPLACE VIEW train_dates AS 
 	SELECT trip_id, 
 		SUBSTR(trip_id, 6, 6) AS train_number, 
+		t.route_id,
 		t.service_id, 
 		(c.sunday + (c.monday << 1) 
 			+ (c.tuesday << 2) 
@@ -518,7 +526,7 @@ CREATE OR REPLACE VIEW train_dates AS
 		c.start_date, 
 		c.end_date, 
 		cd.date, 
-		cd.exception_type 
+		cd.exception_type
 	FROM trips AS t 
 		LEFT JOIN calendar AS c USING (service_id) 
 		LEFT JOIN calendar_dates AS cd USING (service_id);
@@ -526,6 +534,7 @@ CREATE OR REPLACE VIEW train_dates AS
 CREATE OR REPLACE VIEW train_times_temp1 AS 
 	SELECT td.trip_id, 
 		td.train_number, 
+		td.route_id,
 		IF(departure_time >= '24:00:00', SUBDATE(CURDATE(), INTERVAL 1 DAY), CURDATE()) 
 			AS cur_date, 
 		stop_times.departure_time, 
@@ -542,7 +551,7 @@ CREATE OR REPLACE VIEW train_times_temp1 AS
 		JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic);
 
 CREATE OR REPLACE VIEW train_times AS 
-	SELECT trip_id, train_number, cur_date, departure_time, code, uic, name 
+	SELECT trip_id, route_id, train_number, cur_date, departure_time, code, uic, name, stop_sequence
 	FROM train_times_temp1 
 	WHERE (
 		(start_date <= cur_date 
