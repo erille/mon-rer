@@ -83,20 +83,17 @@ div.train div.col3 div.desserte {
 	line-height: 42px;
 	overflow: hidden;
 
-
-/*	white-space: nowrap;  */
 	word-wrap: break-word;
 }
 
 div.train div.col3 div.desserte p {
 	position: relative;
-	/*bottom: 5px;*/ 		/* scroll: 40n + 4 px */
 
 	transition-property: bottom;
 	transition-duration: 0.9s;
-	transition-property: bottom;
+	transition-timing-function: linear;
+	-webkit-transition-property: bottom;
 	-webkit-transition-duration: 0.9s;
-	-webkit-transition-timing-function: linear;
 	-webkit-transition-timing-function: linear;
 }
 
