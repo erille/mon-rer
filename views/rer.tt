@@ -18,6 +18,8 @@ var originCode = "<% origin_code %>";
 
 var origTrains = [1, 1, 1, 1, 1, 1];
 
+var dataRefreshTimer;
+
 
 function extract_number(str) {
 	var num = 0;
@@ -85,7 +87,7 @@ function get_data(obj) {
 			origTrains[i] = -1;
 		}
 
-		window.setTimeout(init_data, 12000, 0);
+		dataRefreshTimer = window.setTimeout(init_data, 12000, 0);
 	}
 	else if (obj.status >= 400) {
 //		alert("error " + obj.status);
@@ -95,6 +97,8 @@ function get_data(obj) {
 
 function init_data(b) {
 	if (b) {
+		if (dataRefreshTimer) { window.clearTimeout(dataRefreshTimer); }
+
 		var trains_div = document.getElementsByClassName("train");
 		for (var i = 0; i < trains_div.length; i++) {
 			var div = trains_div[i];
