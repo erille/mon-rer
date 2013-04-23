@@ -74,7 +74,9 @@ sub get_delay {
 	my $result = $sth->fetchall_arrayref([0]);
 
 	if (scalar(@$result)) {
-		return $result->[0][0];
+		my $value = $result->[0][0];
+		$value += 1440 while $value <= -720;
+		return $value;
 	}
 	elsif (($numero % 2) == 1) {
 		return get_delay(int($numero) - 1, $from, $time);
