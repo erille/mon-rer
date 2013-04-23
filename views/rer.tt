@@ -77,7 +77,7 @@ function get_data(obj) {
 			div.childNodes[3].className = "col2";
 			div.childNodes[3].innerHTML = "";
 
-			var dest = "&nbsp;";
+			var dest = "<span class='retard'></span>";
 			if (i < 2) {
 				dest += "<div class='desserte'><p style='bottom: 2px'>&nbsp;</p></div>";
 			}
