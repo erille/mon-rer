@@ -35,9 +35,25 @@ problems.
 
 Copy `config.yml.example` to `config.yml` and edit it to suit your needs.
 
-Initialize the station database as follows:
+Log into an account with administrative access on MySQL and create the database
+holding the data:
 
-	% sqlite3 gares.db < db.sql
+	mysql> CREATE DATABASE sncf_gtfs;
 
-Then, deploy it as you would any Perl Dancer application.  If you really
-have no idea, read the [Dancer::Deployment Perldoc](https://metacpan.org/module/Dancer::Deployment).
+Create a user which only has the necessary privileges.  This is optional, but
+highly recommended (not to mention a good security practice):
+
+	mysql> CREATE USER 'rer-web' IDENTIFIED BY 'some-password';
+	mysql> GRANT SELECT on sncf_gtfs.* TO 'rer-web'@'localhost';
+
+Finally, run `sh ./install.sh`. This install script will download a GTFS
+parsing script, download the GTFS data from SNCF's website, import it into the
+database, and import a custom-made station database as well.
+
+**Note**: SNCF update their data once a week. In order to reimport the data,
+simply run `./install.sh` again.
+
+# Deployment
+
+Deploy this as you would any Perl Dancer application.  If you really
+have no idea how to do this, read the [Dancer::Deployment Perldoc page](https://metacpan.org/module/Dancer::Deployment).
