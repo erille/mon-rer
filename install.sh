@@ -7,7 +7,7 @@ NORMAL=`tput sgr0`
 echo_status() { echo "${BOLD}${BLUE} :: ${NORMAL}${BOLD}$@${NORMAL}"; }
 
 
-echo <<EOF
+cat <<EOF
 DATABASE INITIALIZATION/UPDATE SCRIPT FOR RER-WEB
 =================================================
 
@@ -28,15 +28,15 @@ DATABASE=$2
 #
 # Get some info needed by user
 #
-if [ -z "$USER" ]; then
+while [ -z "$USER" ]; do
 	printf "Username for database (e.g. root)? "
 	read USER
-fi
+done
 
-if [ -z "$DATABASE" ]; then
+while [ -z "$DATABASE" ]; do
 	printf "Database name (e.g. sncf_gtfs)? "
 	read DATABASE
-fi
+done
 
 #
 # Get Perl-GTFS scripts
