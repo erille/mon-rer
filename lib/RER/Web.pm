@@ -13,8 +13,6 @@ our $VERSION = '0.1';
 my %train_obj;
 my %train_obj_last_update;
 
-prefix '/rer';
-
 
 sub check_code {
     my ($code) = @_;
