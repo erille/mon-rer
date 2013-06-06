@@ -333,7 +333,6 @@ INSERT INTO gares (code, uic, name) VALUES
 	('PJ',  8739350, 'Petit Jouy les Loges'),
 	('PKY', 8711127, 'Porte de Clichy'),
 	('PLB', 8727155, 'Plessis-Belleville'),
-	('PLY', 8768600, 'Paris Gare de Lyon'),
 	('PMP', 8739100, 'Paris Montparnasse'),
 	('POA', 8739316, 'Porchefontaine'),
 	('POP', 8768252, 'Ponthierry-Pringy'),
@@ -479,6 +478,7 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('BO',  'Bonneval', 0),
 	('BVS', 'Beauvais', 0),
 	('BZN', 'Briouze', 0),
+	('CBU', 'Cherbourg', 0),
 	('CCT', 'Cercottes', 0),
 	('CDO', 'Clermont-de-l''Oise', 0),
 	('CFO', 'Conflans-Fin-d''Oise', 0), -- redondant avec CFD
@@ -523,8 +523,10 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('NOY', 'Noyon', 0),
 	('OI',  'Oissel', 0),
 	('ORL', 'Orléans', 0),
+	('PAZ', 'Paris Austerlitz', 0),
+	('PLY', 'Paris Gare de Lyon', 0), -- redondant avec PAA
 	('PNB', 'Paris Nord', 0), -- banlieue, redondant (UIC 8727103)
-	('PNO', 'Paris Nord', 0), -- grandes ligne, redondant 
+	('PNO', 'Paris Nord', 0), -- grandes lignes, redondant 
 	('PUY', 'Pont-sur-Yonne', 0),
 	('PVA', 'Paris Vaugirard', 0), -- redondant avec PMP
 	('PXE', 'Pont Sainte-Maxence', 0),
