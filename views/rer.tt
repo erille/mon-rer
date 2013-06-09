@@ -6,7 +6,9 @@
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="css/rer.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="css/rer-mobile.css" media="handheld, screen and (max-width: 480px)" />
-	<link href='http://fonts.googleapis.com/css?family=Tauri' rel='stylesheet' media="screen" type='text/css' />
+	<link rel="stylesheet" type='text/css' href='http://fonts.googleapis.com/css?family=Tauri' media="screen" />
+	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
 	<title><% origin_station %> &bull; Prochains départs</title>
 
 <script type="text/javascript">
