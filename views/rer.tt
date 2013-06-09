@@ -34,6 +34,15 @@ function extract_number(str) {
 	return num;
 }
 
+function extract_float(str) {
+	if (str) {
+		num = str.toString().match(/-?\d+(\.\d+)?/);
+		num = num ? parseFloat(num[0]) : 0;
+	}
+	return num;
+}
+
+
 function get_data(obj) {
 	if (obj.readyState == 4 && obj.status == 200) {
 		var text = obj.responseText;
@@ -65,7 +74,7 @@ function get_data(obj) {
 			if (i < 2) {
 				div.childNodes[7].childNodes[1].childNodes[0].innerHTML = train.dessertes;
 				if (origTrains[i] != trains.numero) {
-					div.childNodes[7].childNodes[1].childNodes[0].style = "bottom: 2px;";
+					div.childNodes[7].childNodes[1].childNodes[0].style = "bottom: 0.1em;";
 				}
 			}
 			div.childNodes[7].childNodes[0].nodeValue = train.destination;
@@ -85,7 +94,7 @@ function get_data(obj) {
 
 			var dest = "";
 			if (i < 2) {
-				dest += "<div class='desserte'><p style='bottom: 2px'>&nbsp;</p></div>";
+				dest += "<div class='desserte'><p style='bottom: 0.1em'>&nbsp;</p></div>";
 			}
 			div.childNodes[7].innerHTML = dest;
 
@@ -144,7 +153,7 @@ function init_data(b) {
 			if (i < 2) {
 				div.childNodes[7].innerHTML = "Chargement... "
 					+ "<div class='desserte'>"
-					+ "<p style='bottom: 2px'>"
+					+ "<p style='bottom: 0.1em'>"
 					+ "Chargement en cours..."
 					+ "</p></div>";
 			}
@@ -171,7 +180,7 @@ function init_scroll() {
 	
 	for (var i = 0; i < list.length; i++) {
 		var pNode = list[i].childNodes[0];
-		pNode.style.bottom = "2px";
+		pNode.style.bottom = "0.1em";
 		window.setTimeout(train_scroll, scrollTimeout, i);
 	}
 }
@@ -192,40 +201,42 @@ function train_scroll(num) {
 	/* scrolls obj */
 	var pNode = list[num].childNodes[0];
 
-	var scroll;
+	var scroll, scroll_px;
 	if (pNode.style) {
-		scroll = extract_number(pNode.style.bottom);
+		scroll = extract_float(pNode.style.bottom);
+		scroll_px = extract_number(pNode.parentNode.offsetTop) - extract_number(pNode.offsetTop);
 	}
 	else {
 		pNode.style = "bottom: 0px;";
 		scroll = 0;
 	}
 	var height = extract_number(pNode.clientHeight);
+	var p_height = extract_number(pNode.parentNode.clientHeight);
 
-	if (scroll < 4) {
+	if (scroll <= 0) {
 		pNode.style.transitionDuration = "0.9s";
 		pNode.style.transitionProperty = "bottom";
 		pNode.style['-webkit-transition-duration'] = "0.9s";
 		pNode.style['-webkit-transition-property'] = "bottom";
 	}
 
-	if (scroll >= height) {
+	if (scroll_px >= height) {
 		pNode.style.transitionDuration = "0s";
 		pNode.style.transitionProperty = "none";
 		pNode.style['-webkit-transition-duration'] = "0s";
 		pNode.style['-webkit-transition-property'] = "none";
-		scroll = -40;
-		pNode.style.bottom = scroll + "px";
+		scroll = -1.4;
+		pNode.style.bottom = scroll + "em";
 		
 		return train_scroll(num);
 	}
 
-	if (height > 45) {
-		scroll += 42;
-		pNode.style.bottom = scroll + "px"; 
+	if (height > 2 * p_height) {
+		scroll += 1.5;
+		pNode.style.bottom = scroll + "em"; 
 	}
 	else {
-		pNode.style.bottom = "2px"; 
+		pNode.style.bottom = "0.1em"; 
 	}
 
 	/* have we scrolled beyond an element's max height? */
@@ -271,15 +282,15 @@ window.onpopstate = function(e) {
 
 <% FOR i in [0..5] %>
 <div class="train">
-	<div class="col1">&nbsp;</div>
-	<div class="col2">&nbsp;</div>
-	<div class="col2bis">&nbsp;</div>
-	<div class="col3"><% IF i <= 1 %>Chargement...<% END %>
+	<div class="col1" id="t<% i %>c1">&nbsp;</div>
+	<div class="col2" id="t<% i %>c2">&nbsp;</div>
+	<div class="col2bis" id="t<% i %>c2b">&nbsp;</div>
+	<div class="col3" id="t<% i %>c3"><span id="t<% i %>c3a"><% IF i <= 1 %>Chargement...<% END %></span>
 	<% IF i <= 1 %>
-	<div class="desserte"><p>Chargement en cours...</p>
+	<div class="desserte" id="t<% i %>c3b"><p>Chargement en cours...</p>
 	</div><% END %>
 	</div>
-	<div class="col4">&nbsp;</div>
+	<div class="col4" id="t<% i %>c4">&nbsp;</div>
 </div>
 <% END %>
 
