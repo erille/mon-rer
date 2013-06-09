@@ -101,7 +101,8 @@ function get_data(obj) {
 	}
 }
 
-
+/* b = 1 => afficher retard
+ * b = 0 => afficher heures */
 function flip_retard(b) {
 	var col2    = document.getElementsByClassName("col2");
 	var col2bis = document.getElementsByClassName("col2bis");
@@ -236,6 +237,8 @@ function change_station(do_push_state) {
 	var sel = document.getElementById("station_list");
 	var new_code 	= sel.options[sel.selectedIndex].value;
 	var new_station = sel.options[sel.selectedIndex].text;
+
+	flip_retard(false);
 
 	if (do_push_state !== false) {
 		window.history.pushState(
