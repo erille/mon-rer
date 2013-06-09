@@ -87,12 +87,12 @@ function get_data(obj) {
 		{
 			var div = trains_div[i];
 			div.className = "train";
-			div.childNodes[1].innerHTML = "";
+			div.childNodes[1].innerHTML = "&nbsp;<br />&nbsp;";
 			div.childNodes[3].className = "col2";
-			div.childNodes[3].innerHTML = "";
-			div.childNodes[5].innerHTML = "";
+			div.childNodes[3].innerHTML = "&nbsp;";
+			div.childNodes[5].innerHTML = "&nbsp;";
 
-			var dest = "";
+			var dest = "&nbsp;";
 			if (i < 2) {
 				dest += "<div class='desserte'><p style='bottom: 0.1em'>&nbsp;</p></div>";
 			}
@@ -146,7 +146,7 @@ function init_data(b) {
 		for (var i = 0; i < trains_div.length; i++) {
 			var div = trains_div[i];
 			div.className = "train";
-			div.childNodes[1].innerHTML = "&nbsp;";
+			div.childNodes[1].innerHTML = "&nbsp;<br />&nbsp;";
 			div.childNodes[3].className = "col2";
 			div.childNodes[3].innerHTML = "&nbsp;";
 			div.childNodes[5].innerHTML = "&nbsp;";
