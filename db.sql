@@ -293,7 +293,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('MY',  8727152, 'Mitry Claye'),
 	('MYD', 8711640, 'Montry Condé'),
 	('NAA', 8711656, 'Nogent l''Artaud Charly'),
-	('NAF', 8775802, 'Nanterre Prefecture SNCF'),
+	('NAF', 8775802, 'Nanterre Préfecture SNCF'),
 	('NAN', 8711609, 'Nangis'),
 	('NAU', 8711655, 'Nanteuil Saacy'),
 	('NG',  8754545, 'La Norville Saint-Germain lès Arpajon'),
