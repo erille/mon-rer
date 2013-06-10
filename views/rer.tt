@@ -203,17 +203,16 @@ function train_scroll(num) {
 	/* scrolls obj */
 	var pNode = list[num].childNodes[0];
 
-	var scroll, scroll_px;
-	if (pNode.style) {
+	var scroll = 0;
+	if (pNode.style)
 		scroll = extract_float(pNode.style.bottom);
-		scroll_px = extract_number(pNode.parentNode.offsetTop) - extract_number(pNode.offsetTop);
-	}
-	else {
-		pNode.style = "bottom: 0px;";
-		scroll = 0;
-	}
-	var height = extract_number(pNode.clientHeight);
-	var p_height = extract_number(pNode.parentNode.clientHeight);
+	else 
+		pNode.style = "bottom: 0em;";
+	
+	var height    = pNode.clientHeight;
+	var p_height  = pNode.parentNode.clientHeight;
+	/* p_height gives us 1.3em in pixels so we convert em into px */
+	var scroll_px = scroll * p_height / 1.3;  
 
 	if (scroll <= 0) {
 		pNode.style.transitionDuration = "0.9s";
