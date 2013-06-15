@@ -189,8 +189,9 @@ function init_scroll() {
 }
 
 function init_other() {
-	var button = document.getElementById("station_submit");
-	button.style.display = "none";
+	document.getElementById("station_submit").style.display = "none";
+	document.getElementById("otherstation").style.display = "none";
+	document.getElementById("disclaimer").style.display = "none";
 }
 
 /* Warning, this function contains ugly hacks with vendor-proprietary CSS
@@ -265,6 +266,26 @@ function change_station(do_push_state) {
 
 }
 
+
+var active_block;
+function toggle_block(id) {
+	var block  = document.getElementById(id);
+	var active = document.getElementById(active_block);
+	if (!block) return;
+
+	if (id != active_block) {
+		if (active)
+			active.style.display = 'none';
+
+		block.style.display = 'block';
+		active_block = id;
+	}
+	else {
+		block.style.display = 'none';
+		active_block = undefined;
+	}
+}
+
 window.addEventListener("load", function() { init_data(1); init_scroll(); init_other(); }, false);
 
 window.onpopstate = function(e) {
@@ -300,12 +321,20 @@ window.onpopstate = function(e) {
 </div>
 
 
+<div class="subwindow">
+
+<p>
+	<a href="#" onclick="toggle_block('otherstation')">Autre gare</a>&nbsp;&bull;&nbsp;
+	<a href="#" onclick="toggle_block('disclaimer')">Dégagement de responsabilité</a>
+</p>
+
+<div class="content">
 <div id="otherstation">
-<a href="#">Une autre gare ?</a>
 <form method="GET" action="#">
+	Sélectionnez une gare : 
 	<select id="station_list" name="s" onchange="change_station()">
-<%- FOREACH s IN stations %>
-		<option value="<% s.code %>" <%- IF s.code == origin_code %> selected="selected"<%- END -%>><% s.name | decode %></option>
+<% FOREACH s IN stations -%>
+		<option value="<% s.code %>"<%- IF s.code == origin_code %> selected="selected"<%- END -%>><% s.name | decode %></option>
 <% END -%>
 	</select>
 	<input id="station_submit" type="submit" value="valider" />
@@ -317,7 +346,15 @@ window.onpopstate = function(e) {
 donc ni prise en charge, ni approuvée par la SNCF.</p>
 <p>Les informations de retard peuvent être manquantes ou inexactes.</p>
 <p>Pour tout bugreport, <a href="/contact">contactez-moi</a>.</p>
-<p><a href="https://code.x0r.fr/rer-web">Code source</a> • <a href="http://test.data-sncf.com/index.php?p=transilien">SNCF Open Data Transilien</a></p>
+</div>
+
+</div>
+
+</div>
+
+
+<div id="footer">
+<p>&copy; 2013 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/23">Blog</a> • <a href="https://code.x0r.fr/rer-web">Code source</a> • <a href="http://test.data-sncf.com/index.php?p=transilien">SNCF Open Data Transilien</a></p>
 </div>
 
 </body>

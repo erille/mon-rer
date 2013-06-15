@@ -23,6 +23,7 @@ h1 {
 div.listetrains { 
 	display: table; 
 	width: 100%;
+	margin-bottom: 3em;
 }
 
 div.train {
@@ -119,7 +120,7 @@ span.numero-train { color: #679fd2; }
 
 div#otherstation {
 	padding: 1em;
-	font-size: 14px;
+	font-size: 12px;
 	text-align: center;
 }
 
@@ -128,6 +129,49 @@ div#otherstation {
 div#disclaimer {
 	text-align: center;
 	font-size: 12px;
+}
+
+
+div.subwindow {
+	position: fixed;
+	bottom: 4em;
+
+	border-top: 1px solid gray;
+	padding-top: 1em;
+	width: 100%;
+
+	font-size: 12px;
+
+	background-color: rgba(34, 34, 34, 0.8);
+	z-index: 1;
+}
+
+div.subwindow p {
+	text-align: center;
+}
+
+div.subwindow div.content {
+	transition-property: height;
+	transition-duration: 0.9s;
+	transition-timing-function: linear;
+	-webkit-transition-property: height;
+	-webkit-transition-duration: 0.9s;
+	-webkit-transition-timing-function: linear;
+}
+	
+
+
+div#footer {
+	border-top: 1px solid gray;
+	padding-top: 1em;
+	position: fixed;
+	bottom: 1em;
+	width: 100%;
+	z-index: 1;
+	background-color: #222;
+
+	font-size: 12px;
+	text-align: center;
 }
 
 select {
