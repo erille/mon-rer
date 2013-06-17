@@ -7,6 +7,7 @@ use DBI;
 use strict;
 use warnings;
 use utf8;
+use 5.010;
 
 
 # Don't even think of modifying this directly.  You should be fiddling with
@@ -83,6 +84,73 @@ sub get_delay {
 	} 
 	else {
 		return undef;
+	}
+}
+
+sub get_ligne {
+	my ($num) = @_;
+
+	if ($num =~ /^\d+$/) {
+		my $sth = $dbh->prepare(qq{
+			SELECT route_short_name, route_long_name 
+				FROM trips 
+				JOIN routes USING (route_id) 
+			WHERE SUBSTRING(trip_id, 6, 6) = ?;
+			});
+		$sth->execute($num) or die $DBI::errstr;
+
+		my $result = $sth->fetchall_arrayref([0]);
+
+		if (scalar(@$result)) {
+			my $value = $result->[0][0];
+			return $value;
+		}
+		elsif (($num % 2) == 1) {
+			return get_ligne(int($num) - 1);
+		} 
+		else {
+			return '';
+		}
+	} else {
+		my $mission = substr $num, 0, 4;
+		given ($mission) {
+			# FIXME: certains codes servent sur les deux lignes !
+			return 'B' when qr/^A/;
+
+			return 'A' when qr/^B/;
+
+			return 'A' when qr/^D/;
+
+			return 'A' when qr/^E(?:CAR|CRI|DUR)/;
+			return 'B' when qr/^E(?:BER|BRE|EVE|DAM|FL[AE]|FOC|GON|JIX|KIL|KLI|LA[NS]|LIE|MEU|MIR|MOI|NRY|NZO|OLE|PAR|PIS|QUI|RNE|SOR|STE|TAL|TUI|URO|VAM|VEN|WIL|WOK|X[AI]L|YLO|ZAN)/;
+
+			return 'B' when qr/^G/;
+
+			return 'B' when qr/^I/;
+
+			return 'A' when qr/^JONE/;
+			return 'B' when qr/^J(?:IBY|ONA|EAN|YJY)/;
+
+			return 'B' when qr/^K/;
+			return 'B' when qr/^L/;
+
+			return 'A' when qr/^N/;
+			return 'A' when qr/^O/;
+
+			return 'A' when qr/^P(?:UC[EU]|[AO]PY)/;
+			return 'B' when qr/^P(?:APY|AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|ISE|JAB|LAN|LUS|NYX|OLY|QUR|SIT|SOU|TAH|ULE)/;
+			return 'A' when qr/^Q/;
+			return 'A' when qr/^R/;
+
+			return 'B' when qr/^S/;
+
+			return 'A' when qr/^T/;
+			return 'A' when qr/^U(?:BOS|DON|DRE|I[LT]E|KRA|LLE|MID|PA[CL]|PIR|R[AE]C|RAM|VAR|XOL|ZAL)/;
+			return 'B' when qr/^U(?:BAN|LLE)/;
+
+			return 'A' when qr/^[X-Z]/;
+		}
+		return '';
 	}
 }
 

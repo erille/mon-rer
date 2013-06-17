@@ -58,6 +58,12 @@ div.train div.col3 {
 	letter-spacing: 0.5px;
 }
 
+div.train div.col3 img {
+	position: relative;
+	top: 0.1em;
+	height: 1em;
+}
+
 div.train div.col4 {
 	width: 2em;
 }

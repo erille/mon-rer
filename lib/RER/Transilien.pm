@@ -13,6 +13,10 @@ use RER::Trains qw(uc_woac);
 use RER::Gares;
 use List::Util qw(min);
 
+
+
+
+
 sub new {
     my %param = @_;
 
@@ -102,6 +106,7 @@ sub new {
             col2class => $col2class,
             trainclass => $trainclass,
             retard => $delay,
+            ligne => RER::Gares::get_ligne($numero),
         };
     }
 
