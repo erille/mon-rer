@@ -43,6 +43,7 @@ get '/' => sub {
     template 'rer', {
     	origin_station => $origin_station,
         origin_code => $origin_code,
+        dmaj     => RER::Gares::get_last_update(),
         stations => RER::Gares::get_stations(),
     };
 };
