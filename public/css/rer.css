@@ -125,7 +125,17 @@ div#otherstation {
 	text-align: center;
 }
 
-
+div#error {
+	position: fixed;
+	top: 0;
+	padding: 0.4em;
+	background-color: #b40404;
+	width: 100%;
+	text-align: center;
+	color: white;
+	font-size: 14px;
+/*	display: none; */
+}
 
 div#disclaimer {
 	text-align: center;

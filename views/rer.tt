@@ -91,6 +91,12 @@ function extract_float(str) {
 }
 
 
+
+function die(str) {
+	document.getElementById("error").style.display = 'block';
+	document.getElementById("errormsg").innerHTML = str;
+}
+
 function get_data(obj) {
 	if (obj.readyState == 4 && obj.status == 200) {
 		var text = obj.responseText;
