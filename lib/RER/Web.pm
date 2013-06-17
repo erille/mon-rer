@@ -48,7 +48,8 @@ get '/' => sub {
 };
 
 get '/json' => sub {
-    header 'Content-type' => 'text/plain; charset=utf-8';
+    header 'Content-type' => 'application/json; charset=utf-8';
+    header 'Cache-Control' => 'no-cache';
 
     my $code = check_code(params->{'s'}) || 'EVC';
 
