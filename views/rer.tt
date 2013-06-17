@@ -17,7 +17,7 @@
 
 var scrollTimeout = 3000;
 
-var retardTimeout1 = 5000;
+var retardTimeout1 = 6500;
 var retardTimeout2 = 2500;
 
 var originCode = "<% origin_code %>";
@@ -411,7 +411,7 @@ donc ni prise en charge, ni approuvée par la SNCF.</p>
 
 
 <div id="footer">
-<p>&copy; 2013 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/23">Blog</a> • <a href="https://code.x0r.fr/rer-web">Code source</a> • <a href="http://test.data-sncf.com/index.php?p=transilien">SNCF Open Data Transilien</a></p>
+<p>&copy; 2013 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/23">Blog</a> • <a href="https://code.x0r.fr/rer-web">Code source</a> • <a href="http://test.data-sncf.com/index.php?p=transilien">SNCF Open Data Transilien</a> • Dernière mise à jour : <% dmaj || 'inconnue' %></p>
 </div>
 
 </body>

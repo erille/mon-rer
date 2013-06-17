@@ -3,6 +3,8 @@
 package RER::Gares;
 use RER::Trains qw(uc_woac);
 use DBI;
+use DateTime;
+use DateTime::Format::Strptime;
 
 use strict;
 use warnings;
@@ -26,6 +28,25 @@ sub db_connect()
 		$config{dsn}, 
 		$config{username}, 
 		$config{password}) or die $DBI::errstr;
+}
+
+
+sub get_last_update {
+	my $sth = $dbh->prepare("SELECT value FROM metadata WHERE `key` = 'dmaj'");
+	$sth->execute;
+	my $result = $sth->fetchall_arrayref([0]);
+
+	my $strp = DateTime::Format::Strptime->new(
+		pattern => '%e %B %Y',
+		locale  => 'fr_FR',
+	);
+
+	my $dt = DateTime->from_epoch( 
+		epoch => $result->[0][0],
+		formatter => $strp,
+	);
+
+	return $strp->format_datetime($dt);
 }
 
 
