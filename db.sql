@@ -1,11 +1,18 @@
 -- PRAGMA encoding="UTF-8";
 
+DROP TABLE IF EXISTS metadata;
+CREATE TABLE IF NOT EXISTS metadata (
+	`key` VARCHAR(8) PRIMARY KEY,
+	`value` TEXT 
+);
+
+
 DROP TABLE IF EXISTS gares;
 CREATE TABLE IF NOT EXISTS gares (
-	code VARCHAR(3) PRIMARY KEY,
-	name VARCHAR(60) NOT NULL,
-	uic  INTEGER,
-	is_transilien INTEGER DEFAULT 1
+	`code` VARCHAR(3) PRIMARY KEY,
+	`name` VARCHAR(60) NOT NULL,
+	`uic`  INTEGER,
+	`is_transilien` INTEGER DEFAULT 1
 );
 
 DELETE FROM gares;

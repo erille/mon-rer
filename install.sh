@@ -55,6 +55,7 @@ echo_status "Obtaining SNCF GTFS data"
 mkdir -p input/sncf_gtfs
 cd input/sncf_gtfs
 wget -N 'http://files.transilien.com/horaires/gtfs/export-TN-GTFS-LAST.zip'
+LAST_UPDATE=`stat -c '%Y' export-TN-GTFS-LAST.zip`
 
 #
 # Unzip
@@ -79,9 +80,12 @@ perl ./Perl-GTFS/loadfromfile.pl -p input -d "${DATABASE}"
 #
 # Import
 #
-echo_status "Importing GTFS data into MySQL"
-mysql -u "${USER}" -p -D "${DATABASE}" < ./input/sncf_gtfs/load-data.sql
-echo_status "Importing station data into MySQL"
-mysql -u "${USER}" -p -D "${DATABASE}" < ./db.sql
+echo_status "Importing GTFS data and station data into MySQL"
+
+echo "INSERT INTO metadata (\`key\`, \`value\`) VALUES ('dmaj', '${LAST_UPDATE}');" 
+
+echo "INSERT INTO metadata (\`key\`, \`value\`) VALUES ('dmaj', '${LAST_UPDATE}');" | \
+	cat ./input/sncf_gtfs/load-data.sql ./db.sql -  | \
+	mysql -u "${USER}" -p -D "${DATABASE}" 
 
 echo_status "You're now ready!"
