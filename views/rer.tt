@@ -28,6 +28,48 @@ var dataRefreshTimer;
 var col2flipTimer;
 
 
+
+/* because IE sucks ass
+ * source: Javascript Cookbook, Shelly Powers, O'Reilly, page 122 */
+function listenEvent(eventTarget, eventType, eventHandler) {
+	if (eventTarget.addEventListener) {
+		eventTarget.addEventListener(eventType, eventHandler, false);
+	} else if (eventTarget.attachEvent) {
+		eventType = "on" + eventType;
+		eventTarget.attachEvent(eventType, eventHandler);
+	} else {
+		eventTarget["on" + eventType] = eventHandler;
+	}
+}
+
+/* because IE sucks ass, again */
+function by_classname(class_name) {
+	if (document.getElementsByClassName)
+		return document.getElementsByClassName(class_name);
+	if (document.querySelectorAll)
+		return document.querySelectorAll('.' + class_name);
+}
+
+
+/* manipulate train timetable easier */
+function table_get_node(row, column) {
+	if (column)
+		return document.getElementById('t' + row + 'c' + column);
+	else
+		return document.getElementById('t' + row);
+}
+
+function table_set_classname(row, column, class_name) {
+	table_get_node(row, column).className = class_name;
+}
+
+function table_set_innerhtml(row, column, html) {
+	table_get_node(row, column).innerHTML = html;
+}
+
+
+
+
 function extract_number(str) {
 	var num = 0;
 	if (str) {
@@ -41,8 +83,11 @@ function extract_float(str) {
 	if (str) {
 		num = str.toString().match(/-?\d+(\.\d+)?/);
 		num = num ? parseFloat(num[0]) : 0;
+		return num;
 	}
-	return num;
+	else {
+		return undefined;
+	}
 }
 
 
@@ -51,73 +96,76 @@ function get_data(obj) {
 		var text = obj.responseText;
 		var trains = JSON.parse(text);
 	
-		var trains_div = document.getElementsByClassName("train");
-
-		var i;
-		for (i = 0; i < trains.length; i++) {
-			var div = trains_div[i];
+		for (var i = 0; i < trains.length; i++) {
 			var train = trains[i];
 
-			div.className = train.trainclass;
+			table_get_node(i).className = train.trainclass;
 
-			div.childNodes[1].innerHTML 
-				= "<span class='mission-train'>" + train.mission 
-					+ "</span> <span class='numero-train'>"
-						+ train.numero + "</span>";
-			div.childNodes[3].className = train.col2class;
-			div.childNodes[3].innerHTML = train.time;
+			table_set_innerhtml(i, '1', 
+				  "<span class='mission-train'>" + train.mission 
+				+ "</span> <span class='numero-train'>"
+				+ train.numero + "</span>");
 
-			if (train.time != 'Supprimé' && train.time != 'Retardé') {
-				div.childNodes[5].innerHTML = train.retard;
-			}
-			else {
-				div.childNodes[5].innerHTML = ''
-			}
+			table_set_classname(i, '2', train.col2class);
+			table_set_innerhtml(i, '2', train.time);
 
+			if (train.time != 'Supprimé' && train.time != 'Retardé') 
+				table_set_innerhtml(i, '2b', train.retard);
+			else 
+				table_set_innerhtml(i, '2b', '');
+
+			var dest = train.destination;
+			if (train.ligne)
+				dest = '<img src="img/rer' 
+					+ train.ligne + '.svg" alt="'
+					+ train.ligne + '" />' + ' ' + dest;
+
+			table_set_innerhtml(i, '3a', dest);
 			if (i < 2) {
-				div.childNodes[7].childNodes[1].childNodes[0].innerHTML = train.dessertes;
-				if (origTrains[i] != trains.numero) {
-					div.childNodes[7].childNodes[1].childNodes[0].style = "bottom: 0.1em;";
+				var p = table_get_node(i, '3b').childNodes[0];
+				p.innerHTML = train.dessertes;
+				if (origTrains[i] != train.numero) {
+					p.style.bottom = "0.1em";
 				}
 			}
-			div.childNodes[7].childNodes[0].nodeValue = train.destination;
 				
 
-			div.childNodes[9].innerHTML = '<span class="voie">' + train.platform + '</span>';
+			table_set_innerhtml(i, '4', '<span class="voie">' + train.platform + '</span>');
 			origTrains[i] = train.numero;
 		}
 		for (; i < 6; i++)
 		{
-			var div = trains_div[i];
-			div.className = "train";
-			div.childNodes[1].innerHTML = "&nbsp;<br />&nbsp;";
-			div.childNodes[3].className = "col2";
-			div.childNodes[3].innerHTML = "&nbsp;";
-			div.childNodes[5].innerHTML = "&nbsp;";
-
-			var dest = "&nbsp;";
+			table_get_node(i).className = 'train';
+			table_set_innerhtml(i, '1', "&nbsp;<br />&nbsp;");
+			table_set_classname(i, '2', "col2");
+			table_set_innerhtml(i, '2', "&nbsp;");
+			table_set_innerhtml(i, '2b', "&nbsp;");
+			table_set_innerhtml(i, '3a', "&nbsp;");
 			if (i < 2) {
-				dest += "<div class='desserte'><p style='bottom: 0.1em'>&nbsp;</p></div>";
+				table_set_innerhtml(i, '3b', "<p style='bottom: 0.1em'>"
+					+ "&nbsp;"
+					+ "</p></div>");
 			}
-			div.childNodes[7].innerHTML = dest;
-
-			div.childNodes[9].innerHTML = "";
+			else 
+			
+			table_set_innerhtml(i, '4', '&nbsp;');
 			origTrains[i] = -1;
 		}
 
-		dataRefreshTimer = window.setTimeout(init_data, 12000, 0);
-		col2flipTimer = window.setTimeout(flip_retard, retardTimeout1, 1);
+		dataRefreshTimer = window.setTimeout(function() { init_data(0) }, 12000);
+		col2flipTimer = window.setTimeout(function() { flip_retard(1) }, retardTimeout1);
 	}
 	else if (obj.status >= 400) {
-//		alert("error " + obj.status);
+		die("Impossible de récupérer les prochains trains (erreur " 
+			+ obj.status + ").");
 	}
 }
 
 /* b = 1 => afficher retard
  * b = 0 => afficher heures */
 function flip_retard(b) {
-	var col2    = document.getElementsByClassName("col2");
-	var col2bis = document.getElementsByClassName("col2bis");
+	var col2    = by_classname("col2");
+	var col2bis = by_classname("col2bis");
 
 	var hide;
 	var show;
@@ -145,25 +193,22 @@ function init_data(b) {
 	if (b) {
 		if (dataRefreshTimer) { window.clearTimeout(dataRefreshTimer); }
 
-		var trains_div = document.getElementsByClassName("train");
-		for (var i = 0; i < trains_div.length; i++) {
-			var div = trains_div[i];
-			div.className = "train";
-			div.childNodes[1].innerHTML = "&nbsp;<br />&nbsp;";
-			div.childNodes[3].className = "col2";
-			div.childNodes[3].innerHTML = "&nbsp;";
-			div.childNodes[5].innerHTML = "&nbsp;";
+		for (var i = 0; i < 6; i++) {
+			table_get_node(i).className = 'train';
+			table_set_innerhtml(i, '1', "&nbsp;<br />&nbsp;");
+			table_set_classname(i, '2', "col2");
+			table_set_innerhtml(i, '2', "&nbsp;");
+			table_set_innerhtml(i, '2b', "&nbsp;");
 			if (i < 2) {
-				div.childNodes[7].innerHTML = "Chargement... "
-					+ "<div class='desserte'>"
-					+ "<p style='bottom: 0.1em'>"
+				table_set_innerhtml(i, '3a', "Chargement... ");
+				table_set_innerhtml(i, '3b', "<p style='bottom: 0.1em'>"
 					+ "Chargement en cours..."
-					+ "</p></div>";
+					+ "</p></div>");
 			}
-			else {
-				div.childNodes[7].innerHTML = "&nbsp;";
-			}
-			div.childNodes[9].innerHTML = '&nbsp;';
+			else 
+				table_set_innerhtml(i, '3a', "&nbsp;");
+			
+			table_set_innerhtml(i, '4', '&nbsp;');
 			origTrains[i] = -1;
 		}
 	}
@@ -179,12 +224,10 @@ function init_data(b) {
 
 
 function init_scroll() {
-	var list = document.getElementsByClassName("desserte");
-	
-	for (var i = 0; i < list.length; i++) {
-		var pNode = list[i].childNodes[0];
+	for (var i = 0; i < 2; i++) {
+		var pNode = table_get_node(i, '3b').childNodes[0];
 		pNode.style.bottom = "0.1em";
-		window.setTimeout(train_scroll, scrollTimeout, i);
+		window.setTimeout("train_scroll("+i+")", scrollTimeout);
 	}
 }
 
@@ -194,16 +237,27 @@ function init_other() {
 	document.getElementById("disclaimer").style.display = "none";
 }
 
+
+
+
+/* set/kill scroll animation */
+/* b = 0 -> kill, b = 1 -> set */
+function set_scroll(node, b) {
+	node.style.transitionDuration 		  = b ? '0.9s' : '0s';
+	node.style['-webkit-transition-duration'] = b ? '0.9s' : '0s';
+	node.style.transitionProperty 		  = b ? 'bottom' : 'none';
+	node.style['-webkit-transition-property'] = b ? 'bottom' : 'none';
+}
+
+
 /* Warning, this function contains ugly hacks with vendor-proprietary CSS
  * attributes.  The Webkit guys usually do a good job, but messed this up
  * big time.  It is frustrating to see a standards-compliant design break on
  * mobile devices because of that.
  */
 function train_scroll(num) {
-	var list = document.getElementsByClassName("desserte");
-
 	/* scrolls obj */
-	var pNode = list[num].childNodes[0];
+	var pNode = table_get_node(num, '3b').childNodes[0];
 
 	var scroll = 0;
 	if (pNode.style)
@@ -216,26 +270,18 @@ function train_scroll(num) {
 	/* p_height gives us 1.3em in pixels so we convert em into px */
 	var scroll_px = scroll * p_height / 1.3;  
 
-	if (scroll <= 0) {
-		pNode.style.transitionDuration = "0.9s";
-		pNode.style.transitionProperty = "bottom";
-		pNode.style['-webkit-transition-duration'] = "0.9s";
-		pNode.style['-webkit-transition-property'] = "bottom";
-	}
 
 	if (scroll_px >= height) {
-		pNode.style.transitionDuration = "0s";
-		pNode.style.transitionProperty = "none";
-		pNode.style['-webkit-transition-duration'] = "0s";
-		pNode.style['-webkit-transition-property'] = "none";
+		set_scroll(pNode, 0);
 		scroll = -1.4;
 		pNode.style.bottom = scroll + "em";
-		
 		return train_scroll(num);
 	}
 
 	if (height > 2 * p_height) {
+		set_scroll(pNode, 1);
 		scroll += 1.5;
+		window.setTimeout(function() { set_scroll(pNode, 0) }, '1000');
 		pNode.style.bottom = scroll + "em"; 
 	}
 	else {
@@ -244,7 +290,7 @@ function train_scroll(num) {
 
 	/* have we scrolled beyond an element's max height? */
 
-	window.setTimeout(train_scroll, scrollTimeout, num);
+	window.setTimeout(function() { train_scroll(num); }, scrollTimeout);
 }
 
 function change_station(do_push_state) {
@@ -286,7 +332,7 @@ function toggle_block(id) {
 	}
 }
 
-window.addEventListener("load", function() { init_data(1); init_scroll(); init_other(); }, false);
+listenEvent(window, "load", function() { init_data(1); init_scroll(); init_other(); });
 
 window.onpopstate = function(e) {
 	if (e.state) {
@@ -304,7 +350,7 @@ window.onpopstate = function(e) {
 <div class="listetrains">
 
 <% FOR i in [0..5] %>
-<div class="train">
+<div class="train" id="t<% i %>">
 	<div class="col1" id="t<% i %>c1">&nbsp;</div>
 	<div class="col2" id="t<% i %>c2">&nbsp;</div>
 	<div class="col2bis" id="t<% i %>c2b">&nbsp;</div>
@@ -320,6 +366,11 @@ window.onpopstate = function(e) {
 
 </div>
 
+<div id="error"><p id="errormsg">
+	<script type="text/javascript">document.getElementById("error").style.display = "none";</script>
+	<noscript>Désolé, ce site nécessite JavaScript pour fonctionner.</noscript>
+	</p>
+</div>
 
 <div class="subwindow">
 
