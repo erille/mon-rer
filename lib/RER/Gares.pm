@@ -109,7 +109,7 @@ sub get_delay {
 }
 
 sub get_ligne {
-	my ($num) = @_;
+	my ($num, $dest) = @_;
 
 	if ($num =~ /^\d+$/) {
 		my $sth = $dbh->prepare(qq{
@@ -158,9 +158,24 @@ sub get_ligne {
 			return 'A' when qr/^N/;
 			return 'A' when qr/^O/;
 
-			return 'A' when qr/^P(?:UC[EU]|[AO]PY)/;
-			return 'B' when qr/^P(?:APY|AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|ISE|JAB|LAN|LUS|NYX|OLY|QUR|SIT|SOU|TAH|ULE)/;
-			return 'A' when qr/^Q/;
+			return 'A' when qr/^P(?:UC[EU]|OPY)/;
+			return 'B' when qr/^P(?:AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|ISE|JAB|LAN|LUS|NYX|OLY|QUR|SIT|SOU|TAH|ULE)/;
+
+			when (qr/^PAPY/) {
+				if ($dest eq 'SNM') {
+					return 'B';
+				} else {
+					return 'A';
+				}
+			}
+
+			when (qr/^Q/) {
+				if ($dest eq 'LPN') {
+					return 'B';
+				} else {
+					return 'A';
+				}
+			}
 			return 'A' when qr/^R/;
 
 			return 'B' when qr/^S/;

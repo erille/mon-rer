@@ -106,7 +106,7 @@ sub new {
             col2class => $col2class,
             trainclass => $trainclass,
             retard => $delay,
-            ligne => RER::Gares::get_ligne($numero),
+            ligne => RER::Gares::get_ligne($numero, (@{$train->{dessertes}})[-1]),
         };
     }
 
