@@ -124,6 +124,13 @@ sub get_ligne {
 
 		if (scalar(@$result)) {
 			my $value = $result->[0][0];
+
+			# $value should usually contain a one-letter value, or
+			# "TER".  However SNCF somehow manages to fuck this up
+			# as well.
+			given ($value) {
+				$value = 'C' when "Gare d'Aus";
+			}
 			return $value;
 		}
 		elsif (($num % 2) == 1) {
@@ -159,7 +166,7 @@ sub get_ligne {
 			return 'A' when qr/^O/;
 
 			return 'A' when qr/^P(?:UC[EU]|OPY)/;
-			return 'B' when qr/^P(?:AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|ISE|JAB|LAN|LUS|NYX|OLY|QUR|SIT|SOU|TAH|ULE)/;
+			return 'B' when qr/^P(?:AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|ISE|JAB|LAN|LUS|MAR|NYX|OLY|QUR|SIT|SOU|TAH|ULE)/;
 
 			when (qr/^PAPY/) {
 				if ($dest eq 'SNM') {
