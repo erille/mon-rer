@@ -97,6 +97,22 @@ function die(str) {
 	document.getElementById("errormsg").innerHTML = str;
 }
 
+
+
+function update_time() {
+	var n = document.getElementById('heure');
+	var dt = new Date();
+
+	var h = dt.getHours();
+	var m = dt.getMinutes();
+	h = (h < 10) ? "0" + h : h;
+	m = (m < 10) ? "0" + m : m;
+
+	n.innerHTML = h + ":" + m;
+}
+
+
+
 function get_data(obj) {
 	if (obj.readyState == 4 && obj.status == 200) {
 		var text = obj.responseText;
@@ -241,6 +257,8 @@ function init_other() {
 	document.getElementById("station_submit").style.display = "none";
 	document.getElementById("otherstation").style.display = "none";
 	document.getElementById("disclaimer").style.display = "none";
+
+	window.setInterval(update_time, 1000);
 }
 
 
@@ -338,7 +356,7 @@ function toggle_block(id) {
 	}
 }
 
-listenEvent(window, "load", function() { init_data(1); init_scroll(); init_other(); });
+listenEvent(window, "load", function() { init_data(1); init_scroll(); init_other(); update_time(); });
 
 window.onpopstate = function(e) {
 	if (e.state) {
@@ -352,6 +370,7 @@ window.onpopstate = function(e) {
 
 <body>
 <h1>Départ : <span class="departure-station" id="departure-station"><% origin_station %></span></h1>
+<div id="heure">--:--</div>
 
 <div class="listetrains">
 
