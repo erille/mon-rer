@@ -30,11 +30,15 @@ sub new {
     die $param{'from'} . ": gare non trouvée" unless length($tmp) > 0;
     $trig_from = $param{'from'};
 
-    my $mech = WWW::Mechanize->new();
+    my $mech = WWW::Mechanize->new(autocheck => 0);
 
     my $url = "http://sncf.mobi/infotrafic/iphoneapp/transilien/?gare=$trig_from";
 
-    my $init_page = $mech->get($url) or die("Le site a l'air de s'être chié dessus... URL: $url");
+    my $r = $mech->get($url);
+    if (!$r->is_success) {
+        die("Erreur lors de la récupération des horaires en live : " 
+            . "sncf.mobi a renvoyé l'erreur " . $r->status_line . "\n");
+    }
 
     my $data = decode_json $mech->content();
     my @t = sort { $a->{heureprobable} cmp $b->{heureprobable} } @{$data->{'D'}};
