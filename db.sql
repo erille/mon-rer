@@ -149,7 +149,6 @@ INSERT INTO gares (code, uic, name) VALUES
 	('EPO', 8738676, 'Épone Mézières'),
 	('EPV', 8727112, 'Épinay Villetaneuse'),
 	('ERA', 8738141, 'Éragny Neuville'),
-	('ERE', 8727605, 'Ermont Eaubonne'),
 	('ERM', 8727658, 'Ermont Halte'),
 	('ERT', 8727605, 'Ermont Eaubonne'),
 	('ESO', 8768160, 'Essonnes-Robinson'),
@@ -509,6 +508,7 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('CVY', 'Chevilly', 0),
 	('DEJ', 'Laboissière-le-Déluge', 0),
 	('ESC', 'Esches', 0),
+	('ERE', 'Ermont Eaubonne', 0),      -- redondant avec ERT
 	('EVX', 'Évreux-Normandie', 0),
 	('FL',  'Flers', 0),
 	('GAA', 'Gaillon Aubevoye', 0),
