@@ -186,11 +186,11 @@ function get_data(obj) {
 	}
 	else if (obj.readyState == 4 && obj.status == 503) {
 		var err = JSON.parse(obj.responseText);
-		if (dataRetryCount++ >= 10)
+		if (dataRetryCount++ >= 20)
 			die(err.error);
 		else
 			dataRefreshTimer = window.setTimeout(function() { init_data(0) }, 
-						2500 + 500 * dataRetryCount);
+						250 * dataRetryCount);
 	}
 	else if (obj.status >= 400 && obj.status != 503) {
 		die("Impossible de récupérer les prochains trains (erreur " 
