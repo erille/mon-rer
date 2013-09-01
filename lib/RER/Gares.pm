@@ -81,6 +81,23 @@ sub get_station_by_code($)
 	}
 }
 
+sub get_autocomp
+{
+	my ($str) = @_;
+	$str =~ s/([_%])/\\$1/g;
+
+	my $sth = $dbh->prepare(qq{
+		SELECT code, name 
+			FROM gares 
+			WHERE is_transilien AND (code = UPPER(?) OR name LIKE ?) 
+			ORDER BY INSTR(name, ?), name
+			LIMIT 10;});
+	$sth->execute("$str", "%$str%", "$str");
+
+	my $result = $sth->fetchall_arrayref({});
+	return $result;
+}
+
 sub get_delay {
 	my ($numero, $from, $time) = @_;
 

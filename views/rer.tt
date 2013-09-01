@@ -10,6 +10,7 @@
 	<link rel="shortcut icon" href="favicon.ico" />
 	<link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
 	<link rel="apple-touch-icon" href="favicon-macfags.png" />
+	<script type="text/javascript" src="js/autocomp.js"></script>
 	<title><% origin_station %> &bull; Prochains départs</title>
 
 <script type="text/javascript">
@@ -274,8 +275,9 @@ function init_scroll() {
 
 function init_other() {
 	document.getElementById("station_submit").style.display = "none";
-	document.getElementById("otherstation").style.display = "none";
 	document.getElementById("disclaimer").style.display = "none";
+
+	document.onkeydown = autocomp_keydown;
 
 	window.setInterval(update_time, 1000);
 }
@@ -356,22 +358,22 @@ function change_station(do_push_state) {
 }
 
 
-var active_block;
-function toggle_block(id) {
+var active_block = {};
+function toggle_block(group, id) {
 	var block  = document.getElementById(id);
-	var active = document.getElementById(active_block);
+	var active = document.getElementById(active_block[group]);
 	if (!block) return;
 
-	if (id != active_block) {
+	if (id != active_block[group]) {
 		if (active)
 			active.style.display = 'none';
 
 		block.style.display = 'block';
-		active_block = id;
+		active_block[group] = id;
 	}
 	else {
 		block.style.display = 'none';
-		active_block = undefined;
+		active_block[group] = undefined;
 	}
 }
 
@@ -388,6 +390,22 @@ window.onpopstate = function(e) {
 </head>
 
 <body>
+
+<div id="hideotherstation"><a href="#" onclick="toggle_block(0, 'otherstation')">[x]</a></div>
+<div id="otherstation">
+<form id="form_otherstation" method="GET" action="#">
+	Sélectionnez une gare : 
+	<input type="text" name="s2" id="s2" />
+	<select id="station_list" name="s" onchange="change_station()">
+<% FOREACH s IN stations -%>
+		<option value="<% s.code %>"<%- IF s.code == origin_code %> selected="selected"<%- END -%>><% s.name | decode %></option>
+<% END -%>
+	</select>
+	<input id="station_submit" type="submit" value="valider" />
+	<div id="autocomp"></div>
+</form>
+</div>
+
 <h1>Départ : <span class="departure-station" id="departure-station"><% origin_station %></span></h1>
 <div id="heure">--:--</div>
 
@@ -419,22 +437,10 @@ window.onpopstate = function(e) {
 <div class="subwindow">
 
 <p>
-	<a href="#" onclick="toggle_block('otherstation')">Autre gare</a>&nbsp;&bull;&nbsp;
-	<a href="#" onclick="toggle_block('disclaimer')">Dégagement de responsabilité</a>
+	<a href="#" onclick="toggle_block(1, 'disclaimer')">Dégagement de responsabilité</a>
 </p>
 
 <div class="content">
-<div id="otherstation">
-<form method="GET" action="#">
-	Sélectionnez une gare : 
-	<select id="station_list" name="s" onchange="change_station()">
-<% FOREACH s IN stations -%>
-		<option value="<% s.code %>"<%- IF s.code == origin_code %> selected="selected"<%- END -%>><% s.name | decode %></option>
-<% END -%>
-	</select>
-	<input id="station_submit" type="submit" value="valider" />
-</form>
-</div>
 
 <div id="disclaimer">
 <p>Cette application Web est expérimentale. Elle n'est pas officielle et n'est
@@ -447,6 +453,9 @@ donc ni prise en charge, ni approuvée par la SNCF.</p>
 
 </div>
 
+<script type='text/javascript'>
+init_autocomp('form_otherstation', 's2', 'autocomp', 'station_submit');
+</script>
 
 <div id="footer">
 <p>&copy; 2013 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/23">Blog</a> • <a href="https://code.x0r.fr/rer-web">Code source</a> • <a href="http://test.data-sncf.com/index.php?p=transilien">SNCF Open Data Transilien</a> • Dernière mise à jour : <% dmaj || 'inconnue' %></p>

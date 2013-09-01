@@ -145,12 +145,48 @@ div.train.canceled div.col3 div.desserte,
 
 span.numero-train { color: #679fd2; }
 
+div#hideotherstation {
+	float: left;
+	font-size: 12px;
+	padding: 0.2em;
+}
 
 div#otherstation {
-	padding: 1em;
+	padding: 0.4em 0.4em 0;
 	font-size: 12px;
-	text-align: center;
+	display: block;
 }
+
+div#autocomp {
+//	display: none;
+	position: absolute;
+
+	font-family: sans-serif;
+	background-color: white;
+	border: 1px solid black;
+	color: black;
+	padding: 0.2em;
+
+	z-index: 2;
+}
+div#autocomp ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	display: table;
+}
+div#autocomp ul li {
+	padding: 0;
+	display: table-row;
+}
+div#autocomp ul li:hover {
+	background-color: #ccc;
+	min-width: 12em;
+	cursor: pointer;
+}
+div#autocomp ul li span { display: table-cell; padding: 0.2em; }
+div#autocomp ul li span.name { padding-right: 1em; }
+div#autocomp ul li span.trig { font-family: monospace; font-style: italic; color: #666; }
 
 div#error {
 	position: fixed;
