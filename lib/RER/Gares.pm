@@ -130,6 +130,15 @@ sub get_ligne {
 			# as well.
 			given ($value) {
 				$value = 'C' when "Gare d'Aus";
+				$value = 'D' when 'Evry Courc';
+				$value = 'D' when 'Grigny Cen';
+				$value = 'D' when 'Le Bras de';
+				$value = 'D' when 'Orangis Bo';
+				$value = 'E' when 'Haussmann '; # note the space
+				$value = 'H' when "LUZARCHES "; # note the space
+				$value = 'J' when 'Gisors => '; # note the space
+				$value = 'J' when 'Mantes la '; # note the space
+				$value = 'R' when 'Montargis '; # note the space
 			}
 			return $value;
 		}
@@ -150,7 +159,7 @@ sub get_ligne {
 			return 'A' when qr/^D/;
 
 			return 'A' when qr/^E(?:CAR|CRI|DUR)/;
-			return 'B' when qr/^E(?:BER|BRE|EVE|DAM|FL[AE]|FOC|GON|JIX|KIL|KLI|LA[NS]|LIE|MEU|MIR|MOI|NRY|NZO|OLE|PAR|PIS|QUI|RNE|SOR|STE|TAL|TUI|URO|VAM|VEN|WIL|WOK|X[AI]L|YLO|ZAN)/;
+			return 'B' when qr/^E(?:BER|BRE|EVE|DAM|FL[AE]|FOC|GON|JIX|KIL|KLI|LA[NS]|LIE|MEU|MIR|MOI|NRY|NZO|OLE|PA[RV]|PIS|PEE|QUI|RNE|SOR|STE|TAL|TUI|URO|VAM|VEN|WIL|WOK|X[AI]L|YLO|ZAN)/;
 
 			return 'B' when qr/^G/;
 
@@ -166,7 +175,7 @@ sub get_ligne {
 			return 'A' when qr/^O/;
 
 			return 'A' when qr/^P(?:UC[EU]|OPY)/;
-			return 'B' when qr/^P(?:AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|ISE|JAB|LAN|LUS|MAR|NYX|OLY|QUR|SIT|SOU|TAH|ULE)/;
+			return 'B' when qr/^P(?:AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|I[RS]E|JAB|LAN|LUS|MAR|NYX|OLY|QUR|SIT|SOU|TAH|ULE)/;
 
 			when (qr/^PAPY/) {
 				if ($dest eq 'SNM') {
@@ -188,7 +197,7 @@ sub get_ligne {
 			return 'B' when qr/^S/;
 
 			return 'A' when qr/^T/;
-			return 'A' when qr/^U(?:BOS|DON|DRE|I[LT]E|KRA|LLE|MID|PA[CL]|PIR|R[AE]C|RAM|VAR|XOL|ZAL)/;
+			return 'A' when qr/^U(?:BOS|DON|DRE|I[LT]E|KRA|LLE|MID|PA[CL]|PEL|PIR|R[AE]C|RAM|VAR|XOL|ZAL)/;
 			return 'B' when qr/^U(?:BAN|LLE)/;
 
 			return 'A' when qr/^[X-Z]/;
