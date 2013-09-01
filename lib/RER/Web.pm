@@ -61,6 +61,7 @@ get '/json' => sub {
         };
         if (my $err = $@) {
             status 503;
+            $train_obj_last_update{$code} = 0;
             return to_json({ error => $err }, { ascii => 1 });
         } else {
             $train_obj_last_update{$code} = time;
