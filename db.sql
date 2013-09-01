@@ -445,7 +445,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('VRG', 8739315, 'Versailles Rive Gauche Château'),
 	('VRI', 8754527, 'Villeneuve le Roi'),
 	('VSG', 8768182, 'Villeneuve Saint-Georges'),
-	('VSM', 8711379, 'Villiers sur Marne Plessis Trevise'),
+	('VSM', 8711379, 'Villiers sur Marne Plessis Trévise'),
 	('VSS', 8768246, 'Vernou sur Seine'),
 	('VSW', 8738664, 'Villennes sur Seine'),
 	('VTV', 8768180, 'Villeneuve Triage'),
@@ -571,6 +571,7 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('VN',  'Vernon', 0),
 	('VO',  'Voves', 0),
 	('VPL', 'Villers-Saint-Paul', 0),
+	('VSX', 'Villeneuve Point X', 0),
 	('VTP', 'La Villette - Saint-Prest', 0),
 	('VVG', 'Villeneuve la Guyard', 0),
 	('VYE', 'Villeneuve sur Yonne', 0);
