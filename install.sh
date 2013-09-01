@@ -83,10 +83,9 @@ perl ./Perl-GTFS/loadfromfile.pl -p input -d "${DATABASE}"
 #
 echo_status "Importing GTFS data and station data into MySQL"
 
-echo "INSERT INTO metadata (\`key\`, \`value\`) VALUES ('dmaj', '${LAST_UPDATE}');" 
-
 echo "INSERT INTO metadata (\`key\`, \`value\`) VALUES ('dmaj', '${LAST_UPDATE}');" | \
-	cat ./input/sncf_gtfs/load-data.sql ./db.sql -  | \
+	cat ./Perl-GTFS/load-gtfs.sql ./input/sncf_gtfs/load-data.sql ./db.sql - | \
+	sed -e '1,5d' | \
 	mysql -u "${USER}" -p -D "${DATABASE}" 
 
 echo_status "You're now ready!"
