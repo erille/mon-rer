@@ -130,6 +130,7 @@ sub get_ligne {
 			# as well.
 			given ($value) {
 				$value = 'C' when "Gare d'Aus";
+				$value = 'C' when 'Invalides '; # note the space
 				$value = 'D' when 'Evry Courc';
 				$value = 'D' when 'Grigny Cen';
 				$value = 'D' when 'Le Bras de';
