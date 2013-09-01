@@ -61,6 +61,7 @@ LAST_UPDATE=`stat -c '%Y' export-TN-GTFS-LAST.zip`
 # Unzip
 #
 echo_status "Unzipping SNCF GTFS data"
+rm -f agency.txt calendar.txt calendar_dates.txt routes.txt stops.txt stop_times.txt trips.txt
 unzip 'export-TN-GTFS-LAST.zip'
 
 #
