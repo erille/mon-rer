@@ -29,6 +29,8 @@ var col2flipTimer;
 
 var dataRetryCount = 0;
 
+var xmlHttp;
+
 
 /* because IE sucks ass
  * source: Javascript Cookbook, Shelly Powers, O'Reilly, page 122 */
@@ -227,6 +229,8 @@ function flip_retard(b) {
 
 
 function init_data(b) {
+	if (xmlHttp) xmlHttp.abort();
+
 	if (b) {
 		if (dataRefreshTimer) { window.clearTimeout(dataRefreshTimer); }
 
@@ -251,7 +255,7 @@ function init_data(b) {
 	}
 
 
-	var xmlHttp = new XMLHttpRequest();
+	xmlHttp = new XMLHttpRequest();
 
 	xmlHttp.open("GET", "json?s=" + originCode, true);
 	xmlHttp.send();
