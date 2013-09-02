@@ -127,7 +127,7 @@ sub get_ligne {
 
 			# $value should usually contain a one-letter value, or
 			# "TER".  However SNCF somehow manages to fuck this up
-			# as well.
+			# big time.
 			given ($value) {
 				$value = 'C' when "Gare d'Aus";
 				$value = 'C' when 'Invalides '; # note the space
@@ -135,6 +135,7 @@ sub get_ligne {
 				$value = 'D' when 'Grigny Cen';
 				$value = 'D' when 'Le Bras de';
 				$value = 'D' when 'Orangis Bo';
+				$value = 'D' when 'Juvisy => '; # note the space
 				$value = 'E' when 'Haussmann '; # note the space
 				$value = 'H' when "LUZARCHES "; # note the space
 				$value = 'J' when 'Gisors => '; # note the space
