@@ -71,6 +71,16 @@ get '/json' => sub {
 
 };
 
+get '/autocomp' => sub {
+    header 'Content-type' => 'application/json; charset=utf-8';
+    header 'Cache-Control' => 'no-cache';
+
+    my $str = params->{'s'};
+    my $autocomp = RER::Gares::get_autocomp($str);
+    my $json = to_json($autocomp);
+    utf8::decode($json);
+    return $json;
+};
 
 true;
 
