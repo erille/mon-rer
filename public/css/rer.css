@@ -179,7 +179,7 @@ div#autocomp ul li {
 	padding: 0;
 	display: table-row;
 }
-div#autocomp ul li:hover {
+div#autocomp ul li.autocompItemHilight {
 	background-color: #ccc;
 	min-width: 12em;
 	cursor: pointer;

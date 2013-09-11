@@ -274,10 +274,7 @@ function init_scroll() {
 }
 
 function init_other() {
-	document.getElementById("station_submit").style.display = "none";
 	document.getElementById("disclaimer").style.display = "none";
-
-	document.onkeydown = autocomp_keydown;
 
 	window.setInterval(update_time, 1000);
 }
@@ -338,11 +335,8 @@ function train_scroll(num) {
 	window.setTimeout(function() { train_scroll(num); }, scrollTimeout);
 }
 
-function change_station(do_push_state) {
-	var sel = document.getElementById("station_list");
-	var new_code 	= sel.options[sel.selectedIndex].value;
-	var new_station = sel.options[sel.selectedIndex].text;
 
+function change_station(new_code, new_station, do_push_state) {
 	flip_retard(false);
 
 	if (do_push_state !== false) {
@@ -354,7 +348,14 @@ function change_station(do_push_state) {
 	init_data(1);
 	document.title = new_station + " \u2022 Prochains départs";
 	document.getElementById("departure-station").innerHTML = new_station;
+}
 
+function combobox_change_station(do_push_state) {
+	var sel = document.getElementById("station_list");
+	var new_code 	= sel.options[sel.selectedIndex].value;
+	var new_station = sel.options[sel.selectedIndex].text;
+
+	change_station(new_code, new_station, do_push_state);
 }
 
 
@@ -382,7 +383,7 @@ listenEvent(window, "load", function() { init_data(1); init_scroll(); init_other
 window.onpopstate = function(e) {
 	if (e.state) {
 		document.getElementById("station_list").value = e.state;
-		change_station(false);
+		combobox_change_station(false);
 	}
 }
 
@@ -396,7 +397,7 @@ window.onpopstate = function(e) {
 <form id="form_otherstation" method="GET" action="#">
 	Sélectionnez une gare : 
 	<input type="text" name="s2" id="s2" />
-	<select id="station_list" name="s" onchange="change_station()">
+	<select id="station_list" name="s" onchange="combobox_change_station()">
 <% FOREACH s IN stations -%>
 		<option value="<% s.code %>"<%- IF s.code == origin_code %> selected="selected"<%- END -%>><% s.name | decode %></option>
 <% END -%>
@@ -454,7 +455,7 @@ donc ni prise en charge, ni approuvée par la SNCF.</p>
 </div>
 
 <script type='text/javascript'>
-init_autocomp('form_otherstation', 's2', 'autocomp', 'station_submit');
+init_autocomp('form_otherstation', 's2', 'station_list', 'autocomp', 'station_submit');
 </script>
 
 <div id="footer">
