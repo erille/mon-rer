@@ -16,6 +16,8 @@ var autocomp_xmlhttp;
 var autocomp_display_list;
 var autocomp_hl_index = -1;
 
+var autocomp_input_volatile = 1;
+
 function init_autocomp(form, field, combo, results, submit) {
 	autocomp_form = document.getElementById(form);
 	autocomp_field = document.getElementById(field);
@@ -23,8 +25,12 @@ function init_autocomp(form, field, combo, results, submit) {
 	autocomp_submit = document.getElementById(submit);
 	document.getElementById(combo).style.display = 'none';
 	
+	autocomp_cur_input_val = autocomp_field.value;
+	autocomp_old_input_val = autocomp_field.value;
 	autocomp_field.autocomplete = "off";
 	autocomp_field.onkeyup = autocomp_keyup;
+	autocomp_field.onclick = function() { autocomp_field.value = ''; };
+	autocomp_field.onfocus = function() { autocomp_field.select(); };
 
 	autocomp_submit.style.display = "none";
 	autocomp_submit.onclick = function() { return false; };
@@ -39,7 +45,6 @@ function init_autocomp(form, field, combo, results, submit) {
 
 	setTimeout(autocomp_loop, 200);
 }
-
 
 function autocomp_show(b) {
 	autocomp_results.style.display = b ? 'block' : 'none';
@@ -77,6 +82,7 @@ function autocomp_make_click_handler(c, n) {
 		autocomp_old_input_val = n;
 		autocomp_show(0);
 		change_station(c, n, 1);
+		autocomp_input_volatile = 1;
 		return false;
 	};
 }

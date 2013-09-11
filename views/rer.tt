@@ -392,11 +392,10 @@ window.onpopstate = function(e) {
 
 <body>
 
-<div id="hideotherstation"><a href="#" onclick="toggle_block(0, 'otherstation')">[x]</a></div>
 <div id="otherstation">
 <form id="form_otherstation" method="GET" action="#">
-	Sélectionnez une gare : 
-	<input type="text" name="s2" id="s2" />
+	<label for="s2">Départ&nbsp;:</label>
+	<input type="text" name="s2" id="s2" value="<% origin_station %>" placeholder="Saisissez le nom ou le code d'une gare..." />
 	<select id="station_list" name="s" onchange="combobox_change_station()">
 <% FOREACH s IN stations -%>
 		<option value="<% s.code %>"<%- IF s.code == origin_code %> selected="selected"<%- END -%>><% s.name | decode %></option>
@@ -407,7 +406,6 @@ window.onpopstate = function(e) {
 </form>
 </div>
 
-<h1>Départ : <span class="departure-station" id="departure-station"><% origin_station %></span></h1>
 <div id="heure">--:--</div>
 
 <div class="listetrains">

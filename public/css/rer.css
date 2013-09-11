@@ -12,17 +12,6 @@ p { margin: 0; padding: 0; }
 
 a { color: #ccc; }
 
-
-h1 {
-	display: block;
-	text-align: left;
-	font-weight: normal;
-	padding: 0.4em;
-	margin: 0;
-}
-
-
-
 div#heure {
 	position: fixed;
 	top: -50px;
@@ -37,9 +26,13 @@ div#heure {
 	border-radius: 0.56em;
 	border: white 0.18em solid;
 
-	z-index: -1;
+	z-index: 1;
 
 	text-align: center;
+}
+
+@media screen and (max-width: 320px) {
+	div#heure { display: none; }
 }
 
 div.listetrains { 
@@ -145,16 +138,45 @@ div.train.canceled div.col3 div.desserte,
 
 span.numero-train { color: #679fd2; }
 
-div#hideotherstation {
-	float: left;
-	font-size: 12px;
-	padding: 0.2em;
-}
-
 div#otherstation {
-	padding: 0.4em 0.4em 0;
+	padding: 0.9em 0.7em 1.2em;
 	font-size: 12px;
 	display: block;
+}
+
+input#s2 {
+	font-family: 'Tauri', sans-serif;
+	width: 22em;
+	color: white;
+	border: solid #777 1px;
+	background-color: #333;
+	padding: 0.2em 0.1em;
+	margin-left: 0.2em;
+}
+
+::input-placeholder {
+	font-style: italic;
+	color: #666;
+}
+
+input:-moz-placeholder {
+	font-style: italic;
+	color: #666;
+}
+
+input::-moz-placeholder {
+	font-style: italic;
+	color: #666;
+}
+
+input:-ms-input-placeholder {
+	font-style: italic;
+	color: #666;
+}
+
+input::-webkit-input-placeholder {
+	font-style: italic;
+	color: #666;
 }
 
 div#autocomp {
