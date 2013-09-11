@@ -129,18 +129,18 @@ sub get_ligne {
 			# "TER".  However SNCF somehow manages to fuck this up
 			# big time.
 			given ($value) {
-				$value = 'C' when "Gare d'Aus";
-				$value = 'C' when 'Invalides '; # note the space
-				$value = 'D' when 'Evry Courc';
-				$value = 'D' when 'Grigny Cen';
-				$value = 'D' when 'Le Bras de';
-				$value = 'D' when 'Orangis Bo';
-				$value = 'D' when 'Juvisy => '; # note the space
-				$value = 'E' when 'Haussmann '; # note the space
-				$value = 'H' when "LUZARCHES "; # note the space
-				$value = 'J' when 'Gisors => '; # note the space
-				$value = 'J' when 'Mantes la '; # note the space
-				$value = 'R' when 'Montargis '; # note the space
+				$value = 'C' when /Gare d'Aus/i;
+				$value = 'C' when /Invalides /i; # note the space
+				$value = 'D' when /Evry Courc/i;
+				$value = 'D' when /Grigny Cen/i;
+				$value = 'D' when /Le Bras de/i;
+				$value = 'D' when /Orangis Bo/i;
+				$value = 'D' when /Juvisy => /i; # note the space
+				$value = 'E' when /Haussmann /i; # note the space
+				$value = 'H' when /LUZARCHES /i; # note the space
+				$value = 'J' when /Gisors => /i; # note the space
+				$value = 'J' when /Mantes la /i; # note the space
+				$value = 'R' when /Montargis /i; # note the space
 			}
 			return $value;
 		}
@@ -161,7 +161,7 @@ sub get_ligne {
 			return 'A' when qr/^D/;
 
 			return 'A' when qr/^E(?:CAR|CRI|DUR)/;
-			return 'B' when qr/^E(?:BER|BRE|EVE|DAM|FL[AE]|FOC|GON|JIX|KIL|KLI|LA[NS]|LIE|MEU|MIR|MOI|NRY|NZO|OLE|PA[RV]|PIS|PEE|QUI|RNE|SOR|STE|TAL|TUI|URO|VAM|VEN|WIL|WOK|X[AI]L|YLO|ZAN)/;
+			return 'B' when qr/^E(?:BER|BRE|CCO|EVE|DAM|FL[AE]|FOC|GON|JIX|KIL|KLI|LA[NS]|LIE|MEU|MIR|MOI|NRY|NZO|OLE|PA[RV]|PIS|PEE|QUI|RNE|SOR|STE|TAL|TUI|URO|VAM|VEN|WIL|WOK|X[AI]L|YLO|ZAN)/;
 
 			return 'B' when qr/^G/;
 
@@ -177,7 +177,7 @@ sub get_ligne {
 			return 'A' when qr/^O/;
 
 			return 'A' when qr/^P(?:UC[EU]|OPY)/;
-			return 'B' when qr/^P(?:AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|I[RS]E|JAB|LAN|LUS|MAR|NYX|OLY|QUR|SIT|SOU|TAH|ULE)/;
+			return 'B' when qr/^P(?:AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|I[RS]E|JAB|LAN|LIC|LUS|MAR|NYX|OLY|QUR|ROC|SIT|SOU|TAH|ULE)/;
 
 			when (qr/^PAPY/) {
 				if ($dest eq 'SNM') {
