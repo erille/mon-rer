@@ -17,19 +17,25 @@ remarks.
 
 # Dependencies
 
-Perl modules:
+You will need the following Perl modules:
 
+ * DateTime
+ * DateTime::Format::Strptime
  * DBI
- * DBD::MySQL
+ * DBD::mysql
  * Dancer
+ * JSON::XS
  * WWW::Mechanize
  * Text::CSV
+ * Template::Plugin::Decode
  * Tie::Handle::CSV
+ * YAML
 
-Software: Any kind of DBMS will do; however, you will need to load SNCF's
-rather massive GTFS data into it and therefore, I recommend MySQL, PostgreSQL
-or anything somewhat beefy.  I have tested this with MySQL without any
-problems.
+You will also need `git` for the `install.sh` script to work.
+
+Any kind of DBMS will do; however, you will need to load SNCF's rather massive
+GTFS data into it and therefore, I recommend MySQL, PostgreSQL or anything
+somewhat beefy.  I have tested this with MySQL without any problems.
 
 # Installing
 
@@ -44,7 +50,7 @@ Create a user which only has the necessary privileges.  This is optional, but
 highly recommended (not to mention a good security practice):
 
 	mysql> CREATE USER 'rer-web' IDENTIFIED BY 'some-password';
-	mysql> GRANT SELECT on sncf_gtfs.* TO 'rer-web'@'localhost';
+	mysql> GRANT SELECT ON sncf_gtfs.* TO 'rer-web'@'localhost';
 
 Finally, run `sh ./install.sh`. This install script will download a GTFS
 parsing script, download the GTFS data from SNCF's website, import it into the
