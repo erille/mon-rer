@@ -14,7 +14,36 @@ use RER::Gares;
 use List::Util qw(min);
 
 
+our $url = "http://ods.ocito.com/ods/transilien/android"; 
 
+
+sub get_train_desserte {
+    my ($current_station, $number) = @_;
+
+    my $mech = WWW::Mechanize->new(autocheck => 0);
+    $mech->add_header( 'User-Agent' => undef );
+
+
+    my $content = qq`[{"listOfMap":null,"map":{"trainNumber":"${number}","theoric":"false"},
+        "headers":null,"target":"\\/transilien\\/getTrainDetails","list":null,"serial":5}]`;
+
+
+    my $r = $mech->post($url, Content => $content);
+    if (!$r->is_success) {
+        die("Erreur lors de la récupération de la desserte du train ${number} : " 
+            . "sncf.mobi a renvoyé l'erreur " . $r->status_line . "\n");
+    }
+
+    my $data = decode_json $mech->content();
+    $data = $data->[0];
+
+    # Par défaut la desserte renvoie TOUTES les gares, y compris celles déjà desservies
+    # avant.  Enlever ceux qui ne nous intéressent pas.
+    my @stations = map { $_->{codeGare} } @{$data->{data}};
+    while ($#stations > 0 && shift @stations ne $current_station) { 1 }
+
+    return @stations;
+}
 
 
 sub new {
@@ -31,20 +60,25 @@ sub new {
     $trig_from = $param{'from'};
 
     my $mech = WWW::Mechanize->new(autocheck => 0);
+    $mech->add_header( 'User-Agent' => undef );
 
-    my $url = "http://sncf.mobi/infotrafic/iphoneapp/transilien/?gare=$trig_from";
+    my $content = qq`[{"listOfMap":null,"map":{"codeDepart":"${trig_from}"},
+        "headers":null,"target":"\\/transilien\\/getNextTrains","list":null,"serial":4}]`;
 
-    my $r = $mech->get($url);
+
+    my $r = $mech->post($url, Content => $content);
     if (!$r->is_success) {
         die("Erreur lors de la récupération des horaires en live : " 
             . "sncf.mobi a renvoyé l'erreur " . $r->status_line . "\n");
     }
 
     my $data = decode_json $mech->content();
-    my @t = sort { $a->{heureprobable} cmp $b->{heureprobable} } @{$data->{'D'}};
+    $data = $data->[0];
+    my @t = sort { $a->{trainHour} cmp $b->{trainHour} } @{$data->{'data'}};
 
+    # FIXME: cassé
     # si gare de destination donnée, filtrer les trains qui desservent la gare
-    @t = grep { (join ",", @{$_->{dessertes}}) =~ /\b$trig_to\b/ } @t if $trig_to;
+    # @t = grep { (join ",", @{$_->{dessertes}}) =~ /\b$trig_to\b/ } @t if $trig_to;
 
     my @messages = ();
     my @trains;
@@ -56,34 +90,54 @@ sub new {
     $param{'to'}   = RER::Gares::get_station_by_code($trig_to) if defined($param{'to'});
 
     # Récupération de l'ensemble des trains
-    foreach my $train (@t[0..5])
+    for (my $i = 0; $i < 6; $i++)
     {
+        my $train = $t[$i];
         next if not defined $train;
 
-        my $mission = $train->{codevoyageur};
-        my $numero  = $train->{numerotrain};
-        my $time    = (split /\s+/, $train->{heureprobable})[1];
-        my $destination = RER::Gares::get_station_by_code((@{$train->{dessertes}})[-1]);
-        my @arr_dessertes = @{$train->{dessertes}};
-        my $platform = $train->{voie};
+        my $mission = $train->{trainMissionCode};
+        my $numero  = $train->{trainNumber};
 
-        my $trainclass = $train->{mention} =~ /^[TI]$/ ? 'train delayed' :
-            $train->{mention} eq 'S' ? 'train canceled' : 'train';
-        my $col2class = $train->{mention} eq 'P' ? 'col2 approche' : 
-            $train->{mention} ne 'N' ? 'col2 texte' : 'col2';
+        my $time    = (split /\s+/, $train->{trainHour})[1];
+        my $destination = RER::Gares::get_station_by_code($train->{trainTerminus});
+        my @arr_dessertes = ($i < 2) ? get_train_desserte($trig_from, $numero) : ();
+        my $platform = $train->{trainLane} || $train->{trainDock};
+
 
         @arr_dessertes = map { RER::Gares::get_station_by_code($_) or (defined $_ ? "$_" : "<i>Gare inconnue</i>") } @arr_dessertes;
         my $dessertes = join ' &bull; ', @arr_dessertes;
 
-        # L'attribut "mention" indique si le train est retardé, supprimé...
+        # L'attribut "trainMention" indique si le train est retardé, supprimé...
         my $time_info;
-        given ($train->{mention}) {
-            when ('N') { $time_info = $time } # N = Normal
-            when ([qw(T I)]) { $time_info = 'Retardé'; }
-            when ('S') { $time_info = 'Supprimé'; }
-            when ('P') { $time_info = 'À l\'approche'; }
-            when ('Q') { $time_info = 'À quai'; }
-            default { $time_info = "$time (MENTION '" . $train->{mention} . "' INCONNUE)"; }
+        my $trainclass;
+        my $col2class;
+        given ($train->{trainMention}) {
+            when (undef) { # rien = Normal
+                $time_info = $time;
+                $trainclass = 'train';
+                $col2class = 'col2';
+            } 
+            when ([qw(T I)]) { 
+                $time_info = 'Retardé'; }
+                $trainclass = 'train delayed';
+                $col2class = 'col2 texte';
+            when ('S') { 
+                $time_info = 'Supprimé'; }
+                $trainclass = 'train canceled';
+                $col2class = 'col2 texte';
+            when ('P') { 
+                $time_info = 'À l\'approche'; }
+                $trainclass = 'train';
+                $col2class = 'col2 texte';
+            when ('Q') { 
+                $time_info = 'À quai'; }
+                $trainclass = 'train';
+                $col2class = 'col2 texte';
+            default { 
+                $time_info = "$time (MENTION '" . $train->{trainMention} . "' INCONNUE)"; 
+                $trainclass = 'train';
+                $col2class = 'col2 texte';
+            }
         }
 
         # Un peu de nettoyage (et de passage en UTF-8) pour les infos concernant
@@ -100,6 +154,9 @@ sub new {
         my $delay = RER::Gares::get_delay($numero, $trig_from, $time);
         $delay = RER::Gares::format_delay($delay);
 
+        # "massage" du numéro de trains dans le cas d'une gare RATP
+
+        $numero =~ s/RATP-([^-]+)-.*$/$1/;
         push @trains, { 
             mission => $mission, 
             numero  => $numero,
@@ -110,7 +167,7 @@ sub new {
             col2class => $col2class,
             trainclass => $trainclass,
             retard => $delay,
-            ligne => RER::Gares::get_ligne($numero, (@{$train->{dessertes}})[-1]),
+            ligne => RER::Gares::get_ligne($numero, $train->{trainTerminus}),
         };
     }
 

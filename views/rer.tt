@@ -160,7 +160,12 @@ function get_data(obj) {
 			}
 				
 
-			table_set_innerhtml(i, '4', '<span class="voie">' + train.platform + '</span>');
+			if (train.platform != " ") {
+				table_set_innerhtml(i, '4', '<span class="voie">' + train.platform + '</span>');
+			} else {
+				table_set_innerhtml(i, '4', '');
+			}
+
 			origTrains[i] = train.numero;
 		}
 		for (; i < 6; i++)
