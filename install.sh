@@ -6,6 +6,22 @@ NORMAL=`tput sgr0`
 
 echo_status() { echo "${BOLD}${BLUE} :: ${NORMAL}${BOLD}$@${NORMAL}"; }
 
+# Make sure this doesn't break on anything else than Linux
+UNAME=`uname`
+case "$UNAME" in 
+	FreeBSD)
+		WGET="fetch"
+		STAT="stat -f %m"
+		;;
+	Linux)
+		WGET="wget -N"
+		STAT="stat -c %Y"
+		;;
+	*)
+		WGET="wget -N"
+		;;
+esac
+
 
 cat <<EOF
 DATABASE INITIALIZATION/UPDATE SCRIPT FOR RER-WEB
@@ -45,7 +61,7 @@ echo_status "Obtaining Perl-GTFS scripts"
 if [ -d Perl-GTFS ]; then
 	cd Perl-GTFS; git pull; cd ..
 else 
-	git clone https://github.com/xtab/Perl-GTFS.git
+	git clone https://github.com/xtab/Perl-GTFS.git || exit 1
 fi
 
 #
@@ -54,8 +70,8 @@ fi
 echo_status "Obtaining SNCF GTFS data"
 mkdir -p input/sncf_gtfs
 cd input/sncf_gtfs
-wget -N 'http://files.transilien.com/horaires/gtfs/export-TN-GTFS-LAST.zip'
-LAST_UPDATE=`stat -c '%Y' export-TN-GTFS-LAST.zip`
+$WGET 'http://files.transilien.com/horaires/gtfs/export-TN-GTFS-LAST.zip'
+LAST_UPDATE=`$STAT export-TN-GTFS-LAST.zip`
 
 #
 # Unzip
@@ -86,6 +102,6 @@ echo_status "Importing GTFS data and station data into MySQL"
 echo "INSERT INTO metadata (\`key\`, \`value\`) VALUES ('dmaj', '${LAST_UPDATE}');" | \
 	cat ./Perl-GTFS/load-gtfs.sql ./input/sncf_gtfs/load-data.sql ./db.sql - | \
 	sed -e '1,5d' | \
-	mysql -u "${USER}" -p -D "${DATABASE}" 
+	mysql --local-infile=1 -u "${USER}" -p -D "${DATABASE}" 
 
 echo_status "You're now ready!"
