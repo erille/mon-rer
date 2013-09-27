@@ -33,7 +33,8 @@ function init_autocomp(form, field, combo, results, submit) {
 	autocomp_field.onfocus = function() { autocomp_field.select(); };
 
 	autocomp_submit.style.display = "none";
-	autocomp_submit.onclick = function() { return false; };
+	autocomp_submit.onclick = function(e) { e.preventDefault(); return false; };
+	autocomp_form.onsubmit = function(e) { e.preventDefault(); return false; };
 
 	autocomp_display_list = document.createElement('ul');
 	autocomp_results.appendChild(autocomp_display_list);
