@@ -178,7 +178,11 @@ sub get_ligne {
 			return 'A' when qr/^D/;
 
 			return 'A' when qr/^E(?:CAR|CRI|DUR)/;
-			return 'B' when qr/^E(?:BER|BRE|CCO|EVE|DAM|FL[AE]|FOC|GON|JIX|KIL|KLI|LA[NS]|LIE|MEU|MIR|MOI|NRY|NZO|OLE|PA[RV]|PIS|PEE|QUI|RNE|SOR|STE|TAL|TUI|URO|VAM|VEN|WIL|WOK|X[AI]L|YLO|ZAN)/;
+			return 'B' when qr/^E(?:BER|BRE|CCO|EVE|DAM|FL[AE]|FOC|GON|
+						JIX|KIL|KLI|LA[NS]|LIE|MEU|MIR|MOI|
+						NRY|NZO|OLE|PA[RUV]|PIS|PEE|QUI|RAS|
+						RIO|RNE|SOR|STE|TAL|TUI|URO|VAM|VEN|
+						WIL|WOK|X[AI]L|YLO|ZAN)/x;
 
 			return 'B' when qr/^G/;
 
@@ -194,7 +198,9 @@ sub get_ligne {
 			return 'A' when qr/^O/;
 
 			return 'A' when qr/^P(?:UC[EU]|OPY)/;
-			return 'B' when qr/^P(?:AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|I[RS]E|JAB|LAN|LIC|LUS|MAR|NYX|OLY|QUR|ROC|SIT|SOU|TAH|ULE)/;
+			return 'B' when qr/^P(?:AZZ|BAU|COT|DGE|E[LP]E|ERA|GAS|
+					        I[RS][ET]|JAB|LAN|LIC|LUS|MAR|NYX|
+						OLY|QUR|ROC|SIT|SOU|TAH|ULE)/x;
 
 			when (qr/^PAPY/) {
 				if ($dest eq 'SNM') {
