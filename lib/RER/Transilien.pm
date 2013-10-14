@@ -18,7 +18,9 @@ our $url = "http://ods.ocito.com/ods/transilien/android";
 
 
 sub get_train_desserte {
-    my ($current_station, $number) = @_;
+    my ($current_station, $train) = @_;
+
+    my $number = $train->{trainNumber};
 
     my $mech = WWW::Mechanize->new(autocheck => 0);
     $mech->add_header( 'User-Agent' => undef );
@@ -37,10 +39,16 @@ sub get_train_desserte {
     my $data = decode_json $mech->content();
     $data = $data->[0];
 
-    # Par défaut la desserte renvoie TOUTES les gares, y compris celles déjà desservies
-    # avant.  Enlever ceux qui ne nous intéressent pas.
     my @stations = map { $_->{codeGare} } @{$data->{data}};
-    while ($#stations > 0 && shift @stations ne $current_station) { 1 }
+    my %mentions = map { $_->{codeGare} => $_->{mention} } @{$data->{data}}; 
+
+    if (grep { $_ eq $current_station } @stations) {
+        # Par défaut la desserte renvoie TOUTES les gares, y compris celles
+        # déjà desservies avant.  Enlever ceux qui ne nous intéressent pas.
+        while ($#stations > 0 && shift @stations ne $current_station) { 1 }
+    }
+
+    $train->{trainMention} = $mentions{$current_station} || 'N';
 
     return @stations;
 }
@@ -100,7 +108,7 @@ sub new {
 
         my $time    = (split /\s+/, $train->{trainHour})[1];
         my $destination = RER::Gares::get_station_by_code($train->{trainTerminus});
-        my @arr_dessertes = ($i < 2) ? get_train_desserte($trig_from, $numero) : ();
+        my @arr_dessertes = get_train_desserte($trig_from, $train);
         my $platform = $train->{trainLane} || $train->{trainDock};
 
 
@@ -112,32 +120,36 @@ sub new {
         my $trainclass;
         my $col2class;
         given ($train->{trainMention}) {
-            when (undef) { # rien = Normal
+            when ('N') { # rien = Normal
                 $time_info = $time;
                 $trainclass = 'train';
                 $col2class = 'col2';
-            } 
-            when ([qw(T I)]) { 
-                $time_info = 'Retardé'; }
+            }; 
+            when ('I') { 
+                $time_info = 'Retardé'; 
                 $trainclass = 'train delayed';
                 $col2class = 'col2 texte';
+            };
             when ('S') { 
-                $time_info = 'Supprimé'; }
+                $time_info = 'Supprimé';
                 $trainclass = 'train canceled';
                 $col2class = 'col2 texte';
+            };
             when ('P') { 
-                $time_info = 'À l\'approche'; }
+                $time_info = 'À l\'approche';
                 $trainclass = 'train';
-                $col2class = 'col2 texte';
+                $col2class = 'col2 approche';
+            };
             when ('Q') { 
-                $time_info = 'À quai'; }
+                $time_info = 'À quai';
                 $trainclass = 'train';
                 $col2class = 'col2 texte';
+            };
             default { 
-                $time_info = "$time (MENTION '" . $train->{trainMention} . "' INCONNUE)"; 
+                $time_info = "$time (MENTION '" . ($train->{trainMention} || 'undef') . "' INCONNUE)"; 
                 $trainclass = 'train';
                 $col2class = 'col2 texte';
-            }
+            };
         }
 
         # Un peu de nettoyage (et de passage en UTF-8) pour les infos concernant
