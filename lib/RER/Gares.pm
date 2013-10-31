@@ -127,6 +127,8 @@ sub get_delay {
 
 sub get_ligne {
 	my ($num, $dest) = @_;
+	return '' if not defined $num;
+	return '' if not defined $dest;
 
 	if ($num =~ /^\d+$/) {
 		my $sth = $dbh->prepare(qq{
@@ -158,6 +160,7 @@ sub get_ligne {
 				$value = 'J' when /Gisors => /i; # note the space
 				$value = 'J' when /Mantes la /i; # note the space
 				$value = 'R' when /Montargis /i; # note the space
+				$value = 'TER' when 'Train';
 			}
 			return $value;
 		}

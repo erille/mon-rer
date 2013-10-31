@@ -89,6 +89,7 @@ sub new {
     # @t = grep { (join ",", @{$_->{dessertes}}) =~ /\b$trig_to\b/ } @t if $trig_to;
 
     my @messages = ();
+    @messages = @{$data->{'list'}} if defined $data->{'list'};
     my @trains;
 
     my $i;
@@ -125,7 +126,7 @@ sub new {
                 $trainclass = 'train';
                 $col2class = 'col2';
             }; 
-            when ('I') { 
+            when ([qw(I T)]) { 
                 $time_info = 'Retardé'; 
                 $trainclass = 'train delayed';
                 $col2class = 'col2 texte';

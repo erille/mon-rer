@@ -228,10 +228,37 @@ div#disclaimer {
 }
 
 
+div#listemessages {
+    max-height: 6em;
+    overflow: hidden;
+    font-size: 140%;
+}
+
+div#conteneurmessages {
+    position: relative;
+    bottom: 0px;
+
+	transition-timing-function: linear;
+	-webkit-transition-timing-function: linear;
+}
+
+div.message {
+    background: #d09955;
+    color: black;
+    height: 5em;
+    max-height: 5em;
+    overflow: hidden;
+    padding: 0.5em 0.5em 0.5em 3em;
+}
+
+
+
+
+
 div.subwindow {
 	border-top: 1px solid gray;
 	padding-top: 1em;
-	padding-bottom: 0.5em;
+	padding-bottom: 2em;
 	width: 100%;
 
 	font-size: 12px;
@@ -243,7 +270,7 @@ div.subwindow {
 @media screen and (min-height: 800px) {
 	div.subwindow { 
 		position: fixed;
-		bottom: 4em;
+		bottom: 2.5em;
 	}
 
 	div#footer {
