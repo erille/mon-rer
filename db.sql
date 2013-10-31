@@ -499,6 +499,7 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('CN',  'Caen', 0),
 	('CNY', 'Chauny', 0),
 	('COB', 'Connerré - Beillé', 0),
+	('COU', 'Avignon TGV', 0),
 	('CPE', 'Compiègne', 0),
 	('CSY', 'Champigny sur Yonne', 0),
 	('CUN', 'Châteaudun', 0),
@@ -533,7 +534,9 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('LUA', 'Longueau', 0),
 	('LUE', 'Longueuil-Sainte-Marie', 0),
 	('LXS', 'Le Meux La Croix-Saint-Ouen', 0),
+	('LYD', 'Lyon Part-Dieu', 0),
 	('MRU', 'Méru', 0),
+	('MSC', 'Marseille Saint-Charles', 0),
 	('MW',  'Monnerville', 0),
 	('NCO', 'Nonancourt', 0),
 	('NGR', 'Nogent le Rotrou', 0),
@@ -574,6 +577,7 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('VSX', 'Villeneuve Point X', 0),
 	('VTP', 'La Villette - Saint-Prest', 0),
 	('VVG', 'Villeneuve la Guyard', 0),
+	('VXN', 'Valence TGV', 0),
 	('VYE', 'Villeneuve sur Yonne', 0);
 
 CREATE INDEX index_uic ON gares (uic);
