@@ -79,7 +79,7 @@ sub new {
         my $time_info;
         given ($train->{mention}) {
             when ('N') { $time_info = $time } # N = Normal
-            when ([qw(T I)]) { $time_info = 'Retardé'; }
+            when ([qw(T I D)]) { $time_info = 'Retardé'; }
             when ('S') { $time_info = 'Supprimé'; }
             when ('P') { $time_info = 'À l\'approche'; }
             when ('Q') { $time_info = 'À quai'; }
