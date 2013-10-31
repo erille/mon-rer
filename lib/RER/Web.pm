@@ -54,20 +54,20 @@ get '/json' => sub {
 
     my $code = check_code(params->{'s'}) || 'EVC';
 
-    if (   !defined $train_obj_last_update{$code} 
+    if (!defined $train_obj_last_update{$code} 
         || time - $train_obj_last_update{$code} > 10) {
         eval {
             $train_obj{$code} = RER::Transilien::new(from => $code);
         };
         if (my $err = $@) {
             status 503;
-            $train_obj_last_update{$code} = 0;
+            $train_obj_last_update{$code} = undef;
             return to_json({ error => $err }, { ascii => 1 });
         } else {
             $train_obj_last_update{$code} = time;
-            return $train_obj{$code}->format();
         }
     }
+    return $train_obj{$code}->format();
 
 };
 
