@@ -277,6 +277,9 @@ function init_data(b) {
 	if (b) {
 		if (dataRefreshTimer) { window.clearTimeout(dataRefreshTimer); }
 
+		var lmsg = document.getElementById('conteneurmessages');
+		lmsg.innerHTML = '';
+
 		for (var i = 0; i < 6; i++) {
 			table_get_node(i).className = 'train';
 			table_set_innerhtml(i, '1', "&nbsp;<br />&nbsp;");
