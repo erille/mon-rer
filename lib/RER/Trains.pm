@@ -55,8 +55,9 @@ sub get_trains {
 sub format
 {
     my ($self) = @_;
-
-    my $ret = encode_json $self->{trains};
+    
+    my $obj = { trains => $self->{trains}, info => $self->{messages} };
+    my $ret = encode_json $obj;
     utf8::decode $ret;
     return $ret;
 }

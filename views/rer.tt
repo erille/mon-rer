@@ -17,6 +17,7 @@
 
 
 var scrollTimeout = 3000;
+var msgScrollTimeout = 14000;
 
 var retardTimeout1 = 6500;
 var retardTimeout2 = 2500;
@@ -119,12 +120,30 @@ function update_time() {
 	n.innerHTML = h + ":" + m;
 }
 
+/* returns 0 if different, 1 if equal */
+function array_compare(a, b) {
+	if (a.length != b.length) {
+		return 1;
+	}
+
+	for (var i = 0; i < a.length; i++) {
+		if (a[i] != b[i]) {
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
+
 
 
 function get_data(obj) {
 	if (obj.readyState == 4 && obj.status == 200) {
 		var text = obj.responseText;
-		var trains = JSON.parse(text);
+		var info = JSON.parse(text);
+		var trains = info.trains;
+		var messages = info.info;
 	
 		for (var i = 0; i < trains.length; i++) {
 			var train = trains[i];
@@ -160,7 +179,12 @@ function get_data(obj) {
 			}
 				
 
-			table_set_innerhtml(i, '4', '<span class="voie">' + train.platform + '</span>');
+			if (train.platform != " ") {
+				table_set_innerhtml(i, '4', '<span class="voie">' + train.platform + '</span>');
+			} else {
+				table_set_innerhtml(i, '4', '');
+			}
+
 			origTrains[i] = train.numero;
 		}
 		for (; i < 6; i++)
@@ -180,6 +204,24 @@ function get_data(obj) {
 			
 			table_set_innerhtml(i, '4', '&nbsp;');
 			origTrains[i] = -1;
+		}
+
+
+		var lmsg = document.getElementById('conteneurmessages');
+		lmsg.innerHTML = '';
+
+		/* on met le premier élément deux fois pour donner l'illusion
+		 * d'un "rouleau" qui scroll
+		 */
+		if (messages.length > 0) {
+			for (var i = 0; i <= messages.length; i++) {
+				var node = document.createElement('div');
+				node.className = 'message';
+				
+				var nodeText = document.createTextNode(messages[i % messages.length]);
+				node.appendChild(nodeText);
+				lmsg.appendChild(node);
+			}
 		}
 
 		dataRefreshTimer = window.setTimeout(function() { init_data(0) }, 12000);
@@ -235,6 +277,9 @@ function init_data(b) {
 	if (b) {
 		if (dataRefreshTimer) { window.clearTimeout(dataRefreshTimer); }
 
+		var lmsg = document.getElementById('conteneurmessages');
+		lmsg.innerHTML = '';
+
 		for (var i = 0; i < 6; i++) {
 			table_get_node(i).className = 'train';
 			table_set_innerhtml(i, '1', "&nbsp;<br />&nbsp;");
@@ -271,6 +316,7 @@ function init_scroll() {
 		pNode.style.bottom = "0.1em";
 		window.setTimeout("train_scroll("+i+")", scrollTimeout);
 	}
+	window.setTimeout(function() { msg_scroll(); }, msgScrollTimeout);
 }
 
 function init_other() {
@@ -283,10 +329,10 @@ function init_other() {
 
 
 /* set/kill scroll animation */
-/* b = 0 -> kill, b = 1 -> set */
+/* b = 0 -> kill, b = <duration> -> set <duration> in seconds */
 function set_scroll(node, b) {
-	node.style.transitionDuration 		  = b ? '0.9s' : '0s';
-	node.style['-webkit-transition-duration'] = b ? '0.9s' : '0s';
+	node.style.transitionDuration 		  = b + 's';
+	node.style['-webkit-transition-duration'] = b + 's';
 	node.style.transitionProperty 		  = b ? 'bottom' : 'none';
 	node.style['-webkit-transition-property'] = b ? 'bottom' : 'none';
 }
@@ -321,7 +367,7 @@ function train_scroll(num) {
 	}
 
 	if (height > 2 * p_height) {
-		set_scroll(pNode, 1);
+		set_scroll(pNode, 0.9);
 		scroll += 1.5;
 		window.setTimeout(function() { set_scroll(pNode, 0) }, '1000');
 		pNode.style.bottom = scroll + "em"; 
@@ -334,6 +380,49 @@ function train_scroll(num) {
 
 	window.setTimeout(function() { train_scroll(num); }, scrollTimeout);
 }
+
+
+
+function msg_scroll() {
+	/* scrolls obj */
+	var pNode = document.getElementById('conteneurmessages');
+
+	var scroll = 0;
+	if (pNode.style)
+		scroll = extract_float(pNode.style.bottom);
+	else 
+		pNode.style = "bottom: 0em;";
+
+	if (scroll == undefined)
+		scroll = 0;
+	
+	var height    = pNode.clientHeight;
+	var p_height  = pNode.parentNode.clientHeight;
+	/* p_height gives us 6em in pixels so we convert em into px */
+	var scroll_px = scroll * p_height / 6;  
+
+
+	if (scroll_px >= height - p_height) {
+		set_scroll(pNode, 0);
+		scroll = 0;
+		pNode.style.bottom = scroll + "em";
+		return msg_scroll();
+	}
+
+	if (height > 2 * p_height) {
+		set_scroll(pNode, 2);
+		scroll += 6;
+		pNode.style.bottom = scroll + "em"; 
+	}
+	else {
+		pNode.style.bottom = "0em"; 
+	}
+
+	/* have we scrolled beyond an element's max height? */
+
+	window.setTimeout(function() { msg_scroll(); }, msgScrollTimeout);
+}
+
 
 
 function change_station(new_code, new_station, do_push_state) {
@@ -425,6 +514,11 @@ window.onpopstate = function(e) {
 <% END %>
 
 
+</div>
+
+<div id="listemessages">
+	<div id="conteneurmessages">
+	</div>
 </div>
 
 <div id="error"><p id="errormsg">
