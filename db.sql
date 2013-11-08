@@ -259,7 +259,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('LZO', 8711663, 'Lizy-sur-Ourcq'),
 	('LZV', 8775882, 'Lozère'),
 	('MAE', 8738172, 'Maule'),
-	('MAG', 8728187, 'Magenta'),
+	('MGT', 8728187, 'Magenta'), -- c'était MAG avant, wtf
 	('MAL', 8768441, 'Malesherbes'),
 	('MAQ', 8711666, 'Mareuil-sur-Ourcq'),
 	('MBP', 8727608, 'Montigny Beauchamp'),
