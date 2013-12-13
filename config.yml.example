@@ -29,3 +29,11 @@ engines:
 db_dsn: "dbi:mysql:dbname=sncf_gtfs;host=localhost;"
 db_username: "rer-web"
 db_password: "secret"
+
+# SNCF API settings
+
+sncf_api:
+   # url: http://api.transilien.com
+   username: 'username'
+   password: 'password'
+

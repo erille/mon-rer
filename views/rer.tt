@@ -179,7 +179,7 @@ function get_data(obj) {
 			}
 				
 
-			if (train.platform != " ") {
+			if (train.platform != null && train.platform != " ") {
 				table_set_innerhtml(i, '4', '<span class="voie">' + train.platform + '</span>');
 			} else {
 				table_set_innerhtml(i, '4', '');

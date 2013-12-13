@@ -4,6 +4,8 @@ use Dancer ':syntax';
 use RER::Transilien;
 use RER::Trains;
 use RER::Gares;
+use RER::DataSource::Transilien;
+use RER::DataSource::TransilienGTFS;
 use Data::Dumper;
 
 our $VERSION = '0.1';
@@ -41,7 +43,7 @@ hook 'before' => sub {
 
 get '/' => sub {
     my $origin_code = check_code(params->{'s'}) || 'EVC';
-    my $origin_station = RER::Gares::get_station_by_code($origin_code);
+    my $origin_station = RER::Gares::find(code => $origin_code)->name;
     utf8::decode($origin_station);
 
     template 'rer', {
@@ -58,10 +60,19 @@ get '/json' => sub {
 
     my $code = check_code(params->{'s'}) || 'EVC';
 
+    my $ds  = RER::DataSource::Transilien->new(%{config->{'sncf_api'}});
+    my $ds2 = RER::DataSource::TransilienGTFS->new(
+        dsn		=> config->{'db_dsn'},
+        username	=> config->{'db_username'},
+        password	=> config->{'db_password'});
+
     if (!defined $train_obj_last_update{$code} 
         || time - $train_obj_last_update{$code} > 10) {
         eval {
-            $train_obj{$code} = RER::Transilien::new(from => $code);
+            $train_obj{$code} = RER::Transilien::new(
+                from => $code,
+                ds   => [ $ds, $ds2 ],
+            );
         };
         if (my $err = $@) {
             status 503;

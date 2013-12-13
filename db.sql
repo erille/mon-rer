@@ -103,6 +103,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('CJV', 8738265, 'Cergy le Haut'),
 	('CL' , 8727600, 'Creil'),
 	('CLC', 8711677, 'Crécy-la-Chapelle'),
+	('CRP', 8760880, 'Créteil Pompadour'), -- je connais pas le code tr3 officiel, quelqu'un l'a ?
 	('CLL', 8738112, 'Clichy Levallois'),
 	('CLR', 8754528, 'Choisy le Roi'),
 	('CLX', 8775860, 'Châtelet les Halles'),
@@ -126,7 +127,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('CVI', 8739320, 'Chaville Rive Gauche'),
 	('CVW', 8775888, 'Courcelles sur Yvette'),
 	('CWJ', 8739320, 'Chaville Rive Droite'),
-	('CXA', 8775860, 'Châtelet les Halles RER A'),
+--	('CXA', 8775860, 'Châtelet les Halles RER A'),
 	('CYC', 8738249, 'Cergy Saint-Christophe'),
 	('CYP', 8738190, 'Cergy Préfecture'),
 	('CYQ', 8711673, 'Couilly Saint-Germain Quincy'),
@@ -175,7 +176,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('GAJ', 8727619, 'Garges Sarcelles'),
 	('GAQ', 8739343, 'Garancières la Queue'),
 --	('GAW', 8775801, 'La Défense RER A'),
-	('GBG', 8732119, 'Grand Bourg'),
+	('GBG', 8768135, 'Grand Bourg'),
 	('GBI', 8739364, 'Gravigny Balizy'),
 	('GCM', 8711626, 'Guérard la Celle sur Morin'),
 	('GCR', 8738605, 'Achères Grand Cormier'),
@@ -338,7 +339,8 @@ INSERT INTO gares (code, uic, name) VALUES
 	('OSN', 8738114, 'Osny'),
 	('OY',  8754620, 'Orly Ville'),
 	('OZF', 8711602, 'Ozoir la Ferrière' ),
-	('PAA', 8768603, 'Paris Gare de Lyon'), -- ou 8768600 ?
+	('PLY', 8768600, 'Paris Gare de Lyon'), 
+	('PAA', 8768603, 'Paris Gare de Lyon'), -- et pas 8768600
 	('PAN', 8711320, 'Pantin' ),
 	('PAW', 8775881, 'Palaiseau Villebon'),
 	('PAX', 8775880, 'Palaiseau'),
@@ -371,7 +373,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('PWR', 8775862, 'Port Royal'),
 	('PXO', null,    'Le Parc de Saint-Maur'),
 	('PYO', 8727641, 'Précy-sur-Oise'),
-	('PZB', 8754700, 'Paris Austerlitz'),
+	('PZB', 8754702, 'Paris Austerlitz'), -- pas 8754700
 	('RBI', 8711369, 'Rosny Bois Perrier' ),
 	('RBT', 8739331, 'Rambouillet'),
 	('RF',  8754629, 'Rungis la Fraternelle'),
@@ -560,7 +562,6 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 	('OI',  'Oissel', 0),
 	('ORL', 'Orléans', 0),
 	('PAZ', 'Paris Austerlitz', 0),
-	('PLY', 'Paris Gare de Lyon', 0), -- redondant avec PAA
 	('PNB', 'Paris Nord', 0), -- banlieue, redondant (UIC 8727103)
 	('PNO', 'Paris Nord', 0), -- grandes lignes, redondant 
 	('PUY', 'Pont-sur-Yonne', 0),
@@ -598,52 +599,113 @@ INSERT INTO gares (code, name, is_transilien) VALUES
 
 CREATE INDEX index_uic ON gares (uic);
 
-CREATE OR REPLACE VIEW train_dates AS 
-	SELECT trip_id, 
-		SUBSTR(trip_id, 6, 6) AS train_number, 
-		t.route_id,
-		t.service_id, 
-		(c.sunday + (c.monday << 1) 
-			+ (c.tuesday << 2) 
-			+ (c.wednesday << 3) 
-			+ (c.thursday << 4) 
-			+ (c.friday << 5) 
-			+ (c.saturday << 6)) AS day_mask, 
-		c.start_date, 
-		c.end_date, 
-		cd.date, 
-		cd.exception_type
-	FROM trips AS t 
-		LEFT JOIN calendar AS c USING (service_id) 
-		LEFT JOIN calendar_dates AS cd USING (service_id);
 
-CREATE OR REPLACE VIEW train_times_temp1 AS 
-	SELECT td.trip_id, 
-		td.train_number, 
-		td.route_id,
-		IF(departure_time >= '24:00:00', SUBDATE(CURDATE(), INTERVAL 1 DAY), CURDATE()) 
-			AS cur_date, 
-		stop_times.departure_time, 
-		stop_times.stop_sequence, 
-		gares.code, 
-		gares.uic, 
-		gares.name, 
-		start_date, 
-		end_date, 
-		date, 
-		exception_type  
-	FROM train_dates AS td   
-		NATURAL JOIN stop_times   
-		JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic);
+-- Une procédure stockée pour faire un CURDATE() translaté d'un jour en 
+-- si besoin (lorsqu'on touche à des heures postérieures à "minuit du
+-- jour suivant", i.e. 24:00:00).
 
-CREATE OR REPLACE VIEW train_times AS 
-	SELECT trip_id, route_id, train_number, cur_date, departure_time, code, uic, name, stop_sequence
-	FROM train_times_temp1 
-	WHERE (
-		(start_date <= cur_date 
-		AND cur_date <= end_date 
-		AND (date <> cur_date OR date IS NULL OR exception_type <> 2)
-		) 
-	OR (
-		date = cur_date AND exception_type = 1)
-	);
+DROP FUNCTION IF EXISTS DATE_GTFS; 
+CREATE FUNCTION DATE_GTFS(d DATE, t TIME)
+RETURNS DATE DETERMINISTIC
+RETURN IF(t >= '24:00:00', SUBDATE(d, INTERVAL 1 DAY), d);
+
+
+
+DROP PROCEDURE IF EXISTS train_times_for_date;
+DROP PROCEDURE IF EXISTS train_station_list;
+
+DELIMITER //
+CREATE PROCEDURE `train_times_for_date`(_d DATE, _station_code TEXT, _train_number CHAR(6))
+BEGIN
+SELECT r.route_short_name,
+	SUBSTR(trip_id, 6, 6) AS train_number,
+	ADDTIME(CAST(DATE_GTFS(_d, departure_time) AS DATETIME), departure_time) AS due_time,
+	gares.code,
+	CAST(COALESCE(gares.uic, SUBSTR(stop_id, 14)) AS CHAR) AS uic,
+	gares.name,
+	stop_times.stop_sequence
+FROM trips AS t
+	LEFT JOIN calendar AS c USING (service_id)
+	LEFT JOIN calendar_dates AS cd USING (service_id)
+	LEFT JOIN routes AS r USING (route_id)
+	JOIN stop_times USING (trip_id)
+	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
+WHERE (
+	(start_date <= DATE_GTFS(_d, departure_time)
+		AND DATE_GTFS(_d, departure_time) <= end_date
+		AND (date <> DATE_GTFS(_d, departure_time) OR date IS NULL OR exception_type <> 2)
+        )
+        OR (
+		date = DATE_GTFS(_d, departure_time) AND exception_type = 1)
+        )
+	AND (trip_id LIKE CONCAT('DUASN', _train_number, '%'))
+	AND (code = _station_code);
+END //
+
+
+CREATE PROCEDURE `train_station_list`(_d DATE, _train_number CHAR(6), _index INTEGER)
+BEGIN
+SELECT gares.code,
+	CAST(COALESCE(gares.uic, SUBSTR(stop_id, 14)) AS CHAR) AS uic,
+	gares.name
+FROM trips AS t
+	LEFT JOIN calendar AS c USING (service_id)
+	LEFT JOIN calendar_dates AS cd USING (service_id)
+	LEFT JOIN routes AS r USING (route_id)
+	JOIN stop_times USING (trip_id)
+	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
+WHERE (
+	(start_date <= DATE_GTFS(_d, departure_time)
+		AND DATE_GTFS(_d, departure_time) <= end_date
+		AND (date <> DATE_GTFS(_d, departure_time) OR date IS NULL OR exception_type <> 2)
+        )
+        OR (
+		date = DATE_GTFS(_d, departure_time) AND exception_type = 1)
+        )
+	AND (trip_id LIKE CONCAT('DUASN', _train_number, '%'))
+	AND (stop_sequence > _index);
+END //
+
+DELIMITER ;
+
+-- Quelques vues pour me faciliter la vie
+
+-- CREATE OR REPLACE VIEW train_dates AS 
+-- 	SELECT trip_id, 
+-- 		SUBSTR(trip_id, 6, 6) AS train_number, 
+-- 		t.route_id,
+-- 		t.service_id, 
+-- 		(c.sunday + (c.monday << 1) 
+-- 			+ (c.tuesday << 2) 
+-- 			+ (c.wednesday << 3) 
+-- 			+ (c.thursday << 4) 
+-- 			+ (c.friday << 5) 
+-- 			+ (c.saturday << 6)) AS day_mask, 
+-- 		c.start_date, 
+-- 		c.end_date, 
+-- 		cd.date, 
+-- 		cd.exception_type,
+-- 		r.route_short_name
+-- 	FROM trips AS t 
+-- 		LEFT JOIN calendar AS c USING (service_id) 
+-- 		LEFT JOIN calendar_dates AS cd USING (service_id) 
+-- 		LEFT JOIN routes AS r USING (route_id);
+-- 
+-- CREATE OR REPLACE VIEW train_times_temp1 AS 
+-- 	SELECT td.trip_id, 
+-- 		td.train_number, 
+-- 		td.route_id,
+-- 		stop_times.departure_time, 
+-- 		stop_times.stop_sequence, 
+-- 		gares.code, 
+-- 		gares.uic, 
+-- 		gares.name, 
+-- 		start_date, 
+-- 		end_date, 
+-- 		date, 
+-- 		exception_type,
+-- 		route_short_name
+-- 	FROM train_dates AS td   
+-- 		NATURAL JOIN stop_times   
+-- 		JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic);
+-- 
