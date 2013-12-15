@@ -103,7 +103,6 @@ INSERT INTO gares (code, uic, name) VALUES
 	('CJV', 8738265, 'Cergy le Haut'),
 	('CL' , 8727600, 'Creil'),
 	('CLC', 8711677, 'Crécy-la-Chapelle'),
-	('CRP', 8760880, 'Créteil Pompadour'), -- je connais pas le code tr3 officiel, quelqu'un l'a ?
 	('CLL', 8738112, 'Clichy Levallois'),
 	('CLR', 8754528, 'Choisy le Roi'),
 	('CLX', 8775860, 'Châtelet les Halles'),
@@ -357,6 +356,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('PMP', 8739100, 'Paris Montparnasse'),
 	('POA', 8739316, 'Porchefontaine'),
 	('POP', 8768252, 'Ponthierry-Pringy'),
+	('PPD', 8760880, 'Créteil Pompadour'), -- je connais pas le code tr3 officiel, quelqu'un l'a ?
 	('PPT', 8727615, 'Pont-Petit'),
 	('PRF', 8727116, 'Pierrefitte Stains'),
 	('PRO', 8711616, 'Provins'),
