@@ -32,8 +32,13 @@ sub do_request {
     given ($response->code) {
         when (401) { die "Authentication failed or missing (invalid API key?)\n"; }
         when (403) { 
-            my $retry_after = $response->header('Retry-After');
-            die "API call quota exceeded (retry after $retry_after)\n"; 
+            if (defined $response->header('Retry-After')) {
+                my $retry_after = $response->header('Retry-After');
+                die "API call quota exceeded (retry after $retry_after s)\n"; 
+            }
+            else {
+                die "Forbidden (invalid station or other error)\n";
+            }
         }
         when (404) { die "Invalid path supplied to API call\n"; }
         when (406) { die "Unsupported version\n"; }
