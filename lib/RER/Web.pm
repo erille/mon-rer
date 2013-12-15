@@ -92,9 +92,11 @@ get '/autocomp' => sub {
 
     my $str = params->{'s'};
     my $autocomp = RER::Gares::get_autocomp($str);
-    my $json = to_json($autocomp);
-    utf8::decode($json);
-    return $json;
+
+    my $json = JSON->new->allow_blessed(1)->convert_blessed(1);
+    my $json_data = $json->encode($autocomp);
+    utf8::decode($json_data);
+    return $json_data;
 };
 
 true;

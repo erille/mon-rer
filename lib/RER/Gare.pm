@@ -52,4 +52,14 @@ sub new {
 
 
 
+sub TO_JSON {
+	my ($self) = @_;
+	return {
+		code => $self->{code},
+		name => $self->{name},
+		uic  => $self->{uic},
+	}
+}
+
+
 1;
