@@ -88,6 +88,21 @@ function autocomp_make_click_handler(c, n) {
 	};
 }
 
+
+
+function autocomp_line_images(lines) {
+	if (!lines)
+		return;
+
+	var result = "";
+	for (var i = 0; i < lines.length; i++) {
+		result = result + '<img src="img/rer'
+			+ lines[i] + '.svg" alt="'
+			+ lines[i] + '" />';
+	}
+	return result;
+}
+
 function autocomp_set(list) {
 	while (autocomp_display_list.childNodes.length > 0) 
 		autocomp_display_list.removeChild(autocomp_display_list.childNodes[0]);
@@ -102,7 +117,9 @@ function autocomp_set(list) {
 
 		n.innerHTML = '<span class="name">'
 			+ name
-			+ '</span><span class="trig">'
+			+ '\u00a0<span class="lines">'
+			+ autocomp_line_images(list[i].lines)
+			+ '</span></span><span class="trig">'
 			+ code
 			+ '</span>';
 		n.onclick = autocomp_make_click_handler(code, name);

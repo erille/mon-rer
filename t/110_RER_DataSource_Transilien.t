@@ -5,7 +5,6 @@ use warnings;
 use utf8;
 
 use Test::More tests => 13;
-use Test::Exception;
 
 use FindBin;
 use Cwd qw(realpath);

@@ -7,6 +7,7 @@ use utf8;
 sub name { $_[0]->{name} = $_[1] || $_[0]->{name}; }
 sub code { $_[0]->{code} = $_[1] || $_[0]->{code}; }
 sub uic  { $_[0]->{uic} = $_[1] || $_[0]->{uic}; }
+sub lines  { $_[0]->{lines} = $_[1] || $_[0]->{lines}; }
 
 # Return 8-digit UIC code
 # Calculates control sum for a 7-digit UIC code
@@ -46,6 +47,7 @@ sub new {
 	$self->{code} = $args{code};
 	$self->{name} = $args{name};
 	$self->{uic}  = $args{uic};
+	$self->{lines} = $args{lines};
 
 	return bless $self, __PACKAGE__;
 }
@@ -58,6 +60,7 @@ sub TO_JSON {
 		code => $self->{code},
 		name => $self->{name},
 		uic  => $self->{uic},
+		lines => $self->{lines}
 	}
 }
 

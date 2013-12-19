@@ -4,19 +4,20 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 136;
+use Test::More tests => 137;
 
 BEGIN { use_ok('RER::Gare'); }
 
 is (RER::Gare->uic8(), undef, "Static method returns undef if no argument given");
 
 my $jy;
-ok ($jy = RER::Gare->new(name => "Juvisy", uic => 8754524, code => 'JY'), 'Object creation works');
+ok ($jy = RER::Gare->new(name => "Juvisy", uic => 8754524, code => 'JY', lines => [qw(C D)] ), 'Object creation works');
 isa_ok ($jy, 'RER::Gare');
 is ($jy->name, 'Juvisy', '"name" getter works');
 is ($jy->uic, '8754524', '"uic" getter works');
 is ($jy->code, 'JY', '"code" getter works');
 is ($jy->uic8, '87545244', '"uic8" method seems to work');
+is_deeply ($jy->lines, [qw(C D)], '"lines" method seems to work');
 is ($jy->code('BLA'), 'BLA', '"code" setter works');
 
 foreach (<main::DATA>) {

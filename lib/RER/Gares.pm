@@ -65,6 +65,21 @@ sub get_stations
 	return $sth->fetchall_arrayref({});
 }
 
+sub get_lines 
+{
+	my ($arg) = @_;
+
+	my $uic;
+	$uic = $arg->uic if ref $arg eq 'RER::Gare';
+	$uic = $arg 	 if ref $arg ne 'RER::Gare';
+		
+
+	my $sth = $dbh->prepare('SELECT line FROM gares_lines WHERE uic = ?');
+	$sth->execute($uic);
+	my @result = map { $_->[0] } @{$sth->fetchall_arrayref([0])};
+	return \@result;
+}
+
 sub find
 {
 	my %params = @_;
@@ -95,11 +110,15 @@ sub find
 	if(scalar(@$result)) {
 		my ($code, $name, $uic) = @{$result->[0]};
 		# utf8::decode($name);
-		return RER::Gare->new(
+		my $gare = RER::Gare->new(
 			code => $code,
 			name => $name,
 			uic  => $uic
 		);
+
+		$gare->lines(get_lines($gare));
+
+		return $gare;
 	}
 	else {
 		return undef;
@@ -126,7 +145,7 @@ sub get_autocomp
 		my $uic  = $_->{uic};
 		my $name = $_->{name};
 		utf8::decode($name);
-		RER::Gare->new(code => $code, name => $name, uic => $uic) 
+		RER::Gare->new(code => $code, name => $name, uic => $uic, lines => get_lines($_->{uic})) 
 	} @$result;
 	return \@obj_result;
 }
