@@ -52,7 +52,13 @@ sub get_info_for_train {
     $self->{sth_ttfd}->execute($date, $station_code, $train_number);
     my $data = $self->{sth_ttfd}->fetchall_arrayref;
 
-    if ($train_number % 2 == 1 && scalar @$data == 0) {
+    # Hack spécifique aux numéros de train impairs : il arrive parfois que les
+    # numéros de train changent de parité en cours de route.  Dans ce cas, il
+    # faut prendre le numéro de train moins 1 et réessayer.
+    # Bien entendu, ne pas faire ça sur les "numéros" de train RATP.
+    if ($train_number !~ /[A-Z]{4}[0-9]{2}/ 
+            && $train_number % 2 == 1 
+            && scalar @$data == 0) {
         $self->{sth_ttfd}->execute($date, $station_code, $train_number - 1);
         $data = $self->{sth_ttfd}->fetchall_arrayref;
         $train_number--;
