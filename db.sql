@@ -1215,7 +1215,7 @@ END //
 
 CREATE PROCEDURE `train_station_list`(_d DATE, _train_number CHAR(6), _index INTEGER)
 BEGIN
-SELECT gares.code,
+SELECT DISTINCT gares.code,
 	CAST(COALESCE(gares.uic, SUBSTR(stop_id, 14)) AS CHAR) AS uic,
 	gares.name
 FROM trips AS t
