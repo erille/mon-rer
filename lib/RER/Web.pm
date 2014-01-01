@@ -63,6 +63,12 @@ get '/json' => sub {
         username	=> config->{'db_username'},
         password	=> config->{'db_password'});
 
+    if (config->{restrict_lines}) {
+        if (! grep /^[CL]$/, @{RER::Gares::get_lines(RER::Gares::find(code => $code))}) {
+            return to_json ( { trains => [], info => [ "Pas d'informations sur cette gare. Seules les lignes C et L sont prises en charge pour le moment." ] } );  
+        }
+    }
+
     if (!defined $train_obj_last_update{$code} 
         || time - $train_obj_last_update{$code} > 10) {
         eval {
