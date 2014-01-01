@@ -4,11 +4,23 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 137;
+use Test::More tests => 139;
 
 BEGIN { use_ok('RER::Gare'); }
 
 is (RER::Gare->uic8(), undef, "Static method returns undef if no argument given");
+
+#
+# Constructor tests
+#
+
+my $obj;
+is ($obj = RER::Gare->new(name => undef, uic => 8754524, code => 'JY', lines => [qw(C D)] ), undef, 'Constructor returns undef if name is undef');
+is ($obj = RER::Gare->new(uic => 8754524, code => 'JY', lines => [qw(C D)] ), undef, 'Constructor returns undef if name is missing');
+
+#
+# Getter/setter tests
+#
 
 my $jy;
 ok ($jy = RER::Gare->new(name => "Juvisy", uic => 8754524, code => 'JY', lines => [qw(C D)] ), 'Object creation works');

@@ -38,11 +38,11 @@ sub new {
 
 	$self = {};
 
-	return undef if ! exists $args{code};
-	return undef if ! exists $args{name};
-	return undef if ! exists $args{uic};
+	return undef if ! exists $args{code} || ! defined $args{code};
+	return undef if ! exists $args{uic} || ! defined $args{uic};
+	return undef if ! exists $args{name} || ! defined $args{name};
 
-	utf8::decode $args{name};
+	utf8::decode($args{name});
 
 	$self->{code} = $args{code};
 	$self->{name} = $args{name};
