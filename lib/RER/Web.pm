@@ -4,6 +4,8 @@ use Dancer ':syntax';
 use RER::Transilien;
 use RER::Trains;
 use RER::Gares;
+use RER::DataSource::Transilien;
+use RER::DataSource::TransilienGTFS;
 use Data::Dumper;
 
 our $VERSION = '0.1';
@@ -20,9 +22,6 @@ sub check_code {
     return undef unless $code;
 
     $code = uc $code;
-
-    # Quelques alias
-    return 'PLY' if $code eq 'PAA';
 
     if($code =~ /^(?:[A-Z]{1,3}|NC[1-6])$/) {
         return $code;
@@ -41,7 +40,7 @@ hook 'before' => sub {
 
 get '/' => sub {
     my $origin_code = check_code(params->{'s'}) || 'EVC';
-    my $origin_station = RER::Gares::get_station_by_code($origin_code);
+    my $origin_station = RER::Gares::find(code => $origin_code)->name;
     utf8::decode($origin_station);
 
     template 'rer', {
@@ -58,10 +57,25 @@ get '/json' => sub {
 
     my $code = check_code(params->{'s'}) || 'EVC';
 
+    my $ds  = RER::DataSource::Transilien->new(%{config->{'sncf_api'}});
+    my $ds2 = RER::DataSource::TransilienGTFS->new(
+        dsn		=> config->{'db_dsn'},
+        username	=> config->{'db_username'},
+        password	=> config->{'db_password'});
+
+    if (config->{restrict_lines}) {
+        if (! grep /^[CL]$/, @{RER::Gares::get_lines(RER::Gares::find(code => $code))}) {
+            return to_json ( { trains => [], info => [ "Pas d'informations sur cette gare. Seules les lignes C et L sont prises en charge pour le moment." ] } );  
+        }
+    }
+
     if (!defined $train_obj_last_update{$code} 
         || time - $train_obj_last_update{$code} > 10) {
         eval {
-            $train_obj{$code} = RER::Transilien::new(from => $code);
+            $train_obj{$code} = RER::Transilien::new(
+                from => $code,
+                ds   => [ $ds, $ds2 ],
+            );
         };
         if (my $err = $@) {
             status 503;
@@ -81,9 +95,11 @@ get '/autocomp' => sub {
 
     my $str = params->{'s'};
     my $autocomp = RER::Gares::get_autocomp($str);
-    my $json = to_json($autocomp);
-    utf8::decode($json);
-    return $json;
+
+    my $json = JSON->new->allow_blessed(1)->convert_blessed(1);
+    my $json_data = $json->encode($autocomp);
+    utf8::decode($json_data);
+    return $json_data;
 };
 
 true;

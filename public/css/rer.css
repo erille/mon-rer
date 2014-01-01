@@ -206,8 +206,10 @@ div#autocomp ul li.autocompItemHilight {
 	min-width: 12em;
 	cursor: pointer;
 }
-div#autocomp ul li span { display: table-cell; padding: 0.2em; }
+div#autocomp ul li span.name, div#autocomp ul li span.trig { display: table-cell; padding: 0.2em; height: 1.4em }
 div#autocomp ul li span.name { padding-right: 1em; }
+div#autocomp ul li span.name span.lines { text-align: right; }
+div#autocomp ul li span.name span.lines img { position: relative; top: 0.2em; padding-left: 0.2em; max-height: 1.4em; }
 div#autocomp ul li span.trig { font-family: monospace; font-style: italic; color: #666; }
 
 div#error {

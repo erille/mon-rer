@@ -50,7 +50,7 @@ Create a user which only has the necessary privileges.  This is optional, but
 highly recommended (not to mention a good security practice):
 
 	mysql> CREATE USER 'rer-web' IDENTIFIED BY 'some-password';
-	mysql> GRANT SELECT ON sncf_gtfs.* TO 'rer-web'@'localhost';
+	mysql> GRANT SELECT, EXECUTE ON sncf_gtfs.* TO 'rer-web'@'localhost';
 
 Finally, run `sh ./install.sh`. This install script will download a GTFS
 parsing script, download the GTFS data from SNCF's website, import it into the

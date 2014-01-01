@@ -2,6 +2,7 @@
 
 package RER::Gares;
 use RER::Trains qw(uc_woac);
+use RER::Gare;
 use DBI;
 use DateTime;
 use DateTime::Format::Strptime;
@@ -22,7 +23,7 @@ our %config = (
 
 our $dbh; 
 
-sub db_connect()
+sub db_connect
 {
 	$dbh = DBI->connect(
 		$config{dsn}, 
@@ -50,34 +51,77 @@ sub get_last_update {
 }
 
 
-sub get_station_codes()
+sub get_station_codes
 {
 	my $sth = $dbh->prepare('SELECT code FROM gares');
 	$sth->execute;
 	return $sth->fetchall_arrayref([0]);
 }
 
-sub get_stations()
+sub get_stations
 {
-	my $sth = $dbh->prepare('SELECT code, name FROM gares WHERE is_transilien = 1 ORDER BY name');
+	my $sth = $dbh->prepare('SELECT code, name, uic FROM gares WHERE is_transilien = 1 ORDER BY name');
 	$sth->execute;
 	return $sth->fetchall_arrayref({});
 }
 
-sub get_station_by_code($)
+sub get_lines 
 {
-	my ($code) = @_;
+	my ($arg) = @_;
 
-	my $sth = $dbh->prepare('SELECT name FROM gares WHERE code = ?');
-	$sth->execute($code);
+	my $uic;
+	$uic = $arg->uic if ref $arg eq 'RER::Gare';
+	$uic = $arg 	 if ref $arg ne 'RER::Gare';
+		
 
-	my $result = $sth->fetchall_arrayref([0]);
-	
-	if(scalar(@$result)) {
-		return $result->[0][0];
+	my $sth = $dbh->prepare('SELECT line FROM gares_lines WHERE uic = ?');
+	$sth->execute($uic);
+	my @result = map { $_->[0] } @{$sth->fetchall_arrayref([0])};
+	return \@result;
+}
+
+sub find
+{
+	my %params = @_;
+
+	my $sth;
+
+	$dbh ||= db_connect();
+
+	if (exists $params{code}) {
+		$sth = $dbh->prepare('SELECT code, name, uic FROM gares WHERE code = ?');
+		$sth->execute($params{code});
+	}
+	elsif (exists $params{uic}) {
+		# les codes UIC ont deux variétés : ceux à 7 chiffres et ceux à 8.
+		# ceux à 8 chiffres ont un chiffre de contrôle (superflu) qu'on
+		# enlève, parce qu'on ne stocke que 7 chiffres dans la BDD.
+		my $uic = substr $params{uic}, 0, 7;
+
+		$sth = $dbh->prepare('SELECT code, name, uic FROM gares WHERE uic = ?');
+		$sth->execute($uic);
 	}
 	else {
-		return "Gare inconnue ($code)";
+		return undef;
+	}
+
+	my $result = $sth->fetchall_arrayref();
+	
+	if(scalar(@$result)) {
+		my ($code, $name, $uic) = @{$result->[0]};
+		# utf8::decode($name);
+		my $gare = RER::Gare->new(
+			code => $code,
+			name => $name,
+			uic  => $uic
+		);
+
+		$gare->lines(get_lines($gare));
+
+		return $gare;
+	}
+	else {
+		return undef;
 	}
 }
 
@@ -87,7 +131,7 @@ sub get_autocomp
 	$str =~ s/([_%])/\\$1/g;
 
 	my $sth = $dbh->prepare(qq{
-		SELECT code, name 
+		SELECT code, name, uic
 			FROM gares 
 			WHERE is_transilien AND (code = UPPER(?) OR name LIKE ?) 
 			ORDER BY INSTR(name, ?), name
@@ -95,7 +139,15 @@ sub get_autocomp
 	$sth->execute("$str", "%$str%", "$str");
 
 	my $result = $sth->fetchall_arrayref({});
-	return $result;
+	
+	my @obj_result = map { 
+		my $code = $_->{code};
+		my $uic  = $_->{uic};
+		my $name = $_->{name};
+		utf8::decode($name);
+		RER::Gare->new(code => $code, name => $name, uic => $uic, lines => get_lines($_->{uic})) 
+	} @$result;
+	return \@obj_result;
 }
 
 sub get_delay {
@@ -128,7 +180,6 @@ sub get_delay {
 sub get_ligne {
 	my ($num, $dest) = @_;
 	return '' if not defined $num;
-	return '' if not defined $dest;
 
 	if ($num =~ /^\d+$/) {
 		my $sth = $dbh->prepare(qq{
@@ -206,6 +257,7 @@ sub get_ligne {
 						OLY|QUR|ROC|SIT|SOU|TAH|ULE)/x;
 
 			when (qr/^PAPY/) {
+				return '' if not defined $dest;
 				if ($dest eq 'SNM') {
 					return 'B';
 				} else {
@@ -214,6 +266,7 @@ sub get_ligne {
 			}
 
 			when (qr/^Q/) {
+				return '' if not defined $dest;
 				if ($dest eq 'LPN') {
 					return 'B';
 				} else {
