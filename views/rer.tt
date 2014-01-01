@@ -231,7 +231,7 @@ function get_data(obj) {
 	}
 	else if (obj.readyState == 4 && obj.status == 503) {
 		var err = JSON.parse(obj.responseText);
-		if (dataRetryCount++ >= 20)
+		if (dataRetryCount++ >= 0)
 			die(err.error);
 		else
 			dataRefreshTimer = window.setTimeout(function() { init_data(0) }, 
