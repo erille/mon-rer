@@ -46,9 +46,9 @@ sub new {
             "--:--";
         $time = substr $time, 0, 5;
 
-        my $today = $train->real_time->ymd('-') 
-            || $train->due_time->ymd('-')
-            || `date +'%Y-%m-%d'`;
+        my $today = ($train->real_time) ? $train->real_time->ymd('-') 
+            : ($train->due_time) ? $train->due_time->ymd('-')
+            : `date +'%Y-%m-%d'`;
 
         my $train2 = $ds[1]->get_info_for_train($today, $gare_from->code, $train->number);
         if ($train2 && $train2->[0]) {
@@ -70,7 +70,7 @@ sub new {
         my @arr_dessertes;
         my $dessertes = "Desserte indisponible";
         if ($train->stations) {
-            @arr_dessertes = map { $_->name || $_->uic } @{$train->stations};
+            @arr_dessertes = map { $_ ? ($_->name || $_->uic) : "Gare non trouvée" } @{$train->stations};
             $dessertes = join ' &bull; ', @arr_dessertes;
         }
 
