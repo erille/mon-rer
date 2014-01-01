@@ -23,9 +23,6 @@ sub check_code {
 
     $code = uc $code;
 
-    # Quelques alias
-    return 'PLY' if $code eq 'PAA';
-
     if($code =~ /^(?:[A-Z]{1,3}|NC[1-6])$/) {
         return $code;
     }

@@ -490,6 +490,12 @@ INSERT INTO gares (code, uic, name) VALUES
 	('ZTN', 8768218, 'Savigny le Temple Nandy'),
 	('ZUB', 8775819, 'Sucy Bonneuil');
 
+
+INSERT INTO gares (code, uic, name, is_transilien) VALUES
+	('ERU', 8753413, 'Ermont Eaubonne', 0), -- hack pour certains trains de AEE qui marchent pas
+	('PAZ', 8754700, 'Paris Austerlitz', 0),   -- grandes lignes
+	('PNB', 8727103, 'Paris Nord', 0);
+
 -- INSERT INTO gares (code, name, is_transilien) VALUES
 -- 	('AGR', 'Aingeray', 0),
 -- 	('AGV', 'Angerville', 0),
@@ -568,7 +574,6 @@ INSERT INTO gares (code, uic, name) VALUES
 -- 	('OI',  'Oissel', 0),
 -- 	('ORL', 'Orléans', 0),
 -- 	('PAZ', 'Paris Austerlitz', 0),
--- 	('PNB', 'Paris Nord', 0), -- banlieue, redondant (UIC 8727103)
 -- 	('PNO', 'Paris Nord', 0), -- grandes lignes, redondant 
 -- 	('PUY', 'Pont-sur-Yonne', 0),
 -- 	('PVA', 'Paris Vaugirard', 0), -- redondant avec PMP
@@ -620,7 +625,7 @@ INSERT INTO gares_lines VALUES
 	(8711352, 'E'),		-- LE CHENAY GAGNY
 	(8711369, 'E'),		-- ROSNY BOIS PERRIER
 	(8711370, 'E'),		-- ROSNY SOUS BOIS
-	(8711371, 'A'),		-- VAL DE FONTENAY
+--	(8711371, 'A'),		-- VAL DE FONTENAY
 	(8711371, 'E'),		-- VAL DE FONTENAY
 	(8711374, 'E'),		-- NOGENT LE PERREUX
 	(8711377, 'E'),		-- LES BOULLEREAUX CHAMPIGNY
@@ -883,7 +888,7 @@ INSERT INTO gares_lines VALUES
 	(8738286, 'L'),		-- VERSAILLES RIVE DROITE
 	(8738287, 'L'),		-- MONTREUIL
 	(8738288, 'L'),		-- VIROFLAY RIVE DROITE
-	(8738328, 'B'),		-- MASSY VERRIERES
+--	(8738328, 'B'),		-- MASSY VERRIERES
 	(8738328, 'C'),		-- MASSY VERRIERES
 	(8738400, 'J'),		-- PARIS SAINT-LAZARE (GARE SAINT-LAZARE)
 	(8738400, 'L'),		-- PARIS SAINT-LAZARE (GARE SAINT-LAZARE)
@@ -957,7 +962,7 @@ INSERT INTO gares_lines VALUES
 	(8739353, 'C'),		-- VAUBOYEN
 	(8739354, 'C'),		-- BIEVRES
 	(8739356, 'C'),		-- IGNY
-	(8739357, 'B'),		-- MASSY PALAISEAU
+--	(8739357, 'B'),		-- MASSY PALAISEAU
 	(8739357, 'C'),		-- MASSY PALAISEAU
 	(8739361, 'C'),		-- LONGJUMEAU
 	(8739362, 'N'),		-- PLAISIR LES CLAYES
@@ -1153,7 +1158,7 @@ INSERT INTO gares_lines VALUES
 	(8775887, 'B'),		-- GIF SUR YVETTE
 	(8775888, 'B'),		-- COURCELLE SUR YVETTE
 	(8775889, 'B'),		-- SAINT-REMY LES CHEVREUSE
-	(8778543, 'C'),		-- SAINT-MICHEL NOTRE DAME RER B
+	(8778543, 'B'),		-- SAINT-MICHEL NOTRE DAME RER B
 	(8798870, 'T4'),	-- REMISE A JORELLE (T4)
 	(8739400, 'TER'),	-- CHARTRES
 	(8739411, 'TER'),	-- EPERNON
