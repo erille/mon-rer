@@ -57,7 +57,10 @@ get '/json' => sub {
 
     my $code = check_code(params->{'s'}) || 'EVC';
 
-    my $ds  = RER::DataSource::Transilien->new(%{config->{'sncf_api'}});
+    my $ds  = RER::DataSource::Transilien->new(
+        url         => config->{'sncf_url'},
+        username    => config->{'sncf_username'},
+        password    => config->{'sncf_password'});
     my $ds2 = RER::DataSource::TransilienGTFS->new(
         dsn		=> config->{'db_dsn'},
         username	=> config->{'db_username'},

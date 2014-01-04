@@ -32,10 +32,9 @@ db_password: "secret"
 
 # SNCF API settings
 
-sncf_api:
-   # url: http://api.transilien.com
-   username: 'username'
-   password: 'password'
+# sncf_url: http://api.transilien.com
+sncf_username: 'username'
+sncf_password: 'password'
 
 # Restrict to C and L lines if 1; restrict to none if 0.
 restrict_lines: 1
