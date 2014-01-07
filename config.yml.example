@@ -38,3 +38,6 @@ sncf_password: 'password'
 
 # Restrict to C and L lines if 1; restrict to none if 0.
 restrict_lines: 1
+
+# RRD path
+rrd_file: 'stats.rrd'

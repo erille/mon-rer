@@ -6,6 +6,7 @@ use RER::Trains;
 use RER::Gares;
 use RER::DataSource::Transilien;
 use RER::DataSource::TransilienGTFS;
+use RRD::Simple;
 use Data::Dumper;
 
 our $VERSION = '0.1';
@@ -14,6 +15,8 @@ our $VERSION = '0.1';
 
 my %train_obj;
 my %train_obj_last_update;
+
+my %stats;
 
 
 sub check_code {
@@ -30,6 +33,46 @@ sub check_code {
         return undef;
     }
 }
+
+
+sub rrd_update {
+    my $rrd = RRD::Simple->new(file => config->{'rrd_file'});
+    if (! -e config->{'rrd_file'}) {
+        $rrd->create(
+            'week',
+            api_call       => 'ABSOLUTE',
+            api_failure    => 'ABSOLUTE'
+        );
+    }
+
+    $rrd->update($stats{begin_time},
+                 api_call    => $stats{api_call} || 0,
+                 api_failure => $stats{api_failure} || 0,
+                 users       => (exists $stats{users}) ? scalar @{$stats{users}} : 0,
+             );
+}
+
+sub stats_add {
+    my ($key, $value) = @_;
+
+    if (! exists $stats{begin_time}) {
+        $stats{begin_time} = (int(time / 60)) * 60;
+    } elsif (time - $stats{begin_time} >= 60) {
+        while (time - $stats{begin_time} >= 60) {
+            rrd_update;
+            my $temp = $stats{begin_time} + 60;
+            %stats = ( begin_time => $temp );
+        }
+    }
+
+    if (!defined ($value)) {
+        $stats{$key}++;
+    } else {
+        $stats{$key} = $value;
+    }
+}
+
+
 
 hook 'before' => sub {
     $RER::Gares::config{dsn} = config->{'db_dsn'};
@@ -74,6 +117,15 @@ get '/json' => sub {
 
     if (!defined $train_obj_last_update{$code} 
         || time - $train_obj_last_update{$code} > 10) {
+
+        stats_add 'api_call';
+        if ( ! exists $stats{'users'} ) {
+            stats_add 'users', [ request->address() ];
+        } elsif ( ! grep { $_ eq request->address() } @{$stats{'users'}}) {
+            push @{$stats{'users'}}, request->address();
+        }
+
+
         eval {
             $train_obj{$code} = RER::Transilien::new(
                 from => $code,
@@ -82,12 +134,14 @@ get '/json' => sub {
         };
         if (my $err = $@) {
             status 503;
+            stats_add 'api_failure';
             $train_obj_last_update{$code} = undef;
             return to_json({ error => $err }, { ascii => 1 });
         } else {
             $train_obj_last_update{$code} = time;
         }
     }
+    
     return $train_obj{$code}->format();
 
 };
