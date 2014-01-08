@@ -52,6 +52,12 @@ sub get_info_for_train {
     $self->{sth_ttfd}->execute($date, $station_code, $train_number);
     my $data = $self->{sth_ttfd}->fetchall_arrayref;
 
+    # Hack spécifique aux gares ayant deux numéros UIC identiques
+    if ($station_code eq 'ERT' && scalar @$data == 0) {
+        $self->{sth_ttfd}->execute($date, 'ERU', $train_number);
+        $data = $self->{sth_ttfd}->fetchall_arrayref;
+    }
+
     # Hack spécifique aux numéros de train impairs : il arrive parfois que les
     # numéros de train changent de parité en cours de route.  Dans ce cas, il
     # faut prendre le numéro de train moins 1 et réessayer.
