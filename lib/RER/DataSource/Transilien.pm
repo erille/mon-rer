@@ -67,7 +67,8 @@ sub process_xml_trains {
     
     # S'il n'y a qu'un seul train, XML::Simple renvoie un hash au lieu d'un
     # tableau.  Forcer un tableau à un seul élément dans ce cas.
-    my @train_data = (ref $data->{train} eq 'ARRAY') ? @{$data->{train}} : ( $data->{train} );
+    my @train_data = (ref $data->{train} eq 'ARRAY') ? @{$data->{train}} : 
+                     (ref $data->{train} eq 'HASH') ? ( $data->{train} ) : ();
 
     foreach my $train_hash (@train_data) {
         my $time_type  = ($train_hash->{date}{mode} eq 'R') ? 'real_time' : 'due_time';
