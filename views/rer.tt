@@ -611,7 +611,7 @@ init_autocomp('form_otherstation', 's2', 'station_list', 'autocomp', 'station_su
 </script>
 
 <div id="footer">
-<p>&copy; 2013&ndash;2014 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/23">Blog</a> • <a href="https://code.x0r.fr/rer-web">Code source</a> • <a href="http://test.data-sncf.com/index.php?p=transilien">SNCF Open Data Transilien</a> • Dernière mise à jour : <% dmaj || 'inconnue' %></p>
+<p>&copy; 2013&ndash;2014 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/32">Blog</a> • <a href="https://bitbucket.org/xtab/rer-web">Code source</a> • <a href="http://test.data-sncf.com/index.php?p=transilien">SNCF Open Data Transilien</a> • Dernière mise à jour : <% dmaj || 'inconnue' %></p>
 </div>
 
 </body>
