@@ -43,6 +43,34 @@ sub new {
 
 
 
+sub check_ligne {
+	my ($ligne) = @_;
+	return '' if not defined $ligne;
+
+	my $value = $ligne;
+
+	# $value should usually contain a one-letter value, or
+	# "TER".  However SNCF somehow manages to fuck this up
+	# big time.
+	given ($value) {
+		$value = 'C' when /Gare d'Aus/i;
+		$value = 'C' when /Invalides /i; # note the space
+		$value = 'D' when /Evry Courc/i;
+		$value = 'D' when /Grigny Cen/i;
+		$value = 'D' when /Le Bras de/i;
+		$value = 'D' when /Orangis Bo/i;
+		$value = 'D' when /Juvisy => /i; # note the space
+		$value = 'E' when /Haussmann /i; # note the space
+		$value = 'H' when /LUZARCHES /i; # note the space
+		$value = 'J' when /Gisors => /i; # note the space
+		$value = 'J' when /Mantes la /i; # note the space
+		$value = 'L' when /St Nom la /i; # note the space
+		$value = 'R' when /Montargis /i; # note the space
+		$value = 'TER' when 'Train';
+	}
+	return $value;
+}
+
 
 
 
@@ -93,7 +121,7 @@ sub get_info_for_train {
         my $train = RER::Train->new(
             number      => $train_number,
             due_time    => $strp->parse_datetime($row->[2]),
-            line        => $row->[0],
+            line        => check_ligne($row->[0]),
             stations    => \@stations,
         );
 
