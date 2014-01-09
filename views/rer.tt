@@ -23,6 +23,7 @@ var retardTimeout1 = 6500;
 var retardTimeout2 = 2500;
 
 var originCode = "<% origin_code %>";
+var originLineFilter;
 
 var origTrains = [1, 1, 1, 1, 1, 1];
 
@@ -228,6 +229,8 @@ function get_data(obj) {
 		col2flipTimer = window.setTimeout(function() { flip_retard(1) }, retardTimeout1);
 
 		dataRetryCount = 0;
+
+		init_filtres(info.lines);
 	}
 	else if (obj.readyState == 4 && obj.status == 503) {
 		var err = JSON.parse(obj.responseText);
@@ -303,11 +306,57 @@ function init_data(b) {
 
 	xmlHttp = new XMLHttpRequest();
 
-	xmlHttp.open("GET", "json?s=" + originCode, true);
+	var url = "json?s=" + originCode;
+	if (originLineFilter)
+		url = url + "&l=" + originLineFilter;
+
+	xmlHttp.open("GET", url, true);
 	xmlHttp.send();
 
 	xmlHttp.onreadystatechange = function() { get_data(xmlHttp); };
 }
+
+
+function init_filtres(lignes) {
+	flt = document.getElementById("line_filter");
+
+	if (lignes.length <= 1) {
+		flt.style.display = "none";
+		return;
+	}
+
+	while (flt.childNodes.length > 0)
+		flt.removeChild(flt.childNodes[0]);
+	
+	var flt_ul = document.createElement("ul");
+
+	var li_0 = document.createElement("li");
+	var li_0_text = document.createTextNode("Toutes");
+	li_0.onclick = function(l) { return function() { change_line_filter(l) } }(null);
+	if (!originLineFilter) li_0.className = "selected";
+	li_0.appendChild(li_0_text);
+	flt_ul.appendChild(li_0);
+
+	for (var i = 0; i < lignes.length; i++) {
+		var li = document.createElement("li");
+		var img = document.createElement("img");
+		img.src = "/img/rer" + lignes[i] + ".svg";
+		img.alt = "Ligne " + lignes[i] + " seulement";
+
+		if (lignes[i] == originLineFilter) 
+			img.className = "selected";
+
+		img.onclick = function(l) { return function() { change_line_filter(l) } }(lignes[i]);
+
+		li.appendChild(img);
+		flt_ul.appendChild(li);
+
+	}
+
+	flt.appendChild(flt_ul);
+	flt.style.display = "inline-block";
+}
+
 
 
 function init_scroll() {
@@ -434,9 +483,15 @@ function change_station(new_code, new_station, do_push_state) {
 	}
 
 	originCode = new_code;
+	originLineFilter = null;
 	init_data(1);
 	document.title = new_station + " \u2022 Prochains départs";
 	document.getElementById("departure-station").innerHTML = new_station;
+}
+
+function change_line_filter(new_line_filter) {
+	originLineFilter = new_line_filter;
+	init_data(1);
 }
 
 function combobox_change_station(do_push_state) {
@@ -491,7 +546,12 @@ window.onpopstate = function(e) {
 <% END -%>
 	</select>
 	<input id="station_submit" type="submit" value="valider" />
+	<div id="line_filter">
+	Montrer lignes :
+	</div>
+
 	<div id="autocomp"></div>
+
 </form>
 </div>
 

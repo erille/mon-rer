@@ -191,10 +191,12 @@ div#autocomp {
 
 	z-index: 2;
 }
-div#autocomp ul {
+div#autocomp ul, div#line_filter ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
+}
+div#autocomp ul {
 	display: table;
 }
 div#autocomp ul li {
@@ -209,8 +211,15 @@ div#autocomp ul li.autocompItemHilight {
 div#autocomp ul li span.name, div#autocomp ul li span.trig { display: table-cell; padding: 0.2em; height: 1.4em }
 div#autocomp ul li span.name { padding-right: 1em; }
 div#autocomp ul li span.name span.lines { text-align: right; }
-div#autocomp ul li span.name span.lines img { position: relative; top: 0.2em; padding-left: 0.2em; max-height: 1.4em; }
 div#autocomp ul li span.trig { font-family: monospace; font-style: italic; color: #666; }
+div#autocomp img, div#line_filter img { position: relative; top: 0.2em; padding-left: 0.2em; max-height: 1.4em; }
+
+div#line_filter ul li { text-decoration: underline; display: inline; cursor: pointer; } 
+div#line_filter ul li img.selected { opacity: 1; } 
+div#line_filter ul li.selected { font-weight: bold; } 
+div#line_filter img { opacity: 0.6; }
+div#line_filter { display: inline-block; }
+div#line_filter ul:before { content: "Montrer lignes : "; }
 
 div#error {
 	position: fixed;

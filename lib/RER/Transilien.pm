@@ -34,7 +34,7 @@ sub new {
 
     my $data = $ds[0]->get_next_trains($gare_from);
 
-    for (my $i = 0; $i < 6; $i++) {
+    for (my $i = 0; $i < scalar(@$data); $i++) {
         my $train = $data->[$i];
         next if ! defined $train;
 

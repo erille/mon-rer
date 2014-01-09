@@ -56,7 +56,7 @@ sub format
 {
     my ($self) = @_;
     
-    my $obj = { trains => $self->{trains}, info => $self->{messages} };
+    my $obj = { lines => $self->{from}->lines, trains => $self->{trains}, info => $self->{messages} };
     my $ret = encode_json $obj;
     utf8::decode $ret;
     return $ret;

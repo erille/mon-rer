@@ -8,6 +8,7 @@ use RER::DataSource::Transilien;
 use RER::DataSource::TransilienGTFS;
 use RRD::Simple;
 use Data::Dumper;
+use Storable qw(dclone);
 
 our $VERSION = '0.1';
 
@@ -99,6 +100,7 @@ get '/json' => sub {
     header 'Cache-Control' => 'no-cache';
 
     my $code = check_code(params->{'s'}) || 'EVC';
+    my $line = params->{'l'};
 
     my $ds  = RER::DataSource::Transilien->new(
         url         => config->{'sncf_url'},
@@ -141,8 +143,19 @@ get '/json' => sub {
             $train_obj_last_update{$code} = time;
         }
     }
+
+    # Filtrer par ligne si cela est désiré
+    my $ret = dclone($train_obj{$code});
+
+    if ($line) {
+        @{$ret->{trains}} = grep { $_->{ligne} eq $line } @{$ret->{trains}};
+    }
+    # Limiter à 6 le nombre de trains renvoyés
+    if (scalar @{$ret->{trains}} > 6) {
+        @{$ret->{trains}} = @{$ret->{trains}}[0..5];
+    }
     
-    return $train_obj{$code}->format();
+    return $ret->format();
 
 };
 
