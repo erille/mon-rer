@@ -599,7 +599,7 @@ window.onpopstate = function(e) {
 <p>Cette application Web est expérimentale. Elle n'est pas officielle et n'est
 donc ni prise en charge, ni approuvée par la SNCF.</p>
 <p>Les informations de retard peuvent être manquantes ou inexactes.</p>
-<p>Pour tout bugreport, <a href="/contact">contactez-moi</a>.</p>
+<p>Pour tout bugreport, <a href="http://x0r.fr/contact">contactez-moi</a>.</p>
 </div>
 
 </div>
