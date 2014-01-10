@@ -55,6 +55,7 @@ sub check_ligne {
 	given ($value) {
 		$value = 'C' when /Gare d'Aus/i;
 		$value = 'C' when /Invalides /i; # note the space
+		$value = 'C' when /Montigny B/i;
 		$value = 'D' when /Evry Courc/i;
 		$value = 'D' when /Grigny Cen/i;
 		$value = 'D' when /Le Bras de/i;
@@ -62,6 +63,7 @@ sub check_ligne {
 		$value = 'D' when /Juvisy => /i; # note the space
 		$value = 'E' when /Haussmann /i; # note the space
 		$value = 'H' when /LUZARCHES /i; # note the space
+		$value = 'H' when /ERMONT EAU/i;
 		$value = 'J' when /Gisors => /i; # note the space
 		$value = 'J' when /Mantes la /i; # note the space
 		$value = 'L' when /St Nom la /i; # note the space
