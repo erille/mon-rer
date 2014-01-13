@@ -76,16 +76,31 @@ sub check_ligne {
 
 
 
+
+sub db_run_train_times_for_date {
+    my ($self, $date, $station_code, $train_number) = @_;
+
+    if ($train_number =~ /^[0-9]+$/) {
+        $train_number = sprintf("%06d", $train_number);
+    }
+
+    $self->{sth_ttfd}->execute($date, $station_code, $train_number);
+    return $self->{sth_ttfd}->fetchall_arrayref;
+}
+
+
+
+
+
+
 sub get_info_for_train {
     my ($self, $date, $station_code, $train_number) = @_;
 
-    $self->{sth_ttfd}->execute($date, $station_code, $train_number);
-    my $data = $self->{sth_ttfd}->fetchall_arrayref;
+    my $data = $self->db_run_train_times_for_date($date, $station_code, $train_number);
 
     # Hack spécifique aux gares ayant deux numéros UIC identiques
     if ($station_code eq 'ERT' && scalar @$data == 0) {
-        $self->{sth_ttfd}->execute($date, 'ERU', $train_number);
-        $data = $self->{sth_ttfd}->fetchall_arrayref;
+        $data = $self->db_run_train_times_for_date($date, 'ERU', $train_number);
     }
 
     # Hack spécifique aux numéros de train impairs : il arrive parfois que les
@@ -95,8 +110,7 @@ sub get_info_for_train {
     if ($train_number =~ /[0-9]{6}/ 
             && $train_number % 2 == 1 
             && scalar @$data == 0) {
-        $self->{sth_ttfd}->execute($date, $station_code, $train_number - 1);
-        $data = $self->{sth_ttfd}->fetchall_arrayref;
+        $data = $self->db_run_train_times_for_date($date, $station_code, $train_number - 1);
         $train_number--;
     }
         
