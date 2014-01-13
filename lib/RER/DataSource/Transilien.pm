@@ -22,7 +22,7 @@ sub do_request {
 
     my $req = HTTP::Request->new(GET => $self->{url} . $path);
     $req->header('User-Agent' => 'RER::Web (+http://bitbucket.org/xtab/rer-web)');
-    # $req->header('Accept'     => 'application/vnd.sncf.transilien.od.depart+xml;vers=1');
+    $req->header('Accept'     => 'application/vnd.sncf.transilien.od.depart+xml;vers=1');
     $req->authorization_basic($self->username, $self->password);
 
     my $ua = LWP::UserAgent->new;
