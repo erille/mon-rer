@@ -61,10 +61,10 @@ div.train div {
 	padding: 3px 6px 3px 3px;
 }
 
-div.train div.col1, div.train div.col2, div.train div.col2bis { text-align: center; }
-div.train div.col1 { width: 4em; }
+div.train div.col1, div.train div.col2 { text-align: center; }
+div.train div.col1 { width: 4.5em; }
 div.train div.col2 { width: 3.5em; font-size: 150%; line-height: 0.9; }
-div.train div.col2bis { width: 4.7727em; font-size: 110%; display: none; }
+div.train span.retard-train { display: none; }
 	
 
 div.train div.col3 {

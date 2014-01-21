@@ -151,18 +151,16 @@ function get_data(obj) {
 
 			table_get_node(i).className = train.trainclass;
 
-			table_set_innerhtml(i, '1', 
-				  "<span class='mission-train'>" + train.mission 
-				+ "</span> <span class='numero-train'>"
-				+ train.numero + "</span>");
+			table_set_innerhtml(i, '1a', train.mission);
+			table_set_innerhtml(i, '1b', train.numero);
+
+			if (train.time != 'Supprimé' && train.time != 'Retardé') 
+				table_set_innerhtml(i, '1c', train.retard);
+			else 
+				table_set_innerhtml(i, '1c', '');
 
 			table_set_classname(i, '2', train.col2class);
 			table_set_innerhtml(i, '2', train.time);
-
-			if (train.time != 'Supprimé' && train.time != 'Retardé') 
-				table_set_innerhtml(i, '2b', train.retard);
-			else 
-				table_set_innerhtml(i, '2b', '');
 
 			var dest = train.destination;
 			if (train.ligne)
@@ -191,10 +189,11 @@ function get_data(obj) {
 		for (; i < 6; i++)
 		{
 			table_get_node(i).className = 'train';
-			table_set_innerhtml(i, '1', "&nbsp;<br />&nbsp;");
+			table_set_innerhtml(i, '1a', "&nbsp;");
+			table_set_innerhtml(i, '1b', "&nbsp;");
+			table_set_innerhtml(i, '1c', "&nbsp;");
 			table_set_classname(i, '2', "col2");
 			table_set_innerhtml(i, '2', "&nbsp;");
-			table_set_innerhtml(i, '2b', "&nbsp;");
 			table_set_innerhtml(i, '3a', "&nbsp;");
 			if (i < 2) {
 				table_set_innerhtml(i, '3b', "<p style='bottom: 0.1em'>"
@@ -254,16 +253,16 @@ function get_data(obj) {
 }
 
 /* b = 1 => afficher retard
- * b = 0 => afficher heures */
+ * b = 0 => afficher numéro train */
 function flip_retard(b) {
-	var col2    = by_classname("col2");
-	var col2bis = by_classname("col2bis");
+	var num_train    = by_classname("numero-train");
+	var ret_train 	 = by_classname("retard-train");
 
 	var hide;
 	var show;
 
-	if (b) { hide = col2; show = col2bis; }
-	else { hide = col2bis; show = col2; }
+	if (b) { hide = num_train; show = ret_train; }
+	else { hide = ret_train; show = num_train; }
 	
 	for (var i = 0; i < hide.length; i++) {
 		if (show[i].innerHTML)
@@ -271,7 +270,7 @@ function flip_retard(b) {
 	}
 	for (var i = 0; i < show.length; i++) {
 		if (show[i].innerHTML)
-			show[i].style.display = 'table-cell';
+			show[i].style.display = 'inline';
 	}
 
 	window.clearTimeout(col2flipTimer);
@@ -292,10 +291,11 @@ function init_data(b) {
 
 		for (var i = 0; i < 6; i++) {
 			table_get_node(i).className = 'train';
-			table_set_innerhtml(i, '1', "&nbsp;<br />&nbsp;");
+			table_set_innerhtml(i, '1a', "&nbsp;");
+			table_set_innerhtml(i, '1b', "&nbsp;");
+			table_set_innerhtml(i, '1c', "&nbsp;");
 			table_set_classname(i, '2', "col2");
 			table_set_innerhtml(i, '2', "&nbsp;");
-			table_set_innerhtml(i, '2b', "&nbsp;");
 			if (i < 2) {
 				table_set_innerhtml(i, '3a', "Chargement... ");
 				table_set_innerhtml(i, '3b', "<p style='bottom: 0.1em'>"
@@ -568,9 +568,12 @@ window.onpopstate = function(e) {
 
 <% FOR i in [0..5] %>
 <div class="train" id="t<% i %>">
-	<div class="col1" id="t<% i %>c1">&nbsp;</div>
+	<div class="col1" id="t<% i %>c1">
+		<span class="mission-train" id="t<% i %>c1a">&nbsp;</span><br />
+		<span class="numero-train" id="t<% i %>c1b">&nbsp;</span>
+		<span class="retard-train" id="t<% i %>c1c">&nbsp;</span>
+	</div>
 	<div class="col2" id="t<% i %>c2">&nbsp;</div>
-	<div class="col2bis" id="t<% i %>c2b">&nbsp;</div>
 	<div class="col3" id="t<% i %>c3"><span id="t<% i %>c3a"><% IF i <= 1 %>Chargement...<% END %></span>
 	<% IF i <= 1 %>
 	<div class="desserte" id="t<% i %>c3b"><p>Chargement en cours...</p>
