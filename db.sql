@@ -1227,10 +1227,9 @@ BEGIN
 SELECT DISTINCT gares.code,
 	CAST(COALESCE(gares.uic, SUBSTR(stop_id, 14)) AS CHAR) AS uic,
 	gares.name
-FROM trips AS t
-	LEFT JOIN calendar AS c USING (service_id)
-	LEFT JOIN calendar_dates AS cd USING (service_id)
-	LEFT JOIN routes AS r USING (route_id)
+FROM trips 
+	LEFT JOIN calendar USING (service_id)
+	LEFT JOIN calendar_dates USING (service_id)
 	JOIN stop_times USING (trip_id)
 	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
 WHERE (
