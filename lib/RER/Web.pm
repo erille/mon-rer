@@ -138,6 +138,11 @@ get '/json' => sub {
             status 503;
             stats_add 'api_failure';
             $train_obj_last_update{$code} = undef;
+
+            # log error
+            error "$code: $err";
+
+            # return error to client
             return to_json({ error => $err }, { ascii => 1 });
         } else {
             $train_obj_last_update{$code} = time;

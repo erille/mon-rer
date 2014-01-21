@@ -54,6 +54,7 @@ sub check_ligne {
 	# big time.
 	given ($value) {
 		$value = 'C' when /Gare d'Aus/i;
+        $value = 'C' when /Dourdan =>/i;
 		$value = 'C' when /Invalides /i; # note the space
 		$value = 'C' when /Montigny B/i;
 		$value = 'D' when /Evry Courc/i;
@@ -107,7 +108,7 @@ sub get_info_for_train {
     # numéros de train changent de parité en cours de route.  Dans ce cas, il
     # faut prendre le numéro de train moins 1 et réessayer.
     # Bien entendu, ne pas faire ça sur les "numéros" de train RATP.
-    if ($train_number =~ /[0-9]{6}/ 
+    if ($train_number =~ /^[0-9]+$/ 
             && $train_number % 2 == 1 
             && scalar @$data == 0) {
         $data = $self->db_run_train_times_for_date($date, $station_code, $train_number - 1);

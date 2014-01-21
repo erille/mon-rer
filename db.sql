@@ -498,6 +498,8 @@ INSERT INTO gares (code, uic, name) VALUES
 INSERT INTO gares (code, uic, name, is_transilien) VALUES
 	('ERU', 8753413, 'Ermont Eaubonne', 0), -- hack pour certains trains de AEE qui marchent pas
 	('PAZ', 8754700, 'Paris Austerlitz', 0),   -- grandes lignes
+ 	('VTP', 8739417, 'La Villette Saint-Prest', 0),  -- TODO: verifier si cette gare est interrogeable
+ 	('PVA', 8739110, 'Paris Montparnasse', 0), -- Paris Vaugirard
 	('PNB', 8727103, 'Paris Nord', 0);
 
 -- INSERT INTO gares (code, name, is_transilien) VALUES
@@ -580,7 +582,6 @@ INSERT INTO gares (code, uic, name, is_transilien) VALUES
 -- 	('PAZ', 'Paris Austerlitz', 0),
 -- 	('PNO', 'Paris Nord', 0), -- grandes lignes, redondant 
 -- 	('PUY', 'Pont-sur-Yonne', 0),
--- 	('PVA', 'Paris Vaugirard', 0), -- redondant avec PMP
 -- 	('PXE', 'Pont Sainte-Maxence', 0),
 -- 	('RIA', 'Rieux Angicourt', 0),
 -- 	('RN',  'Rouen Rive Droite', 0),
@@ -607,7 +608,6 @@ INSERT INTO gares (code, uic, name, is_transilien) VALUES
 -- 	('VO',  'Voves', 0),
 -- 	('VPL', 'Villers-Saint-Paul', 0),
 -- 	('VSX', 'Villeneuve Point X', 0),
--- 	('VTP', 'La Villette - Saint-Prest', 0),
 -- 	('VVG', 'Villeneuve la Guyard', 0),
 -- 	('VXN', 'Valence TGV', 0),
 -- 	('VYE', 'Villeneuve sur Yonne', 0);
