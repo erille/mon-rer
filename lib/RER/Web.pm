@@ -153,7 +153,7 @@ get '/json' => sub {
     my $ret = dclone($train_obj{$code});
 
     if ($line) {
-        @{$ret->{trains}} = grep { $_->{ligne} eq $line } @{$ret->{trains}};
+        @{$ret->{trains}} = grep { $_->{ligne} && $_->{ligne} eq $line } @{$ret->{trains}};
     }
     # Limiter à 6 le nombre de trains renvoyés
     if (scalar @{$ret->{trains}} > 6) {
