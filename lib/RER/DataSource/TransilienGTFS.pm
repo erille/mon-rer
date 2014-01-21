@@ -57,6 +57,8 @@ sub check_ligne {
         $value = 'C' when /Dourdan =>/i;
 		$value = 'C' when /Invalides /i; # note the space
 		$value = 'C' when /Montigny B/i;
+		$value = 'C' when /PONT DU GA/i;
+		$value = 'D' when /Corbeil Es/i;
 		$value = 'D' when /Evry Courc/i;
 		$value = 'D' when /Grigny Cen/i;
 		$value = 'D' when /Le Bras de/i;
