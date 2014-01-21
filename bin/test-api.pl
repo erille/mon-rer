@@ -33,7 +33,10 @@ die "$code: gare non valable\n" if ! defined ($gare);
 
 print "code UIC : " . $gare->uic() . "\n";
 
-my $ds  = RER::DataSource::Transilien->new(%{config->{'sncf_api'}});
+my $ds  = RER::DataSource::Transilien->new(
+	url		=> config->{'sncf_url'},
+	username	=> config->{'sncf_username'},
+	password	=> config->{'sncf_password'});
 my $ds2 = RER::DataSource::TransilienGTFS->new(
 	dsn		=> config->{'db_dsn'},
 	username	=> config->{'db_username'},
@@ -62,14 +65,14 @@ foreach my $train (@$data) {
 	}
 
 
-	printf "%6s %4s %-5s %-5s %-1s %-1s %+3s %+3d %-30s\n",
+	printf "%6s %4s %-5s %-5s %-1s %-1s %+3d %-30s\n",
 		$train->number,
 		$train->code,
 		substr($train->real_time->time, 0, 5),
 		($train->due_time) ? substr($train->due_time->time, 0, 5) : "--:--",
 		$train->status,
 		$train->line || '?',
-		defined $delay ? (sprintf "%+3d", $delay) : "?",
-		scalar @{$train->stations},
+		
+		scalar(@{$train->stations}),
 		$terminus_name;
 }
