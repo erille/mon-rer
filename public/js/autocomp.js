@@ -191,7 +191,6 @@ function autocomp_keyup(event) {
 		}
 		*/
 		if (keycode == 13 || keycode == 3) {
-			console.log("pouf");
 			autocomp_display_list.childNodes[autocomp_hl_index].onclick();
 		}
 		/*

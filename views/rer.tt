@@ -493,7 +493,6 @@ function change_station(new_code, new_station, do_push_state) {
 	originLineFilter = null;
 	init_data(1);
 	document.title = new_station + " \u2022 Prochains départs";
-	document.getElementById("departure-station").innerHTML = new_station;
 }
 
 function change_line_filter(new_line_filter) {

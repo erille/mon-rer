@@ -180,7 +180,6 @@ input::-webkit-input-placeholder {
 }
 
 div#autocomp {
-//	display: none;
 	position: absolute;
 
 	font-family: sans-serif;
