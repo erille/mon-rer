@@ -73,7 +73,14 @@ function table_set_innerhtml(row, column, html) {
 	table_get_node(row, column).innerHTML = html;
 }
 
+function set_cookie(name, value) {
+	var expires = new Date();
+	expires.setDate(expires.getDate() + 28);
 
+	var cookie_str = name + "=" + value + "; expires=" + expires.toUTCString();
+	console.log(cookie_str);
+	document.cookie = cookie_str;
+}
 
 
 function extract_number(str) {
@@ -284,6 +291,7 @@ function init_data(b) {
 	if (xmlHttp) xmlHttp.abort();
 
 	if (b) {
+		set_cookie('station', originCode);
 		if (dataRefreshTimer) { window.clearTimeout(dataRefreshTimer); }
 
 		var lmsg = document.getElementById('conteneurmessages');
