@@ -83,16 +83,10 @@ hook 'before' => sub {
 };
 
 get '/' => sub {
-
-
     # rediriger (302) vers l'url /?s=<blah> si l'user a sauvegardé sa dernière gare
     if (cookie("station") && ! defined params->{'s'})
     {
-        debug "redirect!";
         redirect "?s=" . cookie("station");
-    }
-    else {
-        debug "don't redirect!";
     }
 
     # sinon, examiner le header http
@@ -165,7 +159,7 @@ get '/json' => sub {
             error "$code: $err";
 
             # return error to client
-            return to_json({ error => $err }, { ascii => 1 });
+            return { error => $err };
         } else {
             $train_obj_last_update{$code} = time;
         }
@@ -183,7 +177,6 @@ get '/json' => sub {
     }
     
     return $ret;
-
 };
 
 get '/autocomp' => sub {

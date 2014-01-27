@@ -52,14 +52,10 @@ sub get_trains {
     return $_[0]->{trains};
 }
 
-sub format
+sub TO_JSON
 {
     my ($self) = @_;
-    
-    my $obj = { lines => $self->{from}->lines, trains => $self->{trains}, info => $self->{messages} };
-    my $ret = encode_json $obj;
-    utf8::decode $ret;
-    return $ret;
+    return { lines => $self->{from}->lines, trains => $self->{trains}, info => $self->{messages} };
 }
 
 
