@@ -24,9 +24,12 @@ engines:
      encoding:  'utf8'
      start_tag: '<%'
      end_tag:   '%>'
+   JSON:
+     allow_blessed: '1'
+     convert_blessed: '1'
 
 # database settings
-db_dsn: "dbi:mysql:dbname=sncf_gtfs;host=localhost;"
+db_dsn: "dbi:mysql:dbname=sncf_gtfs;host=localhost;mysql_enable_utf8=1"
 db_username: "rer-web"
 db_password: "secret"
 

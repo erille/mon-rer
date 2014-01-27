@@ -96,8 +96,9 @@ get '/' => sub {
 };
 
 get '/json' => sub {
-    header 'Content-type' => 'application/json; charset=utf-8';
     header 'Cache-Control' => 'no-cache';
+
+    set serializer => 'JSON';
 
     my $code = check_code(params->{'s'}) || 'EVC';
     my $line = params->{'l'};
@@ -113,7 +114,7 @@ get '/json' => sub {
 
     if (config->{restrict_lines}) {
         if (! grep /^[CL]$/, @{RER::Gares::get_lines(RER::Gares::find(code => $code))}) {
-            return to_json ( { trains => [], info => [ "Pas d'informations sur cette gare. Seules les lignes C et L sont prises en charge pour le moment." ] } );  
+            return ( { trains => [], info => [ "Pas d'informations sur cette gare. Seules les lignes C et L sont prises en charge pour le moment." ] } );  
         }
     }
 
@@ -160,21 +161,18 @@ get '/json' => sub {
         @{$ret->{trains}} = @{$ret->{trains}}[0..5];
     }
     
-    return $ret->format();
+    return $ret;
 
 };
 
 get '/autocomp' => sub {
-    header 'Content-type' => 'application/json; charset=utf-8';
     header 'Cache-Control' => 'no-cache';
 
-    my $str = params->{'s'};
-    my $autocomp = RER::Gares::get_autocomp($str);
+    set serializer => 'JSON';
 
-    my $json = JSON->new->allow_blessed(1)->convert_blessed(1);
-    my $json_data = $json->encode($autocomp);
-    utf8::decode($json_data);
-    return $json_data;
+    my $str = params->{'s'} || '';
+
+    return RER::Gares::get_autocomp($str);
 };
 
 true;
