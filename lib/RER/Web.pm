@@ -83,9 +83,30 @@ hook 'before' => sub {
 };
 
 get '/' => sub {
-    my $origin_code = check_code(params->{'s'}) || 'EVC';
+
+
+    # rediriger (302) vers l'url /?s=<blah> si l'user a sauvegardé sa dernière gare
+    if (cookie("station") && ! defined params->{'s'})
+    {
+        debug "redirect!";
+        redirect "?s=" . cookie("station");
+    }
+    else {
+        debug "don't redirect!";
+    }
+
+    # sinon, examiner le header http
+    my $origin_code = check_code(params->{'s'});
+    $origin_code ||= 'EVC';
+
     my $origin_station = RER::Gares::find(code => $origin_code)->name;
     utf8::decode($origin_station);
+
+    # positionner le cookie (valable 4 semaines)
+    # on y touche dans le code js, donc http_only = 0
+    cookie "station" => check_code($origin_code), 
+        expires => '4w', 
+        http_only => 0;
 
     template 'rer', {
     	origin_station => $origin_station,
