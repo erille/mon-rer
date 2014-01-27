@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 139;
+use Test::More tests => 140;
 
 BEGIN { use_ok('RER::Gare'); }
 
@@ -167,3 +167,4 @@ __END__
 8754702 6
 8754730 7
 8754731 5
+8738162 4
