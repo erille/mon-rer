@@ -6,7 +6,6 @@ use RER::Gare;
 use RER::Gares;
 use RER::Train;
 
-use DateTime::Format::Strptime;
 use HTTP::Request;
 use LWP::UserAgent;
 use XML::Simple;
@@ -59,12 +58,6 @@ sub process_xml_trains {
 
     my @trains;
 
-    my $strp = DateTime::Format::Strptime->new(
-        pattern     => '%d/%m/%Y %R',
-        time_zone   => 'Europe/Paris'
-    );
-
-    
     # S'il n'y a qu'un seul train, XML::Simple renvoie un hash au lieu d'un
     # tableau.  Forcer un tableau à un seul élément dans ce cas.
     my @train_data = (ref $data->{train} eq 'ARRAY') ? @{$data->{train}} : 
@@ -72,7 +65,17 @@ sub process_xml_trains {
 
     foreach my $train_hash (@train_data) {
         my $time_type  = ($train_hash->{date}{mode} eq 'R') ? 'real_time' : 'due_time';
-        my $time_value = $strp->parse_datetime($train_hash->{date}{content});
+
+        $train_hash->{date}{content} =~ m#^([\d]{2})/([\d]{2})/([\d]{4}) ([\d]{2}):([\d]{2})$#;
+        my $time_value = DateTime->new(
+            year    => $3,
+            month   => $2,
+            day     => $1,
+            hour    => $4,
+            minute  => $5,
+            second  => 0,
+            time_zone => 'Europe/Paris'
+        );
 
         my $terminus;
 

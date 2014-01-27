@@ -9,7 +9,7 @@ use 5.010;
 
 use RER::Train;
 
-use DateTime::Format::Strptime;
+use DateTime;
 use DBI;
 
 
@@ -99,6 +99,9 @@ sub db_run_train_times_for_date {
 sub get_info_for_train {
     my ($self, $date, $station_code, $train_number) = @_;
 
+    # Sauvegarder le numéro de train (il se peut qu'on le modifie plus tard)
+    my $orig_train_number = $train_number;
+
     my $data = $self->db_run_train_times_for_date($date, $station_code, $train_number);
 
     # Hack spécifique aux gares ayant deux numéros UIC identiques
@@ -117,14 +120,12 @@ sub get_info_for_train {
         $train_number--;
     }
         
-    my $strp = DateTime::Format::Strptime->new(
-        pattern     => '%Y-%m-%d %T',
-        time_zone   => 'Europe/Paris'
-    );
-
     my @ret;
 
-    foreach my $row (@$data) {
+    my $row = $data->[0];
+    
+    if (defined $row)
+    {
         my ($stations_mysql, @stations);
 
         $self->{sth_tsl}->execute($date, $train_number, $row->[6]);
@@ -137,9 +138,20 @@ sub get_info_for_train {
         ) } @$stations_mysql;
 
 
+        $row->[2] =~ /^([\d]{4})-([\d]{2})-([\d]{2}) ([\d]{2}):([\d]{2}):([\d]{2})$/;
+        my $due_time = DateTime->new(
+            year    => $1,
+            month   => $2,
+            day     => $3,
+            hour    => $4,
+            minute  => $5,
+            second  => $6,
+            time_zone => 'Europe/Paris'
+        );
+
         my $train = RER::Train->new(
-            number      => $train_number,
-            due_time    => $strp->parse_datetime($row->[2]),
+            number      => $orig_train_number,
+            due_time    => $due_time,
             line        => check_ligne($row->[0]),
             stations    => \@stations,
         );
