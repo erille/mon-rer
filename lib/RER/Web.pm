@@ -129,7 +129,10 @@ get '/json' => sub {
 
     if (config->{restrict_lines}) {
         if (! grep /^[CL]$/, @{RER::Gares::get_lines(RER::Gares::find(code => $code))}) {
-            return ( { trains => [], info => [ "Pas d'informations sur cette gare. Seules les lignes C et L sont prises en charge pour le moment." ] } );  
+            return ( { 
+                       trains => [], 
+                       info => [ "Pas d'informations sur cette gare. Seules les gares des lignes C et L sont prises en charge pour le moment." ] 
+                   } );  
         }
     }
 
