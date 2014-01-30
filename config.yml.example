@@ -28,10 +28,21 @@ engines:
      allow_blessed: '1'
      convert_blessed: '1'
 
+plugins:
+   Redis:
+     server: '127.0.0.1:6379'   # can't use UNIX domain sockets here
+     debug: 0
+     encoding: utf8
+     reconnect: 60
+     password: supersecret      # optional
+
+
 # database settings
 db_dsn: "dbi:mysql:dbname=sncf_gtfs;host=localhost;mysql_enable_utf8=1"
 db_username: "rer-web"
 db_password: "secret"
+
+use_redis: 1
 
 # SNCF API settings
 

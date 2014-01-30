@@ -1,5 +1,6 @@
 package RER::Web;
 use Dancer ':syntax';
+use Dancer::Plugin::Redis;
 
 use RER::Transilien;
 use RER::Trains;
@@ -8,7 +9,7 @@ use RER::DataSource::Transilien;
 use RER::DataSource::TransilienGTFS;
 use RRD::Simple;
 use Data::Dumper;
-use Storable qw(dclone);
+use Storable qw(dclone freeze thaw);
 
 our $VERSION = '0.1';
 
@@ -68,6 +69,54 @@ sub stats_add {
 
     %stats = ();
 }
+
+
+# Expires a given train objet cache entry
+sub cache_invalidate {
+    my ($key) = @_;
+
+    if (config->{'use_redis'}) {
+        redis->del("rer-web.train_obj.$key");
+    }
+    else {
+        $train_obj_last_update{$key} = undef;
+    }
+}
+
+# Sets a given train objet cache entry to a a new value
+sub cache_set_hash {
+    my ($key, $value) = @_;
+
+    if (config->{'use_redis'}) {
+        redis->multi;
+        redis->set("rer-web.train_obj.$key", freeze $value) if ref $value;
+        redis->expire("rer-web.train_obj.$key", 11) if ref $value;
+        redis->exec;
+    }
+    else {
+        $train_obj_last_update{$key} = time;
+        $train_obj{$key} = $value;
+    }
+}
+
+# Gets a train objet cache entry (or undef if cache miss)
+sub cache_get_hash {
+    my ($key) = @_;
+
+    if (config->{'use_redis'}) {
+        return thaw redis->get("rer-web.train_obj.$key");
+    }
+    else {
+        if (exists $train_obj_last_update{$key}
+            && time - $train_obj_last_update{$key} < 12) {
+            return $train_obj{$key};
+        }
+        else {
+            return undef;
+        }
+    }
+}
+
 
 
 
@@ -132,8 +181,9 @@ get '/json' => sub {
         }
     }
 
-    if (!defined $train_obj_last_update{$code} 
-        || time - $train_obj_last_update{$code} > 10) {
+    my $ret = cache_get_hash($code);
+
+    if (! defined $ret) {
 
         stats_add 'api_call';
         if ( ! exists $stats{'users'} ) {
@@ -143,8 +193,9 @@ get '/json' => sub {
         }
 
 
+        my $data;
         eval {
-            $train_obj{$code} = RER::Transilien::new(
+            $data = RER::Transilien::new(
                 from => $code,
                 ds   => [ $ds, $ds2 ],
             );
@@ -152,7 +203,7 @@ get '/json' => sub {
         if (my $err = $@) {
             status 503;
             stats_add 'api_failure';
-            $train_obj_last_update{$code} = undef;
+            cache_invalidate $code;
 
             # log error
             error "$code: $err";
@@ -160,12 +211,12 @@ get '/json' => sub {
             # return error to client
             return { error => $err };
         } else {
-            $train_obj_last_update{$code} = time;
+            cache_set_hash($code, $data);
         }
+        $ret = dclone $data;
     }
 
     # Filtrer par ligne si cela est désiré
-    my $ret = dclone($train_obj{$code});
 
     if ($line) {
         @{$ret->{trains}} = grep { $_->{ligne} && $_->{ligne} eq $line } @{$ret->{trains}};
