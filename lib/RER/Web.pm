@@ -46,31 +46,27 @@ sub rrd_update {
         );
     }
 
-    $rrd->update($stats{begin_time},
-                 api_call    => $stats{api_call} || 0,
-                 api_failure => $stats{api_failure} || 0,
-                 users       => (exists $stats{users}) ? scalar @{$stats{users}} : 0,
-             );
+    eval {
+        $rrd->update(time,
+                     api_call    => $stats{api_call} || 0,
+                     api_failure => $stats{api_failure} || 0,
+                     users       => (exists $stats{users}) ? scalar @{$stats{users}} : 0,
+                 );
+    };
 }
 
 sub stats_add {
     my ($key, $value) = @_;
-
-    if (! exists $stats{begin_time}) {
-        $stats{begin_time} = (int(time / 60)) * 60;
-    } elsif (time - $stats{begin_time} >= 60) {
-        while (time - $stats{begin_time} >= 60) {
-            rrd_update;
-            my $temp = $stats{begin_time} + 60;
-            %stats = ( begin_time => $temp );
-        }
-    }
 
     if (!defined ($value)) {
         $stats{$key}++;
     } else {
         $stats{$key} = $value;
     }
+
+    rrd_update;
+
+    %stats = ();
 }
 
 
