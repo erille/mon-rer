@@ -17,8 +17,17 @@ var autocomp_xmlhttp;
 var autocomp_display_list;
 var autocomp_hl_index = -1;
 
-var autocomp_input_volatile = 1;
 var autocomp_escaping = 0;
+
+
+/* fonction portable pour arrêter la propagation d'un event
+ * (bonjour IE 8 et ses comportements à la con !) */
+function stop_propagation(e) {
+	if ('bubbles' in e) /* IE 9 et autres browsers */
+		e.stopPropagation();
+	else /* IE 8 de merde */
+		e.cancelBubble = true;
+}
 
 function init_autocomp(form, field, combo, results, submit) {
 	autocomp_form = document.getElementById(form);
@@ -29,18 +38,16 @@ function init_autocomp(form, field, combo, results, submit) {
 	
 	autocomp_cur_input_val = autocomp_field.value;
 	autocomp_old_input_val = autocomp_field.value;
+	autocomp_orig_input_val = autocomp_field.value;
+
 	autocomp_field.autocomplete = "off";
 	autocomp_field.onkeyup = autocomp_keyup;
-	autocomp_field.onclick = function() { 
+	autocomp_field.onclick = function(e) { 
 		autocomp_escaping = 0;
-		autocomp_orig_input_val = autocomp_field.value;
 		autocomp_field.value = ''; 
+		stop_propagation(e);
+		return false;
 	};
-	autocomp_field.onblur = function() {
-		autocomp_escaping = 1;
-		autocomp_field.value = autocomp_orig_input_val;
-		autocomp_show(0);
-	}
 	autocomp_field.onfocus = function() { autocomp_field.select(); };
 
 	autocomp_submit.style.display = "none";
@@ -54,12 +61,21 @@ function init_autocomp(form, field, combo, results, submit) {
 	autocomp_results.style.left = calculateOffsetLeft(autocomp_field) + "px";
 
 	document.onkeydown = autocomp_keydown;
+	document.onclick = autocomp_reset;
 
 	setTimeout(autocomp_loop, 200);
 }
 
 function autocomp_show(b) {
 	autocomp_results.style.display = b ? 'block' : 'none';
+}
+
+function autocomp_reset() {
+	if (autocomp_escaping) return false;
+	autocomp_escaping = 1;
+	autocomp_field.value = autocomp_orig_input_val;
+	autocomp_field.blur();
+	autocomp_show(0);
 }
 
 
@@ -88,14 +104,15 @@ function autocomp_store_cache(str, list) {
 }
 
 function autocomp_make_click_handler(c, n) {
-	return function() {
+	return function(e) {
+		autocomp_escaping = 1;
 		autocomp_field.value = n;
 		autocomp_old_input_val = n;
 		autocomp_orig_input_val = n;
 		autocomp_field.blur();
 		autocomp_show(0);
+		stop_propagation(e);
 		change_station(c, n, 1);
-		autocomp_input_volatile = 1;
 		return false;
 	};
 }
@@ -120,7 +137,7 @@ function autocomp_set(list) {
 		autocomp_display_list.removeChild(autocomp_display_list.childNodes[0]);
 	
 	if (list.length == 0)
-		autocomp_show(0);
+		return autocomp_show(0);
 
 	for (var i = 0; i < list.length; i++) {
 		var n = document.createElement("li");
@@ -161,6 +178,7 @@ function autocomp_loop() {
 			autocomp_get(v);
 		autocomp_field.focus();
 	}
+
 	autocomp_old_input_val = autocomp_cur_input_val;
 	window.setTimeout(autocomp_loop, 200);
 	return true;
@@ -170,8 +188,12 @@ function autocomp_loop() {
 function autocomp_keydown(event) {
 	if (!event && window.event)
 		event=window.event;
-	if (event) 
+	if (event)  {
 		autocomp_last_keycode = event.keyCode;
+		if (event.keyCode == 13 || event.keyCode == 3)
+			autocomp_display_list.childNodes[autocomp_hl_index].onclick(event);
+	}
+	
 }
 
 function autocomp_keyup(event) {
@@ -204,12 +226,11 @@ function autocomp_keyup(event) {
 		}
 		*/
 		if (keycode == 13 || keycode == 3) {
-			autocomp_display_list.childNodes[autocomp_hl_index].onclick();
+			autocomp_display_list.childNodes[autocomp_hl_index].onclick(event);
 		}
-		else if (keycode == 27) {
-			autocomp_field.value = autocomp_orig_input_val;
-			autocomp_field.blur();
-		}
+		else if (keycode == 27) 
+			autocomp_reset();
+
 		/*
 		else {
 			if (autocomp_field.value != V)
