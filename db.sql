@@ -78,7 +78,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('BSR', 8727664, 'Bessancourt'),
 	('BSW', 8727655, 'Belloy - Saint-Martin'),
 	('BUR', 8768143, 'Ballancourt'),
-	('BVI', 8739332, 'Boulevard Victor - Pont du Garigliano'),
+	('BVI', 8739332, 'Pont du Garigliano'),
 	('BVJ', 8775885, 'Bures sur Yvette'),
 	('BWI', 8768440, 'Boigneville'),
 	('BWR', 8754318, 'Boulainvilliers'),
@@ -470,7 +470,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('VP' , 8768185, 'Villeneuve Prairie'),
 	('VPN', 8727145, 'Villepinte'),
 	('VRD', 8738286, 'Versailles Rive Droite'),
-	('VRG', 8739315, 'Versailles Rive Gauche Château'),
+	('VRG', 8739315, 'Versailles Château Rive Gauche'),
 	('VRI', 8754527, 'Villeneuve le Roi'),
 	('VSG', 8768182, 'Villeneuve Saint-Georges'),
 	('VSM', 8711379, 'Villiers sur Marne Plessis Trévise'),
@@ -1176,6 +1176,7 @@ INSERT INTO gares_lines VALUES
 	(8768600, 'D'),		-- PARIS - GARE DE LYON (alternatif)
 	(8768600, 'R'),		-- PARIS - GARE DE LYON (alternatif)
 	(8739414, 'TER'),	-- SAINT PIAT
+	(8738162, 'TER'),	-- BREVAL
 	(8775830, 'A'),		-- VAL DE FONTENAY RER A
 	(8798871, 'T4');	-- LYCEE HENRI SELLIER (T4)
 
