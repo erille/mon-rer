@@ -78,7 +78,6 @@ function set_cookie(name, value) {
 	expires.setDate(expires.getDate() + 28);
 
 	var cookie_str = name + "=" + value + "; expires=" + expires.toUTCString();
-	console.log(cookie_str);
 	document.cookie = cookie_str;
 }
 
