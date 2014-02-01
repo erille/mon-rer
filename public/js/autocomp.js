@@ -5,8 +5,9 @@ var autocomp_results;
 
 var autocomp_timer;
 
-var autocomp_cur_input_val = '';
-var autocomp_old_input_val = '';
+var autocomp_cur_input_val = ''; // courant
+var autocomp_old_input_val = ''; // avant la dernière touche
+var autocomp_orig_input_val = ''; // avant le clic
 
 var autocomp_last_keycode;
 
@@ -17,6 +18,7 @@ var autocomp_display_list;
 var autocomp_hl_index = -1;
 
 var autocomp_input_volatile = 1;
+var autocomp_escaping = 0;
 
 function init_autocomp(form, field, combo, results, submit) {
 	autocomp_form = document.getElementById(form);
@@ -29,7 +31,16 @@ function init_autocomp(form, field, combo, results, submit) {
 	autocomp_old_input_val = autocomp_field.value;
 	autocomp_field.autocomplete = "off";
 	autocomp_field.onkeyup = autocomp_keyup;
-	autocomp_field.onclick = function() { autocomp_field.value = ''; };
+	autocomp_field.onclick = function() { 
+		autocomp_escaping = 0;
+		autocomp_orig_input_val = autocomp_field.value;
+		autocomp_field.value = ''; 
+	};
+	autocomp_field.onblur = function() {
+		autocomp_escaping = 1;
+		autocomp_field.value = autocomp_orig_input_val;
+		autocomp_show(0);
+	}
 	autocomp_field.onfocus = function() { autocomp_field.select(); };
 
 	autocomp_submit.style.display = "none";
@@ -78,9 +89,10 @@ function autocomp_store_cache(str, list) {
 
 function autocomp_make_click_handler(c, n) {
 	return function() {
-		autocomp_field.blur();
 		autocomp_field.value = n;
 		autocomp_old_input_val = n;
+		autocomp_orig_input_val = n;
+		autocomp_field.blur();
 		autocomp_show(0);
 		change_station(c, n, 1);
 		autocomp_input_volatile = 1;
@@ -138,8 +150,9 @@ function autocomp_set(list) {
 }
 
 function autocomp_loop() {
+
 	autocomp_cur_input_val = autocomp_field.value;
-	if (autocomp_old_input_val != autocomp_cur_input_val) {
+	if (!autocomp_escaping && autocomp_old_input_val != autocomp_cur_input_val) {
 		var v = encodeURIComponent(autocomp_cur_input_val);
 		var s = autocomp_cache[autocomp_cur_input_val];
 		if (s)
@@ -192,6 +205,10 @@ function autocomp_keyup(event) {
 		*/
 		if (keycode == 13 || keycode == 3) {
 			autocomp_display_list.childNodes[autocomp_hl_index].onclick();
+		}
+		else if (keycode == 27) {
+			autocomp_field.value = autocomp_orig_input_val;
+			autocomp_field.blur();
 		}
 		/*
 		else {
