@@ -493,7 +493,9 @@ function change_station(new_code, new_station, do_push_state) {
 
 	if (do_push_state !== false) {
 		window.history.pushState(
-			new_code, new_station, "?s=" + new_code);
+			{code: new_code, name: new_station}, 
+			new_station, 
+			"?s=" + new_code);
 	}
 
 	originCode = new_code;
@@ -538,8 +540,10 @@ function toggle_block(group, id) {
 listenEvent(window, "load", function() { init_data(1); init_scroll(); init_other(); update_time(); });
 
 window.onpopstate = function(e) {
+	console.log(e.state);
 	if (e.state) {
-		document.getElementById("station_list").value = e.state;
+		document.getElementById("station_list").value = e.state.code;
+		document.getElementById("s2").value = e.state.name;
 		combobox_change_station(false);
 	}
 }
