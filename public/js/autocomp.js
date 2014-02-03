@@ -199,7 +199,7 @@ function autocomp_keydown(event) {
 function autocomp_keyup(event) {
 	var keycode;
 
-	if (!event && window.sevent)
+	if (!event && window.event)
 		event = window.event;
 	if (event)
 		keycode = event.keyCode;
