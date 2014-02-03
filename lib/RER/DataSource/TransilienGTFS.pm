@@ -44,35 +44,47 @@ sub new {
 
 
 sub check_ligne {
-	my ($ligne) = @_;
+	my ($ligne, $agency) = @_;
 	return '' if not defined $ligne;
 
 	my $value = $ligne;
 
-	# $value should usually contain a one-letter value, or
+    if ($value !~ /^(?:TER|[A-EHJKLNPRU])$/ && defined $agency) {
+        given ($agency) {
+            $value = $1  when /^RER (.)$/;
+            $value = 'N' when 'Paris Rive Gauche';
+            $value = 'P' when 'Paris Est';
+            $value = 'R' when 'Paris Sud Est';
+            $value = 'U' when 'La Verrière - La Défense';
+        }
+    }
+
+	# $value should now usually contain a one-letter value, or
 	# "TER".  However SNCF somehow manages to fuck this up
 	# big time.
 	given ($value) {
-		$value = 'C' when /Gare d'Aus/i;
+        $value = 'C' when /Gare d'Aus/i;
         $value = 'C' when /Dourdan =>/i;
-		$value = 'C' when /Invalides /i; # note the space
-		$value = 'C' when /Montigny B/i;
-		$value = 'C' when /PONT DU GA/i;
-		$value = 'D' when /Corbeil Es/i;
-		$value = 'D' when /Evry Courc/i;
-		$value = 'D' when /Grigny Cen/i;
-		$value = 'D' when /Le Bras de/i;
-		$value = 'D' when /Orangis Bo/i;
-		$value = 'D' when /Juvisy => /i; # note the space
-		$value = 'E' when /Haussmann /i; # note the space
-		$value = 'H' when /LUZARCHES /i; # note the space
-		$value = 'H' when /ERMONT EAU/i;
-		$value = 'J' when /Gisors => /i; # note the space
-		$value = 'J' when /Mantes la /i; # note the space
-		$value = 'L' when /St Nom la /i; # note the space
-		$value = 'R' when /Montargis /i; # note the space
-		$value = 'TER' when 'Train';
+        $value = 'C' when /Invalides /i; # note the space
+        $value = 'C' when /Montigny B/i;
+        $value = 'C' when /PONT DU GA/i;
+        $value = 'D' when /Corbeil Es/i;
+        $value = 'D' when /Evry Courc/i;
+        $value = 'D' when /Grigny Cen/i;
+        $value = 'D' when /Le Bras de/i;
+        $value = 'D' when /Orangis Bo/i;
+        $value = 'D' when /Juvisy => /i; # note the space
+        $value = 'E' when /Haussmann /i; # note the space
+        $value = 'H' when /LUZARCHES /i; # note the space
+        $value = 'H' when /ERMONT EAU/i;
+        $value = 'J' when /Gisors => /i; # note the space
+        $value = 'J' when /Mantes la /i; # note the space
+        $value = 'L' when /St Nom la /i; # note the space
+        $value = 'R' when /Montargis /i; # note the space
+        $value = 'TER' when 'Train';
 	}
+
+    return '' if ($value !~ /^(?:TER|[A-EHJKLNPRU])$/);
 	return $value;
 }
 
@@ -128,7 +140,7 @@ sub get_info_for_train {
     {
         my ($stations_mysql, @stations);
 
-        $self->{sth_tsl}->execute($date, $train_number, $row->[6]);
+        $self->{sth_tsl}->execute($date, $train_number, $row->[7]);
         $stations_mysql = $self->{sth_tsl}->fetchall_arrayref;
 
         @stations = map { RER::Gare->new(
@@ -138,7 +150,7 @@ sub get_info_for_train {
         ) } @$stations_mysql;
 
 
-        $row->[2] =~ /^([\d]{4})-([\d]{2})-([\d]{2}) ([\d]{2}):([\d]{2}):([\d]{2})$/;
+        $row->[3] =~ /^([\d]{4})-([\d]{2})-([\d]{2}) ([\d]{2}):([\d]{2}):([\d]{2})$/;
         my $due_time = DateTime->new(
             year    => $1,
             month   => $2,
@@ -152,7 +164,7 @@ sub get_info_for_train {
         my $train = RER::Train->new(
             number      => $orig_train_number,
             due_time    => $due_time,
-            line        => check_ligne($row->[0]),
+            line        => check_ligne($row->[0], $row->[1]),
             stations    => \@stations,
         );
 
@@ -161,8 +173,6 @@ sub get_info_for_train {
 
     return \@ret;
 }
-
-# CALL train_times_for_date(CURDATE(), 'EVC', '121414');
 
 1;
 # vi:ts=4:sw=4:et:

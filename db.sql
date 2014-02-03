@@ -1198,6 +1198,7 @@ DELIMITER //
 CREATE PROCEDURE `train_times_for_date`(_d DATE, _station_code TEXT, _train_number CHAR(6))
 BEGIN
 SELECT r.route_short_name,
+	a.agency_name,
 	SUBSTR(trip_id, 6, 6) AS train_number,
 	ADDTIME(CAST(DATE_GTFS(_d, departure_time) AS DATETIME), departure_time) AS due_time,
 	gares.code,
@@ -1208,6 +1209,7 @@ FROM trips AS t
 	LEFT JOIN calendar AS c USING (service_id)
 	LEFT JOIN calendar_dates AS cd USING (service_id)
 	LEFT JOIN routes AS r USING (route_id)
+	LEFT JOIN agency AS a USING (agency_id)
 	JOIN stop_times USING (trip_id)
 	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
 WHERE (
