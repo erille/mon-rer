@@ -76,7 +76,10 @@ sub cache_invalidate {
     my ($key) = @_;
 
     if (config->{'use_redis'}) {
-        redis->del("rer-web.train_obj.$key");
+        redis->multi;
+        redis->hdel("rer-web.train_obj",     $key);
+        redis->hdel("rer-web.train_obj_exp", $key);
+        redis->exec;
     }
     else {
         $train_obj_last_update{$key} = undef;
@@ -88,9 +91,22 @@ sub cache_set_hash {
     my ($key, $value) = @_;
 
     if (config->{'use_redis'}) {
+        return if not ref $value;
+
+        my $expires = 12;
+        my $frozen  = freeze $value;
+        
+        my $oldval = redis->hget("rer-web.train_obj", $key);
+        if (defined $oldval && $frozen ne $oldval) {
+            my $old_exp = redis->hget("rer-web.train_obj_exp", $key);
+            if (time < $old_exp + 12) {
+                $expires = 60 - (time - $old_exp);
+            }
+        }
+        
         redis->multi;
-        redis->set("rer-web.train_obj.$key", freeze $value) if ref $value;
-        redis->expire("rer-web.train_obj.$key", 11) if ref $value;
+        redis->hset("rer-web.train_obj",     $key, $frozen);
+        redis->hset("rer-web.train_obj_exp", $key, time + $expires);
         redis->exec;
     }
     else {
@@ -104,7 +120,11 @@ sub cache_get_hash {
     my ($key) = @_;
 
     if (config->{'use_redis'}) {
-        return thaw redis->get("rer-web.train_obj.$key");
+        my $obj    = thaw redis->hget("rer-web.train_obj", $key);
+        my $expire = redis->hget("rer-web.train_obj_exp", $key);
+
+        return undef if (time >= $expire);
+        return $obj;
     }
     else {
         if (exists $train_obj_last_update{$key}
