@@ -123,7 +123,7 @@ sub cache_get_hash {
         my $obj    = thaw redis->hget("rer-web.train_obj", $key);
         my $expire = redis->hget("rer-web.train_obj_exp", $key);
 
-        return undef if (time >= $expire);
+        return undef if (!defined $expire || time >= $expire);
         return $obj;
     }
     else {
