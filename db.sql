@@ -78,6 +78,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('BSR', 8727664, 'Bessancourt'),
 	('BSW', 8727655, 'Belloy - Saint-Martin'),
 	('BUR', 8768143, 'Ballancourt'),
+ 	('BVA', 8738162, 'Bréval'),
 	('BVI', 8739332, 'Pont du Garigliano'),
 	('BVJ', 8775885, 'Bures sur Yvette'),
 	('BWI', 8768440, 'Boigneville'),
@@ -87,7 +88,6 @@ INSERT INTO gares (code, uic, name) VALUES
 	('BXN', 8768419, 'Bagneaux sur Loing'),
 	('BXP', 8711377, 'Les Boullereaux Champigny'),
 	('BXR', 8775820, 'Boissy Saint-Léger'),
- 	('BVA', 8738162, 'Bréval'),
 	('BY' , 8754519, 'Brétigny'),
 	('BYS', 8739336, 'Beynes'),
 	('CAZ', 8739363, 'Chilly Mazarin'),
@@ -130,13 +130,13 @@ INSERT INTO gares (code, uic, name) VALUES
 	('CQQ', 8711664, 'Crouy-sur-Ourcq'),
 	('CSG', 8711611, 'Chelles Gournay'),
 	('CSH', 8738189, 'Conflans Sainte Honorine'),
+ 	('CSY', 8768312, 'Champigny-sur-Yonne'),
 	('CTH', 8711658, 'Château Thierry'),
 	('CUF', 8775864, 'Cité Universitaire'),
 	('CVF', 8738147, 'Chanteloup les Vignes'),
 	('CVI', 8739320, 'Chaville Rive Gauche'),
 	('CVW', 8775888, 'Courcelles sur Yvette'),
 	('CWJ', 8738233, 'Chaville Rive Droite'),
---	('CXA', 8775860, 'Châtelet les Halles RER A'),
 	('CYC', 8738249, 'Cergy Saint-Christophe'),
 	('CYP', 8738190, 'Cergy Préfecture'),
 	('CYQ', 8711673, 'Couilly Saint-Germain Quincy'),
@@ -171,6 +171,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('EY',  8711632, 'Esbly'),
 	('EYO', 8754522, 'Épinay sur Orge'),
 	('EYS', 8727114, 'Épinay sur Seine'),
+	('EYV', 8768320, 'Étigny Véron'),
 	('FAF', 8739340, 'Fontenay le Fleury'),
 	('FFY', 8768424, 'Ferrières Fontenay'),
 	('FMN', 8775876, 'Fontaine Michalon'),
@@ -222,6 +223,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('ISY', 8739307, 'Issy'),
 	('IV',  8754530, 'Ivry sur Seine'),
 	('JAS', 8739351, 'Jouy en Josas'),
+ 	('JOI', 8768324, 'Joigny'),
 	('JOY', 8739415, 'Jouy'),
 	('JUZ', 8738155, 'Juziers'),
 	('JVL', 8739306, 'Javel'),
@@ -231,6 +233,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('KRW', 8768210, 'Montgeron Crosne'),
 	('KVE', 8738666, 'Les Clairières de Verneuil'),
 	('LAD', 8749210, 'Les Ardoines'),
+ 	('LAR', 8768326, 'Laroche Migennes'),
 	('LBJ', 8727117, 'La Barre Ormesson'),
 	('LBT', 8727139, 'Le Bourget'),
 	('LCB', 8738243, 'La Celle-Saint-Cloud'),
@@ -268,7 +271,6 @@ INSERT INTO gares (code, uic, name) VALUES
 	('LZO', 8711663, 'Lizy-sur-Ourcq'),
 	('LZV', 8775882, 'Lozère'),
 	('MAE', 8738172, 'Maule'),
-	('MGT', 8728187, 'Magenta'), -- c'était MAG avant, wtf
 	('MAL', 8768441, 'Malesherbes'),
 	('MAQ', 8711666, 'Mareuil-sur-Ourcq'),
 	('MBP', 8727608, 'Montigny Beauchamp'),
@@ -280,6 +282,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('MFA', 8768115, 'Maisons Alfort Alfortville'),
 	('MFL', 8738287, 'Montreuil'),
 	('MFY', 8739308, 'Meudon Val Fleury'),
+	('MGT', 8728187, 'Magenta'), -- c'était MAG avant, wtf
 	('MHD', 8738183, 'Meulan Hardricourt'),
 	('MJM', 8738171, 'Mareil sur Mauldre'),
 	('MJW', 8768140, 'Moulin-Galant'),
@@ -349,7 +352,6 @@ INSERT INTO gares (code, uic, name) VALUES
 	('OSN', 8738114, 'Osny'),
 	('OY',  8754620, 'Orly Ville'),
 	('OZF', 8711602, 'Ozoir la Ferrière' ),
-	('PLY', 8768600, 'Paris Gare de Lyon'), 
 	('PAA', 8768603, 'Paris Gare de Lyon'), -- et pas 8768600
 	('PAN', 8711320, 'Pantin' ),
 	('PAW', 8775881, 'Palaiseau Villebon'),
@@ -364,6 +366,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('PJ',  8739350, 'Petit Jouy les Loges'),
 	('PKY', 8711127, 'Porte de Clichy'),
 	('PLB', 8727155, 'Plessis-Belleville'),
+	('PLY', 8768600, 'Paris Gare de Lyon'), 
 	('PMP', 8739100, 'Paris Montparnasse'),
 	('POA', 8739316, 'Porchefontaine'),
 	('POP', 8768252, 'Ponthierry-Pringy'),
@@ -380,6 +383,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('PSY', 8738657, 'Poissy'),
 	('PTC', 8738111, 'Pont Cardinet'),
 	('PTX', 8738238, 'Puteaux'),
+ 	('PUY', 8768313, 'Pont-sur-Yonne'),
 	('PV',  8739365, 'Petit Vaux'),
 	('PWR', 8775862, 'Port Royal'),
 	('PXO', 8775816, 'Le Parc de Saint-Maur'),
@@ -400,6 +404,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('SCR', 8739322, 'Saint-Cyr'),
 	('SCW', 8754550, 'Saint-Chéron'),
 	('SDE', 8727101, 'Saint-Denis'),
+ 	('SES', 8768300, 'Sens'),
 	('SEV', 8727142, 'Sevran Livry'),
 	('SF' , 8768229, 'Saint-Mammès'),
 	('SFD', 8716478, 'Stade de France Saint-Denis'),
@@ -407,6 +412,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('SGT', 8727617, 'Saint-Gratien'),
 	('SHL', 8754731, 'Saint-Michel Notre Dame RER C'), 
 	('SHO', 8754520, 'Saint-Michel sur Orge'),
+ 	('SJX', 8768322, 'Saint-Julien-du-Sault'),
 	('SKX', 8775870, 'Sceaux'),
 	('SLF', 8727660, 'Saint-Leu la Forêt'),
 	('SLL', 8727638, 'Sarcelles Saint-Brice'),
@@ -478,11 +484,13 @@ INSERT INTO gares (code, uic, name) VALUES
 	('VSW', 8738664, 'Villennes sur Seine'),
 	('VTV', 8768180, 'Villeneuve Triage'),
 	('VUN', 8768244, 'Vulaines sur Seine Samoreau'),
+ 	('VVG', 8768310, 'Villeneuve la Guyard'),
 	('VW',  8727202, 'Villaines'),
 	('VWC', 8768131, 'Viry Châtillon'),
 	('VWT', 8738120, 'La Villetertre'),
 	('VXS', 8738181, 'Vaux sur Seine'),
 	('VY',  8754529, 'Vitry sur Seine'),
+ 	('VYE', 8768321, 'Villeneuve sur Yonne'),
 	('VYL', 8739325, 'La Verrière'),
 	('WEE', 8768217, 'Le Mée'),
 	('XBY', 8775874, 'La Croix de Berny'),
@@ -494,11 +502,12 @@ INSERT INTO gares (code, uic, name) VALUES
 	('XPY', 8738118, 'Santeuil - Le Perchay'),
 	('YES', 8768211, 'Yerres'),
 	('ZTN', 8768218, 'Savigny le Temple Nandy'),
+--	('CXA', 8775860, 'Châtelet les Halles RER A'),
 	('ZUB', 8775819, 'Sucy Bonneuil');
 
 
 INSERT INTO gares (code, uic, name, is_transilien) VALUES
-	('ERU', 8753413, 'Ermont Eaubonne', 0), -- hack pour certains trains de AEE qui marchent pas
+	('ERE', 8753413, 'Ermont Eaubonne', 0), -- hack pour certains trains de AEE qui marchent pas
 	('PAZ', 8754700, 'Paris Austerlitz', 0),   -- grandes lignes
  	('VTP', 8739417, 'La Villette Saint-Prest', 0),  -- TODO: verifier si cette gare est interrogeable
  	('PVA', 8739110, 'Paris Montparnasse', 0), -- Paris Vaugirard
@@ -537,7 +546,6 @@ INSERT INTO gares (code, uic, name, is_transilien) VALUES
 -- 	('COB', 'Connerré - Beillé', 0),
 -- 	('COU', 'Avignon TGV', 0),
 -- 	('CPE', 'Compiègne', 0),
--- 	('CSY', 'Champigny sur Yonne', 0),
 -- 	('CUN', 'Châteaudun', 0),
 -- 	('CVB', 'Courville sur Eure', 0),
 -- 	('CVE', 'Chevrières', 0),
@@ -553,12 +561,10 @@ INSERT INTO gares (code, uic, name, is_transilien) VALUES
 -- 	('GRV', 'Granville', 0),
 -- 	('GU',  'Guillerval', 0),
 -- 	('JAX', 'Jaux', 0),
--- 	('JOI', 'Joigny', 0),
 -- 	('LAB', 'Les Aubrais-Orléans', 0),
 -- 	('LAE', 'L''Aigle', 0),
 -- 	('LAI', 'Laigneville', 0),
 -- 	('LAO', 'Laon', 0),
--- 	('LAR', 'Laroche Mignennes', 0),
 -- 	('LEW', 'Lille Europe', 0),
 -- 	('LFB', 'La Ferté Bernard', 0),
 -- 	('LIA', 'Liancourt-Rantigny', 0),
@@ -581,17 +587,14 @@ INSERT INTO gares (code, uic, name, is_transilien) VALUES
 -- 	('ORL', 'Orléans', 0),
 -- 	('PAZ', 'Paris Austerlitz', 0),
 -- 	('PNO', 'Paris Nord', 0), -- grandes lignes, redondant 
--- 	('PUY', 'Pont-sur-Yonne', 0),
 -- 	('PXE', 'Pont Sainte-Maxence', 0),
 -- 	('RIA', 'Rieux Angicourt', 0),
 -- 	('RN',  'Rouen Rive Droite', 0),
 -- 	('RSS', 'Rosny sur Seine', 0),
 -- 	('RYP', 'Romilly-la-Puthenaye', 0),
 -- 	('SDN', 'Surdon', 0),
--- 	('SES', 'Sens', 0),
 -- 	('SGG', 'Sainte-Gauburge', 0),
 -- 	('SJS', 'Saint-Just-en-Chaussée', 0),
--- 	('SJX', 'Saint-Julien-du-Sault', 0),
 -- 	('SOI', 'Soissons', 0),
 -- 	('SQ',  'Saint-Quentin', 0),
 -- 	('SUP', 'Saint-Sulpice-Auteuil', 0),
@@ -608,9 +611,7 @@ INSERT INTO gares (code, uic, name, is_transilien) VALUES
 -- 	('VO',  'Voves', 0),
 -- 	('VPL', 'Villers-Saint-Paul', 0),
 -- 	('VSX', 'Villeneuve Point X', 0),
--- 	('VVG', 'Villeneuve la Guyard', 0),
 -- 	('VXN', 'Valence TGV', 0),
--- 	('VYE', 'Villeneuve sur Yonne', 0);
 
 CREATE UNIQUE INDEX index_tr3a ON gares (code);
 
@@ -1178,7 +1179,16 @@ INSERT INTO gares_lines VALUES
 	(8739414, 'TER'),	-- SAINT PIAT
 	(8738162, 'TER'),	-- BREVAL
 	(8775830, 'A'),		-- VAL DE FONTENAY RER A
-	(8798871, 'T4');	-- LYCEE HENRI SELLIER (T4)
+	(8798871, 'T4'),	-- LYCEE HENRI SELLIER (T4)
+	(8768310, 'R'),		-- VILLENEUVE LA GUYARD
+	(8768312, 'R'),		-- CHAMPIGNY SUR YONNE
+	(8768313, 'R'),		-- PONT SUR YONNE
+	(8768300, 'R'),		-- SENS
+	(8768320, 'R'),		-- ETIGNY VERON
+	(8768321, 'R'),		-- VILLENEUVE SUR YONNE
+	(8768322, 'R'),		-- SAINT JULIEN DU SAULT
+	(8768324, 'R'),		-- JOIGNY
+	(8768326, 'R');		-- LAROCHE MIGENNES
 
 -- Une procédure stockée pour faire un CURDATE() translaté d'un jour en 
 -- si besoin (lorsqu'on touche à des heures postérieures à "minuit du
