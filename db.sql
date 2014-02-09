@@ -1203,6 +1203,7 @@ RETURN IF(t >= '24:00:00', SUBDATE(d, INTERVAL 1 DAY), d);
 
 DROP PROCEDURE IF EXISTS train_times_for_date;
 DROP PROCEDURE IF EXISTS train_station_list;
+DROP PROCEDURE IF EXISTS station_next_trains;
 
 DELIMITER //
 CREATE PROCEDURE `train_times_for_date`(_d DATE, _station_code TEXT, _train_number CHAR(6))
@@ -1216,20 +1217,23 @@ SELECT r.route_short_name,
 	gares.name,
 	stop_times.stop_sequence
 FROM trips AS t
+	JOIN stop_times USING (trip_id)
 	LEFT JOIN calendar AS c USING (service_id)
-	LEFT JOIN calendar_dates AS cd USING (service_id)
+	LEFT JOIN calendar_dates AS cd ON (t.service_id = cd.service_id AND cd.date = DATE_GTFS(_d, stop_times.departure_time))
 	LEFT JOIN routes AS r USING (route_id)
 	LEFT JOIN agency AS a USING (agency_id)
-	JOIN stop_times USING (trip_id)
 	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
-WHERE (
-	(start_date <= DATE_GTFS(_d, departure_time)
-		AND DATE_GTFS(_d, departure_time) <= end_date
-		AND (date <> DATE_GTFS(_d, departure_time) OR date IS NULL OR exception_type <> 2)
-        )
-        OR (
-		date = DATE_GTFS(_d, departure_time) AND exception_type = 1)
-        )
+WHERE 
+	(
+		(
+			DATE_GTFS(_d, departure_time) BETWEEN start_date AND end_date
+			AND (date IS NULL OR exception_type <> 2)
+			AND (
+				1 << DAYOFWEEK(_d) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday)
+			)
+		)
+		OR (exception_type = 1)
+	)	
 	AND (trip_id LIKE CONCAT('DUASN', _train_number, '%'))
 	AND (code = _station_code);
 END //
@@ -1240,22 +1244,96 @@ BEGIN
 SELECT DISTINCT gares.code,
 	CAST(COALESCE(gares.uic, SUBSTR(stop_id, 14)) AS CHAR) AS uic,
 	gares.name
-FROM trips 
+FROM trips AS t
+	LEFT JOIN stop_times USING (trip_id)
 	LEFT JOIN calendar USING (service_id)
-	LEFT JOIN calendar_dates USING (service_id)
-	JOIN stop_times USING (trip_id)
+	LEFT JOIN calendar_dates AS cd ON (t.service_id = cd.service_id AND cd.date = DATE_GTFS(_d, stop_times.departure_time))
 	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
-WHERE (
-	(start_date <= DATE_GTFS(_d, departure_time)
-		AND DATE_GTFS(_d, departure_time) <= end_date
-		AND (date <> DATE_GTFS(_d, departure_time) OR date IS NULL OR exception_type <> 2)
-        )
-        OR (
-		date = DATE_GTFS(_d, departure_time) AND exception_type = 1)
-        )
+WHERE 
+	(
+		(
+			DATE_GTFS(_d, departure_time) BETWEEN start_date AND end_date
+			AND (date IS NULL OR exception_type <> 2)
+			AND (
+				1 << DAYOFWEEK(_d) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday)
+			)
+		)
+		OR (exception_type = 1)
+	)	
 	AND (trip_id LIKE CONCAT('DUASN', _train_number, '%'))
 	AND (stop_sequence > _index);
 END //
+
+
+
+CREATE PROCEDURE `station_next_trains`(_d DATE, _t TIME, _station_code TEXT)
+BEGIN
+SELECT * FROM (
+SELECT DISTINCT r.route_short_name,
+	a.agency_name,
+	trip_headsign,
+	SUBSTR(trip_id, 6, 6) AS train_number,
+	ADDTIME(CAST(DATE_GTFS(_d, departure_time) AS DATETIME), departure_time) AS due_time,
+	gares.code,
+	CAST(COALESCE(gares.uic, SUBSTR(stop_id, 14)) AS CHAR) AS uic,
+	gares.name,
+	stop_sequence 
+FROM trips AS t
+	LEFT JOIN stop_times USING (trip_id)
+	LEFT JOIN calendar AS c USING (service_id)
+	LEFT JOIN calendar_dates AS cd ON (t.service_id = cd.service_id AND cd.date = DATE_GTFS(_d, stop_times.departure_time))
+	LEFT JOIN routes AS r USING (route_id)
+	LEFT JOIN agency AS a USING (agency_id)
+	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
+WHERE (
+	(
+		(
+			DATE_GTFS(_d, departure_time) BETWEEN start_date AND end_date
+			AND (date IS NULL OR exception_type <> 2)
+			AND (
+				1 << DAYOFWEEK(_d) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday)
+			)
+		)
+	)	
+	OR (exception_type = 1)
+	)
+	AND (code = _station_code)
+UNION SELECT DISTINCT r.route_short_name,
+	a.agency_name,
+	trip_headsign,
+	SUBSTR(trip_id, 6, 6) AS train_number,
+	ADDTIME(CAST(DATE_GTFS(ADDDATE(_d, INTERVAL 1 DAY), departure_time) AS DATETIME), departure_time) AS due_time,
+	gares.code,
+	CAST(COALESCE(gares.uic, SUBSTR(stop_id, 14)) AS CHAR) AS uic,
+	gares.name,
+	stop_sequence 
+FROM trips AS t
+	LEFT JOIN stop_times USING (trip_id)
+	LEFT JOIN calendar AS c USING (service_id)
+	LEFT JOIN calendar_dates AS cd ON (t.service_id = cd.service_id AND cd.date = DATE_GTFS(ADDDATE(_d, INTERVAL 1 DAY), stop_times.departure_time))
+	LEFT JOIN routes AS r USING (route_id)
+	LEFT JOIN agency AS a USING (agency_id)
+	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
+WHERE (
+	(
+		(
+			DATE_GTFS(_d, departure_time) BETWEEN start_date AND end_date
+			AND (date IS NULL OR exception_type <> 2)
+			AND (
+				1 << DAYOFWEEK(ADDDATE(_d, INTERVAL 1 DAY)) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday)
+			)
+		)
+	)	
+	OR (exception_type = 1)
+	)
+	AND (code = _station_code)
+) AS t
+WHERE due_time BETWEEN ADDTIME(CAST(_d AS DATETIME), _t) AND ADDDATE(ADDTIME(CAST(_d AS DATETIME), _t), INTERVAL 6 HOUR)
+ORDER BY due_time
+LIMIT 30;
+END //
+
+
 
 DELIMITER ;
 

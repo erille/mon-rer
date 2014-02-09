@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 15;
+use Test::More tests => 16;
 
 use DateTime;
 
@@ -15,6 +15,12 @@ ok(my $gare_by = RER::Gare->new(
 	code => 'BY',
 	uic  => 8754519,
 	name => 'Brétigny')
+);
+
+ok(my $gare_mpu = RER::Gare->new(
+	code => 'MPU',
+	uic  => 8754519,
+	name => 'Massy Palaiseau RER C')
 );
 
 ok(my $train1 = RER::Train->new(
@@ -36,7 +42,8 @@ ok(my $train2 = RER::Train->new(
 		hour => 17, minute => 52, second => 0,
 		time_zone => 'Europe/Paris'),
 	line	=> 'C',
-	stations => [ $gare_by, $gare_by ])
+	stations => [ $gare_by, $gare_by ],
+	terminus => $gare_mpu )
 );
 
 is ($train1->line, undef);

@@ -11,6 +11,7 @@ use JSON::XS;
 use RER::Trains qw(uc_woac);
 use RER::Gares;
 use List::Util qw(min);
+use Dancer qw(:syntax config debug error);
 
 
 
@@ -31,20 +32,34 @@ sub new {
     }
     my @ds = @{$param{ds}};
 
+    my @messages = ();
 
-    my $data = $ds[0]->get_next_trains($gare_from);
+    my $data = eval { 
+        for my $i (0..$#ds) { 
+            if (($i == 0)
+                && (! grep /^[CL]$/, @{RER::Gares::get_lines($gare_from)})
+                && config->{restrict_lines}) {
+                next;
+            }
+            if ($i == 1) {
+                push @messages, "Attention, les horaires affichés sont théoriques. "
+                        . "Renseignez-vous en gare pour vérifier si votre train est "
+                        . "à l'heure et n'est pas supprimé.";
+                push @messages, "Les horaires temps réel sont uniquement disponibles "
+                        . "pour les gares des lignes C et L du Transilien.  Ils seront "
+                        . "accessibles pour l'ensemble des gares Transilien avant fin "
+                        . "février 2014.";
+            }
+
+            my $data = eval { $ds[$i]->get_next_trains($gare_from); };
+            error $@ if $@;
+            return $data unless $@;
+        }
+    };
 
     for (my $i = 0; $i < scalar(@$data); $i++) {
         my $train = $data->[$i];
         next if ! defined $train;
-
-        my $terminus_name = ($train->terminus) ? $train->terminus->name : "?";
-        utf8::encode($terminus_name);
-
-        my $time = ($train->real_time) ? $train->real_time->time :
-            ($train->due_time) ? $train->due_time->time :
-            "--:--";
-        $time = substr $time, 0, 5;
 
         my $today = ($train->real_time) ? $train->real_time->ymd('-') 
             : ($train->due_time) ? $train->due_time->ymd('-')
@@ -54,6 +69,15 @@ sub new {
         if ($train2 && $train2->[0]) {
             $train = $train->merge($train2->[0]);
         }
+
+        my $terminus_name = ($train->terminus) ? $train->terminus->name : "?";
+
+        my $time = ($train->real_time) ? $train->real_time->time :
+            ($train->due_time) ? $train->due_time->time :
+            "--:--";
+        $time = substr $time, 0, 5;
+
+
 
         my ($delay, $delay_str);
         if ($train->real_time && $train->due_time) {
@@ -116,7 +140,7 @@ sub new {
             mission => $train->code, 
             numero  => $train->number,
             time    => $time_info,
-            destination => $train->terminus->name,
+            destination => $terminus_name,
             dessertes   => $dessertes,
             platform => $train->platform,
             col2class => $col2class,
@@ -131,10 +155,6 @@ sub new {
     # si gare de destination donnée, filtrer les trains qui desservent la gare
     # @t = grep { (join ",", @{$_->{dessertes}}) =~ /\b$trig_to\b/ } @t if $trig_to;
 
-    my @messages = ();
-
-    my $i;
-    
     # Récupération des vrais noms de gares
     $param{'from'} = $gare_from;
     # $param{'to'}   = RER::Gares::get_station_by_code($trig_to) if defined($param{'to'});
