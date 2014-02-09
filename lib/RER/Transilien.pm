@@ -8,7 +8,7 @@ use utf8;
 use 5.010;
 
 use JSON::XS;
-use RER::Trains qw(uc_woac);
+use RER::Results;
 use RER::Gares;
 use List::Util qw(min);
 use Dancer qw(:syntax config debug error);
@@ -150,22 +150,11 @@ sub new {
         };
     }
 
-
-    # FIXME: cassé
-    # si gare de destination donnée, filtrer les trains qui desservent la gare
-    # @t = grep { (join ",", @{$_->{dessertes}}) =~ /\b$trig_to\b/ } @t if $trig_to;
-
-    # Récupération des vrais noms de gares
-    $param{'from'} = $gare_from;
-    # $param{'to'}   = RER::Gares::get_station_by_code($trig_to) if defined($param{'to'});
-
-    my $obj = RER::Trains::new(
-        $param{'from'},
-        $param{'to'},
-        \@trains,
-        \@messages);
-
-    return $obj;
+    return RER::Results->new(
+        from => $gare_from,
+        trains => \@trains,
+        messages => \@messages
+    );
 }
 
 

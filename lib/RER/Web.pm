@@ -3,7 +3,7 @@ use Dancer ':syntax';
 use Dancer::Plugin::Redis;
 
 use RER::Transilien;
-use RER::Trains;
+use RER::Results;
 use RER::Gares;
 use RER::DataSource::Transilien;
 use RER::DataSource::TransilienGTFS;

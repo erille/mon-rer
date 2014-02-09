@@ -12,8 +12,6 @@ BEGIN {
 
 route_exists [GET => '/autocomp'], 'a route handler is defined for /autocomp';
 
-my $json = JSON->new;
-
 sub autocomp_test {
 	my ($url, $str) = @_;
 

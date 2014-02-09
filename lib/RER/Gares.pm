@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 
 package RER::Gares;
-use RER::Trains qw(uc_woac);
 use RER::Gare;
 use DBI;
 use DateTime;
