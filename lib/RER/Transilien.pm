@@ -84,7 +84,7 @@ sub new {
             $delay = $train->real_time - $train->due_time;
             $delay = $delay->in_units('minutes');
 
-            $delay_str = sprintf "%+d h %02d min", 
+            $delay_str = sprintf "%+d h %02d", 
                         (int($delay / 60)),
                         (abs($delay % 60))  if abs $delay >= 60;
             $delay_str = sprintf "%+d min", $delay if abs $delay < 60;
