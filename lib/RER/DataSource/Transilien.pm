@@ -93,12 +93,16 @@ sub process_xml_trains {
                    name => "Gare non référencée");
         }
 
+        my $train_etat = 'N';
+        $train_etat = $train_hash->{etat} if exists $train_hash->{etat};
+        $train_etat = 'S' if $train_etat eq 'Supprimé';
+        $train_etat = 'R' if $train_etat eq 'Retardé';   # not sure if this works
+
         push @trains, RER::Train->new(
             number     => $train_hash->{num},
             code       => $train_hash->{miss},
             $time_type => $time_value,
-            status     => (exists $train_hash->{etat}) ? 
-                             $train_hash->{etat} : 'N',
+            status     => $train_etat,
             terminus   => $terminus,
         );
     }

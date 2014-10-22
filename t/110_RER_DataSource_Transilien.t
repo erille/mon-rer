@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 13;
+use Test::More tests => 14;
 
 use FindBin;
 use Cwd qw(realpath);
@@ -47,6 +47,8 @@ is($train->due_time, undef);
 is($train->status, 'N');
 
 
+is($data_hash->[1]->status, 'S');
+
 __END__
 <?xml version="1.0" encoding="UTF-8"?>
 <passages gare="87393009">
@@ -59,6 +61,7 @@ __END__
 <num>165312</num>
 <miss>DEFI</miss>
 <term>87382218</term>
+<etat>Supprimé</etat>
 </train>
 <train><date mode="R">23/05/2012 13:01</date>
 <num>165412</num>
