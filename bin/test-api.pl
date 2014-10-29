@@ -4,6 +4,9 @@ use strict;
 use warnings;
 use utf8;
 
+use lib '../lib';
+use lib 'lib';
+
 use RER::DataSource::Transilien;
 use RER::DataSource::TransilienGTFS;
 
@@ -14,7 +17,7 @@ use Dancer qw(:script !pass);
 use Data::Dumper;
 
 
-my $code = $ARGV[0];
+my $code = $ARGV[0] || die "usage: $0 <tr3>\n";
 
 
 
@@ -73,6 +76,6 @@ foreach my $train (@$data) {
 		$train->status,
 		$train->line || '?',
 		
-		scalar(@{$train->stations}),
+		scalar(eval { @{$train->stations} } or ()),
 		$terminus_name;
 }
