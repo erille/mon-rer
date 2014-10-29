@@ -131,12 +131,14 @@ sub get_autocomp
 	$str =~ s/([_%])/\\$1/g;
 
 	my $sth = $dbh->prepare(qq{
-		SELECT code, name, uic
+		SELECT code, name, uic,
+			IF(code = UPPER(?), 0, IF(INSTR(name, ?), 10 + INSTR(name, ?), 50)) AS score
 			FROM gares 
 			WHERE is_transilien AND (code = UPPER(?) OR name LIKE ?) 
-			ORDER BY INSTR(name, ?), name
-			LIMIT 10;});
-	$sth->execute("$str", "%$str%", "$str");
+			ORDER BY score, name
+			LIMIT 10;
+	});
+	$sth->execute("$str", "$str", "$str", "$str", "%$str%");
 
 	my $result = $sth->fetchall_arrayref({});
 	
