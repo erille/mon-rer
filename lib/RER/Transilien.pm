@@ -37,18 +37,22 @@ sub new {
     my $data = eval { 
         for my $i (0..$#ds) { 
             if (($i == 0)
-                && (! grep /^[CL]$/, @{RER::Gares::get_lines($gare_from)})
+                && (grep {/^[AB]$/} @{RER::Gares::get_lines($gare_from)})
                 && config->{restrict_lines}) {
                 next;
             }
+#            if (($i == 0)
+#                && ! (grep {!/^[AB]$/} @{RER::Gares::get_lines($gare_from)})
+#                && config->{restrict_lines}) {
+#                next;
+#            }
             if ($i == 1) {
                 push @messages, "Attention, les horaires affichés sont théoriques. "
                         . "Renseignez-vous en gare pour vérifier si votre train est "
                         . "à l'heure et n'est pas supprimé.";
                 push @messages, "Les horaires temps réel sont uniquement disponibles "
-                        . "pour les gares des lignes C et L du Transilien.  Ils seront "
-                        . "accessibles pour l'ensemble des gares Transilien avant fin "
-                        . "février 2014.";
+                        . "pour les gares des lignes SNCF du Transilien (C, D, E, H, "
+                        . "J, K, L, N, P, R, U) pour le moment.";
             }
 
             my $data = eval { $ds[$i]->get_next_trains($gare_from); };
