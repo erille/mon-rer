@@ -45,7 +45,7 @@ Copy `config.yml.example` to `config.yml` and edit it to suit your needs.
 Log into an account with administrative access on MySQL and create the database
 holding the data:
 
-	mysql> CREATE DATABASE sncf_gtfs;
+	mysql> CREATE DATABASE sncf_gtfs CHARSET utf8 COLLATE utf8_general_ci;
 
 Create a user which only has the necessary privileges.  This is optional, but
 highly recommended (not to mention a good security practice):

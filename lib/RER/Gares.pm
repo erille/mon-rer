@@ -27,7 +27,8 @@ sub db_connect
 	$dbh = DBI->connect(
 		$config{dsn}, 
 		$config{username}, 
-		$config{password}) or die $DBI::errstr;
+		$config{password},
+		{ mysql_enable_utf8 => 1 }) or die $DBI::errstr;
 }
 
 
