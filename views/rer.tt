@@ -20,8 +20,8 @@
 var scrollTimeout = 3000;
 var msgScrollTimeout = 14000;
 
-var retardTimeout1 = 6500;
-var retardTimeout2 = 2500;
+var retardTimeout1 = 5500;
+var retardTimeout2 = 3500;
 
 var originCode = "<% origin_code %>";
 var originLineFilter;
