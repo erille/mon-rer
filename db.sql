@@ -509,9 +509,10 @@ INSERT INTO gares (code, uic, name) VALUES
 INSERT INTO gares (code, uic, name, is_transilien) VALUES
 	('ERE', 8753413, 'Ermont Eaubonne', 0), -- hack pour certains trains de AEE qui marchent pas
 	('PAZ', 8754700, 'Paris Austerlitz', 0),   -- grandes lignes
- 	('VTP', 8739417, 'La Villette Saint-Prest', 0),  -- TODO: verifier si cette gare est interrogeable
+ 	('VTP', 8739417, 'La Villette Saint-Prest', 0),  -- hors IDF
  	('PVA', 8739110, 'Paris Montparnasse', 0), -- Paris Vaugirard
-	('PNB', 8727103, 'Paris Nord', 0);
+	('PNB', 8727103, 'Paris Nord', 0),  -- Paris Nord Banlieue
+	('PNO', 8727100, 'Paris Nord', 0);  -- Paris Nord Grandes Lignes
 
 -- INSERT INTO gares (code, name, is_transilien) VALUES
 -- 	('AGR', 'Aingeray', 0),
