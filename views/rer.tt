@@ -4,6 +4,7 @@
 
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Liste des six prochains trains pour n'importe quelle gare SNCF Transilien" />
 	<link rel="stylesheet" type="text/css" href="css/rer.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="css/rer-mobile.css" media="handheld, screen and (max-width: 480px)" />
 	<link rel="stylesheet" type='text/css' href='http://fonts.googleapis.com/css?family=Tauri' media="screen" />
