@@ -7,7 +7,6 @@ use RER::Results;
 use RER::Gares;
 use RER::DataSource::Transilien;
 use RER::DataSource::TransilienGTFS;
-use RRD::Simple;
 use Data::Dumper;
 use Storable qw(dclone freeze thaw);
 
@@ -37,37 +36,20 @@ sub check_code {
 }
 
 
-sub rrd_update {
-    my $rrd = RRD::Simple->new(file => config->{'rrd_file'});
-    if (! -e config->{'rrd_file'}) {
-        $rrd->create(
-            'week',
-            api_call       => 'ABSOLUTE',
-            api_failure    => 'ABSOLUTE'
-        );
-    }
-
-    eval {
-        $rrd->update(time,
-                     api_call    => $stats{api_call} || 0,
-                     api_failure => $stats{api_failure} || 0,
-                     users       => (exists $stats{users}) ? scalar @{$stats{users}} : 0,
-                 );
-    };
-}
 
 sub stats_add {
     my ($key, $value) = @_;
 
+    return unless $key;
+
     if (!defined ($value)) {
-        $stats{$key}++;
-    } else {
-        $stats{$key} = $value;
-    }
-
-    rrd_update;
-
-    %stats = ();
+        if (config->{'use_redis'}) {
+            eval { redis->incr("rer-web.$key"); };
+        }
+    } 
+    # else {
+    #     $stats{$key} = $value;
+    # }
 }
 
 
@@ -180,6 +162,8 @@ get '/json' => sub {
 
     set serializer => 'JSON';
 
+    stats_add 'api_incoming';
+
     my $code = check_code(params->{'s'}) || 'EVC';
     my $line = params->{'l'};
 
@@ -197,12 +181,13 @@ get '/json' => sub {
 
     if (! defined $ret) {
 
-        stats_add 'api_call';
-        if ( ! exists $stats{'users'} ) {
-            stats_add 'users', [ request->address() ];
-        } elsif ( ! grep { $_ eq request->address() } @{$stats{'users'}}) {
-            push @{$stats{'users'}}, request->address();
-        }
+        stats_add 'api_sent';
+
+        # if ( ! exists $stats{'users'} ) {
+        #     stats_add 'users', [ request->address() ];
+        # } elsif ( ! grep { $_ eq request->address() } @{$stats{'users'}}) {
+        #     push @{$stats{'users'}}, request->address();
+        # }
 
 
         my $data;
@@ -214,7 +199,7 @@ get '/json' => sub {
         };
         if (my $err = $@) {
             status 503;
-            stats_add 'api_failure';
+            stats_add 'api_errors';
             cache_invalidate $code;
 
             # log error
@@ -236,6 +221,14 @@ get '/json' => sub {
     # Limiter à 6 le nombre de trains renvoyés
     if (scalar @{$ret->{trains}} > 6) {
         @{$ret->{trains}} = @{$ret->{trains}}[0..5];
+    }
+
+    if (config->{'use_redis'}) {
+        my $api_incoming = redis->get("rer-web.api_incoming") || 0;
+        my $api_sent     = redis->get("rer-web.api_sent") || 0;
+        my $api_errors   = redis->get("rer-web.api_errors") || 0;
+
+        debug "counters: incoming = $api_incoming, sent = $api_sent, errors = $api_errors";
     }
     
     return $ret;
