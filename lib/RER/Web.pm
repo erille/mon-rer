@@ -102,8 +102,15 @@ sub cache_get_hash {
     my ($key) = @_;
 
     if (config->{'use_redis'}) {
-        my $obj    = thaw redis->hget("rer-web.train_obj", $key);
-        my $expire = redis->hget("rer-web.train_obj_exp", $key);
+        my ($obj, $expire);
+        eval {
+            $obj    = thaw redis->hget("rer-web.train_obj", $key);
+            $expire = redis->hget("rer-web.train_obj_exp", $key);
+        };
+        if (my $err = $@) {
+            warn $err;
+            return undef;
+        }
 
         return undef if (!defined $expire || time >= $expire);
         return $obj;
