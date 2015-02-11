@@ -2,7 +2,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Tauri', sans-serif;
-	font-size: 20px;
+	font-size: 18pt;
 
 	background: #222;
 	color: #eee;
@@ -14,11 +14,11 @@ a { color: #ccc; }
 
 div#heure {
 	position: fixed;
-	top: -50px;
-	right: 10px;
+	top: -40pt;
+	right: 8pt;
 	width: 3em;
 	padding: 0.2em;
-	padding-top: 50px;
+	padding-top: 40pt;
 	font-size: 160%;
 	margin: 0;
 
@@ -31,6 +31,12 @@ div#heure {
 	text-align: center;
 }
 
+
+@media screen and (max-width: 1152px) { body { font-size: 16pt; } }
+@media screen and (min-width: 1400px) { body { font-size: 20pt; } }
+@media screen and (min-width: 1600px) { body { font-size: 22pt; } }
+@media screen and (min-width: 1800px) { body { font-size: 24pt; } }
+
 @media screen and (max-width: 320px) {
 	div#heure { display: none; }
 }
@@ -42,8 +48,7 @@ div.listetrains {
 
 div.train {
 	display: table-row;
-	font-size: 25px;
-	padding: 5px;
+	padding: 5pt;
 	background-color: #0c5da5;
 }
 
@@ -68,8 +73,8 @@ div.train span.retard-train { display: none; }
 	
 
 div.train div.col3 {
-	font-size: 40px;
-	letter-spacing: 0.5px;
+	font-size: 180%;
+	letter-spacing: 0.5pt;
 }
 
 div.train div.col3 img {
@@ -139,8 +144,8 @@ div.train.canceled div.col3 div.desserte,
 span.numero-train { color: #679fd2; }
 
 div#otherstation {
-	padding: 0.9em 0.7em 1.2em;
-	font-size: 12px;
+	padding: 0.9em 0.7em 1.0em;
+	font-size: 11pt;
 	display: block;
 }
 
@@ -228,13 +233,13 @@ div#error {
 	width: 100%;
 	text-align: center;
 	color: white;
-	font-size: 14px;
+	font-size: 12pt;
 /*	display: none; */
 }
 
 div#disclaimer {
 	text-align: center;
-	font-size: 12px;
+	font-size: 11pt;
 }
 
 
@@ -271,13 +276,13 @@ div.subwindow {
 	padding-bottom: 2em;
 	width: 100%;
 
-	font-size: 12px;
+	font-size: 10pt;
 
 	background-color: rgba(34, 34, 34, 0.8);
 	z-index: 1;
 }
 
-@media screen and (min-height: 800px) {
+@media screen and (max-aspect-ratio: 16/9) {
 	div.subwindow { 
 		position: fixed;
 		bottom: 2.5em;
@@ -312,7 +317,7 @@ div#footer {
 	z-index: 1;
 	background-color: #222;
 
-	font-size: 12px;
+	font-size: 10pt;
 	text-align: center;
 }
 
