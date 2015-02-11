@@ -76,14 +76,9 @@ div.train.canceled { background-color: #b44; }
 
 span.numero-train, span.retard { color: #679fd2; }
 
-div#otherstation {
-	padding: 1em;
-	text-align: center;
-}
-
-div#disclaimer {
-	text-align: center;
-}
+div#otherstation { padding: 0.5em; }
+div#disclaimer { text-align: center; font-size: 100%; }
+div#heure { display: none; }
 
 select {
 	background-color: #444;

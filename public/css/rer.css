@@ -32,15 +32,6 @@ div#heure {
 }
 
 
-@media screen and (max-width: 1152px) { body { font-size: 16pt; } }
-@media screen and (min-width: 1400px) { body { font-size: 20pt; } }
-@media screen and (min-width: 1600px) { body { font-size: 22pt; } }
-@media screen and (min-width: 1800px) { body { font-size: 24pt; } }
-
-@media screen and (max-width: 320px) {
-	div#heure { display: none; }
-}
-
 div.listetrains { 
 	display: table; 
 	width: 100%;
@@ -69,7 +60,7 @@ div.train div {
 div.train div.col1, div.train div.col2 { text-align: center; }
 div.train div.col1 { width: 4.5em; }
 div.train div.col2 { width: 3.5em; font-size: 150%; line-height: 0.9; }
-div.train span.retard-train { display: none; }
+div.train span.retard-train { display: none; white-space : pre; }
 	
 
 div.train div.col3 {
@@ -144,7 +135,7 @@ div.train.canceled div.col3 div.desserte,
 span.numero-train { color: #679fd2; }
 
 div#otherstation {
-	padding: 0.9em 0.7em 1.0em;
+	padding: 0.9em 5.6em 1.0em 0.7em;
 	font-size: 11pt;
 	display: block;
 }
@@ -331,4 +322,15 @@ select {
 select option {
 	background-color: #444;
 	color: white;
+}
+
+
+@media screen and (max-width: 800px) { div.train div.col3 { font-size: 150%; } }
+@media screen and (max-width: 1152px) { body { font-size: 16pt; } }
+@media screen and (min-width: 1400px) { body { font-size: 20pt; } }
+@media screen and (min-width: 1600px) { body { font-size: 22pt; } }
+@media screen and (min-width: 1800px) { body { font-size: 24pt; } }
+
+@media screen and (max-width: 320px) {
+	div#heure { display: none; }
 }
