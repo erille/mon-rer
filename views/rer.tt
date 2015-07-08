@@ -5,8 +5,11 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<meta name="description" content="Liste des six prochains trains pour n'importe quelle gare SNCF Transilien" />
-	<link rel="stylesheet" type="text/css" href="css/rer.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="css/rer-mobile.css" media="handheld, screen and (max-width: 480px)" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="msapplication-config" content="none">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/common.css" />
+	<link rel="stylesheet" type="text/css" media="screen and (max-width: 480px)" href="css/small.css" />
+	<link rel="stylesheet" type="text/css" media="screen and (min-width: 481px)" href="css/big.css" />
 	<link rel="stylesheet" type='text/css' href='http://fonts.googleapis.com/css?family=Tauri' media="screen" />
 	<link rel="shortcut icon" href="favicon.ico" />
 	<link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
@@ -66,12 +69,13 @@ function table_get_node(row, column) {
 		return document.getElementById('t' + row);
 }
 
-function table_set_classname(row, column, class_name) {
-	table_get_node(row, column).className = class_name;
+function table_set_innerhtml(row, column, html) {
+	table_get_node(row, column).style.display = (html ? '' : 'none');
+	table_get_node(row, column).innerHTML = (html ? html : '');
 }
 
-function table_set_innerhtml(row, column, html) {
-	table_get_node(row, column).innerHTML = html;
+function table_set_visible(row, column, visible) {
+	table_get_node(row, column).style.display = (visible ? undefined : 'none');
 }
 
 function set_cookie(name, value) {
@@ -161,12 +165,17 @@ function get_data(obj) {
 			table_set_innerhtml(i, '1a', train.mission);
 			table_set_innerhtml(i, '1b', train.numero);
 
-			if (train.time != 'Supprimé' && train.time != 'Retardé') 
+			if (train.time != 'Supprimé' && train.time != 'Retardé') {
 				table_set_innerhtml(i, '1c', train.retard);
-			else 
-				table_set_innerhtml(i, '1c', '');
+			} else {
+				table_set_innerhtml(i, '1c', undefined);
+			}
 
-			table_set_classname(i, '2', train.col2class);
+			table_get_node(i, '1b').className = 'numero-train';
+			if (!table_get_node(i, '1c').innerHTML) {
+				table_get_node(i, '1b').className = 'numero-train no-flip';
+			}
+
 			table_set_innerhtml(i, '2', train.time);
 
 			var dest = train.destination;
@@ -188,7 +197,7 @@ function get_data(obj) {
 			if (train.platform != null && train.platform != " ") {
 				table_set_innerhtml(i, '4', '<span class="voie">' + train.platform + '</span>');
 			} else {
-				table_set_innerhtml(i, '4', '');
+				table_set_innerhtml(i, '4', undefined);
 			}
 
 			origTrains[i] = train.numero;
@@ -196,12 +205,13 @@ function get_data(obj) {
 		for (; i < 6; i++)
 		{
 			table_get_node(i).className = 'train';
-			table_set_innerhtml(i, '1a', "&nbsp;");
-			table_set_innerhtml(i, '1b', "&nbsp;");
-			table_set_innerhtml(i, '1c', "&nbsp;");
-			table_set_classname(i, '2', "col2");
-			table_set_innerhtml(i, '2', "&nbsp;");
-			table_set_innerhtml(i, '3a', "&nbsp;");
+			table_set_innerhtml(i, '1a', undefined);
+			table_set_innerhtml(i, '1b', undefined);
+			table_set_visible(i, '1b', 0);
+			table_set_innerhtml(i, '1c', undefined);
+			table_set_visible(i, '1c', 0);
+			table_set_innerhtml(i, '2', undefined);
+			table_set_innerhtml(i, '3a', undefined);
 			if (i < 2) {
 				table_set_innerhtml(i, '3b', "<p style='bottom: 0.1em'>"
 					+ "&nbsp;"
@@ -209,7 +219,7 @@ function get_data(obj) {
 			}
 			else 
 			
-			table_set_innerhtml(i, '4', '&nbsp;');
+			table_set_innerhtml(i, '4', undefined);
 			origTrains[i] = -1;
 		}
 
@@ -262,28 +272,13 @@ function get_data(obj) {
 /* b = 1 => afficher retard
  * b = 0 => afficher numéro train */
 function flip_retard(b) {
-	var num_train    = by_classname("numero-train");
-	var ret_train 	 = by_classname("retard-train");
+	class_name = (b ? 'retard-flip' : 'no-retard-flip');
+	next_value = (b ? 0 : 1);
+	next_timeout = (b ? retardTimeout2 : retardTimeout1);
 
-	var hide;
-	var show;
-
-	if (b) { hide = num_train; show = ret_train; }
-	else { hide = ret_train; show = num_train; }
-	
-	for (var i = 0; i < hide.length; i++) {
-		if (show[i].innerHTML)
-			hide[i].style.display = 'none';
-	}
-	for (var i = 0; i < show.length; i++) {
-		if (show[i].innerHTML)
-			show[i].style.display = 'inline';
-	}
-
+	document.getElementById("listetrains").className = class_name;
 	window.clearTimeout(col2flipTimer);
-	col2flipTimer = window.setTimeout(flip_retard, 
-		b ? retardTimeout2 : retardTimeout1,
-		b ? 0 : 1);
+	col2flipTimer = window.setTimeout(function() { flip_retard(next_value) }, next_timeout);
 }
 
 
@@ -299,11 +294,10 @@ function init_data(b) {
 
 		for (var i = 0; i < 6; i++) {
 			table_get_node(i).className = 'train';
-			table_set_innerhtml(i, '1a', "&nbsp;");
-			table_set_innerhtml(i, '1b', "&nbsp;");
-			table_set_innerhtml(i, '1c', "&nbsp;");
-			table_set_classname(i, '2', "col2");
-			table_set_innerhtml(i, '2', "&nbsp;");
+			table_set_innerhtml(i, '1a', undefined);
+			table_set_innerhtml(i, '1b', undefined);
+			table_set_innerhtml(i, '1c', undefined);
+			table_set_innerhtml(i, '2', undefined);
 			if (i < 2) {
 				table_set_innerhtml(i, '3a', "Chargement... ");
 				table_set_innerhtml(i, '3b', "<p style='bottom: 0.1em'>"
@@ -311,9 +305,9 @@ function init_data(b) {
 					+ "</p></div>");
 			}
 			else 
-				table_set_innerhtml(i, '3a', "&nbsp;");
+				table_set_innerhtml(i, '3a', undefined);
 			
-			table_set_innerhtml(i, '4', '&nbsp;');
+			table_set_innerhtml(i, '4', undefined);
 			origTrains[i] = -1;
 		}
 	}
@@ -575,22 +569,26 @@ window.onpopstate = function(e) {
 
 <div id="heure">--:--</div>
 
-<div class="listetrains">
+<div id="listetrains" class="no-retard-flip">
 
 <% FOR i in [0..5] %>
 <div class="train" id="t<% i %>">
-	<div class="col1" id="t<% i %>c1">
-		<span class="mission-train" id="t<% i %>c1a">&nbsp;</span><br />
+	<div class="force-height"></div>
+	<div class="group group-left">
+		<span class="mission-train" id="t<% i %>c1a">&nbsp;</span>
 		<span class="numero-train" id="t<% i %>c1b">&nbsp;</span>
-		<span class="retard-train" id="t<% i %>c1c">&nbsp;</span>
+		<span class="retard-train" id="t<% i %>c1c">&nbsp;</span><br class="after-retard-train">
 	</div>
-	<div class="col2" id="t<% i %>c2">&nbsp;</div>
-	<div class="col3" id="t<% i %>c3"><span id="t<% i %>c3a"><% IF i <= 1 %>Chargement...<% END %></span>
-	<% IF i <= 1 %>
-	<div class="desserte" id="t<% i %>c3b"><p>Chargement en cours...</p>
-	</div><% END %>
+	<div class="group group-middle">
+		<span class="heure-train" id="t<% i %>c2">&nbsp;</span>
 	</div>
-	<div class="col4" id="t<% i %>c4">&nbsp;</div>
+	<div class="group">
+		<span class="destination-train" id="t<% i %>c3a"><% IF i <= 1 %>Chargement...<% END %></span>
+		<% IF i <= 1 -%>
+		<div class="desserte-train" id="t<% i %>c3b"><ul><li>Chargement en cours...</li></ul></div>
+		<%- END %>
+		<span class="voie-train" id="t<% i %>c4">&nbsp;</span>
+	</div>
 </div>
 <% END %>
 
@@ -632,7 +630,7 @@ init_autocomp('form_otherstation', 's2', 'station_list', 'autocomp', 'station_su
 </script>
 
 <div id="footer">
-<p>&copy; 2013&ndash;2015 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/32">Blog</a> • <a href="https://bitbucket.org/xtab/rer-web">Code source</a> • <a href="http://data.sncf.com/">SNCF Open Data Transilien</a> • Dernière mise à jour : <% dmaj || 'inconnue' %></p>
+&copy; 2013&ndash;2015 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/32">Blog</a> • <a href="https://bitbucket.org/xtab/rer-web">Code source</a> • <a href="http://data.sncf.com/">SNCF Open Data Transilien</a> • Dernière mise à jour : <% dmaj || 'inconnue' %>
 </div>
 
 </body>

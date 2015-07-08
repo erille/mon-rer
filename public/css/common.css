@@ -2,8 +2,6 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Tauri', sans-serif;
-	font-size: 18pt;
-
 	background: #222;
 	color: #eee;
 }
@@ -19,7 +17,6 @@ div#heure {
 	width: 3em;
 	padding: 0.2em;
 	padding-top: 40pt;
-	font-size: 160%;
 	margin: 0;
 
 	background-color: navy;
@@ -32,13 +29,7 @@ div#heure {
 }
 
 
-div.listetrains { 
-	display: table; 
-	width: 100%;
-}
-
 div.train {
-	display: table-row;
 	padding: 5pt;
 	background-color: #0c5da5;
 }
@@ -51,35 +42,7 @@ div.train:nth-child(2n+1) {
 	background-color: #0c5da5;
 }
 
-div.train div {
-	display: table-cell;
-	vertical-align: middle;
-	padding: 3px 6px 3px 3px;
-}
-
-div.train div.col1, div.train div.col2 { text-align: center; }
-div.train div.col1 { width: 4.5em; }
-div.train div.col2 { width: 3.5em; font-size: 150%; line-height: 0.9; }
-div.train span.retard-train { display: none; white-space : pre; }
-	
-
-div.train div.col3 {
-	font-size: 180%;
-	letter-spacing: 0.5pt;
-}
-
-div.train div.col3 img {
-	position: relative;
-	top: 0.1em;
-	height: 1em;
-}
-
-div.train div.col4 {
-	width: 2em;
-}
-
 span.voie {
-	display: inline-block;
 	text-align: center;
 
 	width: 1.2em;
@@ -92,12 +55,19 @@ span.voie {
 	letter-spacing: -2px;
 }
 
-div.train div.col3 div.desserte {
-	display: block;
+div.train span.heure-train { font-size: 125%; }
+div.train.delayed span.heure-train { font-size: 100%; }
+div.train.canceled span.heure-train { font-size: 90%; }
+
+span.destination-train img {
+	position: relative;
+	top: 0.1em;
+	height: 1em;
+}
+
+div.train div.desserte-train {
 	padding: 0;
 
-	font-size: 75%;
-	letter-spacing: 0px;
 	color: #679fd2;
 
 	height: 1.3em;
@@ -107,7 +77,7 @@ div.train div.col3 div.desserte {
 	word-wrap: break-word;
 }
 
-div.train div.col3 div.desserte p {
+div.train div.desserte-train p {
 	position: relative;
 	bottom: 0.1em;
 
@@ -119,30 +89,25 @@ div.train div.col3 div.desserte p {
 	-webkit-transition-timing-function: linear;
 }
 
-div.train div.col2.approche { text-decoration: blink; line-height: 0.9; font-size: 100% }
-div.train div.col2.texte { font-size: 120%; line-height: 0.9 }
+div.train div.heure-train.approche { text-decoration: blink; line-height: 0.9; }
 
 div.train.delayed:nth-child(2n)   { background-color: #a05522; }
 div.train.delayed:nth-child(2n+1) { background-color: #b63; }
 div.train.canceled { background-color: #b44; }
 
-div.train.delayed div.col3 div.desserte, 
-	div.train.delayed div.col1 span.numero-train { color: #d9a45a; }
-div.train.canceled div.col3 div.desserte, 
-	div.train.canceled div.col1 span.numero-train { color: #d27272; }
+div.train.delayed div.desserte-train,
+	div.train.delayed span.numero-train { color: #d9a45a; }
+div.train.canceled div.desserte-train,
+	div.train.canceled span.numero-train { color: #e89090; }
 
 
 span.numero-train { color: #679fd2; }
 
-div#otherstation {
-	padding: 0.9em 10.2em 1.0em 0.7em;
-	font-size: 11pt;
-	display: block;
-}
 
 input#s2 {
+	display: none;
 	font-family: 'Tauri', sans-serif;
-	width: 22em;
+	max-width: 22em;
 	color: white;
 	border: solid #777 1px;
 	background-color: #333;
@@ -177,6 +142,7 @@ input::-webkit-input-placeholder {
 
 div#autocomp {
 	position: absolute;
+	display: none;
 
 	font-family: sans-serif;
 	background-color: white;
@@ -224,20 +190,17 @@ div#error {
 	width: 100%;
 	text-align: center;
 	color: white;
-	font-size: 12pt;
 /*	display: none; */
 }
 
 div#disclaimer {
 	text-align: center;
-	font-size: 11pt;
 }
 
 
 div#listemessages {
     max-height: 6em;
     overflow: hidden;
-    font-size: 140%;
 }
 
 div#conteneurmessages {
@@ -267,22 +230,8 @@ div.subwindow {
 	padding-bottom: 2em;
 	width: 100%;
 
-	font-size: 10pt;
-
 	background-color: rgba(34, 34, 34, 0.8);
 	z-index: 1;
-}
-
-@media screen and (max-aspect-ratio: 16/9) {
-	div.subwindow { 
-		position: fixed;
-		bottom: 2.5em;
-	}
-
-	div#footer {
-		position: fixed;
-		bottom: 1em;
-	}
 }
 
 div.subwindow p {
@@ -308,7 +257,6 @@ div#footer {
 	z-index: 1;
 	background-color: #222;
 
-	font-size: 10pt;
 	text-align: center;
 }
 
@@ -325,12 +273,3 @@ select option {
 }
 
 
-@media screen and (max-width: 800px) { div.train div.col3 { font-size: 150%; } }
-@media screen and (max-width: 1152px) { body { font-size: 16pt; } }
-@media screen and (min-width: 1400px) { body { font-size: 20pt; } }
-@media screen and (min-width: 1600px) { body { font-size: 22pt; } }
-@media screen and (min-width: 1800px) { body { font-size: 24pt; } }
-
-@media screen and (max-width: 320px) {
-	div#heure { display: none; }
-}

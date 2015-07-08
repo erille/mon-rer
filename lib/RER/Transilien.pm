@@ -106,37 +106,30 @@ sub new {
         # L'attribut "status" indique si le train est retardé, supprimé...
         my $time_info;
         my $trainclass;
-        my $col2class;
         given ($train->status) {
             when ('N') { # rien = Normal
                 $time_info = $time;
                 $trainclass = 'train';
-                $col2class = 'col2';
             }; 
             when ('R') { 
                 $time_info = 'Retardé'; 
                 $trainclass = 'train delayed';
-                $col2class = 'col2 texte';
             };
             when ('S') { 
                 $time_info = 'Supprimé';
                 $trainclass = 'train canceled';
-                $col2class = 'col2 texte';
             };
             when ('P') { 
                 $time_info = 'À l\'approche';
                 $trainclass = 'train';
-                $col2class = 'col2 approche';
             };
             when ('Q') { 
                 $time_info = 'À quai';
                 $trainclass = 'train';
-                $col2class = 'col2 texte';
             };
             default { 
                 $time_info = "$time (MENTION '" . ($train->status || 'undef') . "' INCONNUE)"; 
                 $trainclass = 'train';
-                $col2class = 'col2 texte';
             };
         }
 
@@ -147,7 +140,6 @@ sub new {
             destination => $terminus_name,
             dessertes   => $dessertes,
             platform => $train->platform,
-            col2class => $col2class,
             trainclass => $trainclass,
             retard => $delay_str,
             ligne => $train->line,

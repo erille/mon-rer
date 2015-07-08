@@ -36,6 +36,7 @@ function init_autocomp(form, field, combo, results, submit) {
 	autocomp_submit = document.getElementById(submit);
 	document.getElementById(combo).style.display = 'none';
 	
+	autocomp_field.style.display = 'inline-block';
 	autocomp_cur_input_val = autocomp_field.value;
 	autocomp_old_input_val = autocomp_field.value;
 	autocomp_orig_input_val = autocomp_field.value;
