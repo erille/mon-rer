@@ -9,3 +9,4 @@ span.mission-train:after,
 span.destination-train { font-size: 140%; }
 
 
+.no-data { display: none; }

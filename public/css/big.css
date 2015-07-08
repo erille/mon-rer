@@ -17,11 +17,13 @@ div.group-left span { display: inline-block;  }
 div.group-middle { width: 4.5em; text-align: center; }
 span.mission-train { display: inline-block; }
 
-div.retard-flip div span.numero-train { display: none; }
-div.retard-flip div span.retard-train { display: inline-block; }
-div.no-retard-flip div span.numero-train { display: inline-block; }
-div.no-retard-flip div span.retard-train { display: none; }
-span.no-flip { display: inline-block; }
+div#listetrains.retard-flip div.group-left span.numero-train { display: none; }
+div#listetrains.retard-flip div.group-left span.retard-train { display: inline-block; }
+div#listetrains.retard-flip div.group-left span.retard-train.no-data { display: none; }
+div#listetrains.no-retard-flip div.group-left span.numero-train { display: inline-block; }
+div#listetrains.no-retard-flip div.group-left span.retard-train { display: none; }
+
+div#listetrains.retard-flip div.group-left span.numero-train.no-flip { display: inline-block; }
 
 span.destination-train { font-size: 160%; }
 div.force-height { min-height: 2.5em; }

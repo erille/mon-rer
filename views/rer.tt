@@ -70,12 +70,14 @@ function table_get_node(row, column) {
 }
 
 function table_set_innerhtml(row, column, html) {
-	table_get_node(row, column).style.display = (html ? '' : 'none');
-	table_get_node(row, column).innerHTML = (html ? html : '');
-}
+	var classlist = table_get_node(row, column).classList;
+	classlist.remove('no-data');
+	if (!html) {
+		classlist.add('no-data');
+	}
 
-function table_set_visible(row, column, visible) {
-	table_get_node(row, column).style.display = (visible ? undefined : 'none');
+	table_get_node(row, column).classList = classlist;
+	table_get_node(row, column).innerHTML = (html ? html : '');
 }
 
 function set_cookie(name, value) {
@@ -164,17 +166,20 @@ function get_data(obj) {
 
 			table_set_innerhtml(i, '1a', train.mission);
 			table_set_innerhtml(i, '1b', train.numero);
+			table_get_node(i, '1b').className = 'numero-train';
 
-			if (train.time != 'Supprimé' && train.time != 'Retardé') {
+			console.log("Traitement du train " + i);
+			if (train.retard != null 
+				&& train.time != 'Supprimé' && train.time != 'Retardé') {
 				table_set_innerhtml(i, '1c', train.retard);
 			} else {
+				if (!train.retard) {
+					console.log("Train " + i + ": pas d'info de retard");
+				}
 				table_set_innerhtml(i, '1c', undefined);
-			}
-
-			table_get_node(i, '1b').className = 'numero-train';
-			if (!table_get_node(i, '1c').innerHTML) {
 				table_get_node(i, '1b').className = 'numero-train no-flip';
 			}
+
 
 			table_set_innerhtml(i, '2', train.time);
 
@@ -207,9 +212,7 @@ function get_data(obj) {
 			table_get_node(i).className = 'train';
 			table_set_innerhtml(i, '1a', undefined);
 			table_set_innerhtml(i, '1b', undefined);
-			table_set_visible(i, '1b', 0);
 			table_set_innerhtml(i, '1c', undefined);
-			table_set_visible(i, '1c', 0);
 			table_set_innerhtml(i, '2', undefined);
 			table_set_innerhtml(i, '3a', undefined);
 			if (i < 2) {
