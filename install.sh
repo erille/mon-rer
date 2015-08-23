@@ -10,15 +10,15 @@ echo_status() { echo "${BOLD}${BLUE} :: ${NORMAL}${BOLD}$@${NORMAL}"; }
 UNAME=`uname`
 case "$UNAME" in 
 	FreeBSD)
-		WGET="fetch"
+		WGET="fetch -o export-TN-GTFS-LAST.zip"
 		STAT="stat -f %m"
 		;;
 	Linux)
-		WGET="wget -N"
+		WGET="wget -O export-TN-GTFS-LAST.zip -N"
 		STAT="stat -c %Y"
 		;;
 	*)
-		WGET="wget -N"
+		WGET="wget -O export-TN-GTFS-LAST.zip -N"
 		;;
 esac
 
@@ -70,7 +70,7 @@ fi
 echo_status "Obtaining SNCF GTFS data"
 mkdir -p input/sncf_gtfs
 cd input/sncf_gtfs
-$WGET 'http://files.transilien.com/horaires/gtfs/export-TN-GTFS-LAST.zip'
+$WGET 'https://ressources.data.sncf.com/api/datasets/1.0/sncf-transilien-gtfs/attachments/export_tn_gtfs_last_zip/'
 LAST_UPDATE=`$STAT export-TN-GTFS-LAST.zip`
 
 #
