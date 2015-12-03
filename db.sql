@@ -26,6 +26,8 @@ DELETE FROM gares;
 
 -- source codes UIC : 
 -- http://aurelienb.pagesperso-orange.fr/HTML/transports/obli_UIC.htm
+-- source codes TR3 :
+-- http://transilien.mobi/train
 
 INSERT INTO gares (code, uic, name) VALUES
 	('AB',  8727141, 'Aulnay sous Bois'),
@@ -394,8 +396,9 @@ INSERT INTO gares (code, uic, name) VALUES
 	('RF',  8754629, 'Rungis la Fraternelle'),
 	('RIS', 8768133, 'Ris Orangis'),
 	('RNS', 8775872, 'Robinson'),
-	('ROB', 8711603, 'Roissy en Brie' ),
-	('RSB', 8711370, 'Rosny sous Bois' ),
+	('ROB', 8711603, 'Roissy en Brie'),
+	('RPA', 8765479, 'Rosa Parks'),
+	('RSB', 8711370, 'Rosny sous Bois'),
 	('RSY', 8727146, 'Aéroport Charles de Gaulle 1'),
 	('RVM', 8711347, 'Le Raincy Villemomble' ),
 	('RYR', 8700147, 'Aéroport Charles de Gaulle 2 TGV'),
@@ -797,6 +800,7 @@ INSERT INTO gares_lines VALUES
 	(8727675, 'H'),		-- NOINTEL MOURS
 	(8728187, 'E'),		-- MAGENTA
 	(8728189, 'E'),		-- HAUSSMANN SAINT-LAZARE
+	(8765479, 'E'),		-- ROSA PARKS
 	(8732832, 'C'),		-- BIBLIOTHEQUE FRANCOIS MITTERRAND
 	(8733293, 'C'),		-- MONDESIR
 	(8733294, 'C'),		-- MONNERVILLE CENTRE
