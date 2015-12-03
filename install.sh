@@ -70,14 +70,15 @@ fi
 echo_status "Obtaining SNCF GTFS data"
 mkdir -p input/sncf_gtfs
 cd input/sncf_gtfs
-$WGET 'https://ressources.data.sncf.com/api/datasets/1.0/sncf-transilien-gtfs/attachments/export_tn_gtfs_last_zip/'
+$WGET 'http://medias.sncf.com/sncfcom/open-data/gtfs/gtfs-lines-last.zip'
 LAST_UPDATE=`$STAT export-TN-GTFS-LAST.zip`
 
 #
 # Unzip
 #
 echo_status "Unzipping SNCF GTFS data"
-rm -f agency.txt calendar.txt calendar_dates.txt routes.txt stops.txt stop_times.txt trips.txt
+rm -f agency.txt calendar.txt calendar_dates.txt routes.txt stops.txt \
+	stop_times.txt transfers.txt trips.txt
 unzip 'export-TN-GTFS-LAST.zip'
 
 #
