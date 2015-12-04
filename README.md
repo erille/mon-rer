@@ -11,9 +11,8 @@ cellphones.
 See it in action at [http://monrer.fr/] [1].
 
 I know the SNCF's website does the same thing, but let's face it, this
-interface is sexier.  Also, because this was an AJAX and Javascript exercise
-for myself, please try not to be too harsh on the "but this is useless"
-remarks.
+interface is sexier.  This project started an AJAX and Javascript exercise
+for myself, but a handful of people have convinced me to make this public.
 
 # Dependencies
 
@@ -28,7 +27,6 @@ You will need the following Perl modules:
  * RRD::Simple
  * Text::CSV
  * Template::Plugin::Decode
- * Tie::Handle::CSV
  * XML::Simple
  * YAML
 
