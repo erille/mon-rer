@@ -140,7 +140,7 @@ get '/' => sub {
     # rediriger (302) vers l'url /?s=<blah> si l'user a sauvegardé sa dernière gare
     if (cookie("station") && ! defined params->{'s'})
     {
-        redirect "?s=" . cookie("station");
+        return redirect uri_for("/", { s => cookie('station') } );
     }
 
     # sinon, examiner le header http
