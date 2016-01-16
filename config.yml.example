@@ -2,6 +2,9 @@
 # env-related settings should go to environments/$env.yml
 # all the settings in this file will be loaded at Dancer's startup.
 
+# Don't forget to set behind_proxy to 1 if using starman!
+behind_proxy: 1
+
 # Your application's name
 appname: "RER::Web"
 
