@@ -23,6 +23,7 @@ You will need the following Perl modules:
  * DBI
  * DBD::mysql
  * Dancer
+ * Dancer::Plugin::Redis
  * JSON::XS
  * RRD::Simple
  * Text::CSV
@@ -71,7 +72,7 @@ This program is licensed under the 3-clause BSD license.
 This program uses the following datasets supplied by SNCF under its [Open Data
 License] [3] (in French):
 
- * [API Prochains départs lignes Transilien C et L] [4]
+ * [API Prochains départs lignes Transilien] [4]
  * [Horaires des lignes Transilien] [5]
 
 This program also contains a custom database derived from the following datasets,
