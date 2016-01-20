@@ -70,7 +70,7 @@ fi
 echo_status "Obtaining SNCF GTFS data"
 mkdir -p input/sncf_gtfs
 cd input/sncf_gtfs
-$WGET 'http://medias.sncf.com/sncfcom/open-data/gtfs/gtfs-lines-last.zip'
+$WGET 'http://medias.sncf.com/sncfcom/open-data/gtfs/gtfs-lines-last.zip' || exit 1
 LAST_UPDATE=`$STAT export-TN-GTFS-LAST.zip`
 
 #
@@ -79,13 +79,13 @@ LAST_UPDATE=`$STAT export-TN-GTFS-LAST.zip`
 echo_status "Unzipping SNCF GTFS data"
 rm -f agency.txt calendar.txt calendar_dates.txt routes.txt stops.txt \
 	stop_times.txt transfers.txt trips.txt
-unzip 'export-TN-GTFS-LAST.zip'
+unzip 'export-TN-GTFS-LAST.zip' || exit 1
 
 #
 # Preprocess
 #
 echo_status "Running preprocessor.pl on GTFS data"
-perl -i ../../Perl-GTFS/preprocessor.pl *.txt
+perl -i ../../Perl-GTFS/preprocessor.pl *.txt || exit 1
 
 #
 # Generate
@@ -93,7 +93,7 @@ perl -i ../../Perl-GTFS/preprocessor.pl *.txt
 echo_status "Generating MySQL table creation statements"
 cd ../..
 
-perl ./Perl-GTFS/loadfromfile.pl -p input -d "${DATABASE}"
+perl ./Perl-GTFS/loadfromfile.pl -p input -d "${DATABASE}" || exit 1
 
 #
 # Import
@@ -105,6 +105,6 @@ echo Last update: ${LAST_UPDATE}
 echo "INSERT INTO metadata (\`key\`, \`value\`) VALUES ('dmaj', '${LAST_UPDATE}');" | \
 	cat ./Perl-GTFS/load-gtfs.sql ./input/sncf_gtfs/load-data.sql ./db.sql - | \
 	sed -e '1,5d' | \
-	mysql --local-infile=1 -u "${USER}" -p -D "${DATABASE}" 
+	mysql --local-infile=1 -u "${USER}" -p -D "${DATABASE}" || exit 1
 
 echo_status "You're now ready!"
