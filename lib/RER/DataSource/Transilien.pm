@@ -28,21 +28,21 @@ sub do_request {
     push(@LWP::Protocol::http::EXTRA_SOCK_OPTS, SendTE => 0);
     my $response = $ua->request($req);
 
-    given ($response->code) {
-        when (401) { die "Authentication failed or missing (invalid API key?)\n"; }
-        when (403) { 
+    for ($response->code) {
+        if ($_ == 401) { die "Authentication failed or missing (invalid API key?)\n"; }
+        elsif ($_ == 403) {
             if (defined $response->header('Retry-After')) {
                 my $retry_after = $response->header('Retry-After');
-                die "API call quota exceeded (retry after $retry_after s)\n"; 
+                die "API call quota exceeded (retry after $retry_after s)\n";
             }
             else {
                 die "Forbidden (invalid station or other error)\n";
             }
         }
-        when (404) { die "Invalid path supplied to API call\n"; }
-        when (406) { die "Unsupported version\n"; }
-        when (500) { die "API is broken\n"; }
-        when (503) { die "API is overloaded\n"; }
+        elsif ($_ == 404) { die "Invalid path supplied to API call\n"; }
+        elsif ($_ == 406) { die "Unsupported version\n"; }
+        elsif ($_ == 500) { die "API is broken\n"; }
+        elsif ($_ == 503) { die "API is overloaded\n"; }
     }
 
     return $response->decoded_content;

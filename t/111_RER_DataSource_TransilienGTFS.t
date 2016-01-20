@@ -30,7 +30,7 @@ ok($ds = RER::DataSource::TransilienGTFS->new(
 
 my $data;
 # ok($data = $ds->get_info_for_train('2013-12-11', 'JY', '121414'));
-ok($data = $ds->get_info_for_train('2014-02-06', 'JY', '147483'));
+ok($data = $ds->get_info_for_train('2016-02-06', 'JY', '147483'));
 isa_ok($data, 'ARRAY');
 is(scalar @$data, 1, 'Array contains one element');
 isa_ok($data->[0], 'RER::Train');

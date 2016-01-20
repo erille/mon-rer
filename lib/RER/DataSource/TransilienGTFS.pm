@@ -52,38 +52,38 @@ sub check_ligne {
 	my $value = $ligne;
 
     if ($value !~ /^(?:TER|[A-EHJKLNPRU])$/ && defined $agency) {
-        given ($agency) {
-            $value = $1  when /^RER (.)$/;
-            $value = 'N' when 'Paris Rive Gauche';
-            $value = 'P' when 'Paris Est';
-            $value = 'R' when 'Paris Sud Est';
-            $value = 'U' when 'La Verrière - La Défense';
+        for ($agency) {
+            $value = $1  if /^RER (.)$/;
+            $value = 'N' if $_ eq 'Paris Rive Gauche';
+            $value = 'P' if $_ eq 'Paris Est';
+            $value = 'R' if $_ eq 'Paris Sud Est';
+            $value = 'U' if $_ eq 'La Verrière - La Défense';
         }
     }
 
 	# $value should now usually contain a one-letter value, or
 	# "TER".  However SNCF somehow manages to fuck this up
 	# big time.
-	given ($value) {
-        $value = 'C' when /Gare d'Aus/i;
-        $value = 'C' when /Dourdan =>/i;
-        $value = 'C' when /Invalides /i; # note the space
-        $value = 'C' when /Montigny B/i;
-        $value = 'C' when /PONT DU GA/i;
-        $value = 'D' when /Corbeil Es/i;
-        $value = 'D' when /Evry Courc/i;
-        $value = 'D' when /Grigny Cen/i;
-        $value = 'D' when /Le Bras de/i;
-        $value = 'D' when /Orangis Bo/i;
-        $value = 'D' when /Juvisy => /i; # note the space
-        $value = 'E' when /Haussmann /i; # note the space
-        $value = 'H' when /LUZARCHES /i; # note the space
-        $value = 'H' when /ERMONT EAU/i;
-        $value = 'J' when /Gisors => /i; # note the space
-        $value = 'J' when /Mantes la /i; # note the space
-        $value = 'L' when /St Nom la /i; # note the space
-        $value = 'R' when /Montargis /i; # note the space
-        $value = 'TER' when 'Train';
+	for ($value) {
+        $value = 'C' if /Gare d'Aus/i;
+        $value = 'C' if /Dourdan =>/i;
+        $value = 'C' if /Invalides /i; # note the space
+        $value = 'C' if /Montigny B/i;
+        $value = 'C' if /PONT DU GA/i;
+        $value = 'D' if /Corbeil Es/i;
+        $value = 'D' if /Evry Courc/i;
+        $value = 'D' if /Grigny Cen/i;
+        $value = 'D' if /Le Bras de/i;
+        $value = 'D' if /Orangis Bo/i;
+        $value = 'D' if /Juvisy => /i; # note the space
+        $value = 'E' if /Haussmann /i; # note the space
+        $value = 'H' if /LUZARCHES /i; # note the space
+        $value = 'H' if /ERMONT EAU/i;
+        $value = 'J' if /Gisors => /i; # note the space
+        $value = 'J' if /Mantes la /i; # note the space
+        $value = 'L' if /St Nom la /i; # note the space
+        $value = 'R' if /Montargis /i; # note the space
+        $value = 'TER' if $_ eq 'Train';
 	}
 
     return '' if ($value !~ /^(?:TER|[A-EHJKLNPRU])$/);

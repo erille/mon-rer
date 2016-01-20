@@ -1,6 +1,9 @@
+#!/usr/bin/env perl
+
 use Test::More tests => 14;
 use strict;
 use warnings;
+use utf8;
 
 # the order is important
 use RER::Web;
@@ -19,8 +22,11 @@ sub autocomp_test {
 	is $response->{status}, 200, "$url works";
 	is $response->content_type, 'application/json', 
 		"$url has the right Content-Type header";
-	is_deeply $response->content,
-		Dancer::to_json(RER::Gares::get_autocomp($str)),
+
+    my $content = $response->content;
+    utf8::encode($content);
+	is_deeply Dancer::from_json($content),
+		RER::Gares::get_autocomp($str),
 		"$url returns the correct data";
 }
 

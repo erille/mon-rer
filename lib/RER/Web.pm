@@ -1,4 +1,11 @@
+#!/usr/bin/env perl
+
 package RER::Web;
+
+use strict;
+use warnings;
+use utf8;
+
 use Dancer ':syntax';
 use Dancer::Plugin::Redis;
 
@@ -130,9 +137,6 @@ sub cache_get_hash {
 
 
 hook 'before' => sub {
-    $RER::Gares::config{dsn} = config->{'db_dsn'};
-    $RER::Gares::config{username} = config->{'db_username'};
-    $RER::Gares::config{password} = config->{'db_password'};
     RER::Gares::db_connect();
 };
 
@@ -189,13 +193,6 @@ get '/json' => sub {
     if (! defined $ret) {
 
         stats_add 'api_sent';
-
-        # if ( ! exists $stats{'users'} ) {
-        #     stats_add 'users', [ request->address() ];
-        # } elsif ( ! grep { $_ eq request->address() } @{$stats{'users'}}) {
-        #     push @{$stats{'users'}}, request->address();
-        # }
-
 
         my $data;
         eval {

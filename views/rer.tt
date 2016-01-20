@@ -1,4 +1,3 @@
-<%- USE Decode %>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -168,14 +167,10 @@ function get_data(obj) {
 			table_set_innerhtml(i, '1b', train.numero);
 			table_get_node(i, '1b').className = 'numero-train';
 
-			console.log("Traitement du train " + i);
 			if (train.retard != null 
 				&& train.time != 'Supprimé' && train.time != 'Retardé') {
 				table_set_innerhtml(i, '1c', train.retard);
 			} else {
-				if (!train.retard) {
-					console.log("Train " + i + ": pas d'info de retard");
-				}
 				table_set_innerhtml(i, '1c', undefined);
 				table_get_node(i, '1b').className = 'numero-train no-flip';
 			}
@@ -538,7 +533,6 @@ function toggle_block(group, id) {
 listenEvent(window, "load", function() { init_data(1); init_scroll(); init_other(); update_time(); });
 
 window.onpopstate = function(e) {
-	console.log(e.state);
 	if (e.state) {
 		document.getElementById("station_list").value = e.state.code;
 		document.getElementById("s2").value = e.state.name;
@@ -557,7 +551,7 @@ window.onpopstate = function(e) {
 	<input type="text" name="s2" id="s2" value="<% origin_station %>" placeholder="Saisissez le nom ou le code d'une gare..." />
 	<select id="station_list" name="s" onchange="combobox_change_station()">
 <% FOREACH s IN stations -%>
-		<option value="<% s.code %>"<%- IF s.code == origin_code %> selected="selected"<%- END -%>><% s.name | decode %></option>
+		<option value="<% s.code %>"<%- IF s.code == origin_code %> selected="selected"<%- END -%>><% s.name %></option>
 <% END -%>
 	</select>
 	<input id="station_submit" type="submit" value="valider" />

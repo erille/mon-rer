@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 package RER::Transilien;
 
@@ -36,9 +36,8 @@ sub new {
 
     my $data = eval { 
         for my $i (0..$#ds) { 
-            if (($i == 0)
-                && (grep {/^[AB]$/} @{RER::Gares::get_lines($gare_from)})
-                && config->{restrict_lines}) {
+            if ($ds[$i]->isa('RER::DataSource::Transilien')
+                && (grep {/^[AB]$/} @{$gare_from->lines})) {
                 next;
             }
 #            if (($i == 0)
@@ -106,28 +105,23 @@ sub new {
         # L'attribut "status" indique si le train est retardé, supprimé...
         my $time_info;
         my $trainclass;
-        given ($train->status) {
-            when ('N') { # rien = Normal
+        for ($train->status) {
+            if ($_ eq 'N') { # rien = Normal
                 $time_info = $time;
                 $trainclass = 'train';
-            }; 
-            when ('R') { 
+            } elsif ($_ eq 'R') {
                 $time_info = 'Retardé'; 
                 $trainclass = 'train delayed';
-            };
-            when ('S') { 
+            } elsif ($_ eq 'S') {
                 $time_info = 'Supprimé';
                 $trainclass = 'train canceled';
-            };
-            when ('P') { 
+            } elsif ($_ eq 'P') {
                 $time_info = 'À l\'approche';
                 $trainclass = 'train';
-            };
-            when ('Q') { 
+            } elsif ($_ eq 'Q') {
                 $time_info = 'À quai';
                 $trainclass = 'train';
-            };
-            default { 
+            } else {
                 $time_info = "$time (MENTION '" . ($train->status || 'undef') . "' INCONNUE)"; 
                 $trainclass = 'train';
             };

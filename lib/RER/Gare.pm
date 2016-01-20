@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+
 package RER::Gare;
 
 use strict;

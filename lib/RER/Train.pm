@@ -26,21 +26,21 @@ sub line {
     $line ||= ($self) ? $self->{line} : undef;
     return $self->{line} if not defined $line;
 
-    given ($line) {
-	$line = 'C' when /Boulevard /i;
-        $line = 'C' when /Gare d'Aus/i;
-        $line = 'C' when /Invalides /i; # note the space
-        $line = 'D' when /Evry Courc/i;
-        $line = 'D' when /Grigny Cen/i;
-        $line = 'D' when /Le Bras de/i;
-        $line = 'D' when /Orangis Bo/i;
-        $line = 'D' when /Juvisy => /i; # note the space
-        $line = 'E' when /Haussmann /i; # note the space
-        $line = 'H' when /LUZARCHES /i; # note the space
-        $line = 'J' when /Gisors => /i; # note the space
-        $line = 'J' when /Mantes la /i; # note the space
-        $line = 'R' when /Montargis /i; # note the space
-        $line = 'TER' when 'Train';
+    for ($line) {
+        $line = 'C' if /Boulevard /i;
+        $line = 'C' if /Gare d'Aus/i;
+        $line = 'C' if /Invalides /i; # note the space
+        $line = 'D' if /Evry Courc/i;
+        $line = 'D' if /Grigny Cen/i;
+        $line = 'D' if /Le Bras de/i;
+        $line = 'D' if /Orangis Bo/i;
+        $line = 'D' if /Juvisy => /i; # note the space
+        $line = 'E' if /Haussmann /i; # note the space
+        $line = 'H' if /LUZARCHES /i; # note the space
+        $line = 'J' if /Gisors => /i; # note the space
+        $line = 'J' if /Mantes la /i; # note the space
+        $line = 'R' if /Montargis /i; # note the space
+        $line = 'TER' if $_ eq 'Train';
     }
 
     $self->{line} = $line;

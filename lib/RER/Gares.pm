@@ -1,6 +1,7 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 package RER::Gares;
+use Dancer ':syntax';
 use RER::Gare;
 use DBI;
 use DateTime;
@@ -11,23 +12,14 @@ use warnings;
 use utf8;
 use 5.010;
 
-
-# Don't even think of modifying this directly.  You should be fiddling with
-# config.yml instead.
-our %config = (
-	dsn => 'dbi:SQLite:dbname=gares.db',
-	username => '',
-	password => ''
-);
-
 our $dbh; 
 
 sub db_connect
 {
 	$dbh = DBI->connect(
-		$config{dsn}, 
-		$config{username}, 
-		$config{password},
+		config->{db_dsn},
+		config->{db_username},
+		config->{db_password},
 		{ mysql_enable_utf8 => 1 }) or die $DBI::errstr;
 }
 
@@ -109,7 +101,7 @@ sub find
 	
 	if(scalar(@$result)) {
 		my ($code, $name, $uic) = @{$result->[0]};
-		# utf8::decode($name);
+		utf8::decode($name);
 		my $gare = RER::Gare->new(
 			code => $code,
 			name => $name,

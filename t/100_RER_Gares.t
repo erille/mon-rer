@@ -34,7 +34,7 @@ isa_ok($station, 'RER::Gare');
 is($station->code, 'CLX');
 # is() doesn't work here because of utf-8
 is($station->name, "Châtelet les Halles");
-ok(utf8::is_utf8($station->name), '$station->name is utf-8');
+is(ord(substr($station->name, 2)), 0xe2);
 is($station->uic,  '8775860');
 
 $station = RER::Gares::find(uic => '8775860');
