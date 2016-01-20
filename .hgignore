@@ -3,3 +3,5 @@
 ^config.yml$
 Perl-GTFS
 input
+sessions
+logs
