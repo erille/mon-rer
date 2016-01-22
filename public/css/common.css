@@ -22,6 +22,7 @@ div#heure {
 	background-color: navy;
 	border-radius: 0.56em;
 	border: white 0.18em solid;
+	font-size: 125%;
 
 	z-index: 1;
 
@@ -175,22 +176,32 @@ div#autocomp ul li span.name span.lines { text-align: right; }
 div#autocomp ul li span.trig { font-family: monospace; font-style: italic; color: #666; }
 div#autocomp img, div#line_filter img { position: relative; top: 0.2em; padding-left: 0.2em; max-height: 1.4em; }
 
-div#line_filter ul li { text-decoration: underline; display: inline; cursor: pointer; } 
-div#line_filter ul li img.selected { opacity: 1; } 
-div#line_filter ul li.selected { font-weight: bold; } 
-div#line_filter img { opacity: 0.6; }
+div#line_filter ul { margin-top: 0.3em; }
+div#line_filter li { text-decoration: underline; }
+div#line_filter img { position: relative; left: -2px; top: 4px; }
+div#line_filter li.selected { font-weight: bold; }
 div#line_filter { display: inline-block; }
-div#line_filter ul:before { content: "Montrer lignes : "; }
 
 div#error {
+	z-index: 10;
 	position: fixed;
 	top: 0;
+	width: 100%;
+}
+
+div.error-overlay {
+	left: 0;
+	top: 0;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+p#errormsg {
+	display: block;
 	padding: 0.4em;
 	background-color: #b40404;
-	width: 100%;
 	text-align: center;
 	color: white;
-/*	display: none; */
 }
 
 div#disclaimer {
@@ -259,6 +270,24 @@ div#footer {
 
 	text-align: center;
 }
+
+
+.button { 
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	margin: 0 3px;
+	color: white; background: #555; padding: 4px;
+	min-width: 2.5em; line-height: 1.7em;
+	border-radius: 4px;
+	box-shadow: 0 4px 0 0 #333;
+	vertical-align: middle;
+}
+
+.button:hover { background: #666; cursor: pointer; }
+.button:active { top: 4px; box-shadow: 0 0; }
+.button.pressed { top: 2px; box-shadow: 0 2px 0 0 #333; background: #567; }
+.button.pressed:hover { background: #678; cursor: pointer; }
 
 select {
 	background-color: #444;

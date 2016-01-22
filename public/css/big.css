@@ -1,9 +1,10 @@
 body { font-size: 11pt; }
-div#otherstation, div#error, div.subwindow, div#disclaimer, div#footer { font-size: 11pt; }
-div#otherstation {
-	padding: 0.9em 10.2em 1.0em 0.7em;
+div#haut, div#error, div.subwindow, div#disclaimer, div#footer { font-size: 11pt; }
+div#haut {
+	padding: 0.9em 12.2em 1.0em 0.7em;
 	display: block;
 }
+
 div#listetrains { display: table; width: 100%; }
 div.train { display: table-row; width: 100%; }
 
@@ -27,6 +28,8 @@ div#listetrains.retard-flip div.group-left span.numero-train.no-flip { display: 
 
 span.destination-train { font-size: 160%; }
 div.force-height { min-height: 2.5em; }
+
+div#line_filter ul:before { content: "Montrer lignes : "; }
 
 @media screen and (min-width: 600px)  { body { font-size: 14pt; } }
 @media screen and (min-width: 750px)  { body { font-size: 16pt; } }

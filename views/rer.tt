@@ -262,8 +262,13 @@ function get_data(obj) {
 		}
 	}
 	else if (obj.status >= 400 && obj.status != 503) {
-		die("Impossible de récupérer les prochains trains (erreur " 
-			+ obj.status + ").");
+		try {
+			var err = JSON.parse(obj.responseText);
+			die(err.error);
+		} catch (e) {
+			die("Impossible de récupérer les prochains trains (erreur "
+				+ obj.status + ").");
+		}
 	}
 }
 
@@ -329,7 +334,10 @@ function init_filtres(lignes) {
 
 	if (lignes.length <= 1) {
 		flt.style.display = "none";
+		document.getElementById("more_options_button").display = "none";
 		return;
+	} else {
+		document.getElementById("more_options_button").display = "inline";
 	}
 
 	while (flt.childNodes.length > 0)
@@ -338,26 +346,31 @@ function init_filtres(lignes) {
 	var flt_ul = document.createElement("ul");
 
 	var li_0 = document.createElement("li");
-	var li_0_text = document.createTextNode("Toutes");
+	li_0.className = "button";
+	var li_0_p = document.createElement("p");
+	var li_0_p_text = document.createTextNode("Toutes");
 	li_0.onclick = function(l) { return function() { change_line_filter(l) } }(null);
-	if (!originLineFilter) li_0.className = "selected";
-	li_0.appendChild(li_0_text);
+	if (!originLineFilter) li_0.className = "button pressed";
+	li_0_p.appendChild(li_0_p_text);
+	li_0.appendChild(li_0_p);
 	flt_ul.appendChild(li_0);
 
 	for (var i = 0; i < lignes.length; i++) {
 		var li = document.createElement("li");
+		li.className = "button";
+		var p = document.createElement("p");
 		var img = document.createElement("img");
 		img.src = "/img/rer" + lignes[i] + ".svg";
 		img.alt = "Ligne " + lignes[i] + " seulement";
 
 		if (lignes[i] == originLineFilter) 
-			img.className = "selected";
+			li.className = "button pressed";
 
-		img.onclick = function(l) { return function() { change_line_filter(l) } }(lignes[i]);
+		li.onclick = function(l) { return function() { change_line_filter(l) } }(lignes[i]);
 
-		li.appendChild(img);
+		p.appendChild(img);
+		li.appendChild(p);
 		flt_ul.appendChild(li);
-
 	}
 
 	flt.appendChild(flt_ul);
@@ -376,9 +389,8 @@ function init_scroll() {
 }
 
 function init_other() {
-	document.getElementById("disclaimer").style.display = "none";
-
 	window.setInterval(update_time, 1000);
+	show_more_options(false);
 }
 
 
@@ -442,6 +454,8 @@ function train_scroll(num) {
 function msg_scroll() {
 	/* scrolls obj */
 	var pNode = document.getElementById('conteneurmessages');
+	if (pNode.innerHTML === "")
+		return;
 
 	var scroll = 0;
 	if (pNode.style)
@@ -480,6 +494,23 @@ function msg_scroll() {
 }
 
 
+function show_more_options(b) {
+	var extraOpts = document.getElementById('more_options');
+	var extraOptsButton = document.getElementById('more_options_button');
+
+	extraOptsButton.onclick = function(b) { 
+		return function() { show_more_options(!b); } 
+	}(b);
+
+	if (b) {
+		extraOpts.style.display = "block";
+		extraOptsButton.className = "button pressed";
+	} else {
+		extraOpts.style.display = "none";
+		extraOptsButton.className = "button";
+	}
+}
+
 
 function change_station(new_code, new_station, do_push_state) {
 	flip_retard(false);
@@ -511,25 +542,6 @@ function combobox_change_station(do_push_state) {
 }
 
 
-var active_block = {};
-function toggle_block(group, id) {
-	var block  = document.getElementById(id);
-	var active = document.getElementById(active_block[group]);
-	if (!block) return;
-
-	if (id != active_block[group]) {
-		if (active)
-			active.style.display = 'none';
-
-		block.style.display = 'block';
-		active_block[group] = id;
-	}
-	else {
-		block.style.display = 'none';
-		active_block[group] = undefined;
-	}
-}
-
 listenEvent(window, "load", function() { init_data(1); init_scroll(); init_other(); update_time(); });
 
 window.onpopstate = function(e) {
@@ -545,23 +557,29 @@ window.onpopstate = function(e) {
 
 <body>
 
-<div id="otherstation">
-<form id="form_otherstation" method="GET" action="#">
-	<label for="s2">Départ&nbsp;:</label>
-	<input type="text" name="s2" id="s2" value="<% origin_station %>" placeholder="Saisissez le nom ou le code d'une gare..." />
-	<select id="station_list" name="s" onchange="combobox_change_station()">
+<div id="haut">
+	<form id="form_otherstation" method="GET" action="#">
+		<label for="s2">Départ&nbsp;:</label>
+		<input type="text" name="s2" id="s2" value="<% origin_station %>" placeholder="Saisissez le nom ou le code d'une gare..." />
+		<select id="station_list" name="s" onchange="combobox_change_station()">
 <% FOREACH s IN stations -%>
-		<option value="<% s.code %>"<%- IF s.code == origin_code %> selected="selected"<%- END -%>><% s.name %></option>
+			<option value="<% s.code %>"
+				<%- IF s.code == origin_code %> selected="selected"<%- END -%>
+			>
+				<% s.name %>
+			</option>
 <% END -%>
-	</select>
-	<input id="station_submit" type="submit" value="valider" />
-	<div id="line_filter">
-	Montrer lignes :
+		</select>
+		<input id="station_submit" type="submit" value="valider" />
+		<span id="more_options_button" class="button">Plus d'options</span>
+
+		<div id="autocomp"></div>
+	</form>
+
+	<div id="more_options">
+		<div id="line_filter"></div>
 	</div>
 
-	<div id="autocomp"></div>
-
-</form>
 </div>
 
 <div id="heure">--:--</div>
@@ -597,29 +615,13 @@ window.onpopstate = function(e) {
 	</div>
 </div>
 
-<div id="error"><p id="errormsg">
-	<script type="text/javascript">document.getElementById("error").style.display = "none";</script>
-	<noscript>Désolé, ce site nécessite JavaScript pour fonctionner.</noscript>
-	</p>
-</div>
-
-<div class="subwindow">
-
-<p>
-	<a href="#" onclick="toggle_block(1, 'disclaimer')">Dégagement de responsabilité</a>
-</p>
-
-<div class="content">
-
-<div id="disclaimer">
-<p>Cette application Web est expérimentale. Elle n'est pas officielle et n'est
-donc ni prise en charge, ni approuvée par la SNCF.</p>
-<p>Les informations de retard peuvent être manquantes ou inexactes.</p>
-<p>Pour tout bugreport, <a href="http://x0r.fr/contact">contactez-moi</a>.</p>
-</div>
-
-</div>
-
+<div id="error">
+	<div class="error-overlay">
+		<p id="errormsg">
+		<script type="text/javascript">document.getElementById("error").style.display = "none";</script>
+		<noscript>Désolé, ce site nécessite JavaScript pour fonctionner.</noscript>
+		</p>
+	</div>
 </div>
 
 <script type='text/javascript'>
@@ -627,7 +629,7 @@ init_autocomp('form_otherstation', 's2', 'station_list', 'autocomp', 'station_su
 </script>
 
 <div id="footer">
-&copy; 2013&ndash;2016 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/32">Blog</a> • <a href="https://bitbucket.org/xtab/rer-web">Code source</a> • <a href="http://data.sncf.com/">SNCF Open Data Transilien</a> • Dernière mise à jour : <% dmaj || 'inconnue' %>
+&copy; 2013&ndash;2016 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/55">Blog</a> • <a href="https://bitbucket.org/xtab/rer-web">Code source</a> • <a href="http://data.sncf.com/">SNCF Open Data Transilien</a> • Dernière mise à jour : <% dmaj || 'inconnue' %>
 </div>
 
 </body>

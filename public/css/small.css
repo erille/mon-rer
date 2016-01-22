@@ -1,12 +1,13 @@
 body { font-size: 11pt; }
 div#heure { display: none; }
-div#otherstation { padding: 0.9em 0.9em 1.0em 0.7em; }
+div#haut { padding: 0.9em 0.9em 1.0em 0.7em; }
 
 div.group { display: inline; }
 
 span.mission-train:after, 
 	span.retard-train:before { color: white; content: " • "; }
 span.destination-train { font-size: 140%; }
+div#line_filter ul:before { content: "Lignes : "; }
 
 
 .no-data { display: none; }
