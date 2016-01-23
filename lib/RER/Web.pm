@@ -34,7 +34,7 @@ sub check_code {
 
     $code = uc $code;
 
-    if($code =~ /^(?:[A-Z]{1,3}|NC[1-6])$/) {
+    if($code =~ /^(?:[A-Z]{1,3}|NC[1-7])$/) {
         return $code;
     }
     else {
