@@ -1,3 +1,43 @@
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(/fonts/MaterialIcons-Regular.woff2) format('woff2'),
+       url(/fonts/MaterialIcons-Regular.woff) format('woff'),
+       url(/fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  vertical-align: middle;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -9,6 +49,8 @@ body {
 p { margin: 0; padding: 0; }
 
 a { color: #ccc; }
+
+form label, form input { vertical-align: middle; }
 
 div#heure {
 	position: fixed;
@@ -25,9 +67,12 @@ div#heure {
 	font-size: 125%;
 
 	z-index: 1;
+	cursor: default;
 
 	text-align: center;
 }
+
+div#more_options { cursor: default; }
 
 
 div.train {
@@ -108,6 +153,7 @@ span.numero-train { color: #679fd2; }
 input#s2 {
 	display: none;
 	font-family: 'Tauri', sans-serif;
+	font-size: 11pt;
 	max-width: 22em;
 	color: white;
 	border: solid #777 1px;
@@ -209,15 +255,13 @@ div#disclaimer {
 }
 
 
-div#listemessages {
-    max-height: 6em;
-    overflow: hidden;
-}
+div#heure, div#listetrains { cursor: default; }
+
+div#listemessages { max-height: 6em; overflow: hidden; cursor: default; }
 
 div#conteneurmessages {
-    position: relative;
-    bottom: 0px;
-
+	position: relative;
+	bottom: 0px;
 	transition-timing-function: linear;
 	-webkit-transition-timing-function: linear;
 }
@@ -285,7 +329,7 @@ div#footer {
 }
 
 .button:hover { background: #666; cursor: pointer; }
-.button:active { top: 4px; box-shadow: 0 0; }
+.button.pressed:active, .button:active { top: 4px; box-shadow: 0 0; }
 .button.pressed { top: 2px; box-shadow: 0 2px 0 0 #333; background: #567; }
 .button.pressed:hover { background: #678; cursor: pointer; }
 

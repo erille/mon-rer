@@ -18,7 +18,6 @@
 
 <script type="text/javascript">
 
-
 var scrollTimeout = 3000;
 var msgScrollTimeout = 14000;
 
@@ -215,8 +214,6 @@ function get_data(obj) {
 					+ "&nbsp;"
 					+ "</p></div>");
 			}
-			else 
-			
 			table_set_innerhtml(i, '4', undefined);
 			origTrains[i] = -1;
 		}
@@ -333,11 +330,11 @@ function init_filtres(lignes) {
 	flt = document.getElementById("line_filter");
 
 	if (lignes.length <= 1) {
-		flt.style.display = "none";
-		document.getElementById("more_options_button").display = "none";
+		show_more_options(false);
+		document.getElementById("more_options_button").style.display = "none";
 		return;
 	} else {
-		document.getElementById("more_options_button").display = "inline";
+		document.getElementById("more_options_button").style.display = "inline-block";
 	}
 
 	while (flt.childNodes.length > 0)
@@ -347,6 +344,7 @@ function init_filtres(lignes) {
 
 	var li_0 = document.createElement("li");
 	li_0.className = "button";
+	li_0.title = "Montrer toutes les lignes";
 	var li_0_p = document.createElement("p");
 	var li_0_p_text = document.createTextNode("Toutes");
 	li_0.onclick = function(l) { return function() { change_line_filter(l) } }(null);
@@ -358,10 +356,11 @@ function init_filtres(lignes) {
 	for (var i = 0; i < lignes.length; i++) {
 		var li = document.createElement("li");
 		li.className = "button";
+		li.title = "Ligne " + lignes[i] + " seulement";
 		var p = document.createElement("p");
 		var img = document.createElement("img");
 		img.src = "/img/rer" + lignes[i] + ".svg";
-		img.alt = "Ligne " + lignes[i] + " seulement";
+		img.alt = li.title;
 
 		if (lignes[i] == originLineFilter) 
 			li.className = "button pressed";
@@ -559,8 +558,9 @@ window.onpopstate = function(e) {
 
 <div id="haut">
 	<form id="form_otherstation" method="GET" action="#">
+		<span id="more_options_button" title="Afficher plus d'options" class="button"><i class="material-icons">&#xe5cf;</i></span>
 		<label for="s2">Départ&nbsp;:</label>
-		<input type="text" name="s2" id="s2" value="<% origin_station %>" placeholder="Saisissez le nom ou le code d'une gare..." />
+		<input type="text" name="s2" id="s2" title="Gare à partir de laquelle afficher les prochains départs" value="<% origin_station %>" placeholder="Saisissez le nom ou le code d'une gare..." />
 		<select id="station_list" name="s" onchange="combobox_change_station()">
 <% FOREACH s IN stations -%>
 			<option value="<% s.code %>"
@@ -571,7 +571,6 @@ window.onpopstate = function(e) {
 <% END -%>
 		</select>
 		<input id="station_submit" type="submit" value="valider" />
-		<span id="more_options_button" class="button">Plus d'options</span>
 
 		<div id="autocomp"></div>
 	</form>
