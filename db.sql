@@ -329,6 +329,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('NC4', 8775807, 'Le Vésinet-Centre'),
 	('NC5', 8775806, 'Chatou-Croissy'),
 	('NC6', 8775805, 'Rueil-Malmaison'),
+	('NC7', 8775803, 'Nanterre Université RER A'),
 	('NG',  8754545, 'La Norville Saint-Germain lès Arpajon'),
 	('NGM', 8775813, 'Nogent-sur-Marne'),
 	('NH',  8727157, 'Nanteuil-le-Haudoin'),
@@ -341,7 +342,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('NSY', 8711321, 'Noisy Le Sec' ),
 	('NTN', 8775810, 'Nation'),
 	('NUE', 8733448, 'Neuville Université'),
-	('NUN', 8738631, 'Nanterre Université'),
+	('NUN', 8738631, 'Nanterre Université Transilien L'),
 	('NYC', 8775834, 'Noisy Champs'),
 	('NYG', 8775833, 'Noisy le Grand Mont d''Est'),
 	('NYP', 8775831, 'Neuilly Plaisance'),
@@ -698,8 +699,6 @@ INSERT INTO gares_lines VALUES
 	(8727101, 'H'),		-- SAINT-DENIS
 	(8727102, 'B'),		-- GARE DU NORD RER
 	(8727102, 'D'),		-- GARE DU NORD RER
-	(8727103, 'B'),		-- PARIS NORD (GARE DU NORD)
-	(8727103, 'D'),		-- PARIS NORD (GARE DU NORD)
 	(8727103, 'H'),		-- PARIS NORD (GARE DU NORD)
 	(8727103, 'K'),		-- PARIS NORD (GARE DU NORD)
 	(8727112, 'H'),		-- EPINAY VILLETANEUSE
@@ -908,7 +907,6 @@ INSERT INTO gares_lines VALUES
 	(8738605, 'J'),		-- ACHERES GRAND CORMIER
 	(8738630, 'L'),		-- LES VALLEES
 --	(8775802, 'A'),		-- NANTERRE PREFECTURE (mauvais code UIC et doublon !)
-	(8738631, 'A'),		-- NANTERRE UNIVERSITE
 	(8738631, 'L'),		-- NANTERRE UNIVERSITE
 	(8738640, 'A'),		-- HOUILLES CARRIERES SUR SEINE
 	(8738640, 'J'),		-- HOUILLES CARRIERES SUR SEINE
