@@ -206,7 +206,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('GRL', 8727636, 'Groslay'),
 	('GTL', 8775865, 'Gentilly'),
 	('GUW', 8775883, 'Le Guichet'),
-	('GYN', 8775858, 'Gare de Lyon RER A'),
+	('GYN', 8775858, 'Paris Gare de Lyon'),
 	('GZ',  8711601, 'Gretz Armainvilliers' ),
 	('GZA', 8739334, 'Gazeran'),
 	('HAQ', 8775886, 'La Hacquinière'),
@@ -619,6 +619,8 @@ INSERT INTO gares (code, uic, name, is_transilien) VALUES
 -- 	('VXN', 'Valence TGV', 0),
 
 CREATE UNIQUE INDEX index_tr3a ON gares (code);
+
+CREATE INDEX trip_headsign ON trips (trip_headsign);
 
 
 
@@ -1101,7 +1103,6 @@ INSERT INTO gares_lines VALUES
 	(8768424, 'R'),		-- FERRIERES FONTENAY
 	(8768440, 'D'),		-- BOIGNEVILLE
 	(8768441, 'D'),		-- MALESHERBES
-	(8768603, 'A'),		-- PARIS - GARE DE LYON
 	(8768603, 'D'),		-- PARIS - GARE DE LYON
 	(8768603, 'R'),		-- PARIS - GARE DE LYON
 	(8768666, 'R'),		-- PARIS BERCY (GARE DE BERCY)
@@ -1177,9 +1178,7 @@ INSERT INTO gares_lines VALUES
 	(8775879, 'B'),		-- MASSY PALAISEAU RER B
 	(8739413, 'TER'),	-- MAINTENON
 	(8775878, 'B'), 	-- MASSY VERRIERES RER B
-	(8768600, 'A'),		-- PARIS - GARE DE LYON (alternatif)
-	(8768600, 'D'),		-- PARIS - GARE DE LYON (alternatif)
-	(8768600, 'R'),		-- PARIS - GARE DE LYON (alternatif)
+	(8768600, 'R'),		-- PARIS - GARE DE LYON (GRANDES LIGNES)
 	(8739414, 'TER'),	-- SAINT PIAT
 	(8738162, 'TER'),	-- BREVAL
 	(8775830, 'A'),		-- VAL DE FONTENAY RER A
@@ -1208,6 +1207,7 @@ RETURN IF(t >= '24:00:00', SUBDATE(d, INTERVAL 1 DAY), d);
 DROP PROCEDURE IF EXISTS train_times_for_date;
 DROP PROCEDURE IF EXISTS train_station_list;
 DROP PROCEDURE IF EXISTS station_next_trains;
+DROP PROCEDURE IF EXISTS possible_lines_for_mission;
 
 DELIMITER //
 CREATE PROCEDURE `train_times_for_date`(_d DATE, _station_code TEXT, _train_number CHAR(6))
@@ -1338,6 +1338,15 @@ LIMIT 30;
 END //
 
 
+CREATE PROCEDURE `possible_lines_for_mission`(_mission TEXT, _station_code TEXT)
+BEGIN
+SELECT DISTINCT route_short_name
+FROM stop_times
+    JOIN trips USING (trip_id)
+    JOIN routes USING (route_id)
+    JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
+WHERE trip_headsign = _mission AND gares.code = _station_code;
+END //
 
 DELIMITER ;
 

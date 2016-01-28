@@ -8,6 +8,7 @@ use utf8;
 use 5.010;
 
 use RER::Train;
+use Dancer ':syntax';
 
 use DateTime;
 use DBI;
@@ -39,6 +40,8 @@ sub new {
         'CALL train_station_list(?, ?, ?)');
     $self->{sth_snt}  = $self->{dbh}->prepare(
         'CALL station_next_trains(?, ?, ?)');
+    $self->{sth_plfm} = $self->{dbh}->prepare(
+        'CALL possible_lines_for_mission(?, ?)');
 
     return bless $self, __PACKAGE__;
 }
@@ -189,9 +192,24 @@ sub db_run_train_station_list {
 
 
 
+sub db_guess_line_for_mission {
+    my ($self, $code, $terminus) = @_;
+
+    $self->{sth_plfm}->execute($code, $terminus);
+    my $data = $self->{sth_plfm}->fetchall_arrayref([0]);
+
+    if (scalar @$data == 1) {
+        debug "Guessing line " . $data->[0] . " for train $code to $terminus ";
+        return $data->[0];
+    } else {
+        return undef;
+    }
+}
+
+
 
 sub get_info_for_train {
-    my ($self, $date, $station_code, $train_number) = @_;
+    my ($self, $date, $station_code, $train_number, $mission_code, $terminus_station) = @_;
 
     # Sauvegarder le numéro de train (il se peut qu'on le modifie plus tard)
     my $orig_train_number = $train_number;
@@ -243,14 +261,6 @@ sub get_info_for_train {
 
         my $line = check_ligne($row->[0], $row->[1]);
 
-        # N'essayer d'avoir le terminus que pour les RER
-        # if (defined $line && $line != 'TER' && $train_number ) {
-        #     $terminus = $stations[-1];
-        # }
-
-
-
-
         $row->[3] =~ /^([\d]{4})-([\d]{2})-([\d]{2}) ([\d]{2}):([\d]{2}):([\d]{2})$/;
         my $due_time = DateTime->new(
             year    => $1,
@@ -262,15 +272,32 @@ sub get_info_for_train {
             time_zone => 'Europe/Paris'
         );
 
-        
-
-
         my $train = RER::Train->new(
             number      => $orig_train_number,
             due_time    => $due_time,
             line        => $line,
             stations    => \@stations,
             terminus    => $stations[-1],
+        );
+
+        push @ret, $train;
+    }
+    else {
+        # utiliser une heuristique à partir du code mission et de la gare
+        # du terminus pour déterminer les lignes possibles
+        my $line = $self->db_guess_line_for_mission($mission_code, $terminus_station->code);
+
+        # en dernier recours, le déduire à partir de son terminus
+        if (!defined $line) {
+            my @terminus_lines = @{$terminus_station->lines};
+            if (scalar @terminus_lines == 1) {
+                $line = $terminus_lines[0];
+            }
+        }
+
+        my $train = RER::Train->new(
+            number      => $orig_train_number,
+            line        => $line,
         );
 
         push @ret, $train;

@@ -68,7 +68,7 @@ sub new {
             : ($train->due_time) ? $train->due_time->ymd('-')
             : `date +'%Y-%m-%d'`;
 
-        my $train2 = $ds[1]->get_info_for_train($today, $gare_from->code, $train->number);
+        my $train2 = $ds[1]->get_info_for_train($today, $gare_from->code, $train->number, $train->code, $train->terminus);
         if ($train2 && $train2->[0]) {
             $train = $train->merge($train2->[0]);
         }

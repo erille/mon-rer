@@ -19,13 +19,10 @@ use Storable qw(dclone freeze thaw);
 
 our $VERSION = '0.1';
 
-
-
 my %train_obj;
 my %train_obj_last_update;
 
 my %stats;
-
 
 sub check_code {
     my ($code) = @_;
