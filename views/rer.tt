@@ -334,6 +334,7 @@ function init_filtres(lignes) {
 		document.getElementById("more_options_button").style.display = "none";
 		return;
 	} else {
+		show_more_options(true);
 		document.getElementById("more_options_button").style.display = "inline-block";
 	}
 
@@ -389,7 +390,7 @@ function init_scroll() {
 
 function init_other() {
 	window.setInterval(update_time, 1000);
-	show_more_options(false);
+	show_more_options(true);
 }
 
 
@@ -497,6 +498,7 @@ function show_more_options(b) {
 	var extraOpts = document.getElementById('more_options');
 	var extraOptsButton = document.getElementById('more_options_button');
 
+	extraOptsButton.childNodes[0].innerHTML = b ? "\ue5ce" : "\ue5cf";
 	extraOptsButton.onclick = function(b) { 
 		return function() { show_more_options(!b); } 
 	}(b);
