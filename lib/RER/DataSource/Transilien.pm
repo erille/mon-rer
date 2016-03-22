@@ -25,6 +25,7 @@ sub do_request {
     $req->authorization_basic($self->username, $self->password);
 
     my $ua = LWP::UserAgent->new;
+    $ua->timeout(10);
     push(@LWP::Protocol::http::EXTRA_SOCK_OPTS, SendTE => 0);
     my $response = $ua->request($req);
 
