@@ -3,7 +3,7 @@
 DROP TABLE IF EXISTS metadata;
 CREATE TABLE IF NOT EXISTS metadata (
 	`key` VARCHAR(8) PRIMARY KEY,
-	`value` TEXT 
+	`value` TEXT
 );
 
 
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS gares_lines (
 
 DELETE FROM gares;
 
--- source codes UIC : 
+-- source codes UIC :
 -- http://aurelienb.pagesperso-orange.fr/HTML/transports/obli_UIC.htm
 -- source codes TR3 :
 -- http://transilien.mobi/train
@@ -254,7 +254,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('LJU', 8739361, 'Longjumeau'),
 	('LMU', 8738668, 'Les Mureaux'),
 	('LNX', 8727623, 'Les Noues'),
-	('LON', 8711613, 'Longueville'), 
+	('LON', 8711613, 'Longueville'),
 	('LOV', 8727625, 'Louvres'),
 	('LPE', 8739329, 'Le Perray'),
 	('LPN', 8716479, 'La Plaine Stade de France'),
@@ -315,7 +315,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('MVH', 8738237, 'Suresnes Mont Valérien'),
 	('MVP', 8775878, 'Massy Verrières RER B'),
 	('MVW', 8738328, 'Massy Verrières RER C'),
-	('MWO', 8727666, 'Méry sur Oise'), 
+	('MWO', 8727666, 'Méry sur Oise'),
 	('MXK', 8711628, 'Mouroux'),
 	('MY',  8727152, 'Mitry Claye'),
 	('MYD', 8711640, 'Montry Condé'),
@@ -369,11 +369,11 @@ INSERT INTO gares (code, uic, name) VALUES
 	('PJ',  8739350, 'Petit Jouy les Loges'),
 	('PKY', 8711127, 'Porte de Clichy'),
 	('PLB', 8727155, 'Plessis-Belleville'),
-	('PLY', 8768600, 'Paris Gare de Lyon'), 
+	('PLY', 8768600, 'Paris Gare de Lyon'),
 	('PMP', 8739100, 'Paris Montparnasse'),
 	('POA', 8739316, 'Porchefontaine'),
 	('POP', 8768252, 'Ponthierry-Pringy'),
-	('PPD', 8760880, 'Créteil Pompadour'), 
+	('PPD', 8760880, 'Créteil Pompadour'),
 	('PPT', 8727615, 'Pont-Petit'),
 	('PRF', 8727116, 'Pierrefitte Stains'),
 	('PRO', 8711616, 'Provins'),
@@ -414,7 +414,7 @@ INSERT INTO gares (code, uic, name) VALUES
 	('SFD', 8716478, 'Stade de France Saint-Denis'),
 	('SGM', 8738280, 'Saint-Germain-en-Laye Grande Ceinture'),
 	('SGT', 8727617, 'Saint-Gratien'),
-	('SHL', 8754731, 'Saint-Michel Notre Dame RER C'), 
+	('SHL', 8754731, 'Saint-Michel Notre Dame RER C'),
 	('SHO', 8754520, 'Saint-Michel sur Orge'),
  	('SJX', 8768322, 'Saint-Julien-du-Sault'),
 	('SKX', 8775870, 'Sceaux'),
@@ -591,7 +591,7 @@ INSERT INTO gares (code, uic, name, is_transilien) VALUES
 -- 	('OI',  'Oissel', 0),
 -- 	('ORL', 'Orléans', 0),
 -- 	('PAZ', 'Paris Austerlitz', 0),
--- 	('PNO', 'Paris Nord', 0), -- grandes lignes, redondant 
+-- 	('PNO', 'Paris Nord', 0), -- grandes lignes, redondant
 -- 	('PXE', 'Pont Sainte-Maxence', 0),
 -- 	('RIA', 'Rieux Angicourt', 0),
 -- 	('RN',  'Rouen Rive Droite', 0),
@@ -624,7 +624,7 @@ CREATE INDEX trip_headsign ON trips (trip_headsign);
 
 
 
-INSERT INTO gares_lines VALUES 
+INSERT INTO gares_lines VALUES
 	(8700147, 'B'),		-- AEROPORT CHARLES DE GAULLE 2 TGV - Roissy
 	(8711127, 'C'),		-- PORTE DE CLICHY
 	(8711300, 'P'),		-- PARIS EST (GARE DE L'EST)
@@ -1192,11 +1192,11 @@ INSERT INTO gares_lines VALUES
 	(8768324, 'R'),		-- JOIGNY
 	(8768326, 'R');		-- LAROCHE MIGENNES
 
--- Une procédure stockée pour faire un CURDATE() translaté d'un jour en 
+-- Une procédure stockée pour faire un CURDATE() translaté d'un jour en
 -- si besoin (lorsqu'on touche à des heures postérieures à "minuit du
 -- jour suivant", i.e. 24:00:00).
 
-DROP FUNCTION IF EXISTS DATE_GTFS; 
+DROP FUNCTION IF EXISTS DATE_GTFS;
 CREATE FUNCTION DATE_GTFS(d DATE, t TIME)
 RETURNS DATE DETERMINISTIC
 RETURN IF(t >= '24:00:00', SUBDATE(d, INTERVAL 1 DAY), d);
@@ -1226,7 +1226,7 @@ FROM trips AS t
 	LEFT JOIN routes AS r USING (route_id)
 	LEFT JOIN agency AS a USING (agency_id)
 	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
-WHERE 
+WHERE
 	(
 		(
 			DATE_GTFS(_d, departure_time) BETWEEN start_date AND end_date
@@ -1252,7 +1252,7 @@ FROM trips AS t
 	LEFT JOIN calendar USING (service_id)
 	LEFT JOIN calendar_dates AS cd ON (t.service_id = cd.service_id AND cd.date = DATE_GTFS(_d, stop_times.departure_time))
 	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
-WHERE 
+WHERE
 	(
 		(
 			DATE_GTFS(_d, departure_time) BETWEEN start_date AND end_date
@@ -1268,7 +1268,6 @@ WHERE
 END //
 
 
-
 CREATE PROCEDURE `station_next_trains`(_d DATE, _t TIME, _station_code TEXT)
 BEGIN
 SELECT * FROM (
@@ -1276,60 +1275,55 @@ SELECT DISTINCT r.route_short_name,
 	a.agency_name,
 	trip_headsign,
 	SUBSTR(trip_id, 6, 6) AS train_number,
-	ADDTIME(CAST(DATE_GTFS(_d, departure_time) AS DATETIME), departure_time) AS due_time,
+	ADDTIME(CAST(`service_date` AS DATETIME), departure_time) AS due_time,
 	gares.code,
 	CAST(COALESCE(gares.uic, SUBSTR(stop_id, 14)) AS CHAR) AS uic,
 	gares.name,
-	stop_sequence 
-FROM trips AS t
+	stop_sequence
+FROM (
+SELECT c.`service_id`, SUBDATE(_d, INTERVAL 1 DAY) AS `service_date`
+	FROM calendar AS c
+		LEFT JOIN (
+			SELECT * FROM calendar_dates WHERE `date` = SUBDATE(_d, INTERVAL 1 DAY)
+		) AS cd USING (service_id)
+	WHERE
+		(
+			SUBDATE(_d, INTERVAL 1 DAY) BETWEEN c.`start_date` AND c.`end_date` AND
+			((1 << DAYOFWEEK(SUBDATE(_d, INTERVAL 1 DAY)) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday))) AND
+			(`exception_type` IS NULL OR `exception_type` <> 2)
+		) OR
+		(`exception_type` = 1)
+UNION SELECT c.`service_id`, _d AS `service_date`
+	FROM calendar AS c
+		LEFT JOIN (
+			SELECT * FROM calendar_dates WHERE `date` = _d
+		) AS cd USING (service_id)
+	WHERE
+		(
+			_d BETWEEN c.`start_date` AND c.`end_date` AND
+			((1 << DAYOFWEEK(_d) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday))) AND
+			(`exception_type` IS NULL OR `exception_type` <> 2)
+		) OR
+		(`exception_type` = 1)
+UNION SELECT c.`service_id`, ADDDATE(_d, INTERVAL 1 DAY) AS `service_date`
+	FROM calendar AS c
+		LEFT JOIN (
+			SELECT * FROM calendar_dates WHERE `date` = ADDDATE(_d, INTERVAL 1 DAY)
+		) AS cd USING (service_id)
+	WHERE
+		(
+			ADDDATE(_d, INTERVAL 1 DAY) BETWEEN c.`start_date` AND c.`end_date` AND
+			((1 << DAYOFWEEK(ADDDATE(_d, INTERVAL 1 DAY)) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday))) AND
+			(`exception_type` IS NULL OR `exception_type` <> 2)
+		) OR
+		(`exception_type` = 1)
+) AS s
+	LEFT JOIN trips AS t USING (service_id)
 	LEFT JOIN stop_times USING (trip_id)
-	LEFT JOIN calendar AS c USING (service_id)
-	LEFT JOIN calendar_dates AS cd ON (t.service_id = cd.service_id AND cd.date = DATE_GTFS(_d, stop_times.departure_time))
 	LEFT JOIN routes AS r USING (route_id)
 	LEFT JOIN agency AS a USING (agency_id)
 	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
-WHERE (
-	(
-		(
-			DATE_GTFS(_d, departure_time) BETWEEN start_date AND end_date
-			AND (date IS NULL OR exception_type <> 2)
-			AND (
-				1 << DAYOFWEEK(_d) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday)
-			)
-		)
-	)	
-	OR (exception_type = 1)
-	)
-	AND (code = _station_code)
-UNION SELECT DISTINCT r.route_short_name,
-	a.agency_name,
-	trip_headsign,
-	SUBSTR(trip_id, 6, 6) AS train_number,
-	ADDTIME(CAST(DATE_GTFS(ADDDATE(_d, INTERVAL 1 DAY), departure_time) AS DATETIME), departure_time) AS due_time,
-	gares.code,
-	CAST(COALESCE(gares.uic, SUBSTR(stop_id, 14)) AS CHAR) AS uic,
-	gares.name,
-	stop_sequence 
-FROM trips AS t
-	LEFT JOIN stop_times USING (trip_id)
-	LEFT JOIN calendar AS c USING (service_id)
-	LEFT JOIN calendar_dates AS cd ON (t.service_id = cd.service_id AND cd.date = DATE_GTFS(ADDDATE(_d, INTERVAL 1 DAY), stop_times.departure_time))
-	LEFT JOIN routes AS r USING (route_id)
-	LEFT JOIN agency AS a USING (agency_id)
-	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
-WHERE (
-	(
-		(
-			DATE_GTFS(_d, departure_time) BETWEEN start_date AND end_date
-			AND (date IS NULL OR exception_type <> 2)
-			AND (
-				1 << DAYOFWEEK(ADDDATE(_d, INTERVAL 1 DAY)) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday)
-			)
-		)
-	)	
-	OR (exception_type = 1)
-	)
-	AND (code = _station_code)
+WHERE gares.`code` = _station_code
 ) AS t
 WHERE due_time BETWEEN ADDTIME(CAST(_d AS DATETIME), _t) AND ADDDATE(ADDTIME(CAST(_d AS DATETIME), _t), INTERVAL 6 HOUR)
 ORDER BY due_time
