@@ -20,7 +20,7 @@ sub do_request {
     my ($self, $path) = @_;
 
     my $req = HTTP::Request->new(GET => $self->{url} . $path);
-    $req->header('User-Agent' => 'RER::Web (+http://bitbucket.org/xtab/rer-web)');
+    $req->header('User-Agent' => 'RER::Web (+https://bitbucket.org/xtab/rer-web)');
     $req->header('Accept'     => 'application/vnd.sncf.transilien.od.depart+xml;vers=1');
     $req->authorization_basic($self->username, $self->password);
 
@@ -107,7 +107,7 @@ sub process_xml_trains {
             terminus   => $terminus,
         );
     }
-    
+
     return \@trains;
 }
 
@@ -139,7 +139,7 @@ sub new {
 	return undef if ! exists $args{username};
 	return undef if ! exists $args{password};
 
-	$self->{url}  = $args{url} || 'http://api.transilien.com';
+	$self->{url}  = $args{url} || 'https://api.transilien.com';
 	$self->{username} = $args{username};
 	$self->{password} = $args{password};
 

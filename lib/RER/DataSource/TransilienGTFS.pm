@@ -289,9 +289,11 @@ sub get_info_for_train {
 
         # en dernier recours, le déduire à partir de son terminus
         if (!defined $line) {
-            my @terminus_lines = @{$terminus_station->lines};
-            if (scalar @terminus_lines == 1) {
-                $line = $terminus_lines[0];
+            if (defined $terminus_station->lines) {
+                my @terminus_lines = @{$terminus_station->lines};
+                if (scalar @terminus_lines == 1) {
+                    $line = $terminus_lines[0];
+                }
             }
         }
 

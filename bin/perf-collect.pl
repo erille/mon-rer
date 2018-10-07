@@ -38,9 +38,9 @@ sub open_rrd_file {
 	my $rrd = RRD::Simple->new(file => $file);
 	if (! -e $file) {
 		$rrd->create('month',
-			api_incoming 	=> 'COUNTER',
-			api_sent	=> 'COUNTER',
-			api_errors	=> 'COUNTER',
+			api_incoming 	=> 'DERIVE',
+			api_sent	=> 'DERIVE',
+			api_errors	=> 'DERIVE',
 		);
 	}
 
