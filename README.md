@@ -3,16 +3,13 @@
 ![Screenshot](http://x0r.fr/blogstuff/rer-web.png)
 
 This web app is yet another variation on the "how can I possibly display the
-timetable for the 6 next trains in any way I can imagine" theme.  Only this
-time, it tries to be classy.  It is primarily intended for display on medium
-(tablet/desktop) or large screens (TVs), while trying not to break too badly on
-cellphones.
+timetable for the 6 next trains in any way I can imagine" theme.  This project
+started an AJAX and Javascript exercise for myself, but a handful of people
+have convinced me to make this public.  Only this time, it tries to be classy.
+It is primarily intended for display on medium (tablet/desktop) or large
+screens (TVs), while trying not to break too badly on cellphones.
 
 See it in action at [http://monrer.fr/] [1].
-
-I know the SNCF's website does the same thing, but let's face it, this
-interface is sexier.  This project started an AJAX and Javascript exercise
-for myself, but a handful of people have convinced me to make this public.
 
 # Dependencies
 
@@ -24,6 +21,7 @@ You will need the following Perl modules:
  * DBD::mysql
  * Dancer
  * Dancer::Plugin::Redis
+ * LWP::Protocol::https
  * JSON::XS
  * RRD::Simple
  * Text::CSV
@@ -86,7 +84,7 @@ also supplied by SNCF under [the same terms] [3]:
 [1]: http://monrer.fr
 [2]: https://metacpan.org/module/Dancer::Deployment
 [3]: http://sncf-data.s3.amazonaws.com/assets/licence-sncf-opendata-eda896b0e6b60d3277a61e548cdb8cb5.pdf
-[4]: http://ressources.data.sncf.com/explore/dataset/sncf-prochains-departs-lignes-c-et-l/
+[4]: https://ressources.data.sncf.com/explore/dataset/api-temps-reel-transilien/information/
 [5]: http://ressources.data.sncf.com/explore/dataset/sncf-horaires-des-lignes-transilien/
 [6]: http://ressources.data.sncf.com/explore/dataset/sncf-gares-et-arrets-transilien-ile-de-france/
 [7]: http://ressources.data.sncf.com/explore/dataset/sncf-lignes-par-gares-idf/
