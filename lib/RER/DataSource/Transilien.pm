@@ -8,13 +8,12 @@ use RER::Train;
 
 use HTTP::Request;
 use LWP::UserAgent;
-use XML::Simple;
+use XML::LibXML::Simple;
 
 use strict;
 use warnings;
 use utf8;
 use 5.010;
-
 
 sub do_request {
     my ($self, $path) = @_;
@@ -54,7 +53,7 @@ sub do_request {
 sub process_xml_trains {
     my ($self, $xml) = @_;
 
-    my $xs = XML::Simple->new();
+    my $xs = XML::LibXML::Simple->new();
     my $data = $xs->XMLin($xml);
 
     my @trains;
