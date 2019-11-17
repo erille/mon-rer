@@ -283,16 +283,20 @@ sub get_info_for_train {
         push @ret, $train;
     }
     else {
+        my $line;
+
         # utiliser une heuristique à partir du code mission et de la gare
         # du terminus pour déterminer les lignes possibles
-        my $line = $self->db_guess_line_for_mission($mission_code, $terminus_station->code);
+        if (defined $terminus_station) {
+            $line = $self->db_guess_line_for_mission($mission_code, $terminus_station->code);
 
-        # en dernier recours, le déduire à partir de son terminus
-        if (!defined $line) {
-            if (defined $terminus_station->lines) {
-                my @terminus_lines = @{$terminus_station->lines};
-                if (scalar @terminus_lines == 1) {
-                    $line = $terminus_lines[0];
+            # en dernier recours, le déduire à partir de son terminus
+            if (!defined $line) {
+                if (defined $terminus_station->lines) {
+                    my @terminus_lines = @{$terminus_station->lines};
+                    if (scalar @terminus_lines == 1) {
+                        $line = $terminus_lines[0];
+                    }
                 }
             }
         }
