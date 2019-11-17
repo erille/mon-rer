@@ -98,8 +98,21 @@ sub process_xml_trains {
         $train_etat = 'S' if $train_etat eq 'Supprimé';
         $train_etat = 'R' if $train_etat eq 'Retardé';   # not sure if this works
 
+        # train numbers can be pairs (e.g. 123456-123457). in this case keep the
+        # first one only
+        
+        my $train_num = $train_hash->{num};
+        if ($train_num =~ /^(\d+)-\d+$/) {
+            $train_num = $1;
+        }
+
+        # if the train number equals the previous one, skip the entry
+        if (scalar(@trains) > 1 && $trains[-1]->number eq $train_num) {
+            next;
+        }
+
         push @trains, RER::Train->new(
-            number     => $train_hash->{num},
+            number     => $train_num,
             code       => $train_hash->{miss},
             $time_type => $time_value,
             status     => $train_etat,

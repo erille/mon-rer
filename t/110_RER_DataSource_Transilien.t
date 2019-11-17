@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 14;
+use Test::More tests => 15;
 
 use FindBin;
 use Cwd qw(realpath);
@@ -48,6 +48,7 @@ is($train->status, 'N');
 
 
 is($data_hash->[1]->status, 'S');
+is($data_hash->[1]->number, '165312');
 
 __END__
 <?xml version="1.0" encoding="UTF-8"?>
@@ -58,7 +59,7 @@ __END__
 <term>87393843</term>
 </train>
 <train><date mode="R">23/05/2012 12:55</date>
-<num>165312</num>
+<num>165312-165313</num>
 <miss>DEFI</miss>
 <term>87382218</term>
 <etat>Supprimé</etat>
