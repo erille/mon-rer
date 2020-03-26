@@ -76,6 +76,6 @@ foreach my $train (@$data) {
 		$train->status,
 		$train->line || '?',
 		
-		scalar(eval { @{$train->stations} } or ()),
+		(defined $train->stations ? scalar(@{$train->stations}) : 0),
 		$terminus_name;
 }
