@@ -107,7 +107,7 @@ sub process_xml_trains {
         }
 
         # if the train number equals the previous one, skip the entry
-        if (scalar(@trains) > 1 && $trains[-1]->number eq $train_num) {
+        if (scalar(@trains) >= 1 && $trains[-1]->number eq $train_num) {
             next;
         }
 
