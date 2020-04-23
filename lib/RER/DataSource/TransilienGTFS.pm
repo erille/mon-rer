@@ -31,7 +31,8 @@ sub new {
     $self->{dbh} = DBI->connect(
         $self->{dsn},
         $self->{username},
-        $self->{password}
+        $self->{password},
+        { mysql_enable_utf8 => 1 }
     ) or die $DBI::errstr;
 
     $self->{sth_ttfd} = $self->{dbh}->prepare(

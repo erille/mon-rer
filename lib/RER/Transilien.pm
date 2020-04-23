@@ -98,7 +98,7 @@ sub new {
         my $dessertes = "Desserte indisponible";
         if ($train->stations) {
             @arr_dessertes = map { $_ ? ($_->name || $_->uic) : "Gare non trouvée" } @{$train->stations};
-            $dessertes = join ' &bull; ', @arr_dessertes;
+            $dessertes = join " \x{2022} ", @arr_dessertes;
         }
 
 
