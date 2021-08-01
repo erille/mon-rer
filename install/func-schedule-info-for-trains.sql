@@ -70,12 +70,10 @@ WITH dates(date) AS (
          timetable.train_name,
          timetable.train_number,
          timetable.due_time,
-         COALESCE(next_stops.next_stops, ARRAY[]::TEXT[])
-           AS next_stops,
-         COALESCE(next_stops.destination, E'\x1F0\x1FTrain terminus')
-           AS destination
+         next_stops.next_stops,
+         next_stops.destination
     FROM timetable
-         LEFT JOIN LATERAL (
+         JOIN LATERAL (
            SELECT DISTINCT array_agg(E'\x1F0\x1F' || stop_id_station_names.name)
                              OVER w
                              AS next_stops,
