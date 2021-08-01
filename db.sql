@@ -1264,66 +1264,79 @@ WHERE
 END //
 
 
+-- Cette procédure donne les prochains trains pour une gare (identifiée par
+-- son code TR3) à une date et heure donnée. Les résultats sont limités
+-- à l’intervalle [date+heure, date+heure+6 h] et à 30 résultats maximum.
 CREATE PROCEDURE `station_next_trains`(_d DATE, _t TIME, _station_code TEXT)
 BEGIN
-SELECT * FROM (
-SELECT DISTINCT r.route_short_name,
-	a.agency_name,
-	trip_headsign,
-	SUBSTR(trip_id, 6, 6) AS train_number,
-	ADDTIME(CAST(`service_date` AS DATETIME), departure_time) AS due_time,
-	gares.code,
-	CAST(COALESCE(gares.uic, SUBSTR(stop_id, 14)) AS CHAR) AS uic,
-	gares.name,
-	stop_sequence
-FROM (
-SELECT c.`service_id`, SUBDATE(_d, INTERVAL 1 DAY) AS `service_date`
-	FROM calendar AS c
-		LEFT JOIN (
-			SELECT * FROM calendar_dates WHERE `date` = SUBDATE(_d, INTERVAL 1 DAY)
-		) AS cd USING (service_id)
-	WHERE
-		(
-			SUBDATE(_d, INTERVAL 1 DAY) BETWEEN c.`start_date` AND c.`end_date` AND
-			((1 << DAYOFWEEK(SUBDATE(_d, INTERVAL 1 DAY)) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday))) AND
-			(`exception_type` IS NULL OR `exception_type` <> 2)
-		) OR
-		(`exception_type` = 1)
-UNION SELECT c.`service_id`, _d AS `service_date`
-	FROM calendar AS c
-		LEFT JOIN (
-			SELECT * FROM calendar_dates WHERE `date` = _d
-		) AS cd USING (service_id)
-	WHERE
-		(
-			_d BETWEEN c.`start_date` AND c.`end_date` AND
-			((1 << DAYOFWEEK(_d) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday))) AND
-			(`exception_type` IS NULL OR `exception_type` <> 2)
-		) OR
-		(`exception_type` = 1)
-UNION SELECT c.`service_id`, ADDDATE(_d, INTERVAL 1 DAY) AS `service_date`
-	FROM calendar AS c
-		LEFT JOIN (
-			SELECT * FROM calendar_dates WHERE `date` = ADDDATE(_d, INTERVAL 1 DAY)
-		) AS cd USING (service_id)
-	WHERE
-		(
-			ADDDATE(_d, INTERVAL 1 DAY) BETWEEN c.`start_date` AND c.`end_date` AND
-			((1 << DAYOFWEEK(ADDDATE(_d, INTERVAL 1 DAY)) & (2*sunday+4*monday+8*tuesday+16*wednesday+32*thursday+64*friday+128*saturday))) AND
-			(`exception_type` IS NULL OR `exception_type` <> 2)
-		) OR
-		(`exception_type` = 1)
-) AS s
-	LEFT JOIN trips AS t USING (service_id)
-	LEFT JOIN stop_times USING (trip_id)
-	LEFT JOIN routes AS r USING (route_id)
-	LEFT JOIN agency AS a USING (agency_id)
-	LEFT JOIN gares ON (SUBSTR(stop_id, 14) = gares.uic)
-WHERE gares.`code` = _station_code
-) AS t
-WHERE due_time BETWEEN ADDTIME(CAST(_d AS DATETIME), _t) AND ADDDATE(ADDTIME(CAST(_d AS DATETIME), _t), INTERVAL 6 HOUR)
-ORDER BY due_time
-LIMIT 30;
+WITH adjacent_days(date) AS (
+    SELECT SUBDATE(_d, 1)
+    UNION SELECT _d
+    UNION SELECT ADDDATE(_d, 1)
+), calendar2 AS (
+    SELECT adjacent_days.date AS today_date,
+            calendar.service_id,
+            CASE DAYOFWEEK(adjacent_days.date)
+            WHEN 1 THEN calendar.sunday
+            WHEN 2 THEN calendar.monday
+            WHEN 3 THEN calendar.tuesday
+            WHEN 4 THEN calendar.wednesday
+            WHEN 5 THEN calendar.thursday
+            WHEN 6 THEN calendar.friday
+            WHEN 7 THEN calendar.saturday
+            END
+            AS active_on_dow,
+            calendar.start_date,
+            calendar.end_date
+    FROM adjacent_days
+            CROSS JOIN calendar
+), calendar_dates_2 AS (
+    SELECT calendar_dates.*
+    FROM calendar_dates
+    WHERE calendar_dates.date IN (SELECT date FROM adjacent_days)
+), services AS (
+    SELECT today_date, calendar2.service_id
+    FROM calendar2
+            LEFT JOIN calendar_dates_2
+                ON (calendar2.service_id = calendar_dates_2.service_id
+                    AND calendar2.today_date = calendar_dates_2.date)
+    WHERE exception_type = 1
+        OR (start_date <= today_date
+            AND today_date <= end_date
+            AND active_on_dow
+            AND (exception_type IS NULL OR exception_type <> 2))
+    UNION SELECT calendar_dates_2.date, calendar_dates_2.service_id
+    FROM calendar_dates_2
+    WHERE exception_type = 1
+), timetable AS (
+    SELECT route_short_name,
+            agency_name,
+            trip_headsign,
+            SUBSTR(trips.trip_id, 6, 6) AS train_number,
+            ADDTIME(CAST(today_date AS DATETIME), departure_time) AS due_time,
+            gares.code,
+            COALESCE(CAST(gares.uic AS CHAR), SUBSTR(stops.stop_id, 14)) AS uic,
+            gares.name,
+            stop_sequence
+    FROM services
+            JOIN trips ON (trips.service_id = services.service_id)
+            JOIN stop_times AS times ON (times.trip_id = trips.trip_id)
+            JOIN routes ON (trips.route_id = routes.route_id)
+            JOIN agency ON (routes.agency_id = agency.agency_id)
+            JOIN stops ON (times.stop_id = stops.stop_id)
+            JOIN gares ON (SUBSTR(stops.stop_id, 14) = gares.uic)
+    WHERE gares.code = _station_code
+), limits AS (
+    SELECT ADDTIME(_d, _t) AS lower_bound,
+           ADDTIME(_d, _t) + INTERVAL 6 HOUR AS upper_bound
+)
+SELECT timetable.*
+    FROM timetable
+         JOIN limits
+             ON (limits.lower_bound <= due_time
+                 AND due_time <= limits.upper_bound)
+ ORDER BY due_time
+ LIMIT 30;
 END //
 
 
