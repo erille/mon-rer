@@ -6,16 +6,14 @@
 ALTER TABLE metadata
   ADD CONSTRAINT metadata_pkey PRIMARY KEY (key);
 
-CREATE INDEX "gares_idx_uic" ON gares (uic);
+ALTER TABLE station_codes
+  ADD CONSTRAINT station_codes_code_check
+      CHECK (code ~ '^[A-Z]{1,3}$' OR code ~ '^N[CD][0-9]$'),
+  ADD CONSTRAINT station_codes_uic_check
+      CHECK (uic ~ '^87[0-9]{5}$');
 
-CREATE INDEX "gares_idx_name" ON gares (name);
+ALTER TABLE station_names
+  ADD CONSTRAINT station_names_pkey PRIMARY KEY (pa_id);
 
-ALTER TABLE gares
-  ADD CONSTRAINT gares_code_check CHECK (length(code) <= 3),
-  ADD CONSTRAINT gares_uic_check CHECK (length(code) <= 7),
-  ADD CONSTRAINT gares_uic_unique UNIQUE (uic),
-  ADD CONSTRAINT gares_pkey PRIMARY KEY (code);
-
-ALTER TABLE gares_lines
-  ADD CONSTRAINT gares_lines_fk_gares FOREIGN KEY (uic) REFERENCES gares (uic),
-  ADD CONSTRAINT gares_lines_pkey PRIMARY KEY (uic, line);
+ALTER TABLE station_lines
+  ADD CONSTRAINT station_lines_pkey PRIMARY KEY (pa_id, line);

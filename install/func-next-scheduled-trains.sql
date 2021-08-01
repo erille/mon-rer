@@ -52,9 +52,8 @@ WITH dates(date) AS (
                         AS times ON TRUE
          JOIN raw.routes ON (today_trips.route_id = routes.route_id)
          JOIN raw.stops ON (times.stop_id = stops.stop_id)
-         JOIN uic_stop_id ON (stops.stop_id = uic_stop_id.stop_id)
-         JOIN gares ON (uic_stop_id.uic7 = gares.uic)
-   WHERE gares.code = station_code
+         JOIN stop_id_station_codes ON (stops.stop_id = stop_id_station_codes.stop_id)
+   WHERE stop_id_station_codes.code = station_code
      AND rt <= today_trips.date + times.due_time
      AND today_trips.date + times.due_time <= rt + interval '6 hours'
 )
@@ -66,19 +65,19 @@ SELECT timetable.line,
        COALESCE(next_stops.destination, E'\x1F0\x1FTrain terminus') AS destination
   FROM timetable
        LEFT JOIN LATERAL (
-         SELECT DISTINCT array_agg(CONCAT(gares.code, E'\x1F', gares.uic, E'\x1F',
-                                         gares.name)) OVER w
-                             AS next_stops,
-                         last_value(CONCAT(gares.code, E'\x1F', gares.uic, E'\x1F',
-                                             gares.name)) OVER w
-                             AS destination
+         SELECT DISTINCT array_agg(E'\x1F0\x1F' || stop_id_station_names.name)
+                           OVER w
+                           AS next_stops,
+                         last_value(E'\x1F0\x1F' || stop_id_station_names.name)
+                           OVER w
+                           AS destination
            FROM raw.stop_times
-                LEFT JOIN uic_stop_id ON (stop_times.stop_id = uic_stop_id.stop_id)
-                JOIN gares ON (uic_stop_id.uic7 = gares.uic)
+                LEFT JOIN stop_id_station_names
+                    ON (stop_times.stop_id = stop_id_station_names.stop_id)
           WHERE stop_times.trip_id = timetable.trip_id
             AND stop_times.stop_sequence > timetable.stop_sequence
-         WINDOW w AS (ORDER BY stop_sequence
-                      ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+                WINDOW w AS (ORDER BY stop_sequence
+                             ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
           LIMIT 1
        ) AS next_stops ON TRUE
   ORDER BY due_time

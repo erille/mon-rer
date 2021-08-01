@@ -27,7 +27,7 @@ isa_ok($station, 'RER::Gare');
 
 is($station->code, 'CLX');
 # is() doesn't work here because of utf-8
-is($station->name, "Châtelet les Halles");
+is($station->name, "Châtelet – Les Halles");
 is(ord(substr($station->name, 2)), 0xe2);
 is($station->uic,  '8775860');
 
@@ -35,7 +35,7 @@ $station = RER::Gares::find(uic => '8775860');
 isa_ok($station, 'RER::Gare');
 
 is($station->code, 'CLX');
-is($station->name, 'Châtelet les Halles');
+is($station->name, 'Châtelet – Les Halles');
 is($station->uic,  '8775860');
 is_deeply($station->lines, [ qw(A B D) ], 'CLX lines is [A, B, D]');
 is_deeply(RER::Gares::get_lines('8739300'), [ qw(C N U) ], 'VC lines is [C, N, U]');
@@ -62,6 +62,6 @@ $list = RER::Gares::get_autocomp('clx');
 is(scalar(@$list), 1, 'Autocomp for "clx" contains 1 item');
 
 isa_ok($list->[0], 'RER::Gare');
-is($list->[0]->name, 'Châtelet les Halles');
+is($list->[0]->{name}, 'Châtelet – Les Halles');
 
 # done_testing;

@@ -38,15 +38,18 @@ sub get_last_update {
 
 sub get_station_codes
 {
-    my $sth = database->prepare('SELECT code FROM gares');
+    my $sth = database->prepare('SELECT code FROM station_codes');
     $sth->execute;
     return $sth->fetchall_arrayref([0]);
 }
 
 sub get_stations
 {
-    my $sth = database->prepare(
-        'SELECT code, name, uic FROM gares WHERE is_transilien ORDER BY name');
+    my $sth = database->prepare(q{
+        SELECT code, name, uic
+          FROM station_codes
+               JOIN station_names ON (station_codes.pa_id = station_names.pa_id)
+         ORDER BY name});
     $sth->execute;
     return $sth->fetchall_arrayref({});
 }
@@ -59,7 +62,12 @@ sub get_lines
     $uic = $arg->uic if ref $arg eq 'RER::Gare';
     $uic = $arg      if ref $arg ne 'RER::Gare';
 
-    my $sth = database->prepare('SELECT line FROM gares_lines WHERE uic = ?');
+    my $sth = database->prepare(q{
+       SELECT line
+           FROM station_codes
+           JOIN station_lines ON (station_lines.pa_id = station_codes.pa_id)
+        WHERE station_codes.uic = ?
+        ORDER BY line});
     $sth->execute($uic);
     my @result = map { $_->[0] } @{$sth->fetchall_arrayref([0])};
     return \@result;
@@ -69,36 +77,24 @@ sub find
 {
     my %params = @_;
 
-    my $sth;
+    my ($key, $value);
 
     if (exists $params{code}) {
-        $sth = database->prepare(q{
-            SELECT code, name, gares.uic, array_agg(line) AS lines
-              FROM gares
-                   JOIN gares_lines ON (gares.uic = gares_lines.uic)
-             WHERE gares.code = ?
-             GROUP BY gares.code
-        });
-        $sth->execute($params{code});
+        ($key, $value) = ('code', $params{code});
     }
     elsif (exists $params{uic}) {
         # les codes UIC ont deux variétés : ceux à 7 chiffres et ceux à 8.
         # ceux à 8 chiffres ont un chiffre de contrôle (superflu) qu'on
         # enlève, parce qu'on ne stocke que 7 chiffres dans la BDD.
-        my $uic = substr $params{uic}, 0, 7;
-
-        $sth = database->prepare(q{
-            SELECT code, name, gares.uic, array_agg(line) AS lines
-              FROM gares
-                   JOIN gares_lines ON (gares.uic = gares_lines.uic)
-             WHERE gares.uic = ?
-             GROUP BY gares.code
-        });
-        $sth->execute($uic);
+        ($key, $value) = ('uic', substr($params{uic}, 0, 7));
     }
     else {
         return undef;
     }
+
+    my $sth = database->prepare(q{
+       SELECT code, uic, name, lines FROM find_station_by_key(?, ?)});
+    $sth->execute($key, $value);
 
     my $result = $sth->fetchall_arrayref({});
 
@@ -120,18 +116,15 @@ sub get_autocomp
     my ($str) = @_;
 
     my $sth = database->prepare(
-        'SELECT code, name, uic, lines FROM autocomplete_stations(?);');
+        'SELECT codes, name, lines FROM autocomplete_stations(?);');
     $sth->execute($str);
 
     return [
-        map {
-            RER::Gare->new(
-                code  => $_->{code},
-                name  => $_->{name},
-                uic   => $_->{uic},
-                lines => $_->{lines}
-            )
-        } @{$sth->fetchall_arrayref({})}
+        map +{
+            codes  => $_->{codes},
+            name  => $_->{name},
+            lines => $_->{lines}
+        }, @{$sth->fetchall_arrayref({})}
     ];
 }
 

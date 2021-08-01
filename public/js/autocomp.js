@@ -142,17 +142,15 @@ function autocomp_set(list) {
 
     for (var i = 0; i < list.length; i++) {
         var n = document.createElement("li");
-        var name = list[i].name;
-        var code = list[i].code;
 
         n.innerHTML = '<span class="name">'
-            + name
+            + list[i].name
             + '\u00a0<span class="lines">'
             + autocomp_line_images(list[i].lines)
             + '</span></span><span class="trig">'
-            + code
+            + list[i].codes.join(', ')
             + '</span>';
-        n.onclick = autocomp_make_click_handler(code, name);
+        n.onclick = autocomp_make_click_handler(list[i].codes[0], name);
         n.onmouseover = function(i) {
             return function() {
                 autocomp_set_highlight(i);

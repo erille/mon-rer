@@ -19,15 +19,21 @@ CREATE TABLE IF NOT EXISTS metadata (
   value TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS gares (
-  code TEXT,
-  uic TEXT NOT NULL,
-  name TEXT NOT NULL COLLATE "fr_FR",
-  is_transilien BOOL NOT NULL DEFAULT TRUE);
+CREATE TABLE station_codes (
+  pa_id INTEGER NOT NULL,
+  code  TEXT NOT NULL,
+  uic   TEXT NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS gares_lines (
-  uic TEXT NOT NULL,
-  line TEXT NOT NULL);
+CREATE TABLE station_names (
+  pa_id INTEGER NOT NULL,
+  name  TEXT NOT NULL
+);
+
+CREATE TABLE station_lines (
+  pa_id INTEGER NOT NULL,
+  line TEXT NOT NULL
+);
 
 /*
  * La table de transcodage pour faire les conversions entre UIC7, UIC8 et ID
