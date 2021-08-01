@@ -41,9 +41,8 @@ sub new {
 
     $self->{sth_sched_info_trains} = $self->{dbh}->prepare(
         'SELECT * FROM schedule_info_for_trains(?, ?, ?)');
-
-    $self->{sth_snt}  = $self->{dbh}->prepare(
-        'CALL station_next_trains(?, ?, ?)');
+    $self->{sth_next_trains} = $self->{dbh}->prepare(
+        'SELECT * FROM next_scheduled_trains(?, ?)');
 
     return bless $self, __PACKAGE__;
 }
@@ -74,69 +73,46 @@ sub pg_row_to_station {
     }
 }
 
+=head2 get_next_trains
 
+Renvoie les prochains trains dont le départ est prévu à la gare donnée.
 
+=cut
 sub get_next_trains {
     my ($self, $station) = @_;
 
     die "Invalid station\n" if ! defined ($station);
 
-    my $curdate = `date +'%Y-%m-%d'`;
-    my $curtime = `date +'%T'`;
-
-    my $trains = $self->db_get_next_trains($curdate, $curtime, $station->code);
-
-    return $trains;
+    return [
+        map {
+            RER::Train->new(
+                line   => $_->{line},
+                number => $_->{train_number},
+                code   => $_->{train_name},
+                due_time => DateTime::Format::Pg->parse_timestamptz($_->{due_time}),
+                stations => [map { pg_row_to_station($_) } @{$_->{next_stops}}],
+                terminus => pg_row_to_station($_->{destination}),
+                status   => 'N',
+            );
+        } @{$self->db_get_next_trains(DateTime->now, $station->code)}
+    ];
 }
 
+=head2 db_get_next_trains
 
+Exécute la procédure stockée next_scheduled_trains() dans la base de données.
+Cette dernière prend en entrée un horodatage et un code de gare. Renvoie une liste
+de tableaux associatifs.
 
-
+=cut
 
 sub db_get_next_trains {
-    my ($self, $date, $time, $station_code) = @_;
+    my ($self, $datetime, $station_code) = @_;
 
-    $self->{sth_snt}->execute($date, $time, $station_code);
-    my $data = $self->{sth_snt}->fetchall_arrayref;
-
-    my $count = 0;
-
-    # columns:
-    # #0 - route_short_name
-    # #1 - agency_name
-    # #2 - trip_headsign (mission code)
-    # #3 - train number
-    # #4 - due time
-    # #5 - station code
-    # #6 - station uic
-    # #7 - station name
-    # #8 - stop sequence
-
-    my @trains;
-
-    foreach my $row (@$data) {
-        $row->[4] =~ /^([\d]{4})-([\d]{2})-([\d]{2}) ([\d]{2}):([\d]{2}):([\d]{2})$/;
-        my $due_time = DateTime->new(
-            year    => $1,
-            month   => $2,
-            day     => $3,
-            hour    => $4,
-            minute  => $5,
-            second  => $6,
-            time_zone => 'Europe/Paris'
-        );
-
-        my $line = check_ligne($row->[0], $row->[1]);
-
-        push @trains, RER::Train->new(
-            number   => int $row->[3],
-            code     => $row->[2],
-            due_time => $due_time,
-            status   => 'N',
-        );
-    }
-
-    return \@trains;
+    $self->{sth_next_trains}->execute(
+        DateTime::Format::Pg->format_timestamptz($datetime),
+        $station_code);
+    return $self->{sth_next_trains}->fetchall_arrayref({});
 }
 
 =head2 db_run_sched_info_trains

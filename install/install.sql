@@ -11,5 +11,6 @@ BEGIN;
 \i install/index-rer-web-tables.sql
 \i install/func-today-services.sql
 \i install/func-schedule-info-for-trains.sql
+\i install/func-next-scheduled-trains.sql
 
 COMMIT;
