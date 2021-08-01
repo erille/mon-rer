@@ -33,7 +33,7 @@ engines:
 
 plugins:
   Database:
-    driver: "mysql"
+    driver: "Pg"
     database: "sncf_gtfs"
     username: "rer-web"
     password: "secret"

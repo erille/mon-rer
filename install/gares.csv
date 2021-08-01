@@ -1,0 +1,490 @@
+"RYR",8700147,"Aéroport Charles de Gaulle 2 TGV",1
+"PKY",8711127,"Porte de Clichy",1
+"PE",8711300,"Paris Est",1
+"PAN",8711320,"Pantin",1
+"NSY",8711321,"Noisy Le Sec",1
+"BDY",8711340,"Bondy",1
+"RVM",8711347,"Le Raincy Villemomble",1
+"GN",8711351,"Gagny",1
+"CGG",8711352,"Chenay Gagny",1
+"RBI",8711369,"Rosny Bois Perrier",1
+"RSB",8711370,"Rosny sous Bois",1
+"VDF",8711371,"Val de Fontenay RER E",1
+"NLP",8711374,"Nogent Le Perreux",1
+"BXP",8711377,"Les Boullereaux Champigny",1
+"VSM",8711379,"Villiers sur Marne Le Plessis Trévise",1
+"LYV",8711380,"Les Yvris Noisy Le Grand",1
+"CPK",8711587,"Champbenoist - Poigny",1
+"GZ",8711601,"Gretz Armainvilliers",1
+"OZF",8711602,"Ozoir la Ferrière",1
+"ROB",8711603,"Roissy en Brie",1
+"EM",8711604,"Émerainville Pontault Combault",1
+"VNL",8711607,"Verneuil l'Étang",1
+"MRT",8711608,"Mormant",1
+"NAN",8711609,"Nangis",1
+"MEA",8711610,"Meaux",1
+"CSG",8711611,"Chelles Gournay",1
+"LON",8711613,"Longueville",1
+"PRO",8711616,"Provins",1
+"XCS",8711617,"Saint-Colombe - Septveilles",1
+"TOU",8711621,"Tournan",1
+"MLB",8711622,"Marles en Brie",1
+"MOF",8711624,"Mortcerf",1
+"GCM",8711626,"Guérard la Celle sur Morin",1
+"FMP",8711627,"Faremoutiers Pommeuse",1
+"MXK",8711628,"Mouroux",1
+"VAI",8711629,"Vaires Torcy",1
+"CO",8711630,"Coulommiers",1
+"LGY",8711631,"Lagny Thorigny",1
+"EY",8711632,"Esbly",1
+"NC9",8711634,"Chailly Boissy le Châtel",1
+"ND0",8711635,"Chauffry",1
+"SSJ",8711636,"Saint-Siméon",1
+"NC8",8711637,"Saint-Rémy la Vanne",1
+"MYD",8711640,"Montry Condé",1
+"TLP",8711649,"Trilport",1
+"CJN",8711650,"Changis Saint-Jean",1
+"LFJ",8711651,"La Ferté sous Jouarre",1
+"NAU",8711655,"Nanteuil Saacy",1
+"NAA",8711656,"Nogent l'Artaud Charly",1
+"CYZ",8711657,"Chézy sur Marne",1
+"CTH",8711658,"Château Thierry",1
+"IAC",8711661,"Isles-Armentières-Congis",1
+"LZO",8711663,"Lizy-sur-Ourcq",1
+"CQQ",8711664,"Crouy-sur-Ourcq",1
+"MAQ",8711666,"Mareuil-sur-Ourcq",1
+"LFM",8711667,"La Ferté Milon",1
+"CYQ",8711673,"Couilly Saint-Germain Quincy",1
+"VBB",8711674,"Villiers-Montbarbin",1
+"CLC",8711677,"Crécy-la-Chapelle",1
+"SFD",8716478,"Stade de France Saint-Denis",1
+"LPN",8716479,"La Plaine Stade de France",1
+"PNO",8727100,"Paris Nord",0
+"SDE",8727101,"Saint-Denis",1
+"GDS",8727102,"Paris Nord",1
+"PNB",8727103,"Paris Nord",0
+"EPV",8727112,"Épinay Villetaneuse",1
+"EYS",8727114,"Épinay sur Seine",1
+"PRF",8727116,"Pierrefitte Stains",1
+"LBJ",8727117,"La Barre Ormesson",1
+"GEN",8727120,"Gennevilliers",1
+"SOS",8727124,"Saint-Ouen",1
+"ALC",8727130,"Aubervilliers La Courneuve",1
+"LBT",8727139,"Le Bourget",1
+"DRN",8727140,"Drancy",1
+"AB",8727141,"Aulnay sous Bois",1
+"SEV",8727142,"Sevran Livry",1
+"VGL",8727143,"Vert Galant",1
+"BDE",8727144,"Sevran Beaudottes",1
+"VPN",8727145,"Villepinte",1
+"RSY",8727146,"Aéroport Charles de Gaulle 1",1
+"BAM",8727147,"Blanc Mesnil",1
+"PEX",8727148,"Parc des Expositions",1
+"VII",8727151,"Villeparisis Mitry Le Neuf",1
+"MY",8727152,"Mitry Claye",1
+"DAM",8727153,"Dammartin Juilly-Saint-Mard",1
+"PLB",8727155,"Plessis-Belleville",1
+"NH",8727157,"Nanteuil-le-Haudoin",1
+"ORM",8727158,"Ormoy-Villers",1
+"CYV",8727159,"Crépy-en-Valois",1
+"VW",8727202,"Villaines",1
+"SWY",8727203,"Seugy",1
+"COJ",8727204,"Compans",1
+"TNT",8727205,"Thieux - Nantouillet",1
+"LEG",8727214,"Les Grésillons",1
+"CL",8727600,"Creil",1
+"EN",8727602,"Enghien les Bains",1
+"CEG",8727603,"Champ de Courses d'Enghien",1
+"ERT",8727605,"Ermont Eaubonne",1
+"CEJ",8727606,"Cernay",1
+"FPB",8727607,"Franconville Le Plessis Bouchard",1
+"MBP",8727608,"Montigny Beauchamp",1
+"PRY",8727609,"Pierrelaye",1
+"SOA",8727610,"Saint-Ouen l'Aumône",1
+"CLY",8727611,"Chantilly Gouvieux",1
+"PSE",8727613,"Pontoise",1
+"EPL",8727614,"Épluches",1
+"PPT",8727615,"Pont-Petit",1
+"CPW",8727616,"Chaponval",1
+"SGT",8727617,"Saint-Gratien",1
+"SNN",8727618,"Sannois",1
+"GAJ",8727619,"Garges Sarcelles",1
+"VIB",8727622,"Villiers le Bel Gonesse Arnouville",1
+"LNX",8727623,"Les Noues",1
+"GOU",8727624,"Goussainville",1
+"LOV",8727625,"Louvres",1
+"SUR",8727626,"Survilliers Fosses",1
+"ORY",8727627,"Orry la Ville Coye",1
+"BBN",8727628,"La Borne Blanche",1
+"DEU",8727634,"Deuil Montmagny",1
+"GRL",8727636,"Groslay",1
+"SLL",8727638,"Sarcelles Saint-Brice",1
+"ECZ",8727639,"Écouen Ézanville",1
+"SLT",8727640,"Saint-Leu d'Esserent",1
+"PYO",8727641,"Précy-sur-Oise",1
+"DMO",8727643,"Domont",1
+"BRN",8727644,"Boran-sur-Oise",1
+"BRK",8727645,"Bruyères-sur-Oise",1
+"PEB",8727646,"Persan Beaumont",1
+"BOF",8727648,"Bouffemont Moisselles",1
+"MSO",8727649,"Montsoult Maffliers",1
+"PRQ",8727650,"Presles - Courcelles",1
+"CPO",8727651,"Champagne sur Oise",1
+"IAP",8727652,"L'Isle Adam Parmain",1
+"VMD",8727653,"Valmondois",1
+"AUW",8727654,"Auvers-sur-Oise",1
+"BSW",8727655,"Belloy - Saint-Martin",1
+"VMS",8727656,"Viarmes",1
+"LUZ",8727657,"Luzarches",1
+"ERM",8727658,"Ermont Halte",1
+"GNX",8727659,"Gros Noyer Saint-Prix",1
+"SLF",8727660,"Saint-Leu la Forêt",1
+"VCX",8727662,"Vaucelles",1
+"TVY",8727663,"Taverny",1
+"BSR",8727664,"Bessancourt",1
+"FPN",8727665,"Frépillon",1
+"MWO",8727666,"Méry sur Oise",1
+"MLV",8727667,"Meriel",1
+"NO",8727675,"Nointel - Mours",1
+"MGT",8728187,"Magenta",1
+"HSL",8728189,"Haussman Saint-Lazare",1
+"BFM",8732832,"Bibliothèque François Mitterrand",1
+"NUE",8733448,"Neuville Université",1
+"LIE",8733798,"Saint-Ouen l'Aumône Liesse",1
+"BEL",8736692,"Saint-Germain-en-Laye Bel Air Fourqueux",1
+"PRR",8738101,"Pereire Levallois",1
+"NPT",8738102,"Neuilly Porte Maillot",1
+"AVF",8738103,"Avenue Foch",1
+"AHM",8738104,"Avenue Henri Martin",1
+"BCO",8738107,"Bois Colombes",1
+"CBK",8738108,"Colombes",1
+"LSD",8738109,"Le Stade",1
+"PTC",8738111,"Pont Cardinet",1
+"CLL",8738112,"Clichy Levallois",1
+"AEE",8738113,"Asnières sur Seine",1
+"OSN",8738114,"Osny",1
+"BLA",8738115,"Boissy-l'Aillerie",1
+"MKU",8738116,"Montgeroult - Courcelles",1
+"US",8738117,"Us",1
+"XPY",8738118,"Santeuil - Le Perchay",1
+"CHR",8738119,"Chars",1
+"VWT",8738120,"La Villetertre",1
+"LQK",8738121,"Liancourt-Saint-Pierre",1
+"CEV",8738122,"Chaumont-en-Vexin",1
+"TRH",8738123,"Trie-Château",1
+"GIS",8738124,"Gisors",1
+"ERA",8738141,"Éragny Neuville",1
+"XOA",8738142,"Saint-Ouen l'Aumône Quartier de l'Église",1
+"CFD",8738145,"Conflans-Fin-d'Oise",1
+"CVF",8738147,"Chanteloup les Vignes",1
+"MRK",8738148,"Maurecourt",1
+"ANY",8738149,"Andrésy",1
+"MTE",8738150,"Mantes la Jolie",1
+"JUZ",8738155,"Juziers",1
+"GGV",8738156,"Gargenville",1
+"IPO",8738157,"Issou Porcheville",1
+"LIM",8738158,"Limay",1
+"MTQ",8738159,"Mantes Station",1
+"BVA",8738162,"Bréval",1
+"ACW",8738165,"Achères-Ville",1
+"MJM",8738171,"Mareil sur Mauldre",1
+"MAE",8738172,"Maule",1
+"NZL",8738173,"Nezel Aulnay",1
+"VDA",8738179,"Val d'Argenteuil",1
+"TSS",8738180,"Triel sur Seine",1
+"VXS",8738181,"Vaux sur Seine",1
+"TPA",8738182,"Thun le Paradis",1
+"MHD",8738183,"Meulan Hardricourt",1
+"ARW",8738184,"Argenteuil",1
+"CPA",8738186,"Cormeilles en Parisis",1
+"FMY",8738187,"La Frette Montigny",1
+"HRY",8738188,"Herblay",1
+"CSH",8738189,"Conflans Sainte Honorine",1
+"CYP",8738190,"Cergy Préfecture",1
+"BEC",8738200,"Bécon les Bruyères",1
+"KOU",8738220,"Courbevoie",1
+"LDU",8738221,"La Défense",1
+"GMC",8738225,"Garches Marnes-la-Coquette",1
+"VCN",8738226,"Vaucresson",1
+"CWJ",8738233,"Chaville Rive Droite",1
+"VDV",8738234,"Sèvres Ville d'Avray",1
+"SCD",8738235,"Saint-Cloud",1
+"VDO",8738236,"Le Val d'Or",1
+"MVH",8738237,"Suresnes Mont Valérien",1
+"PTX",8738238,"Puteaux",1
+"LCB",8738243,"La Celle-Saint-Cloud",1
+"BGV",8738244,"Bougival",1
+"LFC",8738245,"Louveciennes",1
+"MLR",8738246,"Marly-le-Roi",1
+"ELW",8738247,"L'Étang-la-Ville",1
+"SNB",8738248,"Saint-Nom-la-Bretèche Forêt de Marly",1
+"CYC",8738249,"Cergy Saint-Christophe",1
+"CJV",8738265,"Cergy le Haut",1
+"SGM",8738280,"Saint-Germain-en-Laye Grande Ceinture",1
+"MPJ",8738281,"Mareil-Marly",1
+"VRD",8738286,"Versailles Rive Droite",1
+"MFL",8738287,"Montreuil",1
+"VFD",8738288,"Viroflay Rive Droite",1
+"MVW",8738328,"Massy Verrières RER C",1
+"PSL",8738400,"Paris Saint-Lazare",1
+"LGK",8738600,"La Garenne Colombes",1
+"GCR",8738605,"Achères Grand Cormier",1
+"LWA",8738630,"Les Vallées",1
+"NUN",8738631,"Nanterre Université Transilien L",1
+"HAR",8738640,"Houilles Carrières sur Seine",1
+"SVL",8738641,"Sartrouville",1
+"MLF",8738642,"Maisons Laffitte",1
+"PSY",8738657,"Poissy",1
+"VSW",8738664,"Villennes sur Seine",1
+"VET",8738665,"Vernouillet Verneuil",1
+"KVE",8738666,"Les Clairières de Verneuil",1
+"LMU",8738668,"Les Mureaux",1
+"AEH",8738673,"Aubergenville Élisabethville",1
+"EPO",8738676,"Épone Mézières",1
+"PMP",8739100,"Paris Montparnasse",1
+"PVA",8739110,"Paris Montparnasse",0
+"VMK",8739153,"Vanves Malakoff",1
+"CMA",8739156,"Clamart",1
+"VC",8739300,"Versailles Chantiers",1
+"INV",8739303,"Invalides",1
+"PDM",8739304,"Pont de l'Alma",1
+"CPM",8739305,"Champ de Mars Tour Eiffel",1
+"JVL",8739306,"Javel",1
+"ISY",8739307,"Issy",1
+"MFY",8739308,"Meudon Val Fleury",1
+"MDN",8739310,"Meudon",1
+"BLU",8739311,"Bellevue",1
+"SVR",8739312,"Sèvres Rive Gauche",1
+"VRG",8739315,"Versailles Château Rive Gauche",1
+"POA",8739316,"Porchefontaine",1
+"CHV",8739317,"Chaville Vélizy",1
+"CVI",8739320,"Chaville Rive Gauche",1
+"VFG",8739321,"Viroflay Rive Gauche",1
+"SCR",8739322,"Saint-Cyr",1
+"VYL",8739325,"La Verrière",1
+"CGW",8739327,"Coignières",1
+"LSI",8739328,"Les Essarts le Roi",1
+"LPE",8739329,"Le Perray",1
+"ISP",8739330,"Issy Val de Seine",1
+"RBT",8739331,"Rambouillet",1
+"BVI",8739332,"Pont du Garigliano",1
+"GZA",8739334,"Gazeran",1
+"BYS",8739336,"Beynes",1
+"FAF",8739340,"Fontenay le Fleury",1
+"VEP",8739341,"Villepreux les Clayes",1
+"PG",8739342,"Plaisir Grignon",1
+"GAQ",8739343,"Garancières la Queue",1
+"OGB",8739344,"Orgerus Behoust",1
+"TAE",8739345,"Tacoignières Richebourg",1
+"HOA",8739346,"Houdan",1
+"MBR",8739347,"Marchezais Broué",1
+"DX",8739348,"Dreux",1
+"PJ",8739350,"Petit Jouy les Loges",1
+"JAS",8739351,"Jouy en Josas",1
+"VBO",8739353,"Vauboyen",1
+"BIS",8739354,"Bièvres",1
+"IGY",8739356,"Igny",1
+"MPU",8739357,"Massy Palaiseau RER C",1
+"LJU",8739361,"Longjumeau",1
+"PIE",8739362,"Plaisir les Clayes",1
+"CAZ",8739363,"Chilly Mazarin",1
+"GBI",8739364,"Gravigny Balizy",1
+"PV",8739365,"Petit Vaux",1
+"TVO",8739383,"Trappes",1
+"SQY",8739384,"Saint-Quentin en Yvelines",1
+"NIO",8739387,"Noisy-le-Roi",1
+"VEH",8739388,"Villiers Neauphle Pontchartrain",1
+"MLM",8739389,"Montfort l'Amaury Méré",1
+"CH",8739400,"Chartres",1
+"EPN",8739411,"Épernon",1
+"MTN",8739413,"Maintenon",1
+"SPI",8739414,"Saint-Piat",1
+"JOY",8739415,"Jouy",1
+"VTP",8739417,"La Villette Saint-Prest",0
+"VN",8741560,"Vernon – Giverny",1
+"RSS",8741588,"Rosny sur Seine",1
+"BNR",8741589,"Bonnières",1
+"LAD",8749210,"Les Ardoines",1
+"ERE",8753413,"Ermont Eaubonne",0
+"DA",8754017,"Dourdan la Forêt",1
+"BWR",8754318,"Boulainvilliers",1
+"APK",8754320,"Avenue du Président Kennedy",1
+"ETP",8754513,"Étampes",1
+"ETY",8754514,"Étrechy",1
+"CHK",8754515,"Chamarande",1
+"LYO",8754516,"Lardy",1
+"BSO",8754517,"Bouray",1
+"MSX",8754518,"Marolles en Hurepoix",1
+"BY",8754519,"Brétigny",1
+"SHO",8754520,"Saint-Michel sur Orge",1
+"SXG",8754521,"Sainte Geneviève des Bois",1
+"EYO",8754522,"Épinay sur Orge",1
+"SAO",8754523,"Savigny sur Orge",1
+"JY",8754524,"Juvisy",1
+"ATH",8754525,"Athis Mons",1
+"ABL",8754526,"Ablon",1
+"VRI",8754527,"Villeneuve le Roi",1
+"CLR",8754528,"Choisy le Roi",1
+"VY",8754529,"Vitry sur Seine",1
+"IV",8754530,"Ivry sur Seine",1
+"SME",8754535,"Saint-Martin d'Étampes",1
+"NG",8754545,"La Norville Saint-Germain lès Arpajon",1
+"ARP",8754546,"Arpajon",1
+"ELY",8754547,"Égly",1
+"BIH",8754548,"Breuillet Bruyères le Chatel",1
+"BRW",8754549,"Breuillet Village",1
+"SCW",8754550,"Saint-Chéron",1
+"SXE",8754551,"Sermaise",1
+"D",8754552,"Dourdan",1
+"PRU",8754619,"Pont de Rungis Aéroport d'Orly",1
+"OY",8754620,"Orly Ville",1
+"LSW",8754622,"Les Saules",1
+"RF",8754629,"Rungis la Fraternelle",1
+"CHQ",8754631,"Chemin d'Antony",1
+"PAZ",8754700,"Paris Austerlitz",0
+"PZB",8754702,"Paris Austerlitz",1
+"MDS",8754730,"Musée d'Orsay",1
+"SHL",8754731,"Saint-Michel Notre Dame RER C",1
+"PPD",8760880,"Créteil Pompadour",1
+"RPA",8765479,"Rosa Parks",1
+"COE",8768100,"Corbeil Essonnes",1
+"MFA",8768115,"Maisons Alfort Alfortville",1
+"VD",8768124,"Le Vert de Maisons",1
+"VGS",8768130,"Vigneux sur Seine",1
+"VWC",8768131,"Viry Châtillon",1
+"RIS",8768133,"Ris Orangis",1
+"OBP",8768134,"Orangis Bois de l'Épine",1
+"GBG",8768135,"Grand Bourg",1
+"EVR",8768136,"Évry",1
+"GGG",8768137,"Grigny Centre",1
+"EVC",8768138,"Évry Courcouronnes",1
+"BFX",8768139,"Le Bras de Fer",1
+"MJW",8768140,"Moulin-Galant",1
+"MNY",8768141,"Mennecy",1
+"BUR",8768143,"Ballancourt",1
+"LFA",8768145,"La Ferté Alais",1
+"BJN",8768147,"Boutigny",1
+"MSN",8768148,"Maisse",1
+"BQV",8768151,"Buno-Gironville",1
+"ESO",8768160,"Essonnes-Robinson",1
+"VBV",8768161,"Villabé",1
+"IBM",8768162,"Le Plessis-Chenet",1
+"CEX",8768163,"Le Coudray-Monceaux",1
+"VTV",8768180,"Villeneuve Triage",1
+"VSG",8768182,"Villeneuve Saint-Georges",1
+"VP",8768185,"Villeneuve Prairie",1
+"MEL",8768200,"Melun",1
+"KRW",8768210,"Montgeron Crosne",1
+"YES",8768211,"Yerres",1
+"BNY",8768212,"Brunoy",1
+"BXI",8768213,"Boussy Saint-Antoine",1
+"CBV",8768214,"Combs la Ville Quincy",1
+"LIU",8768215,"Lieusaint Moissy",1
+"CES",8768216,"Cesson",1
+"WEE",8768217,"Le Mée",1
+"ZTN",8768218,"Savigny le Temple Nandy",1
+"BJR",8768220,"Bois Le Roi",1
+"FON",8768221,"Fontainebleau Avon",1
+"TMR",8768225,"Thomery",1
+"MOR",8768227,"Morêt Veneux les Sablons",1
+"SF",8768229,"Saint-Mammès",1
+"MTU",8768230,"Montereau",1
+"LYQ",8768240,"Livry sur Seine",1
+"CJR",8768241,"Chartrettes",1
+"FPO",8768242,"Fontaine le Port",1
+"HER",8768243,"Héricy",1
+"VUN",8768244,"Vulaines sur Seine Samoreau",1
+"CME",8768245,"Champagne sur Seine",1
+"VSS",8768246,"Vernou sur Seine",1
+"GPA",8768247,"La Grande Paroisse",1
+"VOM",8768250,"Vosves",1
+"BKR",8768251,"Boissise-le-Roi",1
+"POP",8768252,"Ponthierry-Pringy",1
+"XFA",8768254,"Saint-Fargeau",1
+"SES",8768300,"Sens",1
+"VVG",8768310,"Villeneuve la Guyard",1
+"CSY",8768312,"Champigny-sur-Yonne",1
+"PUY",8768313,"Pont-sur-Yonne",1
+"EYV",8768320,"Étigny Véron",1
+"VYE",8768321,"Villeneuve sur Yonne",1
+"SJX",8768322,"Saint-Julien-du-Sault",1
+"JOI",8768324,"Joigny",1
+"LAR",8768326,"Laroche Migennes",1
+"MS",8768400,"Montargis",1
+"MKN",8768410,"Montigny sur Loing",1
+"BOM",8768411,"Bourron Marlotte Grez",1
+"NSP",8768412,"Nemours Saint-Pierre",1
+"BXN",8768419,"Bagneaux sur Loing",1
+"SPP",8768421,"Souppes Château Landon",1
+"DDI",8768423,"Dordives",1
+"FFY",8768424,"Ferrières Fontenay",1
+"BWI",8768440,"Boigneville",1
+"MAL",8768441,"Malesherbes",1
+"PLY",8768600,"Paris Gare de Lyon",1
+"PAA",8768603,"Paris Gare de Lyon",1
+"PBY",8768666,"Paris Bercy",0
+"VDE",8773006,"Val d'Europe",1
+"BXG",8775498,"Bussy Saint-Georges",1
+"MVC",8775499,"Marne la Vallée Chessy",1
+"CGP",8775800,"Charles de Gaulle-Étoile",1
+"GAW",8775801,"La Défense Grande Arche",1
+"NAF",8775802,"Nanterre Préfecture",1
+"NC7",8775803,"Nanterre Université RER A",1
+"NC3",8775804,"Nanterre Ville",1
+"NC6",8775805,"Rueil-Malmaison",1
+"NC5",8775806,"Chatou-Croissy",1
+"NC4",8775807,"Le Vésinet-Centre",1
+"NC2",8775808,"Le Vésinet Le Pecq",1
+"NC1",8775809,"Saint-Germain-en-Laye",1
+"NTN",8775810,"Nation",1
+"VNC",8775811,"Vincennes",1
+"FSB",8775812,"Fontenay-sous-Bois",1
+"NGM",8775813,"Nogent-sur-Marne",1
+"JVR",8775814,"Joinville-le-Pont",1
+"XMC",8775815,"Saint-Maur-Créteil",1
+"PXO",8775816,"Le Parc de Saint-Maur",1
+"CGJ",8775817,"Champigny",1
+"LVZ",8775818,"La Varenne Chennevières",1
+"ZUB",8775819,"Sucy Bonneuil",1
+"BXR",8775820,"Boissy Saint-Léger",1
+"VFR",8775830,"Val de Fontenay RER A",1
+"NYP",8775831,"Neuilly Plaisance",1
+"BQA",8775832,"Bry sur Marne",1
+"NYG",8775833,"Noisy le Grand Mont d'Est",1
+"NYC",8775834,"Noisy Champs",1
+"NSL",8775835,"Noisiel",1
+"LQN",8775836,"Lognes",1
+"TOC",8775837,"Torcy",1
+"GYN",8775858,"Paris Gare de Lyon",1
+"AUU",8775859,"Auber",1
+"CLX",8775860,"Châtelet les Halles",1
+"LXJ",8775861,"Luxembourg",1
+"PWR",8775862,"Port Royal",1
+"DFR",8775863,"Denfert Rochereau",1
+"CUF",8775864,"Cité Universitaire",1
+"GTL",8775865,"Gentilly",1
+"LJA",8775866,"Laplace",1
+"ARK",8775867,"Arcueil Cachan",1
+"BGK",8775868,"Bagneux",1
+"BQQ",8775869,"Bourg la Reine",1
+"SKX",8775870,"Sceaux",1
+"FNR",8775871,"Fontenay aux Roses",1
+"RNS",8775872,"Robinson",1
+"PCX",8775873,"Parc de Sceaux",1
+"XBY",8775874,"La Croix de Berny",1
+"ATW",8775875,"Antony",1
+"FMN",8775876,"Fontaine Michalon",1
+"BQC",8775877,"Les Baconnets",1
+"MVP",8775878,"Massy Verrières RER B",1
+"MP",8775879,"Massy Palaiseau RER B",1
+"PAX",8775880,"Palaiseau",1
+"PAW",8775881,"Palaiseau Villebon",1
+"LZV",8775882,"Lozère",1
+"GUW",8775883,"Le Guichet",1
+"ORS",8775884,"Orsay Ville",1
+"BVJ",8775885,"Bures sur Yvette",1
+"HAQ",8775886,"La Hacquinière",1
+"GIF",8775887,"Gif sur Yvette",1
+"CVW",8775888,"Courcelles sur Yvette",1
+"SNM",8775889,"Saint-Rémy lès Chevreuse",1
+"XND",8778543,"Saint-Michel Notre Dame RER B",1
