@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use utf8;
 
+use 5.010;
+
 use lib '../lib';
 use lib 'lib';
 
@@ -16,6 +18,7 @@ use Cwd qw(realpath);
 use Dancer qw(:script !pass);
 use Data::Dumper;
 
+binmode STDOUT, ':encoding(UTF-8)';
 
 my $code = $ARGV[0] || die "usage: $0 <tr3>\n";
 
@@ -47,7 +50,6 @@ my $data = $ds->get_next_trains($gare);
 
 foreach my $train (@$data) {
     my $terminus_name = ($train->terminus) ? $train->terminus->name : "?";
-    utf8::encode($terminus_name);
 
     my $today = $train->real_time->ymd('-')
         || $train->due_time->ymd('-')

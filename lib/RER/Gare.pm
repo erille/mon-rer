@@ -44,8 +44,6 @@ sub new {
     return undef if ! exists $args{uic} || ! defined $args{uic};
     return undef if ! exists $args{name} || ! defined $args{name};
 
-    utf8::decode($args{name});
-
     $self->{code} = $args{code};
     $self->{name} = $args{name};
     $self->{uic}  = $args{uic};

@@ -101,7 +101,6 @@ sub find
 
     if(scalar(@$result)) {
         my ($code, $name, $uic) = @{$result->[0]};
-        utf8::decode($name);
         my $gare = RER::Gare->new(
             code => $code,
             name => $name,
@@ -138,7 +137,6 @@ sub get_autocomp
         my $code = $_->{code};
         my $uic  = $_->{uic};
         my $name = $_->{name};
-        utf8::decode($name);
         RER::Gare->new(code => $code, name => $name, uic => $uic, lines => get_lines($_->{uic}))
     } @$result;
     return \@obj_result;
