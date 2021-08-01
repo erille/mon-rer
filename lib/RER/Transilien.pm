@@ -40,11 +40,6 @@ sub new {
                 && (grep {/^[AB]$/} @{$gare_from->lines})) {
                 next;
             }
-#            if (($i == 0)
-#                && ! (grep {!/^[AB]$/} @{RER::Gares::get_lines($gare_from)})
-#                && config->{restrict_lines}) {
-#                next;
-#            }
             if ($i == 1) {
                 push @messages, "Attention, les horaires affichés sont théoriques. "
                         . "Renseignez-vous en gare pour vérifier si votre train est "
