@@ -84,7 +84,7 @@ sub new {
                         (int($delay / 60)),
                         (abs($delay % 60))  if abs $delay >= 60;
             $delay_str = sprintf "%+d min", $delay if abs $delay < 60;
-            $delay_str = "à l'heure" if $delay == 0;
+            $delay_str = "à l’heure" if $delay == 0;
         }
 
         my @arr_dessertes;
