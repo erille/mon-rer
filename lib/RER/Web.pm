@@ -10,17 +10,15 @@ use Dancer ':syntax';
 use Dancer::Plugin::Database;
 use Dancer::Plugin::Redis;
 
+use RER::Cache;
 use RER::Transilien;
 use RER::Results;
 use RER::Gares;
 use RER::DataSource::Transilien;
 use RER::DataSource::TransilienGTFS;
-use Storable qw(dclone freeze thaw);
+use Storable qw(dclone);
 
 our $VERSION = '0.1';
-
-my %train_obj;
-my %train_obj_last_update;
 
 my %stats;
 
@@ -60,73 +58,25 @@ sub stats_add {
 sub cache_invalidate {
     my ($key) = @_;
 
-    if (config->{'use_redis'}) {
-        redis->multi;
-        redis->hdel("rer-web.train_obj",     $key);
-        redis->hdel("rer-web.train_obj_exp", $key);
-        redis->exec;
-    }
-    else {
-        $train_obj_last_update{$key} = undef;
-    }
+    RER::Cache::cache_del($key);
 }
 
-# Sets a given train objet cache entry to a a new value
+# Sets a given train objet cache entry to a new value
 sub cache_set_hash {
     my ($key, $value) = @_;
 
-    if (config->{'use_redis'}) {
-        return if not ref $value;
-
-        my $expires = 12;
-        my $frozen  = freeze $value;
-
-        my $oldval = redis->hget("rer-web.train_obj", $key);
-        if (defined $oldval && $frozen ne $oldval) {
-            my $old_exp = redis->hget("rer-web.train_obj_exp", $key);
-            if (time < $old_exp + 12) {
-                $expires = 60 - (time - $old_exp);
-            }
-        }
-
-        redis->multi;
-        redis->hset("rer-web.train_obj",     $key, $frozen);
-        redis->hset("rer-web.train_obj_exp", $key, time + $expires);
-        redis->exec;
-    }
-    else {
-        $train_obj_last_update{$key} = time;
-        $train_obj{$key} = $value;
-    }
+    RER::Cache::cache_put($key, $value, 60, 60);
 }
 
 # Gets a train objet cache entry (or undef if cache miss)
 sub cache_get_hash {
     my ($key) = @_;
 
-    if (config->{'use_redis'}) {
-        my ($obj, $expire);
-        eval {
-            $obj    = thaw redis->hget("rer-web.train_obj", $key);
-            $expire = redis->hget("rer-web.train_obj_exp", $key);
-        };
-        if (my $err = $@) {
-            warn $err;
-            return undef;
-        }
-
-        return undef if (!defined $expire || time >= $expire);
-        return $obj;
+    my $obj = RER::Cache::cache_get($key);
+    if (defined $obj) {
+        $obj = RER::Results->new(%$obj);
     }
-    else {
-        if (exists $train_obj_last_update{$key}
-            && time - $train_obj_last_update{$key} < 12) {
-            return $train_obj{$key};
-        }
-        else {
-            return undef;
-        }
-    }
+    return $obj;
 }
 
 
