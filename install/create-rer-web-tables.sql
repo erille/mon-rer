@@ -4,6 +4,16 @@
  * temporairement les index lors du chargement de données en masse.
  */
 
+CREATE EXTENSION unaccent;
+
+DROP TEXT SEARCH CONFIGURATION IF EXISTS fr_unaccent;
+
+CREATE TEXT SEARCH CONFIGURATION fr_unaccent (COPY = simple);
+
+ALTER TEXT SEARCH CONFIGURATION fr_unaccent
+  ALTER MAPPING FOR hword, hword_part, word
+WITH unaccent, simple;
+
 CREATE TABLE IF NOT EXISTS metadata (
   key TEXT NOT NULL,
   value TEXT NOT NULL

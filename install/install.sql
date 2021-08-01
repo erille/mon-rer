@@ -12,5 +12,6 @@ BEGIN;
 \i install/func-today-services.sql
 \i install/func-schedule-info-for-trains.sql
 \i install/func-next-scheduled-trains.sql
+\i install/func-autocomplete-stations.sql
 
 COMMIT;

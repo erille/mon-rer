@@ -72,7 +72,13 @@ sub find
     my $sth;
 
     if (exists $params{code}) {
-        $sth = database->prepare('SELECT code, name, uic FROM gares WHERE code = ?');
+        $sth = database->prepare(q{
+            SELECT code, name, gares.uic, array_agg(line) AS lines
+              FROM gares
+                   JOIN gares_lines ON (gares.uic = gares_lines.uic)
+             WHERE gares.code = ?
+             GROUP BY gares.code
+        });
         $sth->execute($params{code});
     }
     elsif (exists $params{uic}) {
@@ -81,26 +87,28 @@ sub find
         # enlève, parce qu'on ne stocke que 7 chiffres dans la BDD.
         my $uic = substr $params{uic}, 0, 7;
 
-        $sth = database->prepare('SELECT code, name, uic FROM gares WHERE uic = ?');
+        $sth = database->prepare(q{
+            SELECT code, name, gares.uic, array_agg(line) AS lines
+              FROM gares
+                   JOIN gares_lines ON (gares.uic = gares_lines.uic)
+             WHERE gares.uic = ?
+             GROUP BY gares.code
+        });
         $sth->execute($uic);
     }
     else {
         return undef;
     }
 
-    my $result = $sth->fetchall_arrayref();
+    my $result = $sth->fetchall_arrayref({});
 
-    if(scalar(@$result)) {
-        my ($code, $name, $uic) = @{$result->[0]};
-        my $gare = RER::Gare->new(
-            code => $code,
-            name => $name,
-            uic  => $uic
+    if (scalar(@$result)) {
+        return RER::Gare->new(
+            code  => $result->[0]{code},
+            name  => $result->[0]{name},
+            uic   => $result->[0]{uic},
+            lines => $result->[0]{lines},
         );
-
-        $gare->lines(get_lines($gare));
-
-        return $gare;
     }
     else {
         return undef;
@@ -110,27 +118,21 @@ sub find
 sub get_autocomp
 {
     my ($str) = @_;
-    $str =~ s/([_%])/\\$1/g;
 
-    my $sth = database->prepare(qq{
-        SELECT code, name, uic,
-            IF(code = UPPER(?), 0, IF(INSTR(name, ?), 10 + INSTR(name, ?), 50)) AS score
-            FROM gares
-            WHERE is_transilien AND (code = UPPER(?) OR name LIKE ?)
-            ORDER BY score, name
-            LIMIT 10;
-        });
-    $sth->execute("$str", "$str", "$str", "$str", "%$str%");
+    my $sth = database->prepare(
+        'SELECT code, name, uic, lines FROM autocomplete_stations(?);');
+    $sth->execute($str);
 
-    my $result = $sth->fetchall_arrayref({});
-
-    my @obj_result = map {
-        my $code = $_->{code};
-        my $uic  = $_->{uic};
-        my $name = $_->{name};
-        RER::Gare->new(code => $code, name => $name, uic => $uic, lines => get_lines($_->{uic}))
-    } @$result;
-    return \@obj_result;
+    return [
+        map {
+            RER::Gare->new(
+                code  => $_->{code},
+                name  => $_->{name},
+                uic   => $_->{uic},
+                lines => $_->{lines}
+            )
+        } @{$sth->fetchall_arrayref({})}
+    ];
 }
 
 sub format_delay {
