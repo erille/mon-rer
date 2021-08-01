@@ -48,7 +48,7 @@ is($train->status, 'N');
 
 
 is($data_hash->[1]->status, 'S');
-is($data_hash->[1]->number, '165312');
+is($data_hash->[1]->number, '165312-165313');
 
 __END__
 <?xml version="1.0" encoding="UTF-8"?>

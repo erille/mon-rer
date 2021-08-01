@@ -15,32 +15,7 @@ sub real_time { $_[0]->{real_time} = $_[1] || $_[0]->{real_time}; }
 sub due_time  { $_[0]->{due_time} = $_[1] || $_[0]->{due_time}; }
 sub terminus  { $_[0]->{terminus} = $_[1] || $_[0]->{terminus}; }
 sub stations  { $_[0]->{stations} = $_[1] || $_[0]->{stations}; }
-
-sub line {
-    my ($self, $line) = @_;
-
-    $line ||= ($self) ? $self->{line} : undef;
-    return $self->{line} if not defined $line;
-
-    for ($line) {
-        $line = 'C' if /Boulevard /i;
-        $line = 'C' if /Gare d'Aus/i;
-        $line = 'C' if /Invalides /i; # note the space
-        $line = 'D' if /Evry Courc/i;
-        $line = 'D' if /Grigny Cen/i;
-        $line = 'D' if /Le Bras de/i;
-        $line = 'D' if /Orangis Bo/i;
-        $line = 'D' if /Juvisy => /i; # note the space
-        $line = 'E' if /Haussmann /i; # note the space
-        $line = 'H' if /LUZARCHES /i; # note the space
-        $line = 'J' if /Gisors => /i; # note the space
-        $line = 'J' if /Mantes la /i; # note the space
-        $line = 'R' if /Montargis /i; # note the space
-        $line = 'TER' if $_ eq 'Train';
-    }
-
-    $self->{line} = $line;
-}
+sub line      { $_[0]->{line} = $_[1] || $_[0]->{line}; }
 
 sub merge {
     my ($self, $obj) = @_;

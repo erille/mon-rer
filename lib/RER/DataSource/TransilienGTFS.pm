@@ -221,17 +221,6 @@ sub get_info_for_train {
         $data = $self->db_run_train_times_for_date($date, 'ERE', $train_number);
     }
 
-    # Hack spécifique aux numéros de train impairs : il arrive parfois que les
-    # numéros de train changent de parité en cours de route.  Dans ce cas, il
-    # faut prendre le numéro de train moins 1 et réessayer.
-    # Bien entendu, ne pas faire ça sur les "numéros" de train RATP.
-    if ($train_number =~ /^[0-9]+$/
-        && $train_number % 2 == 1
-        && scalar @$data == 0) {
-        $data = $self->db_run_train_times_for_date($date, $station_code, $train_number - 1);
-        $train_number--;
-    }
-
     my @ret;
 
     my $row = $data->[0];
