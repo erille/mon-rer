@@ -45,7 +45,8 @@ sub get_station_codes
 
 sub get_stations
 {
-    my $sth = database->prepare('SELECT code, name, uic FROM gares WHERE is_transilien = 1 ORDER BY name');
+    my $sth = database->prepare(
+        'SELECT code, name, uic FROM gares WHERE is_transilien ORDER BY name');
     $sth->execute;
     return $sth->fetchall_arrayref({});
 }
