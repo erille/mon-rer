@@ -7,6 +7,7 @@ use warnings;
 use utf8;
 
 use Dancer ':syntax';
+use Dancer::Plugin::Database;
 use Dancer::Plugin::Redis;
 
 use RER::Transilien;
@@ -131,10 +132,6 @@ sub cache_get_hash {
 
 
 
-hook 'before' => sub {
-    RER::Gares::db_connect();
-};
-
 get '/' => sub {
     # rediriger (302) vers l'url /?s=<blah> si l'user a sauvegardé sa dernière gare
     # (et sinon on redirige vers la gare par défaut)
@@ -189,11 +186,7 @@ get '/json' => sub {
         url         => config->{'sncf_url'},
         username    => config->{'sncf_username'},
         password    => config->{'sncf_password'});
-    my $ds2 = RER::DataSource::TransilienGTFS->new(
-        dsn		=> config->{'db_dsn'},
-        username	=> config->{'db_username'},
-        password	=> config->{'db_password'});
-
+    my $ds2 = RER::DataSource::TransilienGTFS->new(dbh => database);
 
     my $ret = cache_get_hash($station->code);
 

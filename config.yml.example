@@ -32,6 +32,11 @@ engines:
     convert_blessed: '1'
 
 plugins:
+  Database:
+    driver: "mysql"
+    database: "sncf_gtfs"
+    username: "rer-web"
+    password: "secret"
   Redis:
     # can't use UNIX domain sockets here
     server: '127.0.0.1:6379'
@@ -40,12 +45,6 @@ plugins:
     reconnect: 60
     # optional
     password: supersecret
-
-
-# database settings
-db_dsn: "dbi:mysql:dbname=sncf_gtfs;host=localhost;mysql_enable_utf8=1"
-db_username: "rer-web"
-db_password: "secret"
 
 use_redis: 1
 

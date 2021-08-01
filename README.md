@@ -20,6 +20,7 @@ You will need the following Perl modules:
  * DBI
  * DBD::mysql
  * Dancer
+ * Dancer::Plugin::Database
  * Dancer::Plugin::Redis
  * LWP::Protocol::https
  * JSON::XS

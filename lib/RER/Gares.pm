@@ -3,6 +3,8 @@
 package RER::Gares;
 
 use Dancer ':syntax';
+use Dancer::Plugin::Database;
+
 use RER::Gare;
 use DBI;
 use DateTime;
@@ -13,20 +15,8 @@ use warnings;
 use utf8;
 use 5.010;
 
-our $dbh;
-
-sub db_connect
-{
-    $dbh = DBI->connect(
-        config->{db_dsn},
-        config->{db_username},
-        config->{db_password},
-        { mysql_enable_utf8 => 1 }) or die $DBI::errstr;
-}
-
-
 sub get_last_update {
-    my $sth = $dbh->prepare("SELECT value FROM metadata WHERE `key` = 'dmaj'");
+    my $sth = database->prepare("SELECT value FROM metadata WHERE key = 'dmaj'");
     $sth->execute;
     my $result = $sth->fetchall_arrayref([0]);
 
@@ -46,14 +36,14 @@ sub get_last_update {
 
 sub get_station_codes
 {
-    my $sth = $dbh->prepare('SELECT code FROM gares');
+    my $sth = database->prepare('SELECT code FROM gares');
     $sth->execute;
     return $sth->fetchall_arrayref([0]);
 }
 
 sub get_stations
 {
-    my $sth = $dbh->prepare('SELECT code, name, uic FROM gares WHERE is_transilien = 1 ORDER BY name');
+    my $sth = database->prepare('SELECT code, name, uic FROM gares WHERE is_transilien = 1 ORDER BY name');
     $sth->execute;
     return $sth->fetchall_arrayref({});
 }
@@ -66,7 +56,7 @@ sub get_lines
     $uic = $arg->uic if ref $arg eq 'RER::Gare';
     $uic = $arg      if ref $arg ne 'RER::Gare';
 
-    my $sth = $dbh->prepare('SELECT line FROM gares_lines WHERE uic = ?');
+    my $sth = database->prepare('SELECT line FROM gares_lines WHERE uic = ?');
     $sth->execute($uic);
     my @result = map { $_->[0] } @{$sth->fetchall_arrayref([0])};
     return \@result;
@@ -78,10 +68,8 @@ sub find
 
     my $sth;
 
-    $dbh ||= db_connect();
-
     if (exists $params{code}) {
-        $sth = $dbh->prepare('SELECT code, name, uic FROM gares WHERE code = ?');
+        $sth = database->prepare('SELECT code, name, uic FROM gares WHERE code = ?');
         $sth->execute($params{code});
     }
     elsif (exists $params{uic}) {
@@ -90,7 +78,7 @@ sub find
         # enlève, parce qu'on ne stocke que 7 chiffres dans la BDD.
         my $uic = substr $params{uic}, 0, 7;
 
-        $sth = $dbh->prepare('SELECT code, name, uic FROM gares WHERE uic = ?');
+        $sth = database->prepare('SELECT code, name, uic FROM gares WHERE uic = ?');
         $sth->execute($uic);
     }
     else {
@@ -121,7 +109,7 @@ sub get_autocomp
     my ($str) = @_;
     $str =~ s/([_%])/\\$1/g;
 
-    my $sth = $dbh->prepare(qq{
+    my $sth = database->prepare(qq{
         SELECT code, name, uic,
             IF(code = UPPER(?), 0, IF(INSTR(name, ?), 10 + INSTR(name, ?), 50)) AS score
             FROM gares

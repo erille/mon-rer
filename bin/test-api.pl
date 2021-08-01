@@ -13,24 +13,12 @@ use RER::DataSource::Transilien;
 use RER::DataSource::TransilienGTFS;
 
 use RER::Gares;
-use FindBin;
-use Cwd qw(realpath);
 use Dancer qw(:script !pass);
-use Data::Dumper;
+use Dancer::Plugin::Database;
 
 binmode STDOUT, ':encoding(UTF-8)';
 
 my $code = $ARGV[0] || die "usage: $0 <tr3>\n";
-
-my $appdir = realpath("$FindBin::Bin/..");
-Dancer::Config::setting(appdir => $appdir);
-Dancer::Config::load();
-
-$RER::Gares::config{dsn}        = config->{'db_dsn'};
-$RER::Gares::config{username}   = config->{'db_username'};
-$RER::Gares::config{password}   = config->{'db_password'};
-
-RER::Gares::db_connect();
 
 my $gare = RER::Gares::find(code => $code);
 die "$code: gare non valable\n" if ! defined ($gare);
@@ -41,10 +29,7 @@ my $ds  = RER::DataSource::Transilien->new(
     url		=> config->{'sncf_url'},
     username	=> config->{'sncf_username'},
     password	=> config->{'sncf_password'});
-my $ds2 = RER::DataSource::TransilienGTFS->new(
-    dsn		=> config->{'db_dsn'},
-    username	=> config->{'db_username'},
-    password	=> config->{'db_password'});
+my $ds2 = RER::DataSource::TransilienGTFS->new(dbh => database);
 
 my $data = $ds->get_next_trains($gare);
 

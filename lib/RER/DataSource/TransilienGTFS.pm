@@ -13,26 +13,30 @@ use Dancer ':syntax';
 use DateTime;
 use DBI;
 
-sub dsn      { $_[0]->{dsn} = $_[1] || $_[0]->{dsn}; }
-sub username { $_[0]->{username} = $_[1] || $_[0]->{username}; }
-sub password { $_[0]->{password} = $_[1] || $_[0]->{password}; }
-sub dbh      { $_[0]->{dbh} = $_[1] || $_[0]->{dbh}; }
+=head2 dbh
 
+Accesseur pour le handle d’accès à la base de données donné à cet objet.
+
+=cut
+
+sub dbh { $_[0]->{dbh} = $_[1] || $_[0]->{dbh}; }
+
+=head2 new
+
+Instancie un nouvel objet TransilienGTFS.
+
+Ce constructeur nécessite un paramètre « dbh » correspondant à un « handle »
+de base de données préalablement ouvert. Celui que propose Dancer via son plugin
+Dancer::Plugin::Database et la fonction « database » fait l’affaire.
+
+=cut
 
 sub new {
     my ($self, %args) = @_;
-    $self = {};
 
-    $self->{dsn}      = $args{dsn};
-    $self->{username} = $args{username};
-    $self->{password} = $args{password};
-
-    $self->{dbh} = DBI->connect(
-        $self->{dsn},
-        $self->{username},
-        $self->{password},
-        { mysql_enable_utf8 => 1 }
-    ) or die $DBI::errstr;
+    $self = {
+        dbh => $args{dbh},
+    };
 
     $self->{sth_ttfd} = $self->{dbh}->prepare(
         'CALL train_times_for_date(?, ?, ?)');

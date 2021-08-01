@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 24;
+use Test::More tests => 23;
 
 use FindBin;
 use Cwd qw(realpath);
@@ -16,12 +16,6 @@ BEGIN { use_ok('RER::Gares'); }
 my $appdir = realpath("$FindBin::Bin/..");
 Dancer::Config::setting(appdir => $appdir);
 Dancer::Config::load();
-
-$RER::Gares::config{dsn} 	= config->{'db_dsn'};
-$RER::Gares::config{username} 	= config->{'db_username'};
-$RER::Gares::config{password} 	= config->{'db_password'};
-
-ok (RER::Gares::db_connect());
 
 like (RER::Gares::get_last_update(), qr/[\d]+ [^ ]+ [\d]{4}/);
 
