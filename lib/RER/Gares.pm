@@ -142,33 +142,6 @@ sub get_autocomp
     return \@obj_result;
 }
 
-sub get_delay {
-    my ($numero, $from, $time) = @_;
-
-    return undef if ($numero !~ /^1[0-9]{5}$/);
-
-    my $sth = $dbh->prepare(qq{
-        SELECT (TIME_TO_SEC(?) - TIME_TO_SEC(departure_time)) DIV 60 AS retard
-        FROM train_times
-        WHERE code = ? AND train_number = ? LIMIT 1;
-                   });
-    $sth->execute($time, $from, $numero) or die $DBI::errstr;
-
-    my $result = $sth->fetchall_arrayref([0]);
-
-    if (scalar(@$result)) {
-        my $value = $result->[0][0];
-        $value += 1440 while $value <= -720;
-        return $value;
-    }
-    elsif (($numero % 2) == 1) {
-        return get_delay(int($numero) - 1, $from, $time);
-    }
-    else {
-        return undef;
-    }
-}
-
 sub format_delay {
     my ($num) = @_;
     return ""           if not defined $num;
