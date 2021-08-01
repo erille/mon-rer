@@ -17,6 +17,7 @@ You will need the following Perl modules:
 
  * DateTime
  * DateTime::Format::Strptime
+ * DateTime::Format::Pg
  * DBI
  * DBD::Pg
  * Dancer

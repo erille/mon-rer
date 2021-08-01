@@ -31,20 +31,11 @@ my $ds  = RER::DataSource::Transilien->new(
     password	=> config->{'sncf_password'});
 my $ds2 = RER::DataSource::TransilienGTFS->new(dbh => database);
 
-my $data = $ds->get_next_trains($gare);
+my $real_time_data = $ds->get_next_trains($gare);
+my @data = @{$ds2->complete_train_info($gare, $real_time_data)};
 
-foreach my $train (@$data) {
+foreach my $train (@data) {
     my $terminus_name = ($train->terminus) ? $train->terminus->name : "?";
-
-    my $today = $train->real_time->ymd('-')
-        || $train->due_time->ymd('-')
-        || `date +'%Y-%m-%d'`;
-
-    my $train2 = $ds2->get_info_for_train($today, $gare->code, $train->number);
-    if ($train2 && $train2->[0]) {
-        $train = $train->merge($train2->[0]);
-    }
-
 
     my $delay;
     if ($train->real_time && $train->due_time) {

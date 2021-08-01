@@ -31,39 +31,40 @@ sub new {
 
     my @messages = ();
 
-    my $data = eval { 
-        for my $i (0..$#ds) { 
-            if ($ds[$i]->isa('RER::DataSource::Transilien')
-                && (grep {/^[AB]$/} @{$gare_from->lines})) {
-                next;
-            }
-            if ($i == 1) {
-                push @messages, "Attention, les horaires affichés sont théoriques. "
-                        . "Renseignez-vous en gare pour vérifier si votre train est "
-                        . "à l'heure et n'est pas supprimé.";
-                push @messages, "Les horaires temps réel sont uniquement disponibles "
-                        . "pour les gares des lignes SNCF du Transilien (C, D, E, H, "
-                        . "J, K, L, N, P, R, U) pour le moment.";
-            }
+    my @data;
 
-            my $data = eval { $ds[$i]->get_next_trains($gare_from); };
-            error $@ if $@;
-            return $data unless $@;
+    # Si la gare choisie dessert au moins une ligne SNCF, alors on peut utiliser
+    # l’API temps réel et le GTFS ensemble.
+    if (grep {!/^[AB]$/} @{$gare_from->lines}) {
+        my $real_time_data = eval { $ds[0]->get_next_trains($gare_from); };
+
+        if ($@) {
+            push @messages, "Attention, les horaires affichés sont théoriques. "
+                . "Renseignez-vous en gare pour vérifier si votre train est "
+                . "à l’heure et n’est pas supprimé.";
+            @data = @{$ds[1]->get_next_trains($gare_from)};
         }
-    };
+        else {
+            @data = @{$ds[1]->complete_train_info($gare_from, $real_time_data)};
+        }
+    }
+    else {
+        push @messages, "Attention, les horaires affichés sont théoriques. "
+            . "Renseignez-vous en gare pour vérifier si votre train est "
+            . "à l’heure et n’est pas supprimé.";
+        push @messages, "Les horaires temps réel sont uniquement disponibles "
+            . "pour les gares des lignes SNCF du Transilien (C, D, E, H, "
+            . "J, K, L, N, P, R, U) pour le moment.";
+        @data = @{$ds[1]->get_next_trains($gare_from)};
+    }
 
-    for (my $i = 0; $i < scalar(@$data); $i++) {
-        my $train = $data->[$i];
+    for (my $i = 0; $i < scalar(@data); $i++) {
+        my $train = $data[$i];
         next if ! defined $train;
 
         my $today = ($train->real_time) ? $train->real_time->ymd('-') 
             : ($train->due_time) ? $train->due_time->ymd('-')
             : `date +'%Y-%m-%d'`;
-
-        my $train2 = $ds[1]->get_info_for_train($today, $gare_from->code, $train->number, $train->code, $train->terminus);
-        if ($train2 && $train2->[0]) {
-            $train = $train->merge($train2->[0]);
-        }
 
         my $terminus_name = ($train->terminus) ? $train->terminus->name : "?";
 
