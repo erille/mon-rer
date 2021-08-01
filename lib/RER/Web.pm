@@ -31,7 +31,7 @@ sub check_code {
 
     $code = uc $code;
 
-    if($code =~ /^(?:[A-Z]{1,3}|NC[1-7])$/) {
+    if ($code =~ /^(?:[A-Z]{1,3}|NC[1-7])$/) {
         return $code;
     }
     else {
@@ -50,12 +50,11 @@ sub stats_add {
         if (config->{'use_redis'}) {
             eval { redis->incr("rer-web.$key"); };
         }
-    } 
+    }
     # else {
     #     $stats{$key} = $value;
     # }
 }
-
 
 # Expires a given train objet cache entry
 sub cache_invalidate {
@@ -81,7 +80,7 @@ sub cache_set_hash {
 
         my $expires = 12;
         my $frozen  = freeze $value;
-        
+
         my $oldval = redis->hget("rer-web.train_obj", $key);
         if (defined $oldval && $frozen ne $oldval) {
             my $old_exp = redis->hget("rer-web.train_obj_exp", $key);
@@ -89,7 +88,7 @@ sub cache_set_hash {
                 $expires = 60 - (time - $old_exp);
             }
         }
-        
+
         redis->multi;
         redis->hset("rer-web.train_obj",     $key, $frozen);
         redis->hset("rer-web.train_obj_exp", $key, time + $expires);
@@ -153,12 +152,12 @@ get '/' => sub {
 
     # positionner le cookie (valable 4 semaines)
     # on y touche dans le code js, donc http_only = 0
-    cookie "station" => check_code($origin_code), 
-        expires => '4w', 
+    cookie "station" => check_code($origin_code),
+        expires => '4w',
         http_only => 0;
 
     template 'rer', {
-    	origin_station => $origin_station,
+        origin_station => $origin_station,
         origin_code => $origin_code,
         dmaj     => RER::Gares::get_last_update(),
         stations => RER::Gares::get_stations(),
@@ -231,7 +230,7 @@ get '/json' => sub {
 
         debug "counters: incoming = $api_incoming, sent = $api_sent, errors = $api_errors";
     }
-    
+
     return $ret;
 };
 

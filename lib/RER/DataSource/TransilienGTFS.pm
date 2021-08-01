@@ -13,7 +13,6 @@ use Dancer ':syntax';
 use DateTime;
 use DBI;
 
-
 sub dsn      { $_[0]->{dsn} = $_[1] || $_[0]->{dsn}; }
 sub username { $_[0]->{username} = $_[1] || $_[0]->{username}; }
 sub password { $_[0]->{password} = $_[1] || $_[0]->{password}; }
@@ -50,10 +49,10 @@ sub new {
 
 
 sub check_ligne {
-	my ($ligne, $agency) = @_;
-	return '' if not defined $ligne;
+    my ($ligne, $agency) = @_;
+    return '' if not defined $ligne;
 
-	my $value = $ligne;
+    my $value = $ligne;
 
     if ($value !~ /^(?:TER|[A-EHJKLNPRU])$/ && defined $agency) {
         for ($agency) {
@@ -65,10 +64,10 @@ sub check_ligne {
         }
     }
 
-	# $value should now usually contain a one-letter value, or
-	# "TER".  However SNCF somehow manages to fuck this up
-	# big time.
-	for ($value) {
+    # $value should now usually contain a one-letter value, or
+    # "TER".  However SNCF somehow manages to fuck this up
+    # big time.
+    for ($value) {
         $value = 'C' if /Gare d'Aus/i;
         $value = 'C' if /Dourdan =>/i;
         $value = 'C' if /Invalides /i; # note the space
@@ -88,10 +87,10 @@ sub check_ligne {
         $value = 'L' if /St Nom la /i; # note the space
         $value = 'R' if /Montargis /i; # note the space
         $value = 'TER' if $_ eq 'Train';
-	}
+    }
 
     return '' if ($value !~ /^(?:TER|[A-EHJKLNPRU])$/);
-	return $value;
+    return $value;
 }
 
 
@@ -226,17 +225,17 @@ sub get_info_for_train {
     # numéros de train changent de parité en cours de route.  Dans ce cas, il
     # faut prendre le numéro de train moins 1 et réessayer.
     # Bien entendu, ne pas faire ça sur les "numéros" de train RATP.
-    if ($train_number =~ /^[0-9]+$/ 
-            && $train_number % 2 == 1 
-            && scalar @$data == 0) {
+    if ($train_number =~ /^[0-9]+$/
+        && $train_number % 2 == 1
+        && scalar @$data == 0) {
         $data = $self->db_run_train_times_for_date($date, $station_code, $train_number - 1);
         $train_number--;
     }
-        
+
     my @ret;
 
     my $row = $data->[0];
-    
+
     if (defined $row)
     {
         my ($stations_mysql, @stations);

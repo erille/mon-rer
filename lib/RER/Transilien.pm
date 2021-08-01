@@ -14,8 +14,6 @@ use List::Util qw(min);
 use Dancer qw(:syntax config debug error);
 
 
-
-
 sub new {
     my %param = @_;
 
@@ -95,7 +93,6 @@ sub new {
             @arr_dessertes = map { $_ ? ($_->name || $_->uic) : "Gare non trouvée" } @{$train->stations};
             $dessertes = join " \x{2022} ", @arr_dessertes;
         }
-
 
         # L'attribut "status" indique si le train est retardé, supprimé...
         my $time_info;

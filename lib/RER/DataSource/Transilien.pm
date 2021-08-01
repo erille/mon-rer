@@ -60,8 +60,8 @@ sub process_xml_trains {
 
     # S'il n'y a qu'un seul train, XML::Simple renvoie un hash au lieu d'un
     # tableau.  Forcer un tableau à un seul élément dans ce cas.
-    my @train_data = (ref $data->{train} eq 'ARRAY') ? @{$data->{train}} : 
-                     (ref $data->{train} eq 'HASH') ? ( $data->{train} ) : ();
+    my @train_data = (ref $data->{train} eq 'ARRAY') ? @{$data->{train}} :
+        (ref $data->{train} eq 'HASH') ? ( $data->{train} ) : ();
 
     foreach my $train_hash (@train_data) {
         my $time_type  = ($train_hash->{date}{mode} eq 'R') ? 'real_time' : 'due_time';
@@ -75,22 +75,22 @@ sub process_xml_trains {
             minute  => $5,
             second  => 0,
             time_zone => 'Europe/Paris'
-        );
+            );
 
         my $terminus;
 
         if (exists $train_hash->{term}) {
             $terminus = RER::Gares::find(uic => $train_hash->{term});
             $terminus ||= RER::Gare->new(
-                            uic =>  $train_hash->{term},
-                            code => '',
-                            name => "Gare " . $train_hash->{term});
+                uic =>  $train_hash->{term},
+                code => '',
+                name => "Gare " . $train_hash->{term});
         }
         else {
             $terminus = RER::Gare->new(
-                   uic => 0,
-                   code => '',
-                   name => "Gare non référencée");
+                uic => 0,
+                code => '',
+                name => "Gare non référencée");
         }
 
         my $train_etat = 'N';
@@ -117,7 +117,7 @@ sub process_xml_trains {
             $time_type => $time_value,
             status     => $train_etat,
             terminus   => $terminus,
-        );
+            );
     }
 
     return \@trains;
@@ -144,18 +144,18 @@ sub password { $_[0]->{password} = $_[1] || $_[0]->{password}; }
 
 
 sub new {
-	my ($self, %args) = @_;
+    my ($self, %args) = @_;
 
-	$self = {};
+    $self = {};
 
-	return undef if ! exists $args{username};
-	return undef if ! exists $args{password};
+    return undef if ! exists $args{username};
+    return undef if ! exists $args{password};
 
-	$self->{url}  = $args{url} || 'https://api.transilien.com';
-	$self->{username} = $args{username};
-	$self->{password} = $args{password};
+    $self->{url}  = $args{url} || 'https://api.transilien.com';
+    $self->{username} = $args{username};
+    $self->{password} = $args{password};
 
-	return bless $self, __PACKAGE__;
+    return bless $self, __PACKAGE__;
 }
 
 

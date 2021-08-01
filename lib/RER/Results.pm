@@ -13,7 +13,7 @@ sub new
 {
     my $self = shift;
     my %param = @_;
-    my %obj = ( 
+    my %obj = (
         from =>     $param{from},
         trains =>   $param{trains},
         messages => $param{messages}
@@ -28,9 +28,9 @@ sub messages { return $_[0]->{messages}; }
 sub TO_JSON
 {
     my ($self) = @_;
-    return { 
-        lines => $self->{from}->lines, 
-        trains => $self->{trains}, 
+    return {
+        lines => $self->{from}->lines,
+        trains => $self->{trains},
         info => $self->{messages},
     };
 }
@@ -46,7 +46,7 @@ sub merge {
     # mais à terme on pourrait vouloir fusionner deux résultats de "gares"
     # différentes (ex. Ermont-Eaubonne qui a 2 "gares")
 
-    
+
     # Fusionner les trains
     my @new_trains;
     {
@@ -63,7 +63,7 @@ sub merge {
         }
     }
 
-    
+
 
     # Fusionner les messages
     my @new_messages = @{$self->{messages}};
