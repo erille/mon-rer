@@ -29,9 +29,9 @@ sub TO_JSON
 {
     my ($self) = @_;
     return {
-        lines => $self->{from}->lines,
-        trains => $self->{trains},
-        info => $self->{messages},
+        from     => $self->{from},
+        trains   => $self->{trains},
+        messages => $self->{messages},
     };
 }
 

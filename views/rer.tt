@@ -155,7 +155,7 @@
               var text = obj.responseText;
               var info = JSON.parse(text);
               var trains = info.trains;
-              var messages = info.info;
+              var messages = info.messages;
 
               for (var i = 0; i < trains.length; i++) {
                   var train = trains[i];
@@ -241,7 +241,7 @@
 
               dataRetryCount = 0;
 
-              init_filtres(info.lines);
+              init_filtres(info.from.lines);
           }
           else if (obj.readyState == 4 && obj.status == 503) {
               var err = JSON.parse(obj.responseText);

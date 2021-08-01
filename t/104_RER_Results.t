@@ -86,9 +86,9 @@ is_deeply ($r1->trains(), \@r1_trains, 'trains method works');
 is_deeply ($r1->messages(), \@r1_messages, 'messages method works');
 
 is_deeply ($r1->TO_JSON(), {
-    lines => [ qw(C D) ],
+    from => { code => 'JY', uic => 8754524, name => 'Juvisy', lines => [ qw(C D) ] },
     trains => \@r1_trains,
-    info =>  \@r1_messages,
+    messages => \@r1_messages,
 }, 'TO_JSON method works');
 
 
