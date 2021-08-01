@@ -6,6 +6,7 @@ use RER::Gare;
 use RER::Gares;
 use RER::Train;
 
+use DateTime::Format::Strptime;
 use HTTP::Request;
 use LWP::UserAgent;
 use XML::LibXML::Simple;
@@ -48,7 +49,26 @@ sub do_request {
     return $response->decoded_content;
 }
 
+=head2 parse_date_time
 
+Analyse une chaîne contenant un horodatage dans le format renvoyé par l’API
+Temps réel (JJ/MM/AAAA hh:mm) et renvoie un objet DateTime.
+
+=cut
+sub parse_date_time {
+    my ($string) = @_;
+
+    state $parser = DateTime::Format::Strptime->new(
+        pattern => '%d/%m/%Y %H:%M',
+        time_zone => 'Europe/Paris',
+        on_error => sub {
+            my ($string, $errmsg) = @_;
+            die "$string: $errmsg\n";
+        }
+    );
+
+    return $parser->parse_datetime($string);
+}
 
 sub process_xml_trains {
     my ($self, $xml) = @_;
@@ -65,32 +85,11 @@ sub process_xml_trains {
 
     foreach my $train_hash (@train_data) {
         my $time_type  = ($train_hash->{date}{mode} eq 'R') ? 'real_time' : 'due_time';
-
-        $train_hash->{date}{content} =~ m#^([\d]{2})/([\d]{2})/([\d]{4}) ([\d]{2}):([\d]{2})$#;
-        my $time_value = DateTime->new(
-            year    => $3,
-            month   => $2,
-            day     => $1,
-            hour    => $4,
-            minute  => $5,
-            second  => 0,
-            time_zone => 'Europe/Paris'
-            );
-
+        my $time_value = parse_date_time($train_hash->{date}{content});
         my $terminus;
 
         if (exists $train_hash->{term}) {
             $terminus = RER::Gares::find(uic => $train_hash->{term});
-            $terminus ||= RER::Gare->new(
-                uic =>  $train_hash->{term},
-                code => '',
-                name => "Gare " . $train_hash->{term});
-        }
-        else {
-            $terminus = RER::Gare->new(
-                uic => 0,
-                code => '',
-                name => "Gare non référencée");
         }
 
         my $train_etat = 'N';
