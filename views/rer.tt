@@ -111,12 +111,12 @@
 
       function die(str) {
           document.getElementById("error").style.display = 'block';
-          document.getElementById("errormsg").innerHTML = str;
+          document.getElementById("errormsg").textContent = str;
       }
 
       function undie() {
           document.getElementById("error").style.display = 'none';
-          document.getElementById("errormsg").innerHTML = '&nbsp;';
+          document.getElementById("errormsg").textContent = '&nbsp;';
       }
 
 
@@ -129,7 +129,7 @@
           h = (h < 10) ? "0" + h : h;
           m = (m < 10) ? "0" + m : m;
 
-          n.innerHTML = h + ":" + m;
+          n.textContent = h + ":" + m;
       }
 
       /* returns 0 if different, 1 if equal */
@@ -186,7 +186,7 @@
                   table_set_innerhtml(i, '3a', dest);
                   if (i < 2) {
                       var p = table_get_node(i, '3b').childNodes[0];
-                      p.innerHTML = train.dessertes;
+                      p.textContent = train.dessertes;
                       if (origTrains[i] != train.numero) {
                           p.style.bottom = "0.1em";
                       }
@@ -220,7 +220,7 @@
 
 
               var lmsg = document.getElementById('conteneurmessages');
-              lmsg.innerHTML = '';
+              lmsg.textContent = '';
 
               /* on met le premier élément deux fois pour donner l'illusion
                * d'un "rouleau" qui scroll
@@ -290,7 +290,7 @@
               if (dataRefreshTimer) { window.clearTimeout(dataRefreshTimer); }
 
               var lmsg = document.getElementById('conteneurmessages');
-              lmsg.innerHTML = '';
+              lmsg.textContent = '';
 
               for (var i = 0; i < 6; i++) {
                   table_get_node(i).className = 'train';
@@ -454,7 +454,7 @@
       function msg_scroll() {
           /* scrolls obj */
           var pNode = document.getElementById('conteneurmessages');
-          if (pNode.innerHTML === "")
+          if (pNode.textContent === "")
               return;
 
           var scroll = 0;
@@ -498,7 +498,7 @@
           var extraOpts = document.getElementById('more_options');
           var extraOptsButton = document.getElementById('more_options_button');
 
-          extraOptsButton.childNodes[0].innerHTML = b ? "\ue5ce" : "\ue5cf";
+          extraOptsButton.childNodes[0].textContent = b ? "\ue5ce" : "\ue5cf";
           extraOptsButton.onclick = function(b) {
               return function() { show_more_options(!b); }
           }(b);
