@@ -138,27 +138,33 @@ hook 'before' => sub {
 
 get '/' => sub {
     # rediriger (302) vers l'url /?s=<blah> si l'user a sauvegardé sa dernière gare
-    if (cookie("station") && ! defined params->{'s'})
-    {
-        return redirect uri_for("/", { s => cookie('station') } );
+    # (et sinon on redirige vers la gare par défaut)
+    if (! defined params->{'s'}) {
+        if (my $station_code = cookie('station')) {
+            return redirect uri_for('/', {s => $station_code});
+        }
+        else {
+            return redirect uri_for('/', {s => 'EVC'})
+        }
     }
 
-    # sinon, examiner le header http
-    my $origin_code = check_code(params->{'s'});
-    $origin_code ||= 'EVC';
-
-    my $origin_station = RER::Gares::find(code => $origin_code)->name;
-    utf8::decode($origin_station);
+    # trouver la gare dans la base de données
+    my $station = RER::Gares::find(code => check_code(params->{'s'}));
+    if (!defined $station) {
+        status 'not_found';
+        send_file '404.html';
+        # l’exécution de la route s’arrête ici
+    }
 
     # positionner le cookie (valable 4 semaines)
     # on y touche dans le code js, donc http_only = 0
-    cookie "station" => check_code($origin_code),
+    cookie "station" => check_code($station->code),
         expires => '4w',
         http_only => 0;
 
     template 'rer', {
-        origin_station => $origin_station,
-        origin_code => $origin_code,
+        origin_station => $station->name,
+        origin_code    => $station->code,
         dmaj     => RER::Gares::get_last_update(),
         stations => RER::Gares::get_stations(),
     };
@@ -171,7 +177,13 @@ get '/json' => sub {
 
     stats_add 'api_incoming';
 
-    my $code = check_code(params->{'s'}) || 'EVC';
+    my $station = RER::Gares::find(code => check_code(params->{'s'}));
+    if (!defined $station) {
+        status 404;
+        return { error => 'Gare non trouvée' };
+    }
+
+    my $code = $station->code;
     my $line = params->{'l'};
 
     my $ds  = RER::DataSource::Transilien->new(
@@ -184,7 +196,7 @@ get '/json' => sub {
         password	=> config->{'db_password'});
 
 
-    my $ret = cache_get_hash($code);
+    my $ret = cache_get_hash($station->code);
 
     if (! defined $ret) {
 
@@ -193,14 +205,14 @@ get '/json' => sub {
         my $data;
         eval {
             $data = RER::Transilien::new(
-                from => $code,
+                from => $station->code,
                 ds   => [ $ds, $ds2 ],
             );
         };
         if (my $err = $@) {
             status 503;
             stats_add 'api_errors';
-            cache_invalidate $code;
+            cache_invalidate $station->code;
 
             # log error
             error "$code: $err";
