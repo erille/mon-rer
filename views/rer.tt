@@ -589,7 +589,7 @@
       <div class="train" id="t<% i %>">
         <div class="force-height"></div>
         <div class="group group-left">
-          <span class="mission-train" id="t<% i %>c1a">&nbsp;</span>
+          <span class="mission-train" id="t<% i %>c1a">&nbsp;</span><br class="after-mission-train">
           <span class="numero-train" id="t<% i %>c1b">&nbsp;</span>
           <span class="retard-train" id="t<% i %>c1c">&nbsp;</span><br class="after-retard-train">
         </div>
