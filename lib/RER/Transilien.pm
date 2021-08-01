@@ -10,7 +10,6 @@ use 5.010;
 use JSON;
 use RER::Results;
 use RER::Gares;
-use List::Util qw(min);
 use Dancer qw(:syntax config debug error);
 
 

@@ -14,7 +14,6 @@ use RER::Results;
 use RER::Gares;
 use RER::DataSource::Transilien;
 use RER::DataSource::TransilienGTFS;
-use Data::Dumper;
 use Storable qw(dclone freeze thaw);
 
 our $VERSION = '0.1';
