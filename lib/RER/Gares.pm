@@ -20,17 +20,19 @@ sub get_last_update {
     $sth->execute;
     my $result = $sth->fetchall_arrayref([0]);
 
-    my $strp = DateTime::Format::Strptime->new(
-        pattern => '%e %B %Y',
-        locale  => 'fr_FR',
-    );
+    if (defined $result && defined $result->[0] && defined $result->[0][0]) {
+        my $strp = DateTime::Format::Strptime->new(
+            pattern => '%e %B %Y',
+            locale  => 'fr_FR',
+        );
 
-    my $dt = DateTime->from_epoch(
-        epoch => $result->[0][0],
-        formatter => $strp,
-    );
+        my $dt = DateTime->from_epoch(
+            epoch => $result->[0][0],
+            formatter => $strp,
+        );
 
-    return $strp->format_datetime($dt);
+        return $strp->format_datetime($dt);
+    }
 }
 
 
