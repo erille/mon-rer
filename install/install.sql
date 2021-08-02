@@ -6,6 +6,7 @@ BEGIN;
 \i install/create-rer-web-tables.sql
 \i install/create-rer-web-views.sql
 \i install/create-cache-tables.sql
+\i install/create-stats-tables.sql
 \i install/import-gtfs-data.sql
 \i install/import-rer-web-data.sql
 \i install/index-gtfs-tables.sql

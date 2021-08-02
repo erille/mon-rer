@@ -22,7 +22,6 @@ You will need the following Perl modules:
  * DBD::Pg
  * Dancer
  * Dancer::Plugin::Database
- * Dancer::Plugin::Redis
  * LWP::Protocol::https
  * JSON::XS
  * RRD::Simple

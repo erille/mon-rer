@@ -37,16 +37,6 @@ plugins:
     database: "sncf_gtfs"
     username: "rer-web"
     password: "secret"
-  Redis:
-    # can't use UNIX domain sockets here
-    server: '127.0.0.1:6379'
-    debug: 0
-    encoding: utf8
-    reconnect: 60
-    # optional
-    password: supersecret
-
-use_redis: 1
 
 # SNCF API settings
 

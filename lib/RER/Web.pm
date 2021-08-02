@@ -8,7 +8,6 @@ use utf8;
 
 use Dancer ':syntax';
 use Dancer::Plugin::Database;
-use Dancer::Plugin::Redis;
 
 use RER::Cache;
 use RER::Transilien;
@@ -40,18 +39,13 @@ sub check_code {
 
 
 sub stats_add {
-    my ($key, $value) = @_;
+    my ($event, $extra_data) = @_;
 
-    return unless $key;
+    my $extra_data_json =
+        JSON->new->allow_nonref(1)->convert_blessed(1)->encode($extra_data);
 
-    if (!defined ($value)) {
-        if (config->{'use_redis'}) {
-            eval { redis->incr("rer-web.$key"); };
-        }
-    }
-    # else {
-    #     $stats{$key} = $value;
-    # }
+    my $sth = database->prepare('CALL stats_add(?, ?)');
+    $sth->execute($event, $extra_data_json);
 }
 
 # Expires a given train objet cache entry
@@ -175,14 +169,6 @@ get '/json' => sub {
     # Limiter à 6 le nombre de trains renvoyés
     if (scalar @{$ret->{trains}} > 6) {
         @{$ret->{trains}} = @{$ret->{trains}}[0..5];
-    }
-
-    if (config->{'use_redis'}) {
-        my $api_incoming = redis->get("rer-web.api_incoming") || 0;
-        my $api_sent     = redis->get("rer-web.api_sent") || 0;
-        my $api_errors   = redis->get("rer-web.api_errors") || 0;
-
-        debug "counters: incoming = $api_incoming, sent = $api_sent, errors = $api_errors";
     }
 
     return $ret;

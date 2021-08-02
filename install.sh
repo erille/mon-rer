@@ -153,6 +153,8 @@ REVOKE CREATE ON DATABASE "$db_name" FROM "$db_updater_role";
 
 GRANT USAGE ON SCHEMA raw, public TO "$db_normal_role";
 
+GRANT INSERT ON stat_events TO "$db_normal_role";
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON cache TO "$db_normal_role";
 EOF
 
