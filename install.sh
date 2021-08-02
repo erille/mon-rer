@@ -1,27 +1,34 @@
 #!/bin/sh
 
-BLUE=`tput setaf 4`
-BOLD=`tput bold`
-NORMAL=`tput sgr0`
-
-echo_status() { echo "${BOLD}${BLUE} :: ${NORMAL}${BOLD}$@${NORMAL}"; }
-
 # Make sure this doesn't break on anything else than Linux
 UNAME=`uname`
-case "$UNAME" in 
-	FreeBSD)
-		WGET="fetch -o export-TN-GTFS-LAST.zip"
-		STAT="stat -f %m"
-		;;
-	Linux)
-		WGET="wget -O export-TN-GTFS-LAST.zip -N"
-		STAT="stat -c %Y"
-		;;
-	*)
-		WGET="wget -O export-TN-GTFS-LAST.zip -N"
-		;;
+case "$UNAME" in
+        FreeBSD)
+                WGET="fetch -o export-TN-GTFS-LAST.zip"
+                STAT="stat -f %m"
+
+                BLUE=`tput AF 4`
+                BOLD=`tput md`
+                NORMAL=`tput me`
+                ;;
+        Linux)
+                WGET="wget -O export-TN-GTFS-LAST.zip -N"
+                STAT="stat -c %Y"
+
+                BLUE=`tput setaf 4`
+                BOLD=`tput bold`
+                NORMAL=`tput sgr0`
+                ;;
+        *)
+                WGET="wget -O export-TN-GTFS-LAST.zip -N"
+
+                BLUE=""
+                BOLD=""
+                NORMAL=""
+                ;;
 esac
 
+echo_status() { echo "${BOLD}${BLUE} :: ${NORMAL}${BOLD}$@${NORMAL}"; }
 
 cat <<EOF
 DATABASE INITIALIZATION/UPDATE SCRIPT FOR RER-WEB
