@@ -1,34 +1,6 @@
 #!/bin/sh
 
-# Make sure this doesn't break on anything else than Linux
-UNAME=`uname`
-case "$UNAME" in
-        FreeBSD)
-                WGET="fetch -o input/sncf_gtfs/export-TN-GTFS-LAST.zip"
-                STAT="stat -f %m"
-
-                BLUE=`tput AF 4`
-                BOLD=`tput md`
-                NORMAL=`tput me`
-                ;;
-        Linux)
-                WGET="wget -O input/sncf_gtfs/export-TN-GTFS-LAST.zip -N"
-                STAT="stat -c %Y"
-
-                BLUE=`tput setaf 4`
-                BOLD=`tput bold`
-                NORMAL=`tput sgr0`
-                ;;
-        *)
-                WGET="wget -O input/sncf_gtfs/export-TN-GTFS-LAST.zip -N"
-
-                BLUE=""
-                BOLD=""
-                NORMAL=""
-                ;;
-esac
-
-echo_status() { echo "${BOLD}${BLUE} :: ${NORMAL}${BOLD}$@${NORMAL}"; }
+. ./install/sh/common.sh
 
 usage() {
     echo "Usage: $0 [options]"
@@ -106,19 +78,8 @@ fi
 #
 # Obtain GTFS data
 #
-echo_status "Obtaining SNCF GTFS data"
-mkdir -p input/sncf_gtfs
-$WGET 'https://eu.ftp.opendatasoft.com/sncf/gtfs/gtfs-nouveau-format.zip' || exit 1
-LAST_UPDATE=`$STAT input/sncf_gtfs/export-TN-GTFS-LAST.zip`
-
-#
-# Unzip
-#
-echo_status "Unzipping SNCF GTFS data"
-rm -f input/sncf_gtfs/*.txt
-unzip -jd input/sncf_gtfs 'input/sncf_gtfs/export-TN-GTFS-LAST.zip' || exit 1
-
-echo_status "Setting up and populating database"
+get_and_extract_gtfs
+LAST_UPDATE=`$STAT "${GTFS_PATH}"`
 
 psql -X --quiet -f - -U "$db_superuser" <<-EOF
 CREATE DATABASE "$db_name";
@@ -157,9 +118,6 @@ GRANT INSERT ON stat_events TO "$db_normal_role";
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON cache TO "$db_normal_role";
 EOF
-
-# TODO: write an install/update.sql script that also temporarily drops the
-# constraints before reloading everything
 
 if [ $? -eq 0 ]; then
     echo_status "You're now ready!"
