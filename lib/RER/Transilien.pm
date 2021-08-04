@@ -165,12 +165,9 @@ sub train_to_json
         $dessertes = 'Desserte indisponible';
     }
 
-    # HACK: les trains du RER D ont des numéros de la forme 123456-123457
-    # car ces trains changent de « parité » entre Châtelet–Les Halles et
-    # Paris Gare de Lyon.
     return {
         mission => $train->code,
-        numero  => substr($train->number, 0, 6),
+        numero  => $train->number,
         time    => format_time_info($train),
         destination => $terminus_name,
         dessertes   => $dessertes,

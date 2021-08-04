@@ -48,6 +48,7 @@ WITH dates(date) AS (
          today_trips.trip_headsign AS "train_name",
          today_trips.trip_short_name AS "train_number",
          today_trips.date + times.due_time AS "due_time",
+         stop_id_station_codes.pa_id AS "stop_pa_id",
          times.stop_id,
          times.stop_sequence
     FROM today_trips
@@ -57,8 +58,8 @@ WITH dates(date) AS (
                   stop_times.stop_id,
                   stop_times.stop_sequence
              FROM raw.stop_times
-            WHERE stop_times.trip_id = today_trips.trip_id)
-                        AS times ON TRUE
+            WHERE stop_times.trip_id = today_trips.trip_id
+         ) AS times ON TRUE
          JOIN raw.routes ON (today_trips.route_id = routes.route_id)
          JOIN raw.stops ON (times.stop_id = stops.stop_id)
          JOIN stop_id_station_codes ON (stops.stop_id = stop_id_station_codes.stop_id)
@@ -69,30 +70,39 @@ WITH dates(date) AS (
   SELECT timetable.line,
          timetable.train_name,
          timetable.train_number,
+         extra_info.direction,
          timetable.due_time,
-         next_stops.next_stops,
-         next_stops.destination
+         extra_info.next_stops,
+         extra_info.destination
     FROM timetable
          JOIN LATERAL (
-           SELECT DISTINCT array_agg(E'\x1F0\x1F' || stop_id_station_names.name)
+           SELECT DISTINCT array_agg(E'\x1F0\x1F' || names.name)
                              OVER w
                              AS next_stops,
-                           last_value(E'\x1F0\x1F' || stop_id_station_names.name)
+                           last_value(E'\x1F0\x1F' || names.name)
                              OVER w
-                             AS destination
+                             AS destination,
+                           train_direction(line,
+                                           stop_pa_id,
+                                           first_value(stop_id_pa_ids.pa_id) OVER w)
+                             AS direction
              FROM raw.stop_times
-                  LEFT JOIN stop_id_station_names
-                      ON (stop_times.stop_id = stop_id_station_names.stop_id)
+                  LEFT JOIN stop_id_pa_ids
+                      ON (stop_times.stop_id = stop_id_pa_ids.stop_id)
+                  LEFT JOIN station_names AS names
+                      ON (stop_id_pa_ids.pa_id = names.pa_id)
             WHERE stop_times.trip_id = timetable.trip_id
               AND stop_times.stop_sequence > timetable.stop_sequence
            WINDOW w AS (ORDER BY stop_sequence
                         ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
             LIMIT 1
-         ) AS next_stops ON TRUE
+         ) AS extra_info ON TRUE
 )
 SELECT info.line,
        info.train_name,
-       train_numbers_set.train_number,
+       train_number_from_direction(info.line,
+                                   train_numbers_set.train_number,
+                                   info.direction) AS "train_number",
        info.due_time,
        info.next_stops,
        info.destination

@@ -32,7 +32,9 @@ CREATE TABLE station_names (
 
 CREATE TABLE station_lines (
   pa_id INTEGER NOT NULL,
-  line TEXT NOT NULL
+  line TEXT NOT NULL,
+  line_index INTEGER,
+  increasing_index_is_outbound BOOL
 );
 
 /*

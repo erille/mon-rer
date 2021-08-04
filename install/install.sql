@@ -11,6 +11,7 @@ BEGIN;
 \i install/import-rer-web-data.sql
 \i install/index-gtfs-tables.sql
 \i install/index-rer-web-tables.sql
+\i install/func-basic-functions.sql
 \i install/func-today-services.sql
 \i install/func-autocomplete-stations.sql
 \i install/func-find-station-by-key.sql

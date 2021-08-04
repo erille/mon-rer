@@ -30,6 +30,14 @@ sub merge {
     foreach my $attr (@attributes) {
         $attributes{$attr} = $self->{$attr} // $obj->{$attr};
     }
+
+    # Dans le cas particulier où l’objet de gauche a un numéro de train
+    # pair-impair et l’objet de droite a un numéro de train qui correspond
+    # à l’un ou à l’autre, on prend celui de droite.
+    if ($self->{number} =~ /^([0-9]{5})[02468]-\1[13579]$/
+        && defined $obj->{number}
+        && $obj->{number} =~ /^[0-9]{6}$/) {
+        $attributes{number} = $obj->{number};
     }
 
     return __PACKAGE__->new(%attributes);
