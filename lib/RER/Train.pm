@@ -7,6 +7,9 @@ use warnings;
 use utf8;
 use 5.010;
 
+our @attributes = qw(number code platform status line
+                     real_time due_time terminus stations);
+
 sub number    { $_[0]->{number} = $_[1] || $_[0]->{number}; }
 sub code      { $_[0]->{code} = $_[1] || $_[0]->{code}; }
 sub platform  { $_[0]->{platform} = $_[1] || $_[0]->{platform}; }
@@ -22,9 +25,11 @@ sub merge {
 
     my %attributes;
 
-    foreach my $attr (qw(number code platform status line
-                         real_time due_time terminus stations)) {
-        $attributes{$attr} = $self->{$attr} || $obj->{$attr};
+    # Pour chaque attribut, on prend celui de gauche s’il est défini,
+    # sinon celui de droite.
+    foreach my $attr (@attributes) {
+        $attributes{$attr} = $self->{$attr} // $obj->{$attr};
+    }
     }
 
     return __PACKAGE__->new(%attributes);
@@ -35,15 +40,9 @@ sub new {
 
     $self = {};
 
-    $self->{number}     = $args{number};
-    $self->{code}       = $args{code};
-    $self->{platform}   = $args{platform};
-    $self->{status}     = $args{status};
-    $self->{line}       = $args{line};
-    $self->{real_time}  = $args{real_time};
-    $self->{due_time}   = $args{due_time};
-    $self->{terminus}   = $args{terminus};
-    $self->{stations}   = $args{stations};
+    foreach my $attr (@attributes) {
+        $self->{$attr} = $args{$attr};
+    }
 
     return bless $self, __PACKAGE__;
 }
