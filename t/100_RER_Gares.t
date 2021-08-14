@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 23;
+use Test::More tests => 22;
 
 use FindBin;
 use Cwd qw(realpath);
@@ -61,7 +61,6 @@ $list = RER::Gares::get_autocomp('clx');
 
 is(scalar(@$list), 1, 'Autocomp for "clx" contains 1 item');
 
-isa_ok($list->[0], 'RER::Gare');
 is($list->[0]->{name}, 'Châtelet – Les Halles');
 
 # done_testing;
