@@ -5,6 +5,21 @@
 
 DROP FUNCTION IF EXISTS autocomplete_stations;
 
+CREATE OR REPLACE FUNCTION prefix_phraseto_tsquery(query TEXT)
+  RETURNS tsquery
+  LANGUAGE SQL
+AS $$
+  WITH tsq(q) AS (
+    SELECT NULLIF(phraseto_tsquery('fr_unaccent', query)::text, '')
+  )
+  SELECT CASE
+         WHEN tsq.q IS NULL THEN NULL
+         ELSE to_tsquery(tsq.q::text || ':*')
+         END
+  FROM tsq;
+$$
+IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION autocomplete_stations(query TEXT)
   RETURNS TABLE(codes TEXT[], name TEXT, lines TEXT[],
                 matched_name TEXT,
@@ -12,11 +27,7 @@ CREATE OR REPLACE FUNCTION autocomplete_stations(query TEXT)
   LANGUAGE SQL
 AS $$
 WITH tsq(tsq_name, tsq_code) AS (
-  SELECT to_tsquery('fr_unaccent',
-                    array_to_string(
-                      regexp_split_to_array(unaccent(btrim(query)), E'\\s'),
-                      ' <-> ')
-                      || ':*'),
+  SELECT prefix_phraseto_tsquery(query),
          phraseto_tsquery('simple', query)
 ), results AS (
   SELECT station_codes_lines.codes,
@@ -47,3 +58,4 @@ WITH tsq(tsq_name, tsq_code) AS (
   ORDER BY 50*score2+score DESC
   LIMIT 10;
 $$
+STABLE;
