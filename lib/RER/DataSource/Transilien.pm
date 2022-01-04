@@ -6,6 +6,7 @@ use RER::Gare;
 use RER::Gares;
 use RER::Train;
 
+use DateTime::Format::Strptime;
 use HTTP::Request;
 use LWP::UserAgent;
 use XML::LibXML::Simple;
@@ -48,7 +49,26 @@ sub do_request {
     return $response->decoded_content;
 }
 
+=head2 parse_date_time
 
+Analyse une chaîne contenant un horodatage dans le format renvoyé par l’API
+Temps réel (JJ/MM/AAAA hh:mm) et renvoie un objet DateTime.
+
+=cut
+sub parse_date_time {
+    my ($string) = @_;
+
+    state $parser = DateTime::Format::Strptime->new(
+        pattern => '%d/%m/%Y %H:%M',
+        time_zone => 'Europe/Paris',
+        on_error => sub {
+            my ($string, $errmsg) = @_;
+            die "$string: $errmsg\n";
+        }
+    );
+
+    return $parser->parse_datetime($string);
+}
 
 sub process_xml_trains {
     my ($self, $xml) = @_;
@@ -60,37 +80,16 @@ sub process_xml_trains {
 
     # S'il n'y a qu'un seul train, XML::Simple renvoie un hash au lieu d'un
     # tableau.  Forcer un tableau à un seul élément dans ce cas.
-    my @train_data = (ref $data->{train} eq 'ARRAY') ? @{$data->{train}} : 
-                     (ref $data->{train} eq 'HASH') ? ( $data->{train} ) : ();
+    my @train_data = (ref $data->{train} eq 'ARRAY') ? @{$data->{train}} :
+        (ref $data->{train} eq 'HASH') ? ( $data->{train} ) : ();
 
     foreach my $train_hash (@train_data) {
         my $time_type  = ($train_hash->{date}{mode} eq 'R') ? 'real_time' : 'due_time';
-
-        $train_hash->{date}{content} =~ m#^([\d]{2})/([\d]{2})/([\d]{4}) ([\d]{2}):([\d]{2})$#;
-        my $time_value = DateTime->new(
-            year    => $3,
-            month   => $2,
-            day     => $1,
-            hour    => $4,
-            minute  => $5,
-            second  => 0,
-            time_zone => 'Europe/Paris'
-        );
-
+        my $time_value = parse_date_time($train_hash->{date}{content});
         my $terminus;
 
         if (exists $train_hash->{term}) {
             $terminus = RER::Gares::find(uic => $train_hash->{term});
-            $terminus ||= RER::Gare->new(
-                            uic =>  $train_hash->{term},
-                            code => '',
-                            name => "Gare " . $train_hash->{term});
-        }
-        else {
-            $terminus = RER::Gare->new(
-                   uic => 0,
-                   code => '',
-                   name => "Gare non référencée");
         }
 
         my $train_etat = 'N';
@@ -98,26 +97,18 @@ sub process_xml_trains {
         $train_etat = 'S' if $train_etat eq 'Supprimé';
         $train_etat = 'R' if $train_etat eq 'Retardé';   # not sure if this works
 
-        # train numbers can be pairs (e.g. 123456-123457). in this case keep the
-        # first one only
-        
-        my $train_num = $train_hash->{num};
-        if ($train_num =~ /^(\d+)-\d+$/) {
-            $train_num = $1;
-        }
-
         # if the train number equals the previous one, skip the entry
-        if (scalar(@trains) >= 1 && $trains[-1]->number eq $train_num) {
+        if (scalar(@trains) >= 1 && $trains[-1]->number eq $train_hash->{num}) {
             next;
         }
 
         push @trains, RER::Train->new(
-            number     => $train_num,
+            number     => $train_hash->{num},
             code       => $train_hash->{miss},
             $time_type => $time_value,
             status     => $train_etat,
             terminus   => $terminus,
-        );
+            );
     }
 
     return \@trains;
@@ -144,18 +135,18 @@ sub password { $_[0]->{password} = $_[1] || $_[0]->{password}; }
 
 
 sub new {
-	my ($self, %args) = @_;
+    my ($self, %args) = @_;
 
-	$self = {};
+    $self = {};
 
-	return undef if ! exists $args{username};
-	return undef if ! exists $args{password};
+    return undef if ! exists $args{username};
+    return undef if ! exists $args{password};
 
-	$self->{url}  = $args{url} || 'https://api.transilien.com';
-	$self->{username} = $args{username};
-	$self->{password} = $args{password};
+    $self->{url}  = $args{url} || 'https://api.transilien.com';
+    $self->{username} = $args{username};
+    $self->{password} = $args{password};
 
-	return bless $self, __PACKAGE__;
+    return bless $self, __PACKAGE__;
 }
 
 

@@ -1,0 +1,9 @@
+TRUNCATE TABLE raw.agency;
+TRUNCATE TABLE raw.calendar;
+TRUNCATE TABLE raw.calendar_dates;
+TRUNCATE TABLE raw.routes;
+TRUNCATE TABLE raw.stop_extensions;
+TRUNCATE TABLE raw.stops;
+TRUNCATE TABLE raw.stop_times;
+TRUNCATE TABLE raw.transfers;
+TRUNCATE TABLE raw.trips;

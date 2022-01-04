@@ -17,10 +17,11 @@ You will need the following Perl modules:
 
  * DateTime
  * DateTime::Format::Strptime
+ * DateTime::Format::Pg
  * DBI
- * DBD::mysql
+ * DBD::Pg
  * Dancer
- * Dancer::Plugin::Redis
+ * Dancer::Plugin::Database
  * LWP::Protocol::https
  * JSON::XS
  * RRD::Simple
@@ -29,33 +30,29 @@ You will need the following Perl modules:
  * XML::Simple
  * YAML
 
-You will also need `git` for the `install.sh` script to work.
-
-Any kind of DBMS will do; however, you will need to load SNCF's rather massive
-GTFS data into it and therefore, I recommend MySQL, PostgreSQL or anything
-somewhat beefy.  I have tested this with MySQL without any problems.
+You will also need PostgreSQL. No other DBMSes are supported. Sorry, but I’ve
+had too many issues with MySQL so I can’t recommend anything but PostgreSQL.
 
 # Installing
 
 Copy `config.yml.example` to `config.yml` and edit it to suit your needs.
 
-Log into an account with administrative access on MySQL and create the database
-holding the data:
+Log into an account with superuser access on PostgreSQL and create two
+database roles.  The first one is used for normal operation and the second one
+is used by update scripts:
 
-	mysql> CREATE DATABASE sncf_gtfs CHARSET utf8 COLLATE utf8_general_ci;
+    postgres=# CREATE ROLE "rer_web" LOGIN PASSWORD 'secret';
+    postgres=# CREATE ROLE "rer_web_update" LOGIN PASSWORD 'secret';
 
-Create a user which only has the necessary privileges.  This is optional, but
-highly recommended (not to mention a good security practice):
+Finally, run `sh ./install.sh`. This install script will create a database,
+download the [GTFS-formatted timetable data] [5] from SNCF's website, import
+it into the database, import a custom-made station database, and grant the
+necessary privileges to the previously-defined users.
 
-	mysql> CREATE USER 'rer-web' IDENTIFIED BY 'some-password';
-	mysql> GRANT SELECT, EXECUTE ON sncf_gtfs.* TO 'rer-web'@'localhost';
+**Note**: if you use different user accounts or wish a different database
+name, type `sh ./install.sh -h` to see how to alter these options.
 
-Finally, run `sh ./install.sh`. This install script will download a GTFS
-parsing script, download the [GTFS-formatted timetable data] [5] from SNCF's
-website, import it into the database, and import a custom-made station database
-as well.
-
-**Note**: SNCF update their data once a week. In order to reimport the data,
+**Note 2**: SNCF update their data once a week. In order to reimport the data,
 simply run `./install.sh` again.
 
 # Deployment

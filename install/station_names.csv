@@ -1,0 +1,476 @@
+pa_id,name
+69,Ermont Halte
+520,Lozère
+312,Chartrettes
+522,Orsay-Ville
+193,Ponthierry – Pringy
+462,Chauffry
+296,Vaucresson
+60,Limay
+336,Longueville
+81,Meulan – Hardricourt
+407,Dreux
+247,Bois-le-Roi
+368,Longjumeau
+101,Buno – Gironville
+493,Bussy-Saint-Georges
+32,Aulnay-sous-Bois
+294,Vauboyen
+153,Montigny-sur-Loing
+526,Courcelle-sur-Yvette
+346,Villaines
+485,Vincennes
+104,Saint-Leu-la-Forêt
+500,Champigny
+358,Yerres
+103,Le Coudray-Monceaux
+342,Louvres
+308,Plaisir – Les Clayes
+428,Saint-Ouen
+379,Épinay-sur-Seine
+57,Coignières
+4,Vosves
+375,Vernouillet – Verneuil
+146,Chanteloup-les-Vignes
+335,Savigny-le-Temple – Nandy
+472,Épinay – Villetaneuse
+54,Seugy
+365,Vulaines-sur-Seine – Samoreau
+130,Pont Cardinet
+64,Parc des Expositions
+58,Coulommiers
+334,Les Saules
+257,Villiers – Neauphle – Pontchartrain
+436,Creil
+33,Issou – Porcheville
+509,Laplace
+307,Petit Vaux
+71,Conflans-Sainte-Honorine
+498,Saint-Maur – Créteil
+182,Avenue Henri Martin
+184,Domont
+215,Issy Val de Seine
+217,Étampes
+59,Malesherbes
+233,Orly Ville
+122,Gretz-Armainvilliers
+282,Nangis
+306,Mouroux
+151,Mortcerf
+13,Porchefontaine
+125,Pereire Levallois
+134,Trilport
+37,Bièvres
+260,Dourdan la Forêt
+141,Héricy
+404,La Borne Blanche
+128,Ris Orangis
+478,Le Vésinet-Centre
+382,Bougival
+380,Compans
+111,Créteil Pompadour
+305,Sarcelles Saint-Brice
+212,Colombes
+490,Noisiel
+376,Aéroport Charles de Gaulle 1
+326,Chaville Rive Droite
+150,Lizy-sur-Ourcq
+427,Chantilly-Gouvieux
+211,Villennes-sur-Seine
+329,Gravigny – Balizy
+283,Grand Bourg
+513,Parc de Sceaux
+1090,Maintenon
+15,Les Yvris – Noisy-le-Grand
+495,Fontenay-sous-Bois
+105,Ablon
+496,Nogent-sur-Marne
+486,Neuilly-Plaisance
+94,Cergy Saint-Christophe
+27,Villepinte
+295,La Verrière
+120,Villiers-Montbarbin
+93,Saint-Denis
+280,Chelles – Gournay
+30,Les Noues
+362,Maisse
+126,Nointel – Mours
+430,Ormoy-Villers
+371,Versailles Château Rive Gauche
+175,Viroflay Rive Droite
+170,Évry – Courcouronnes
+332,Frépillon
+381,Le Chénay Gagny
+519,Palaiseau – Villebon
+129,Osny
+87,Marly-le-Roi
+338,Pont-Petit
+166,Lieusaint – Moissy
+330,Bonnières
+409,Chaumont-en-Vexin
+481,Nanterre Ville
+518,Palaiseau
+61,Trappes
+163,Montgeron – Crosne
+29,Bréval
+272,Argenteuil
+95,Cormeilles-en-Parisis
+51,Stade de France Saint-Denis
+389,Igny
+429,Trie-Château
+374,La Barre Ormesson
+20,Chaponval
+482,Charles-de-Gaulle – Étoile
+363,Javel
+90,Saint-Michel – Notre-Dame
+202,Sainte-Geneviève-des-Bois
+405,Chézy-sur-Marne
+262,Écouen – Ézanville
+511,Bagneux
+316,Bibliothèque François Mitterrand
+171,Magenta
+524,La Hacquinière
+443,Saint-Rémy-la-Vanne
+232,Beynes
+208,Le Vert de Maisons
+24,Les Vallées
+43,Bruyères-sur-Oise
+277,Dourdan
+198,Aubergenville Élisabethville
+448,Ferrières Fontenay
+22,Orgerus – Béhoust
+369,Thieux – Nantouillet
+234,Émerainville – Pontault-Combault
+142,Champbenoist – Poigny
+1089,Épernon
+494,Val d’Europe
+11,Garges – Sarcelles
+349,Villiers le Bel – Gonesse – Arnouville
+398,Corbeil-Essonnes
+186,Villeneuve-le-Roi
+149,Aéroport Charles de Gaulle 2 TGV
+479,Châtou – Croissy
+133,Boigneville
+322,Dammartin – Juilly – Saint-Mard
+222,Maule
+527,Saint-Rémy-lès-Chevreuse
+497,Joinville-le-Pont
+176,Mantes-la-Jolie
+183,Nanterre Université
+267,Égly
+124,Versailles Rive Droite
+66,Jouy-en-Josas
+55,Sèvres Rive Gauche
+414,Mareuil-sur-Ourcq
+63,Paris Nord
+157,Nogent – Le Perreux
+302,Essonnes – Robinson
+109,Massy – Palaiseau
+1080,Champigny-sur-Yonne
+99,Bondy
+187,Montereau
+318,Brunoy
+34,Presles – Courcelles
+165,Gros Noyer Saint-Prix
+70,Boussy-Saint-Antoine
+121,La Ferté-sous-Jouarre
+391,Rungis la Fraternelle
+320,Suresnes Mont Valérien
+72,Paris Montparnasse
+377,Villiers-sur-Marne – Le Plessis-Trévise
+223,Rosny-sous-Bois
+77,Breuillet – Bruyères le Chatel
+1092,La Villette Saint-Prest
+352,Clamart
+351,Cergy Préfecture
+484,Nation
+337,Gazeran
+135,Boutigny
+271,Villepreux – Les Clayes
+237,Mareil-Marly
+343,Livry-sur-Seine
+505,Port Royal
+514,La Croix de Berny
+106,Pont du Garigliano
+192,Fontaine-le-Port
+181,Avenue Foch
+85,Montry – Condé
+314,Herblay
+206,Saint-Cloud
+291,Val de Fontenay
+348,Les Mureaux
+36,Avenue du Président Kennedy
+366,Drancy
+42,Étrechy
+1082,Sens
+270,Montigny – Beauchamp
+353,Goussainville
+252,La Défense
+50,Enghien-les-Bains
+491,Lognes
+210,Versailles Chantiers
+504,Luxembourg
+88,Mantes Station
+383,Le Plessis-Chenet
+304,Meaux
+248,Crouy-sur-Ourcq
+360,Survilliers – Fosses
+258,Cernay
+145,La Frette – Montigny
+344,Santeuil – Le Perchay
+284,Sevran Beaudottes
+14,Chamarande
+275,Chaville Rive Gauche
+231,Les Ardoines
+454,Gisors
+476,Saint-Germain-en-Laye
+385,Noisy-le-Roi
+74,Tacoignières – Richebourg
+395,Gargenville
+132,Melun
+393,Porte de Clichy
+225,Houdan
+189,Franconville – Le Plessis-Bouchard
+177,Vert Galant
+40,Fontenay-le-Fleury
+465,Orry-la-Ville – Coye
+167,Éragny – Neuville
+297,Neuville Université
+492,Torcy
+321,Saint-Germain-en-Laye Bel Air – Fourqueux
+292,Issy
+1063,Villeneuve-la-Guyard
+209,Gagny
+5,Triel-sur-Seine
+139,Louveciennes
+311,Montsoult – Maffliers
+1093,Chartres
+52,Vaires – Torcy
+278,Mareil-sur-Mauldre
+525,Gif-sur-Yvette
+79,Villeparisis – Mitry-le-Neuf
+263,Bois-Colombes
+266,Bellevue
+199,Villeneuve Saint-Georges
+41,Chaville Vélizy
+179,Auvers-sur-Oise
+96,Achères-Ville
+268,Meriel
+324,Saint-Cyr
+1087,Joigny
+530,Robinson
+452,Boran-sur-Oise
+131,La Grande-Paroisse
+441,Crépy-en-Valois
+516,Fontaine Michalon
+164,Saint-Fargeau
+114,Vaux-sur-Seine
+256,Le Bourget
+529,Fontenay-aux-Roses
+400,Pierrelaye
+213,Le Blanc-Mesnil
+224,Valmondois
+67,Le Mée
+501,La Varenne – Chennevières
+402,Marles-en-Brie
+489,Noisy – Champs
+507,Cité Universitaire
+1085,Saint-Julien-du-Sault
+328,Les Boullereaux Champigny
+83,La Courneuve – Aubervilliers
+431,La Villetertre
+528,Sceaux
+265,La Norville – Saint-Germain-lès-Arpajon
+196,Paris Gare de Lyon
+487,Bry-sur-Marne
+471,Nanterre Préfecture
+6,Saint-Germain-en-Laye Grande Ceinture
+503,Boissy Saint-Léger
+84,Changis – Saint-Jean
+397,Les Grésillons
+286,Saint-Nom-la-Bretèche Forêt de Marly
+250,Sannois
+1,Nemours – Saint-Pierre
+143,Cesson
+446,Châtelet – Les Halles
+160,Choisy-le-Roi
+238,Petit Jouy – Les Loges
+477,Le Vésinet – Le Pecq
+116,Rosny Bois Perrier
+46,Nézel – Aulnay
+506,Denfert-Rochereau
+180,Noisy-le-Sec
+97,Bourron-Marlotte – Grez
+370,Esbly
+169,Provins
+18,Chars
+31,Crécy-la-Chapelle
+512,Bourg-la-Reine
+460,Château-Thierry
+276,Asnières-sur-Seine
+246,Invalides
+373,Montreuil
+216,Andrésy
+244,Nanteuil – Saâcy
+86,Souppes – Château-Landon
+214,Rosny-sur-Seine
+249,Ozoir-la-Ferrière
+188,Groslay
+123,Boissise-le-Roi
+137,Marolles-en-Hurepoix
+75,Saint-Quentin en Yvelines
+261,Maurecourt
+279,La Plaine – Stade de France
+229,Le Perray
+293,Saint-Michel-sur-Orge
+480,Rueil-Malmaison
+185,Ivry-sur-Seine
+515,Antony
+388,Courbevoie
+325,Champ de Mars Tour Eiffel
+110,Combs-la-Ville – Quincy
+1088,Laroche – Migennes
+425,Liancourt-Saint-Pierre
+339,Guérard – La Celle-sur-Morin
+113,Garches – Marnes-la-Coquette
+221,Méry-sur-Oise
+426,Jouy
+357,Mitry – Claye
+138,Maisons-Laffitte
+118,Rambouillet
+303,Maisons-Alfort – Alfortville
+228,Vanves – Malakoff
+68,Clichy – Levallois
+502,Sucy – Bonneuil
+219,Tournan
+136,Garancières – La Queue
+218,Boulainvilliers
+115,Deuil – Montmagny
+453,Montargis
+422,Saint-Siméon
+195,Épône – Mézières
+178,Pantin
+483,Auber
+23,Moret – Veneux-les-Sablons
+1081,Pont-sur-Yonne
+424,Marchezais – Broué
+158,Meudon
+12,Thomery
+38,Taverny
+510,Arcueil – Cachan
+517,Les Baconnets
+345,Lardy
+201,Belloy – Saint-Martin
+508,Gentilly
+499,Le Parc de Saint-Maur
+204,Paris Saint-Lazare
+521,Le Guichet
+173,Grigny Centre
+112,Juvisy
+140,Paris Austerlitz
+254,Saint-Colombe Septveilles
+147,Gennevilliers
+350,Chilly-Mazarin
+9,Bessancourt
+144,Viarmes
+98,Vernou-sur-Seine
+287,Le Raincy – Villemomble – Montfermeil
+298,Ermont – Eaubonne
+152,Arpajon
+44,Couilly – Saint-Germain – Quincy
+48,Bouffémont – Moisselles
+367,Les Essarts-le-Roi
+100,La Garenne-Colombes
+259,Moulin-Galant
+236,Vitry-sur-Seine
+191,Achères Grand Cormier
+56,Villabé
+331,Plaisir – Grignon
+220,Haussmann – Saint-Lazare
+437,Chailly – Boissy-le-Châtel
+396,Le Bras de Fer
+356,Poissy
+240,Lagny – Thorigny
+155,Bécon-les-Bruyères
+172,Saint-Mammès
+445,Le Plessis-Belleville
+399,Saint-Chéron
+190,Mormant
+10,Ballancourt
+108,Brétigny
+25,Breuillet Village
+364,Sartrouville
+16,Paris Est
+47,Roissy-en-Brie
+387,Sermaise
+264,Épluches
+80,Thun le Paradis
+21,Épinay-sur-Orge
+19,Rosa Parks
+243,Le Stade
+1084,Villeneuve-sur-Yonne
+168,Faremoutiers – Pommeuse
+290,Juziers
+161,Pontoise
+1091,Saint-Piat
+341,Champagne-sur-Seine
+62,Cergy le Haut
+444,Nanteuil-le-Haudoin
+162,Bagneaux-sur-Loing
+3,Us
+301,Vaucelles
+92,Puteaux
+340,Évry
+148,Champagne-sur-Oise
+347,Sevran – Livry
+411,Dordives
+378,Houilles – Carrières-sur-Seine
+241,Luzarches
+418,Précy-sur-Oise
+455,Vernon – Giverny
+392,Isles – Armentières – Congis
+523,Bures-sur-Yvette
+82,Saint-Gratien
+119,La Celle-Saint-Cloud
+194,Mennecy
+76,Les Clairières de Verneuil
+17,Neuilly Porte Maillot
+323,Bouray
+309,Massy – Verrières
+1083,Étigny – Véron
+235,Montgeroult – Courcelles
+447,La Ferté-Milon
+288,Persan – Beaumont
+205,Vigneux-sur-Seine
+2,Meudon Val Fleury
+355,Pierrefitte – Stains
+253,Viry-Châtillon
+207,La Ferté-Alais
+35,Athis-Mons
+394,Savigny-sur-Orge
+227,Viroflay Rive Gauche
+255,Villeneuve Triage
+200,Fontainebleau – Avon
+464,Marne-la-Vallée – Chessy
+8,Saint-Martin d’Étampes
+390,Pont de Rungis Aéroport d’Orly
+269,Val d’Argenteuil
+26,Pont de l’Alma
+91,Saint-Ouen-l’Aumône Quartier de l’Église
+107,L’Isle-Adam – Parmain
+300,L’Étang-la-Ville
+245,Chemin d’Antony
+273,Conflans-Fin-d’Oise
+372,Musée d’Orsay
+65,Saint-Ouen-l’Aumône Liesse
+281,Sèvres – Ville-d’Avray
+488,Noisy-le-Grand Mont d’Est
+386,Verneuil-l’Étang
+49,Champ de Courses d’Enghien
+319,Montfort-l’Amaury – Méré
+242,Boissy-l’Aillerie
+466,Nogent-L’Artaud – Charly
+89,Saint-Ouen-l’Aumône
+251,Le Val d’Or
+299,Orangis Bois de l’Épine
+419,Saint-Leu-d’Esserent

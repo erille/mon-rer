@@ -23,31 +23,20 @@ charset: "UTF-8"
 
 template: "template_toolkit"
 engines:
-   template_toolkit:
-     encoding:  'utf8'
-     start_tag: '<%'
-     end_tag:   '%>'
-   JSON:
-     allow_blessed: '1'
-     convert_blessed: '1'
+  template_toolkit:
+    encoding:  'utf8'
+    start_tag: '<%'
+    end_tag:   '%>'
+  JSON:
+    allow_blessed: '1'
+    convert_blessed: '1'
 
 plugins:
-   Redis:
-     # can't use UNIX domain sockets here
-     server: '127.0.0.1:6379'
-     debug: 0
-     encoding: utf8
-     reconnect: 60
-     # optional
-     password: supersecret
-
-
-# database settings
-db_dsn: "dbi:mysql:dbname=sncf_gtfs;host=localhost;mysql_enable_utf8=1"
-db_username: "rer-web"
-db_password: "secret"
-
-use_redis: 1
+  Database:
+    driver: "Pg"
+    database: "sncf_gtfs"
+    username: "rer-web"
+    password: "secret"
 
 # SNCF API settings
 

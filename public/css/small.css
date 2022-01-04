@@ -9,5 +9,6 @@ span.mission-train:after,
 span.destination-train { font-size: 140%; }
 div#line_filter ul:before { content: "Lignes : "; }
 
+br.after-mission-train { display:none; }
 
 .no-data { display: none; }

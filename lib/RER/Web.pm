@@ -7,20 +7,17 @@ use warnings;
 use utf8;
 
 use Dancer ':syntax';
-use Dancer::Plugin::Redis;
+use Dancer::Plugin::Database;
 
+use RER::Cache;
 use RER::Transilien;
 use RER::Results;
 use RER::Gares;
 use RER::DataSource::Transilien;
 use RER::DataSource::TransilienGTFS;
-use Data::Dumper;
-use Storable qw(dclone freeze thaw);
+use Storable qw(dclone);
 
 our $VERSION = '0.1';
-
-my %train_obj;
-my %train_obj_last_update;
 
 my %stats;
 
@@ -31,7 +28,7 @@ sub check_code {
 
     $code = uc $code;
 
-    if($code =~ /^(?:[A-Z]{1,3}|NC[1-7])$/) {
+    if ($code =~ /^(?:[A-Z]{1,3}|NC[1-7])$/) {
         return $code;
     }
     else {
@@ -42,124 +39,72 @@ sub check_code {
 
 
 sub stats_add {
-    my ($key, $value) = @_;
+    my ($event, $extra_data) = @_;
 
-    return unless $key;
+    my $extra_data_json =
+        JSON->new->allow_nonref(1)->convert_blessed(1)->encode($extra_data);
 
-    if (!defined ($value)) {
-        if (config->{'use_redis'}) {
-            eval { redis->incr("rer-web.$key"); };
-        }
-    } 
-    # else {
-    #     $stats{$key} = $value;
-    # }
+    my $sth = database->prepare('CALL stats_add(?, ?)');
+    $sth->execute($event, $extra_data_json);
 }
-
 
 # Expires a given train objet cache entry
 sub cache_invalidate {
     my ($key) = @_;
 
-    if (config->{'use_redis'}) {
-        redis->multi;
-        redis->hdel("rer-web.train_obj",     $key);
-        redis->hdel("rer-web.train_obj_exp", $key);
-        redis->exec;
-    }
-    else {
-        $train_obj_last_update{$key} = undef;
-    }
+    RER::Cache::cache_del($key);
 }
 
-# Sets a given train objet cache entry to a a new value
+# Sets a given train objet cache entry to a new value
 sub cache_set_hash {
     my ($key, $value) = @_;
 
-    if (config->{'use_redis'}) {
-        return if not ref $value;
-
-        my $expires = 12;
-        my $frozen  = freeze $value;
-        
-        my $oldval = redis->hget("rer-web.train_obj", $key);
-        if (defined $oldval && $frozen ne $oldval) {
-            my $old_exp = redis->hget("rer-web.train_obj_exp", $key);
-            if (time < $old_exp + 12) {
-                $expires = 60 - (time - $old_exp);
-            }
-        }
-        
-        redis->multi;
-        redis->hset("rer-web.train_obj",     $key, $frozen);
-        redis->hset("rer-web.train_obj_exp", $key, time + $expires);
-        redis->exec;
-    }
-    else {
-        $train_obj_last_update{$key} = time;
-        $train_obj{$key} = $value;
-    }
+    RER::Cache::cache_put($key, $value, 60, 60);
 }
 
 # Gets a train objet cache entry (or undef if cache miss)
 sub cache_get_hash {
     my ($key) = @_;
 
-    if (config->{'use_redis'}) {
-        my ($obj, $expire);
-        eval {
-            $obj    = thaw redis->hget("rer-web.train_obj", $key);
-            $expire = redis->hget("rer-web.train_obj_exp", $key);
-        };
-        if (my $err = $@) {
-            warn $err;
-            return undef;
-        }
-
-        return undef if (!defined $expire || time >= $expire);
-        return $obj;
+    my $obj = RER::Cache::cache_get($key);
+    if (defined $obj) {
+        $obj = RER::Results->new(%$obj);
     }
-    else {
-        if (exists $train_obj_last_update{$key}
-            && time - $train_obj_last_update{$key} < 12) {
-            return $train_obj{$key};
-        }
-        else {
-            return undef;
-        }
-    }
+    return $obj;
 }
 
 
 
 
-hook 'before' => sub {
-    RER::Gares::db_connect();
-};
-
 get '/' => sub {
     # rediriger (302) vers l'url /?s=<blah> si l'user a sauvegardé sa dernière gare
-    if (cookie("station") && ! defined params->{'s'})
-    {
-        return redirect uri_for("/", { s => cookie('station') } );
+    # (et sinon on redirige vers la gare par défaut)
+    if (! defined params->{'s'}) {
+        if (my $station_code = cookie('station')) {
+            return redirect uri_for('/', {s => $station_code});
+        }
+        else {
+            return redirect uri_for('/', {s => 'EVC'})
+        }
     }
 
-    # sinon, examiner le header http
-    my $origin_code = check_code(params->{'s'});
-    $origin_code ||= 'EVC';
-
-    my $origin_station = RER::Gares::find(code => $origin_code)->name;
-    utf8::decode($origin_station);
+    # trouver la gare dans la base de données
+    my $station = RER::Gares::find(code => check_code(params->{'s'}));
+    if (!defined $station) {
+        status 'not_found';
+        send_file '404.html';
+        # l’exécution de la route s’arrête ici
+    }
 
     # positionner le cookie (valable 4 semaines)
     # on y touche dans le code js, donc http_only = 0
-    cookie "station" => check_code($origin_code), 
-        expires => '4w', 
+    cookie "station" => check_code($station->code),
+        expires => '4w',
         http_only => 0;
 
     template 'rer', {
-    	origin_station => $origin_station,
-        origin_code => $origin_code,
+        origin_station => $station->name,
+        origin_code    => $station->code,
         dmaj     => RER::Gares::get_last_update(),
         stations => RER::Gares::get_stations(),
     };
@@ -172,20 +117,22 @@ get '/json' => sub {
 
     stats_add 'api_incoming';
 
-    my $code = check_code(params->{'s'}) || 'EVC';
+    my $station = RER::Gares::find(code => check_code(params->{'s'}));
+    if (!defined $station) {
+        status 404;
+        return { error => 'Gare non trouvée' };
+    }
+
+    my $code = $station->code;
     my $line = params->{'l'};
 
     my $ds  = RER::DataSource::Transilien->new(
         url         => config->{'sncf_url'},
         username    => config->{'sncf_username'},
         password    => config->{'sncf_password'});
-    my $ds2 = RER::DataSource::TransilienGTFS->new(
-        dsn		=> config->{'db_dsn'},
-        username	=> config->{'db_username'},
-        password	=> config->{'db_password'});
+    my $ds2 = RER::DataSource::TransilienGTFS->new(dbh => database);
 
-
-    my $ret = cache_get_hash($code);
+    my $ret = cache_get_hash($station->code);
 
     if (! defined $ret) {
 
@@ -194,14 +141,14 @@ get '/json' => sub {
         my $data;
         eval {
             $data = RER::Transilien::new(
-                from => $code,
+                from => $station->code,
                 ds   => [ $ds, $ds2 ],
             );
         };
         if (my $err = $@) {
             status 503;
             stats_add 'api_errors';
-            cache_invalidate $code;
+            cache_invalidate $station->code;
 
             # log error
             error "$code: $err";
@@ -224,14 +171,6 @@ get '/json' => sub {
         @{$ret->{trains}} = @{$ret->{trains}}[0..5];
     }
 
-    if (config->{'use_redis'}) {
-        my $api_incoming = redis->get("rer-web.api_incoming") || 0;
-        my $api_sent     = redis->get("rer-web.api_sent") || 0;
-        my $api_errors   = redis->get("rer-web.api_errors") || 0;
-
-        debug "counters: incoming = $api_incoming, sent = $api_sent, errors = $api_errors";
-    }
-    
     return $ret;
 };
 

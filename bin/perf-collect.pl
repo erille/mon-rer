@@ -2,52 +2,59 @@
 
 use warnings;
 use strict;
+use utf8;
+use 5.010;
 
-use Dancer ':script';
-use Dancer::Plugin::Redis;
+use Dancer qw(:script);
+use Dancer::Plugin::Database;
+use DateTime::Format::Pg;
 use RRD::Simple;
 
+our @stats_keys = qw(api_incoming api_sent api_errors);
 
-if (! config->{'use_redis'})
-{
-	warn 'Not using redis in this configuration, nothing to do!';
-	exit
+sub process_raw_stats_entry {
+    my ($entry) = @_;
+
+    my $time   = DateTime::Format::Pg->parse_timestamptz($entry->{minute})->epoch;
+    my $events = from_json($entry->{events});
+
+    # This creates a hash with the correct keys in @stats_keys and adds a “time” key.
+    return {(map { $_ => ($events->{$_} // 0) } @stats_keys),
+            (time => $time)};
 }
 
-my $time = time;
+sub get_stats_since_last_update {
+    my ($rrd) = @_;
+
+    my $last_update = DateTime::Format::Pg->format_timestamptz(
+        DateTime->from_epoch(epoch => $rrd->last()));
+
+    my @raw_stats = database->quick_select(
+        'stats_by_minute', {minute => {gt => $last_update}});
+
+    return [map { process_raw_stats_entry($_) } @raw_stats];
+}
 
 sub update_data {
-	my ($rrd) = @_;
+    my ($rrd) = @_;
 
-        my $api_incoming = redis->get("rer-web.api_incoming") || 0;
-        my $api_sent     = redis->get("rer-web.api_sent") || 0;
-        my $api_errors   = redis->get("rer-web.api_errors") || 0;
-
-        debug "counters: incoming = $api_incoming, sent = $api_sent, errors = $api_errors";
-
-	$rrd->update($time,
-		api_incoming 	=> $api_incoming,
-		api_sent	=> $api_sent,
-		api_errors	=> $api_errors,
-	);
+    foreach (@{get_stats_since_last_update($rrd)}) {
+        $rrd->update($_->{time}, %$_{@stats_keys});
+    }
 }
 
 sub open_rrd_file {
-	my ($file) = @_;
+    my ($file) = @_;
 
-	my $rrd = RRD::Simple->new(file => $file);
-	if (! -e $file) {
-		$rrd->create('month',
-			api_incoming 	=> 'DERIVE',
-			api_sent	=> 'DERIVE',
-			api_errors	=> 'DERIVE',
-		);
-	}
+    my $rrd = RRD::Simple->new(file => $file);
+    if (! -e $file) {
+        $rrd->create('month', map { $_ => 'GAUGE' } @stats_keys);
+    }
 
-	return $rrd;
+    return $rrd;
 }
 
 my $rrd = open_rrd_file(config->{'rrd_file'})
-	or die config->{'rrd_file'} . ": cannot open RRD file\n";
+    or die config->{'rrd_file'} . ": cannot open RRD file\n";
 
 update_data($rrd);

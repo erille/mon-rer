@@ -11,8 +11,8 @@ use RER::Gare;
 use Test::More tests => 15;
 # use Test::Exception;
 
-BEGIN { 
-	use_ok 'RER::Results'; 
+BEGIN {
+    use_ok 'RER::Results';
 }
 
 
@@ -29,50 +29,50 @@ my @r1_trains = ( $train_11, $train_12 );
 my @r2_trains = ( $train_21, $train_22, $train3 );
 
 my @r1_messages = (
-	RER::Message->new(priority => 'high', content => 'Test message'),
-	RER::Message->new(priority => 'high', content => 'Test message 2'),
+    RER::Message->new(priority => 'high', content => 'Test message'),
+    RER::Message->new(priority => 'high', content => 'Test message 2'),
 );
 my @r2_messages = (
-	RER::Message->new(priority => 'medium', content => 'Test message 3'),
+    RER::Message->new(priority => 'medium', content => 'Test message 3'),
 );
 
 my $from_station_1 = RER::Gare->new(
-	code => 'JY', 
-	uic  => 8754524, 
-	name => 'Juvisy',
-	lines => [ qw(C D) ],
+    code => 'JY',
+    uic  => 8754524,
+    name => 'Juvisy',
+    lines => [ qw(C D) ],
 );
 my $from_station_2 = RER::Gare->new(
-	code => 'LDU', 
-	uic  => 8738221, 
-	name => 'La Défense',
-	lines => [ qw(A L U) ],
+    code => 'LDU',
+    uic  => 8738221,
+    name => 'La Défense',
+    lines => [ qw(A L U) ],
 );
 
 
 ok(
-	my $r1 = RER::Results->new(
-		from   => $from_station_1,
-		trains => \@r1_trains,
-		messages => \@r1_messages,
-),
-'First object creation is successful');
+    my $r1 = RER::Results->new(
+        from   => $from_station_1,
+        trains => \@r1_trains,
+        messages => \@r1_messages,
+    ),
+    'First object creation is successful');
 
 ok(
-	my $r2 = RER::Results->new(
-		from   => $from_station_1,
-		trains => \@r2_trains,
-		messages => \@r2_messages
-),
-'Second object creation is successful');
+    my $r2 = RER::Results->new(
+        from   => $from_station_1,
+        trains => \@r2_trains,
+        messages => \@r2_messages
+    ),
+    'Second object creation is successful');
 
 ok(
-	my $r3 = RER::Results->new(
-		from   => $from_station_2,
-		trains => \@r2_trains,
-		messages => \@r2_messages
-),
-'Third object creation is successful');
+    my $r3 = RER::Results->new(
+        from   => $from_station_2,
+        trains => \@r2_trains,
+        messages => \@r2_messages
+    ),
+    'Third object creation is successful');
 
 
 
@@ -86,9 +86,9 @@ is_deeply ($r1->trains(), \@r1_trains, 'trains method works');
 is_deeply ($r1->messages(), \@r1_messages, 'messages method works');
 
 is_deeply ($r1->TO_JSON(), {
-	lines => [ qw(C D) ],
-	trains => \@r1_trains,
-	info =>  \@r1_messages,
+    from => { code => 'JY', uic => 8754524, name => 'Juvisy', lines => [ qw(C D) ] },
+    trains => \@r1_trains,
+    messages => \@r1_messages,
 }, 'TO_JSON method works');
 
 
@@ -97,10 +97,9 @@ isa_ok ($r4, 'RER::Results');
 
 is (scalar @{$r4->trains()}, 3, 'Merged results contain 3 trains');
 is_deeply (
-	$r4->trains(), 
-	[ $train1, $train2, $train3 ], 
-	'Trains are correctly merged when merging results'
+    $r4->trains(),
+    [ $train1, $train2, $train3 ],
+    'Trains are correctly merged when merging results'
 );
 
 is (scalar @{$r4->messages()}, 3, 'Merged results contain 3 messages');
-
