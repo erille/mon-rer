@@ -3,7 +3,7 @@
 GTFS_DOWNLOAD_DIR="input/sncf_gtfs"
 GTFS_EXTRACT_DIR="input/sncf_gtfs"
 GTFS_PATH="${GTFS_DOWNLOAD_DIR}/export-TN-GTFS-LAST.zip"
-GTFS_URL='https://eu.ftp.opendatasoft.com/sncf/gtfs/gtfs-nouveau-format.zip' 
+GTFS_URL='https://eu.ftp.opendatasoft.com/sncf/gtfs/transilien-gtfs.zip'
 
 # Make sure this doesn't break on anything else than Linux
 UNAME=`uname`
@@ -45,4 +45,3 @@ get_and_extract_gtfs() {
     rm -f -- "${GTFS_DOWNLOAD_DIR}"/*.txt
     unzip -jd "${GTFS_EXTRACT_DIR}" "${GTFS_PATH}" || exit 1
 }
-
