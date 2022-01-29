@@ -27,7 +27,8 @@ CREATE TABLE station_codes (
 
 CREATE TABLE station_names (
   pa_id INTEGER NOT NULL,
-  name  TEXT NOT NULL
+  name  TEXT NOT NULL,
+  transilien_api_ok BOOL NOT NULL
 );
 
 CREATE TABLE station_lines (

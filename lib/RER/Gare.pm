@@ -10,6 +10,9 @@ sub name { $_[0]->{name} = $_[1] || $_[0]->{name}; }
 sub code { $_[0]->{code} = $_[1] || $_[0]->{code}; }
 sub uic  { $_[0]->{uic} = $_[1] || $_[0]->{uic}; }
 sub lines  { $_[0]->{lines} = $_[1] || $_[0]->{lines}; }
+sub transilien_api_ok { $_[0]->{transilien_api_ok} = $_[1] || $_[0]->{transilien_api_ok}; }
+
+our @attributes = qw(code name uic lines transilien_api_ok);
 
 # Return 8-digit UIC code
 # Calculates control sum for a 7-digit UIC code
@@ -44,10 +47,9 @@ sub new {
     return undef if ! exists $args{uic} || ! defined $args{uic};
     return undef if ! exists $args{name} || ! defined $args{name};
 
-    $self->{code} = $args{code};
-    $self->{name} = $args{name};
-    $self->{uic}  = $args{uic};
-    $self->{lines} = $args{lines};
+    for my $attr (@attributes) {
+        $self->{$attr} = $args{$attr};
+    }
 
     return bless $self, __PACKAGE__;
 }
@@ -56,6 +58,9 @@ sub new {
 
 sub TO_JSON {
     my ($self) = @_;
+
+    # On n'a pas besoin de l'attribut transilien_api_ok dans la
+    # représentation JSON de l'objet.
     return {
         code => $self->{code},
         name => $self->{name},

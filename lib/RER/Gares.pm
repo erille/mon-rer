@@ -93,7 +93,8 @@ sub find
     }
 
     my $sth = database->prepare(q{
-       SELECT code, uic, name, lines FROM find_station_by_key(?, ?)});
+       SELECT code, uic, name, lines, transilien_api_ok
+         FROM find_station_by_key(?, ?)});
     $sth->execute($key, $value);
 
     my $result = $sth->fetchall_arrayref({});
@@ -104,6 +105,7 @@ sub find
             name  => $result->[0]{name},
             uic   => $result->[0]{uic},
             lines => $result->[0]{lines},
+            transilien_api_ok => $result->[0]{transilien_api_ok}
         );
     }
     else {

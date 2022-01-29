@@ -28,9 +28,9 @@ sub new {
 
     my @data;
 
-    # Si la gare choisie dessert au moins une ligne SNCF, alors on peut utiliser
-    # l’API temps réel et le GTFS ensemble.
-    if (grep {!/^[AB]$/} @{$gare_from->lines}) {
+    # Si la gare choisie est desservie par l'API Temps Réel SNCF, alors on
+    # peut utiliser l’API temps réel et le GTFS ensemble.
+    if ($gare_from->transilien_api_ok) {
         my $real_time_data = eval { $ds[0]->get_next_trains($gare_from); };
 
         if ($@) {

@@ -5,7 +5,8 @@
  */
 
 CREATE OR REPLACE FUNCTION find_station_by_key(key TEXT, value TEXT)
-  RETURNS TABLE (code TEXT, uic TEXT, name TEXT, lines TEXT[])
+  RETURNS TABLE (code TEXT, uic TEXT, name TEXT, lines TEXT[],
+                 transilien_api_ok BOOL)
   LANGUAGE SQL
 AS $$
 WITH stations_by_key AS (
@@ -21,7 +22,8 @@ WITH stations_by_key AS (
 SELECT station_codes.code,
        station_codes.uic,
        station_names.name,
-       array_agg(station_lines.line ORDER BY line) AS lines
+       array_agg(station_lines.line ORDER BY line) AS lines,
+       station_names.transilien_api_ok
  FROM stations_by_key
       JOIN station_codes
      ON (CASE
@@ -34,5 +36,8 @@ SELECT station_codes.code,
       JOIN station_lines ON (stations_by_key.pa_id = station_lines.pa_id)
   WHERE stations_by_key.key = find_station_by_key.key
     AND stations_by_key.value = find_station_by_key.value
-  GROUP BY station_codes.code, station_codes.uic, station_names.name;
+  GROUP BY station_codes.code,
+           station_codes.uic,
+           station_names.name,
+           station_names.transilien_api_ok;
 $$
