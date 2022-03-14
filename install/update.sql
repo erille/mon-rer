@@ -12,3 +12,5 @@ BEGIN;
 \i install/index-rer-web-tables.sql
 
 COMMIT;
+
+\i install/rotate-logs.sql
