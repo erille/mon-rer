@@ -150,7 +150,7 @@ function autocomp_set(list) {
             + '</span></span><span class="trig">'
             + list[i].codes.join(', ')
             + '</span>';
-        n.onclick = autocomp_make_click_handler(list[i].codes[0], name);
+        n.onclick = autocomp_make_click_handler(list[i].codes[0], list[i].name);
         n.onmouseover = function(i) {
             return function() {
                 autocomp_set_highlight(i);
