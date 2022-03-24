@@ -6,6 +6,8 @@ use strict;
 use warnings;
 use utf8;
 
+use POSIX qw(strftime);
+
 use Dancer ':syntax';
 use Dancer::Plugin::Database;
 
@@ -107,6 +109,7 @@ get '/' => sub {
         origin_code    => $station->code,
         dmaj     => RER::Gares::get_last_update(),
         stations => RER::Gares::get_stations(),
+        year     => strftime("%Y", localtime()),
     };
 };
 

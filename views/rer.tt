@@ -628,7 +628,7 @@
     </script>
 
     <div id="footer">
-      &copy; 2013&ndash;2021 <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/55">Blog</a> • <a href="https://bitbucket.org/xtab/rer-web">Code source</a> • <a href="http://data.sncf.com/">SNCF Open Data Transilien</a> • Dernière mise à jour : <% dmaj || 'inconnue' %>
+      &copy; 2013&ndash;<% year %> <a href="http://x0r.fr">x0r</a> • <a href="http://x0r.fr/blog/55">Blog</a> • <a href="https://bitbucket.org/xtab/rer-web">Code source</a> • <a href="http://data.sncf.com/">SNCF Open Data Transilien</a> • Dernière mise à jour : <% dmaj || 'inconnue' %>
     </div>
 
   </body>
