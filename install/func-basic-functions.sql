@@ -33,7 +33,7 @@ AS $$
 $$;
 
 /*
- * Étant donné un numéro de train de la ligne D de la forme 123456-123457
+ * Étant donné un numéro de train de la ligne C ou D de la forme 123456-123457
  * (numéro pair d’abord, impair ensuite), renvoie le premier numéro pair si
  * direction est « P » et le second si direction vaut « I ». Dans tous les
  * autres cas, renvoie le numéro de train d’origine.
@@ -47,7 +47,7 @@ CREATE OR REPLACE FUNCTION train_number_from_direction(
   LANGUAGE SQL
 AS $$
   SELECT CASE
-         WHEN line = 'D'
+         WHEN (line = 'C' OR line = 'D')
            AND train_number ~ '^([0-9]{5})[02468]-\1[13579]$'
          THEN
            CASE direction
