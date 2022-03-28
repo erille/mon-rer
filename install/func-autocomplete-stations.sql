@@ -14,7 +14,7 @@ AS $$
   )
   SELECT CASE
          WHEN tsq.q IS NULL THEN NULL
-         ELSE to_tsquery(tsq.q::text || ':*')
+         ELSE to_tsquery('fr_unaccent', tsq.q::text || ':*')
          END
   FROM tsq;
 $$
@@ -34,7 +34,7 @@ WITH tsq(tsq_name, tsq_code) AS (
          station_names.name,
          station_codes_lines.lines,
          ts_headline('fr_unaccent', name, tsq_name) AS matched_name,
-         ts_rank_cd(to_tsvector('fr_unaccent', unaccent(name)), tsq_name) AS score,
+         ts_rank_cd(to_tsvector('fr_unaccent', name), tsq_name) AS score,
          ts_rank_cd(to_tsvector('simple', array_to_string(station_codes_lines.codes, ' ')), tsq_code) AS score2
     FROM station_names
          JOIN (SELECT station_codes_2.pa_id,
@@ -50,7 +50,7 @@ WITH tsq(tsq_name, tsq_code) AS (
                 GROUP BY station_codes_2.pa_id, station_codes_2.codes)
                 AS station_codes_lines
                 ON (station_names.pa_id = station_codes_lines.pa_id)
-         JOIN tsq ON (to_tsvector('fr_unaccent', unaccent(name)) @@ tsq.tsq_name
+         JOIN tsq ON (to_tsvector('fr_unaccent', name) @@ tsq.tsq_name
                       OR to_tsvector('simple', array_to_string(station_codes_lines.codes, ' ')) @@ tsq.tsq_code)
 )
   SELECT codes, name, lines, matched_name, 50*score2+score, 0
