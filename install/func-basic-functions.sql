@@ -29,8 +29,9 @@ AS $$
              ON (station_lines_2.pa_id = next_pa_id
                  AND station_lines_2.line = station_lines.line)
    WHERE station_lines.pa_id = this_pa_id
-     AND station_lines.line = train_direction.line
-$$;
+     AND station_lines.line = train_direction.line;
+$$
+STABLE;
 
 /*
  * Étant donné un numéro de train de la ligne C ou D de la forme 123456-123457
@@ -56,5 +57,24 @@ AS $$
            ELSE train_number
            END
          ELSE train_number
-         END
-$$;
+         END;
+$$
+IMMUTABLE;
+
+/*
+ * Étant donné un nom de train extrait de la base de données et un numéro
+ * de train, si ce numéro est dans le style RATP, alors renvoie les quatre
+ * premiers caractères ; sinon, renvoie le nom original.
+ */
+CREATE OR REPLACE FUNCTION override_train_name_from_ratp(
+  orig_train_name TEXT, train_number TEXT)
+  RETURNS TEXT
+  LANGUAGE SQL
+AS $$
+  SELECT CASE
+         WHEN train_number ~ '^[A-Z]{4}[0-9]{2}$'
+         THEN substring(train_number FOR 4)
+         ELSE orig_train_name
+         END;
+$$
+IMMUTABLE;

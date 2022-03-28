@@ -59,7 +59,9 @@ WITH dates(date) AS (
      AND today_trips.date + times.due_time <= rt + interval '6 hours'
 )
 SELECT timetable.line,
-       timetable.train_name,
+       override_train_name_from_ratp(
+         timetable.train_name,
+         timetable.train_number) AS "train_name",
        train_number_from_direction(timetable.line,
                                    timetable.train_number,
                                    extra_info.direction) AS "train_number",
