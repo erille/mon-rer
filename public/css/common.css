@@ -38,6 +38,17 @@
     font-feature-settings: 'liga';
 }
 
+@font-face {
+    font-family: 'Tauri';
+    font-style: normal;
+    font-weight: 400;
+    src: url(/fonts/Tauri-Regular.eot); /* IE compatibility */
+    src: local('Tauri'),
+         url(/fonts/Tauri-Regular.woff2) format('woff2'),
+         url(/fonts/Tauri-Regular.woff) format('woff'),
+         url(/fonts/Tauri-Regular.ttf) format('truetype');
+}
+
 body {
     margin: 0;
     padding: 0;
