@@ -58,6 +58,12 @@
               return document.querySelectorAll('.' + class_name);
       }
 
+      function make_img_line_node(line_name) {
+          var img = document.createElement('img');
+          img.src = "/img/rer" + line_name + ".svg";
+
+          return img;
+      }
 
       /* manipulate train timetable easier */
       function table_get_node(row, column) {
@@ -65,17 +71,6 @@
               return document.getElementById('t' + row + 'c' + column);
           else
               return document.getElementById('t' + row);
-      }
-
-      function table_set_innerhtml(row, column, html) {
-          var classlist = table_get_node(row, column).classList;
-          classlist.remove('no-data');
-          if (!html) {
-              classlist.add('no-data');
-          }
-
-          table_get_node(row, column).classList = classlist;
-          table_get_node(row, column).innerHTML = (html ? html : '');
       }
 
       function set_cookie(name, value) {
@@ -132,23 +127,82 @@
           n.textContent = h + ":" + m;
       }
 
-      /* returns 0 if different, 1 if equal */
-      function array_compare(a, b) {
-          if (a.length != b.length) {
-              return 1;
+      function clear_train_data(row_number) {
+          table_get_node(row_number).className = 'train';
+          table_get_node(row_number, '1a').textContent = '';
+          table_get_node(row_number, '1a').classList.add('no-data');
+          table_get_node(row_number, '1b').textContent = '';
+          table_get_node(row_number, '1b').className = 'numero-train';
+          table_get_node(row_number, '1c').textContent = '';
+          table_get_node(row_number, '1c').classList.add('no-data');
+          table_get_node(row_number, '2').textContent = '';
+          table_get_node(row_number, '3a').textContent = '';
+          if (row_number < 2) {
+              table_get_node(row_number, '3b').textContent = '';
+              var p = document.createElement('p');
+              p.style.bottom = '0.1em';
+              p.textContent = '\u00a0';
+              table_get_node(row_number, '3b').appendChild(p);
+          }
+          table_get_node(row_number, '4').textContent = '';
+          origTrains[row_number] = -1;
+      }
+
+      function set_train_data(row_number, train_object) {
+          table_get_node(row_number).className = train_object.trainclass;
+
+          var elem_mission = table_get_node(row_number, '1a');
+          var elem_numero = table_get_node(row_number, '1b');
+          var elem_retard = table_get_node(row_number, '1c');
+          var elem_time = table_get_node(row_number, '2');
+          var elem_destination = table_get_node(row_number, '3a');
+          var elem_platform = table_get_node(row_number, '4');
+
+          if (train_object.mission != null) {
+              elem_mission.classList.remove('no-data');
+              elem_mission.textContent = train_object.mission;
+          }
+          elem_numero.textContent = train_object.numero;
+
+          if (train_object.retard != null
+              && train_object.time != 'Supprimé' && train_object.time != 'Retardé') {
+              elem_numero.className = 'numero-train';
+              elem_retard.classList.remove('no-data');
+              elem_retard.textContent = train_object.retard;
+          } else {
+              elem_numero.className = 'numero-train no-flip';
+              elem_retard.classList.add('no-data');
+              elem_retard.textContent = '';
           }
 
-          for (var i = 0; i < a.length; i++) {
-              if (a[i] != b[i]) {
-                  return 1;
+          elem_time.textContent = train_object.time;
+
+          elem_destination.textContent = '';
+          if (train_object.ligne) {
+              elem_destination.appendChild(make_img_line_node(train_object.ligne));
+              elem_destination.appendChild(document.createTextNode(' '));
+          }
+          elem_destination.appendChild(document.createTextNode(train_object.destination));
+
+          if (row_number < 2) {
+              var elem_desserte = table_get_node(row_number, '3b');
+              var p = elem_desserte.childNodes[0];
+              p.textContent = train_object.dessertes;
+              if (origTrains[row_number] != train_object.numero) {
+                  p.style.bottom = "0.1em";
               }
           }
 
-          return 0;
+          elem_platform.textContent = '';
+          if (train_object.platform != null && train_object.platform != " ") {
+              var span = document.createElement('span');
+              span.className = 'voie';
+              span.textContent = train_object.platform;
+              elem_platform.appendChild(span);
+          }
+
+          origTrains[row_number] = train_object.numero;
       }
-
-
-
 
       function get_data(obj) {
           if (obj.readyState == 4 && obj.status == 200) {
@@ -158,72 +212,20 @@
               var messages = info.messages;
 
               for (var i = 0; i < trains.length; i++) {
-                  var train = trains[i];
-
-                  table_get_node(i).className = train.trainclass;
-
-                  table_set_innerhtml(i, '1a', train.mission);
-                  table_set_innerhtml(i, '1b', train.numero);
-                  table_get_node(i, '1b').className = 'numero-train';
-
-                  if (train.retard != null
-                      && train.time != 'Supprimé' && train.time != 'Retardé') {
-                      table_set_innerhtml(i, '1c', train.retard);
-                  } else {
-                      table_set_innerhtml(i, '1c', undefined);
-                      table_get_node(i, '1b').className = 'numero-train no-flip';
-                  }
-
-
-                  table_set_innerhtml(i, '2', train.time);
-
-                  var dest = train.destination;
-                  if (train.ligne)
-                      dest = '<img src="img/rer'
-                      + train.ligne + '.svg" alt="'
-                      + train.ligne + '" />' + ' ' + dest;
-
-                  table_set_innerhtml(i, '3a', dest);
-                  if (i < 2) {
-                      var p = table_get_node(i, '3b').childNodes[0];
-                      p.textContent = train.dessertes;
-                      if (origTrains[i] != train.numero) {
-                          p.style.bottom = "0.1em";
-                      }
-                  }
-
-
-                  if (train.platform != null && train.platform != " ") {
-                      table_set_innerhtml(i, '4', '<span class="voie">' + train.platform + '</span>');
-                  } else {
-                      table_set_innerhtml(i, '4', undefined);
-                  }
-
-                  origTrains[i] = train.numero;
+                  set_train_data(i, trains[i]);
               }
               for (; i < 6; i++)
               {
-                  table_get_node(i).className = 'train';
-                  table_set_innerhtml(i, '1a', undefined);
-                  table_set_innerhtml(i, '1b', undefined);
-                  table_set_innerhtml(i, '1c', undefined);
-                  table_set_innerhtml(i, '2', undefined);
-                  table_set_innerhtml(i, '3a', undefined);
-                  if (i < 2) {
-                      table_set_innerhtml(i, '3b', "<p style='bottom: 0.1em'>"
-                                          + "&nbsp;"
-                                          + "</p></div>");
-                  }
-                  table_set_innerhtml(i, '4', undefined);
-                  origTrains[i] = -1;
+                  clear_train_data(i);
               }
 
 
               var lmsg = document.getElementById('conteneurmessages');
               lmsg.textContent = '';
 
-              /* on met le premier élément deux fois pour donner l'illusion
-               * d'un "rouleau" qui scroll
+              /*
+               * On met le premier élément deux fois pour donner l'illusion
+               * d'un "rouleau" qui défile.
                */
               if (messages.length > 0) {
                   for (var i = 0; i <= messages.length; i++) {
@@ -293,22 +295,11 @@
               lmsg.textContent = '';
 
               for (var i = 0; i < 6; i++) {
-                  table_get_node(i).className = 'train';
-                  table_set_innerhtml(i, '1a', undefined);
-                  table_set_innerhtml(i, '1b', undefined);
-                  table_set_innerhtml(i, '1c', undefined);
-                  table_set_innerhtml(i, '2', undefined);
+                  clear_train_data(i);
                   if (i < 2) {
-                      table_set_innerhtml(i, '3a', "Chargement... ");
-                      table_set_innerhtml(i, '3b', "<p style='bottom: 0.1em'>"
-                                          + "Chargement en cours..."
-                                          + "</p></div>");
+                      table_get_node(i, '3a').textContent = 'Chargement…';
+                      table_get_node(i, '3b').children[0].textContent = 'Chargement en cours…';
                   }
-                  else
-                      table_set_innerhtml(i, '3a', undefined);
-
-                  table_set_innerhtml(i, '4', undefined);
-                  origTrains[i] = -1;
               }
           }
 
@@ -331,11 +322,9 @@
 
           if (lignes.length <= 1) {
               show_more_options(false);
-              document.getElementById("more_options_button").style.display = "none";
               return;
           } else {
               show_more_options(true);
-              document.getElementById("more_options_button").style.display = "inline-block";
           }
 
           while (flt.childNodes.length > 0)
@@ -359,8 +348,7 @@
               li.className = "button";
               li.title = "Ligne " + lignes[i] + " seulement";
               var p = document.createElement("p");
-              var img = document.createElement("img");
-              img.src = "/img/rer" + lignes[i] + ".svg";
+              var img = make_img_line_node(lignes[i]);
               img.alt = li.title;
 
               if (lignes[i] == originLineFilter)

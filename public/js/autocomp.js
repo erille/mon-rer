@@ -121,16 +121,11 @@ function autocomp_make_click_handler(c, n) {
 
 
 function autocomp_line_images(lines) {
-    if (!lines)
-        return;
-
-    var result = "";
-    for (var i = 0; i < lines.length; i++) {
-        result = result + '<img src="img/rer'
-            + lines[i] + '.svg" alt="'
-            + lines[i] + '" />';
-    }
-    return result;
+    return lines.map(function(line) {
+        var img = make_img_line_node(line);
+        img.alt = line;
+        return img;
+    });
 }
 
 function autocomp_set(list) {
@@ -142,14 +137,32 @@ function autocomp_set(list) {
 
     for (var i = 0; i < list.length; i++) {
         var n = document.createElement("li");
+        n.appendChild(function () {
+            var spanName = document.createElement("span");
+            spanName.className = "name";
 
-        n.innerHTML = '<span class="name">'
-            + list[i].name
-            + '\u00a0<span class="lines">'
-            + autocomp_line_images(list[i].lines)
-            + '</span></span><span class="trig">'
-            + list[i].codes.join(', ')
-            + '</span>';
+            spanName.appendChild(document.createTextNode(list[i].name));
+            spanName.appendChild(document.createTextNode('\u00a0'));
+            spanName.appendChild(function () {
+                var spanLines = document.createElement("span");
+                spanLines.className = "lines";
+                for (c of autocomp_line_images(list[i].lines)) {
+                    spanLines.appendChild(c);
+                }
+
+                return spanLines;
+            }());
+
+            return spanName;
+        }());
+        n.appendChild(function() {
+            var spanTrig = document.createElement("span");
+            spanTrig.className = "trig";
+            spanTrig.innerText = list[i].codes.join(', ');
+
+            return spanTrig;
+        }());
+
         n.onclick = autocomp_make_click_handler(list[i].codes[0], list[i].name);
         n.onmouseover = function(i) {
             return function() {
