@@ -1,5 +1,5 @@
 body { font-size: 11pt; }
-div#haut, div#error, div.subwindow, div#disclaimer, div#footer { font-size: 11pt; }
+div#haut, div#error, div#disclaimer, div#footer { font-size: 11pt; }
 div#haut {
     padding: 0.9em 12.2em 1.0em 0.7em;
     display: block;

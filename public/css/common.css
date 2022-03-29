@@ -304,32 +304,6 @@ div.message {
 
 
 
-
-div.subwindow {
-    border-top: 1px solid gray;
-    padding-top: 1em;
-    padding-bottom: 2em;
-    width: 100%;
-
-    background-color: rgba(34, 34, 34, 0.8);
-    z-index: 1;
-}
-
-div.subwindow p {
-    text-align: center;
-}
-
-div.subwindow div.content {
-    transition-property: height;
-    transition-duration: 0.9s;
-    transition-timing-function: linear;
-    -webkit-transition-property: height;
-    -webkit-transition-duration: 0.9s;
-    -webkit-transition-timing-function: linear;
-}
-
-
-
 div#footer {
     border-top: 1px solid gray;
     padding: 1em 0;
