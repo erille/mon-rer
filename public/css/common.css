@@ -67,8 +67,9 @@ div#heure {
     position: fixed;
     top: -40pt;
     right: 8pt;
-    width: 3em;
-    padding: 0.2em;
+    padding-bottom: 0.2em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
     padding-top: 40pt;
     margin: 0;
 
@@ -81,6 +82,18 @@ div#heure {
     cursor: default;
 
     text-align: center;
+}
+
+div#heure span { display: inline-block; }
+div#heure span#heure-minutes {
+    width: 3.1em;
+    text-align: center;
+}
+div#heure span#secondes {
+    width: 1.4em;
+    color: orange;
+    font-size: 75%;
+    text-align: left;
 }
 
 div#more_options { cursor: default; }

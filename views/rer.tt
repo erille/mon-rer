@@ -113,17 +113,25 @@
           document.getElementById("errormsg").textContent = '&nbsp;';
       }
 
+      function left_pad(string, char, target_length) {
+          while (string.length < target_length) {
+              string = char + string;
+          }
+          return string;
+      }
 
       function update_time() {
-          var n = document.getElementById('heure');
+          var n = document.getElementById('heure-minutes');
+          var n2 = document.getElementById('secondes');
+
           var dt = new Date();
 
-          var h = dt.getHours();
-          var m = dt.getMinutes();
-          h = (h < 10) ? "0" + h : h;
-          m = (m < 10) ? "0" + m : m;
+          var hm = left_pad(dt.getHours().toString(), '0', 2) + ":"
+              + left_pad(dt.getMinutes().toString(), '0', 2);
+          var s = left_pad(dt.getSeconds().toString(), '0', 2);
 
-          n.textContent = h + ":" + m;
+          if (n.textContent != hm) { n.textContent = hm }
+          if (n2.textContent != s) { n2.textContent = s }
       }
 
       function clear_train_data(row_number) {
@@ -569,7 +577,7 @@
 
     </div>
 
-    <div id="heure">--:--</div>
+    <div id="heure"><span id="heure-minutes">--:--</span><span id="secondes">--</span></div>
 
     <div id="listetrains" class="no-retard-flip">
       <%~ FOR i in [0..5] %>
