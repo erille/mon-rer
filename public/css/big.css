@@ -29,8 +29,6 @@ div#listetrains.retard-flip div.group-left span.numero-train.no-flip { display: 
 span.destination-train { font-size: 160%; }
 div.force-height { min-height: 2.5em; }
 
-div#line_filter ul:before { content: "Montrer lignes : "; }
-
 @media screen and (min-width: 600px)  { body { font-size: 14pt; } }
 @media screen and (min-width: 750px)  { body { font-size: 16pt; } }
 @media screen and (min-width: 950px)  { body { font-size: 18pt; } }
