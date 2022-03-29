@@ -26,12 +26,8 @@ my %stats;
 sub check_code {
     my ($code) = @_;
 
-    return undef unless $code;
-
-    $code = uc $code;
-
-    if ($code =~ /^(?:[A-Z]{1,3}|NC[1-7])$/) {
-        return $code;
+    if (defined $code && uc($code) =~ /^(?:[A-Z]{1,3}|NC[1-9]|ND0)$/) {
+        return uc($code);
     }
     else {
         return undef;
@@ -79,11 +75,15 @@ sub cache_get_hash {
 
 
 get '/' => sub {
-    # rediriger (302) vers l'url /?s=<blah> si l'user a sauvegardé sa dernière gare
-    # (et sinon on redirige vers la gare par défaut)
+    # Rediriger (302) vers l'url /?s=<blah> si l’utilisateur a sauvegardé sa
+    # dernière gare (et sinon on redirige vers la gare par défaut).
+    #
+    # Si par hasard le cookie référence une gare non valable, on évite de le
+    # rediriger de force vers une page 404 car il serait impossible d’en
+    # échapper sans supprimer le cookie !
     if (! defined params->{'s'}) {
-        if (my $station_code = cookie('station')) {
-            return redirect uri_for('/', {s => $station_code});
+        if (my $station = RER::Gares::find(code => check_code(cookie('station')))) {
+            return redirect uri_for('/', {s => $station->code});
         }
         else {
             return redirect uri_for('/', {s => 'EVC'})

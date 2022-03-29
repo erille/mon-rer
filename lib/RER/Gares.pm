@@ -79,10 +79,10 @@ sub find
 
     my ($key, $value);
 
-    if (exists $params{code}) {
+    if (exists $params{code} && defined $params{code}) {
         ($key, $value) = ('code', $params{code});
     }
-    elsif (exists $params{uic}) {
+    elsif (exists $params{uic} && defined $params{uic}) {
         # les codes UIC ont deux variétés : ceux à 7 chiffres et ceux à 8.
         # ceux à 8 chiffres ont un chiffre de contrôle (superflu) qu'on
         # enlève, parce qu'on ne stocke que 7 chiffres dans la BDD.

@@ -251,6 +251,7 @@
               dataRetryCount = 0;
 
               init_filtres(info.from.lines);
+              set_cookie('station', info.from.code);
           }
           else if (obj.readyState == 4 && obj.status == 503) {
               var err = JSON.parse(obj.responseText);
@@ -295,7 +296,6 @@
           if (xmlHttp) xmlHttp.abort();
 
           if (b) {
-              set_cookie('station', originCode);
               if (dataRefreshTimer) { window.clearTimeout(dataRefreshTimer); }
 
               var lmsg = document.getElementById('conteneurmessages');
