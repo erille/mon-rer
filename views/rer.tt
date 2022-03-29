@@ -211,6 +211,55 @@
           origTrains[row_number] = train_object.numero;
       }
 
+      function clear_all_messages() {
+          var container = document.getElementById('conteneurmessages');
+          container.textContent = '';
+      }
+
+      function make_message_block(msg) {
+          var msgDiv = document.createElement('div');
+          msgDiv.className = 'item message';
+          msgDiv.classList.add(msg.priority);
+
+          if (msg.priority == 'high') {
+              msgDiv.appendChild(function() {
+                  var dot = document.createElement('div');
+                  dot.className = 'blinking-dot';
+                  return dot;
+              }());
+          }
+
+          msgDiv.appendChild(function () {
+              var msgP = document.createElement('p');
+              msgP.textContent = msg.content;
+              return msgP;
+          }());
+
+          return msgDiv;
+      }
+
+      function add_message(msg) {
+          var container = document.getElementById('conteneurmessages');
+
+          var msgDiv = make_message_block(msg);
+
+          var currentMessageCount = container.children.length;
+          if (currentMessageCount == 0) {
+              container.appendChild(msgDiv);
+          } else if (currentMessageCount == 1) {
+              /*
+               * The scrolling effect requires the first element to appear
+               * at the beginning and at the end of the container div, so
+               * clone it first.
+               */
+              container.appendChild(msgDiv);
+              container.appendChild(container.children[0].cloneNode(true));
+          } else {
+              /* Insert the new element at the penultimate position */
+              container.insertBefore(msgDiv, container.children[currentMessageCount - 1]);
+          }
+      }
+
       function get_data(obj) {
           if (obj.readyState == 4 && obj.status == 200) {
               var text = obj.responseText;
@@ -226,23 +275,10 @@
                   clear_train_data(i);
               }
 
+              clear_all_messages();
 
-              var lmsg = document.getElementById('conteneurmessages');
-              lmsg.textContent = '';
-
-              /*
-               * On met le premier élément deux fois pour donner l'illusion
-               * d'un "rouleau" qui défile.
-               */
-              if (messages.length > 0) {
-                  for (var i = 0; i <= messages.length; i++) {
-                      var node = document.createElement('div');
-                      node.className = 'message';
-
-                      var nodeText = document.createTextNode(messages[i % messages.length]);
-                      node.appendChild(nodeText);
-                      lmsg.appendChild(node);
-                  }
+              for (var i = 0; i < messages.length; i++) {
+                  add_message(messages[i]);
               }
 
               dataRefreshTimer = window.setTimeout(function() { init_data(0) }, 12000);
@@ -449,41 +485,39 @@
       function msg_scroll() {
           /* scrolls obj */
           var pNode = document.getElementById('conteneurmessages');
-          if (pNode.textContent === "")
-              return;
 
-          var scroll = 0;
-          if (pNode.style)
-              scroll = extract_float(pNode.style.bottom);
-          else
-              pNode.style = "bottom: 0em;";
+          if (pNode.children.length >= 2) {
+              var scroll = 0;
+              if (pNode.style)
+                  scroll = extract_float(pNode.style.bottom);
+              else
+                  pNode.style = "bottom: 0em;";
 
-          if (scroll == undefined)
-              scroll = 0;
+              if (scroll == undefined)
+                  scroll = 0;
 
-          var height    = pNode.clientHeight;
-          var p_height  = pNode.parentNode.clientHeight;
-          /* p_height gives us 6em in pixels so we convert em into px */
-          var scroll_px = scroll * p_height / 6;
+              var height    = pNode.clientHeight;
+              var p_height  = pNode.parentNode.clientHeight;
+              /* p_height gives us 6em in pixels so we convert em into px */
+              var scroll_px = scroll * p_height / 6;
 
 
-          if (scroll_px >= height - p_height) {
-              set_scroll(pNode, 0);
-              scroll = 0;
-              pNode.style.bottom = scroll + "em";
-              return msg_scroll();
+              if (scroll_px >= height - p_height) {
+                  set_scroll(pNode, 0);
+                  scroll = 0;
+                  pNode.style.bottom = scroll + "em";
+                  return msg_scroll();
+              }
+
+              if (height > 2 * p_height) {
+                  set_scroll(pNode, 2);
+                  scroll += 6;
+                  pNode.style.bottom = scroll + "em";
+              }
+              else {
+                  pNode.style.bottom = "0em";
+              }
           }
-
-          if (height > 2 * p_height) {
-              set_scroll(pNode, 2);
-              scroll += 6;
-              pNode.style.bottom = scroll + "em";
-          }
-          else {
-              pNode.style.bottom = "0em";
-          }
-
-          /* have we scrolled beyond an element's max height? */
 
           window.setTimeout(function() { msg_scroll(); }, msgScrollTimeout);
       }

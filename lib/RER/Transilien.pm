@@ -8,6 +8,7 @@ use utf8;
 use 5.010;
 
 use JSON;
+use RER::Message;
 use RER::Results;
 use RER::Gares;
 use Dancer qw(:syntax config debug error);
@@ -28,15 +29,25 @@ sub new {
 
     my @data;
 
+    my $warn_no_real_time_times = RER::Message->new(
+        priority => 'high',
+        content => 'Attention, les horaires affichés sont théoriques. '
+        . 'Renseignez-vous en gare pour vérifier si votre train est à l’heure '
+        . 'et n’est pas supprimé.');
+    my $warn_sncf_stations_only = RER::Message->new(
+        priority => 'medium',
+        content => 'Pour le moment, les horaires temps réel sont uniquement '
+        . 'disponibles pour les portions du réseau exploitées par la SNCF '
+        . '(lignes C, D, E, H, J, K, L, N, P, R, U et certaines gares des '
+        . 'lignes A et B).');
+
     # Si la gare choisie est desservie par l'API Temps Réel SNCF, alors on
     # peut utiliser l’API temps réel et le GTFS ensemble.
     if ($gare_from->transilien_api_ok) {
         my $real_time_data = eval { $ds[0]->get_next_trains($gare_from); };
 
         if ($@) {
-            push @messages, "Attention, les horaires affichés sont théoriques. "
-                . "Renseignez-vous en gare pour vérifier si votre train est "
-                . "à l’heure et n’est pas supprimé.";
+            push @messages, $warn_no_real_time_times;
             @data = @{$ds[1]->get_next_trains($gare_from)};
         }
         else {
@@ -44,12 +55,8 @@ sub new {
         }
     }
     else {
-        push @messages, "Attention, les horaires affichés sont théoriques. "
-            . "Renseignez-vous en gare pour vérifier si votre train est "
-            . "à l’heure et n’est pas supprimé.";
-        push @messages, "Les horaires temps réel sont uniquement disponibles "
-            . "pour les gares des lignes SNCF du Transilien (C, D, E, H, "
-            . "J, K, L, N, P, R, U) pour le moment.";
+        push @messages, $warn_no_real_time_times;
+        push @messages, $warn_sncf_stations_only;
         @data = @{$ds[1]->get_next_trains($gare_from)};
     }
 

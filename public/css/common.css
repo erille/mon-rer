@@ -53,7 +53,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Tauri', sans-serif;
-    background: #222;
+    background: #181818;
     color: #eee;
 }
 
@@ -283,7 +283,7 @@ div#disclaimer {
 
 div#heure, div#listetrains { cursor: default; }
 
-div#listemessages { max-height: 6em; overflow: hidden; cursor: default; }
+div#listemessages { height: 6em; max-height: 6em; overflow: hidden; cursor: default; background: #222; }
 
 div#conteneurmessages {
     position: relative;
@@ -292,25 +292,45 @@ div#conteneurmessages {
     -webkit-transition-timing-function: linear;
 }
 
-div.message {
-    background: #d09955;
-    color: black;
-    height: 5em;
-    max-height: 5em;
+div#conteneurmessages div.item {
+    height: 6em;
+    max-height: 6em;
     overflow: hidden;
-    padding: 0.34em 0.5em 0.66em 3em;
 }
 
+div#conteneurmessages div.item p {
+    margin: 0.34em 0.5em 0.66em 2.75em;
+}
+
+div#conteneurmessages div.item.placeholder,
+div#conteneurmessages div.item.message { background: #222; color: white; }
+div#conteneurmessages div.item.message.medium { background: #483391; color: white; }
+div#conteneurmessages div.item.message.high { background: #fdbf4d; color: #000040; }
+div#conteneurmessages div.item div.blinking-dot {
+    display: block;
+    float: left;
+    position: relative;
+    left: 0.8em;
+    top: 0.8em;
+    background-color: white;
+    width: 1.25em;
+    height: 1.25em;
+    content: '\00a0';
+    border-radius: 0.625em;
+    animation: 1s steps(2, jump-none) infinite alternate blinking_dot;
+}
+div#conteneurmessages div.item.message.urgent { background: #ff1f1f; color: white; }
+
+@keyframes blinking_dot { from { background-color: white; } to { background-color: #e08d39; } }
 
 
 
 div#footer {
-    border-top: 1px solid gray;
     padding: 1em 0;
 
     width: 100%;
     z-index: 1;
-    background-color: #222;
+    background-color: #181818;
 
     text-align: center;
 }
