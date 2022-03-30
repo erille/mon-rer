@@ -72,11 +72,13 @@ function autocomp_show(b) {
 }
 
 function autocomp_reset() {
-    if (autocomp_escaping) return false;
-    autocomp_escaping = 1;
-    autocomp_field.value = autocomp_orig_input_val;
-    autocomp_field.blur();
-    autocomp_show(0);
+    if (!autocomp_escaping) {
+        autocomp_escaping = 1;
+        autocomp_field.value = autocomp_orig_input_val;
+        autocomp_field.blur();
+        autocomp_show(0);
+        return false;
+    }
 }
 
 
