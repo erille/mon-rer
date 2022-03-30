@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 22;
+use Test::More tests => 20;
 
 use FindBin;
 use Cwd qw(realpath);
@@ -26,7 +26,6 @@ my $station = RER::Gares::find(code => 'CLX');
 isa_ok($station, 'RER::Gare');
 
 is($station->code, 'CLX');
-# is() doesn't work here because of utf-8
 is($station->name, "Châtelet – Les Halles");
 is(ord(substr($station->name, 2)), 0xe2);
 is($station->uic,  '8775860');
@@ -38,8 +37,6 @@ is($station->code, 'CLX');
 is($station->name, 'Châtelet – Les Halles');
 is($station->uic,  '8775860');
 is_deeply($station->lines, [ qw(A B D) ], 'CLX lines is [A, B, D]');
-is_deeply(RER::Gares::get_lines('8739300'), [ qw(C N U) ], 'VC lines is [C, N, U]');
-is_deeply(RER::Gares::get_lines('8754524'), [ qw(C D) ], 'JY lines is [C, D]');
 
 $station = RER::Gares::find(uic => '87393009');
 isa_ok($station, 'RER::Gare');

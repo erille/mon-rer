@@ -35,14 +35,6 @@ sub get_last_update {
     }
 }
 
-
-sub get_station_codes
-{
-    my $sth = database->prepare('SELECT code FROM station_codes');
-    $sth->execute;
-    return $sth->fetchall_arrayref([0]);
-}
-
 sub get_stations
 {
     my $sth = database->prepare(q{
@@ -52,25 +44,6 @@ sub get_stations
          ORDER BY name});
     $sth->execute;
     return $sth->fetchall_arrayref({});
-}
-
-sub get_lines
-{
-    my ($arg) = @_;
-
-    my $uic;
-    $uic = $arg->uic if ref $arg eq 'RER::Gare';
-    $uic = $arg      if ref $arg ne 'RER::Gare';
-
-    my $sth = database->prepare(q{
-       SELECT line
-           FROM station_codes
-           JOIN station_lines ON (station_lines.pa_id = station_codes.pa_id)
-        WHERE station_codes.uic = ?
-        ORDER BY line});
-    $sth->execute($uic);
-    my @result = map { $_->[0] } @{$sth->fetchall_arrayref([0])};
-    return \@result;
 }
 
 sub find
