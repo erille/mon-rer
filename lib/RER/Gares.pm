@@ -117,6 +117,8 @@ sub get_autocomp
 {
     my ($str) = @_;
 
+    return [] unless (defined $str && $str ne '');
+
     my $sth = database->prepare(
         'SELECT codes, name, lines FROM autocomplete_stations(?);');
     $sth->execute($str);
