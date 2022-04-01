@@ -46,7 +46,7 @@ while :; do
             ;;
         -y)
             no_confirm="yes"
-            shift; shift
+            shift;
             ;;
         --)
             shift; break
