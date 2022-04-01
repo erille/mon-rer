@@ -17,3 +17,8 @@ ALTER TABLE station_names
 
 ALTER TABLE station_lines
   ADD CONSTRAINT station_lines_pkey PRIMARY KEY (pa_id, line);
+
+ALTER TABLE valid_transilien_api_uics
+  ADD CONSTRAINT valid_transilien_api_uics_pkey PRIMARY KEY (uic8),
+  ADD CONSTRAINT valid_transilien_api_uics_uic8_check
+      CHECK (uic8_is_valid(uic8));

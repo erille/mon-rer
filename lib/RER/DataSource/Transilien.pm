@@ -114,25 +114,21 @@ sub process_xml_trains {
     return \@trains;
 }
 
-
 sub get_next_trains {
     my ($self, $station) = @_;
 
     die "Invalid station\n" if ! defined ($station);
 
-    my $path = '/gare/' . $station->uic8() . '/depart/';
+    my $search_key = $station->transilien_api_search_key();
+    my $path = "/gare/${search_key}/depart/";
     my $data = $self->do_request($path);
 
     return $self->process_xml_trains($data);
 }
 
-
-
-
 sub url      { $_[0]->{url} = $_[1] || $_[0]->{url}; }
 sub username { $_[0]->{username} = $_[1] || $_[0]->{username}; }
 sub password { $_[0]->{password} = $_[1] || $_[0]->{password}; }
-
 
 sub new {
     my ($self, %args) = @_;
@@ -148,7 +144,6 @@ sub new {
 
     return bless $self, __PACKAGE__;
 }
-
 
 1;
 

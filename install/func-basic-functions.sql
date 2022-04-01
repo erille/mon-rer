@@ -1,63 +1,43 @@
 /*
- * Étant donné deux gares consécutives sur une ligne donnée, cette fonction renvoie
- * « I » si cela correspond à un parcours dans le sens impair et « P » s’il s’agit
- * d’un parcours dans le sens pair.
+ * ATTENTION : Les fonctions définies dans ce fichier doivent UNIQUEMENT
+ * être IMMUTABLE (et être déclarées comme telles). En d’autres termes : elles
+ * ne doivent effectuer AUCUN accès aux tables de la base de données, même
+ * juste en lecture. Certaines fonctions définies ici servent en effet pour
+ * des contraintes d’intégrité.
  */
-
-DROP FUNCTION IF EXISTS train_direction;
-
-CREATE OR REPLACE FUNCTION train_direction(
-  line TEXT, this_pa_id INTEGER, next_pa_id INTEGER)
-  RETURNS TEXT
-  LANGUAGE SQL
-AS $$
-  SELECT CASE
-         WHEN (station_lines_2.line_index > station_lines.line_index
-               AND station_lines.increasing_index_is_outbound)
-           OR (station_lines_2.line_index < station_lines.line_index
-               AND NOT station_lines.increasing_index_is_outbound)
-           THEN 'I'
-         WHEN (station_lines_2.line_index < station_lines.line_index
-               AND station_lines.increasing_index_is_outbound)
-           OR (station_lines_2.line_index > station_lines.line_index
-               AND NOT station_lines.increasing_index_is_outbound)
-           THEN 'P'
-         END
-          AS direction
-    FROM station_lines
-         JOIN station_lines AS station_lines_2
-             ON (station_lines_2.pa_id = next_pa_id
-                 AND station_lines_2.line = station_lines.line)
-   WHERE station_lines.pa_id = this_pa_id
-     AND station_lines.line = train_direction.line;
-$$
-STABLE;
 
 /*
- * Étant donné un numéro de train de la ligne C ou D de la forme 123456-123457
- * (numéro pair d’abord, impair ensuite), renvoie le premier numéro pair si
- * direction est « P » et le second si direction vaut « I ». Dans tous les
- * autres cas, renvoie le numéro de train d’origine.
+ * Ces fonctions permettent de calculer la clef de contrôle pour un code UIC.
+ * C'est une formule de Luhn appliquée sur les chiffres du code UIC à partir
+ * du troisième.
  */
 
-DROP FUNCTION IF EXISTS train_number_from_direction;
-
-CREATE OR REPLACE FUNCTION train_number_from_direction(
-  line TEXT, train_number TEXT, direction TEXT)
-  RETURNS TEXT
+CREATE OR REPLACE FUNCTION check_digit(digit_string TEXT)
+  RETURNS INTEGER
   LANGUAGE SQL
 AS $$
-  SELECT CASE
-         WHEN (line = 'C' OR line = 'D')
-           AND train_number ~ '^([0-9]{5})[02468]-\1[13579]$'
-         THEN
-           CASE direction
-           WHEN 'P' THEN substring(train_number FOR 6)
-           WHEN 'I' THEN substring(train_number FROM 8)
-           ELSE train_number
+  WITH weighted_digits AS (
+    SELECT 2 - (row_number() OVER () % 2) AS weight,
+           digit::int
+      FROM regexp_split_to_table(reverse(digit_string), '') AS digits(digit)
+  ), coefficients(c) AS (
+    SELECT CASE
+           WHEN weight * digit >= 10 THEN 1 + ((weight * digit) % 10)
+           ELSE weight * digit
            END
-         ELSE train_number
-         END;
+      FROM weighted_digits
+  )
+  SELECT (10 - (SUM(c) % 10)) % 10 AS check_digit
+  FROM coefficients;
+$$
+IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION uic8_is_valid(uic8 TEXT)
+  RETURNS BOOLEAN
+  LANGUAGE SQL
+AS $$
+  SELECT (uic8 ~ '^[0-9]{8}$'
+          AND check_digit(SUBSTRING(uic8 FROM 3)) = 0);
 $$
 IMMUTABLE;
 

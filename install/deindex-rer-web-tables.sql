@@ -10,3 +10,7 @@ ALTER TABLE station_names
 
 ALTER TABLE station_lines
   DROP CONSTRAINT station_lines_pkey;
+
+ALTER TABLE valid_transilien_api_uics
+  DROP CONSTRAINT valid_transilien_api_uics_pkey,
+  DROP CONSTRAINT valid_transilien_api_uics_uic8_check;

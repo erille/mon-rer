@@ -92,21 +92,14 @@ sub find
         return undef;
     }
 
-    my $sth = database->prepare(q{
-       SELECT code, uic, name, lines, transilien_api_ok
-         FROM find_station_by_key(?, ?)});
-    $sth->execute($key, $value);
+    my $data = database->selectrow_hashref(q{
+       SELECT code, uic, name, lines, transilien_api_search_key
+         FROM find_station_by_key(?, ?)},
+       {},
+       $key, $value);
 
-    my $result = $sth->fetchall_arrayref({});
-
-    if (scalar(@$result)) {
-        return RER::Gare->new(
-            code  => $result->[0]{code},
-            name  => $result->[0]{name},
-            uic   => $result->[0]{uic},
-            lines => $result->[0]{lines},
-            transilien_api_ok => $result->[0]{transilien_api_ok}
-        );
+    if (defined $data) {
+        return RER::Gare->new(%$data);
     }
     else {
         return undef;

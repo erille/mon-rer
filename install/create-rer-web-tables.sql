@@ -4,8 +4,6 @@
  * temporairement les index lors du chargement de données en masse.
  */
 
-CREATE EXTENSION unaccent;
-
 DROP TEXT SEARCH CONFIGURATION IF EXISTS fr_unaccent;
 
 CREATE TEXT SEARCH CONFIGURATION fr_unaccent (COPY = simple);
@@ -27,8 +25,7 @@ CREATE TABLE station_codes (
 
 CREATE TABLE station_names (
   pa_id INTEGER NOT NULL,
-  name  TEXT NOT NULL,
-  transilien_api_ok BOOL NOT NULL
+  name  TEXT NOT NULL
 );
 
 CREATE TABLE station_lines (
@@ -62,3 +59,11 @@ CREATE TABLE IF NOT EXISTS transco_icar (
   zdlr_nom TEXT NOT NULL,
   lda_id TEXT NOT NULL,
   zde_associee TEXT);
+
+/*
+ * Contient la liste blanche des codes UIC8 utilisables pour interroger l’API
+ * Temps Réel Transilien.
+ */
+
+CREATE TABLE IF NOT EXISTS valid_transilien_api_uics (
+  uic8 TEXT);
