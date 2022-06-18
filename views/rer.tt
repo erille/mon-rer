@@ -36,7 +36,7 @@
       var xmlHttp;
 
 
-      /* because IE sucks ass
+      /* workaround for old versions of IE
        * source: Javascript Cookbook, Shelly Powers, O'Reilly, page 122 */
       function listenEvent(eventTarget, eventType, eventHandler) {
           if (eventTarget.addEventListener) {
@@ -49,7 +49,7 @@
           }
       }
 
-      /* because IE sucks ass, again */
+      /* workaround for old versions of IE, again */
       function by_classname(class_name) {
           if (document.getElementsByClassName)
               return document.getElementsByClassName(class_name);
