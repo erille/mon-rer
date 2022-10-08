@@ -634,13 +634,15 @@
           <span class="heure-train" id="t<% i %>c2">&nbsp;</span>
         </div>
         <div class="group">
-          <span class="destination-train" id="t<% i %>c3a">
-            <%~ IF i <= 1 %>Chargement...<% END ~%>
-          </span>
+          <div class="destination-et-voie">
+            <span class="destination-train" id="t<% i %>c3a">
+              <%~ IF i <= 1 %>Chargement...<% END ~%>
+            </span>
+            <span class="conteneur-voie" id="t<% i %>c4">&nbsp;</span>
+          </div>
           <% IF i <= 1 ~%>
              <div class="desserte-train" id="t<% i %>c3b"><ul><li>Chargement en cours...</li></ul></div>
-             <%~ END %>
-          <span class="voie-train" id="t<% i %>c4">&nbsp;</span>
+          <%~ END %>
         </div>
       </div>
       <% END ~%>

@@ -112,11 +112,16 @@ div.train:nth-child(2n+1) {
     background-color: #0c5da5;
 }
 
+div.group div.destination-et-voie { display: flex; justify-content: space-between; }
+span.destination { flex: auto; }
+span.conteneur-voie { flex: none; margin-right: 5px; }
+
 span.voie {
+    display: inline-block;
     text-align: center;
 
-    width: 1.2em;
-    border: 3px solid #ccc;
+    min-width: 1.2em;
+    border: 0.08em solid #ccc;
     border-radius: 3px;
     font-size: 155%;
 
