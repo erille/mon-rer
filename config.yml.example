@@ -44,5 +44,7 @@ plugins:
 sncf_username: 'username'
 sncf_password: 'password'
 
+prim_token: 'token'
+
 # RRD path
 rrd_file: 'stats.rrd'
