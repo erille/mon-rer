@@ -54,12 +54,14 @@ is($trains->[0]->due_time,
        hour => 7, minute => 16, second => 0,
        time_zone => 'UTC'));
 is($trains->[0]->terminus->code, 'MS');
+is($trains->[0]->line, 'R');
 
 
 is($trains->[1]->number, '155827');
 is($trains->[1]->code, 'ROPE');
 is($trains->[1]->status, 'S');
 is($trains->[1]->platform, '1');
+is($trains->[1]->line, 'D');
 
 # A train operated by RATP
 is($trains->[78]->number, 'QMAR36');
@@ -69,5 +71,6 @@ is($trains->[78]->real_time,
        hour => 7, minute => 43, second => 53,
        time_zone => 'UTC'));
 is($trains->[78]->due_time, undef);
+is($trains->[78]->line, 'A');
 
 done_testing();

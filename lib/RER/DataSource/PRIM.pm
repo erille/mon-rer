@@ -14,6 +14,7 @@ use LWP::UserAgent;
 use Dancer qw(:syntax debug);
 
 use RER::Gares;
+use RER::Line;
 use RER::Train;
 
 sub new {
@@ -135,6 +136,7 @@ sub train_from_vehicle_journey {
         real_time => parse_datetime($real_time),
         due_time => parse_datetime($due_time),
         terminus => $terminus,
+        line => RER::Line::from_prim_id($vehicle_journey->{'LineRef'}{'value'}),
     );
 }
 
