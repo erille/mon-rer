@@ -14,8 +14,13 @@ sub transilien_api_search_key {
     $_[0]->{transilien_api_search_key} = $_[1]
         || $_[0]->{transilien_api_search_key};
 }
+sub prim_api_search_key {
+    $_[0]->{prim_api_search_key} = $_[1]
+        || $_[0]->{prim_api_search_key};
+}
 
-our @attributes = qw(code name uic lines transilien_api_search_key);
+our @attributes = qw(
+    code name uic lines transilien_api_search_key prim_api_search_key);
 
 sub new {
     my ($class, %args) = @_;

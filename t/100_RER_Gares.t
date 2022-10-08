@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 20;
+use Test::More tests => 22;
 
 use FindBin;
 use Cwd qw(realpath);
@@ -45,6 +45,10 @@ is($station->uic,  '8739300');
 
 $station = RER::Gares::find(code => 'prout');
 is($station, undef, 'Invalid station yields undef');
+
+$station = RER::Gares::find(prim_key_arr => 'STIF:StopPoint:Q:411481:');
+isa_ok($station, 'RER::Gare');
+is($station->name, 'Montargis');
 
 #
 # Tests for get_autocomp
