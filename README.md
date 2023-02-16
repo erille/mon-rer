@@ -35,6 +35,9 @@ had too many issues with MySQL so I can’t recommend anything but PostgreSQL.
 
 # Installing
 
+Obtain an API token for the [remote API this site uses][4] to fetch the real-time
+timetable data.
+
 Copy `config.yml.example` to `config.yml` and edit it to suit your needs.
 
 Log into an account with superuser access on PostgreSQL and create two
@@ -52,8 +55,10 @@ necessary privileges to the previously-defined users.
 **Note**: if you use different user accounts or wish a different database
 name, type `sh ./install.sh -h` to see how to alter these options.
 
-**Note 2**: SNCF update their data once a week. In order to reimport the data,
-simply run `./install.sh` again.
+**Note 2**: SNCF update their data once a week. In order to refresh the data,
+run `./update.sh`. You can run the script in a weekly cron job if you
+configure the appropriate credentials for the `rer_web_update` user in a
+`.pgpass` file.
 
 # Deployment
 
@@ -64,10 +69,14 @@ have no idea how to do this, read the [Dancer::Deployment Perldoc page] [2].
 
 This program is licensed under the 3-clause BSD license.
 
-This program uses the following datasets supplied by SNCF under its [Open Data
-License] [3] (in French):
+This program uses the following datasets supplied by Île-de-France Mobilités,
+under the [Licence Mobilités] (in French):
 
- * [API Prochains départs lignes Transilien] [4]
+ * [Prochains passages – Requête unitaire][4]
+
+This program also uses the following datasets supplied by SNCF under its [Open
+Data License] [3] (in French):
+
  * [Horaires des lignes Transilien] [5]
 
 This program also contains a custom database derived from the following datasets,
@@ -76,12 +85,11 @@ also supplied by SNCF under [the same terms] [3]:
  * [Gares et points d'arrêts du réseau Transilien] [6]
  * [Lignes par gare en Île-de-France] [7]
 
-
-
 [1]: http://monrer.fr
 [2]: https://metacpan.org/module/Dancer::Deployment
 [3]: http://sncf-data.s3.amazonaws.com/assets/licence-sncf-opendata-eda896b0e6b60d3277a61e548cdb8cb5.pdf
-[4]: https://ressources.data.sncf.com/explore/dataset/api-temps-reel-transilien/information/
-[5]: http://ressources.data.sncf.com/explore/dataset/sncf-horaires-des-lignes-transilien/
-[6]: http://ressources.data.sncf.com/explore/dataset/sncf-gares-et-arrets-transilien-ile-de-france/
-[7]: http://ressources.data.sncf.com/explore/dataset/sncf-lignes-par-gares-idf/
+[4]: https://prim.iledefrance-mobilites.fr/fr/donnees-dynamiques/idfm-ivtr-requete_unitaire
+[5]: https://ressources.data.sncf.com/explore/dataset/sncf-transilien-gtfs/information/
+[6]: https://ressources.data.sncf.com/explore/dataset/sncf-gares-et-arrets-transilien-ile-de-france/
+[7]: https://ressources.data.sncf.com/explore/dataset/sncf-lignes-par-gares-idf/
+[Licence Mobilités]: https://cloud.fabmob.io/s/eYWWJBdM3fQiFNm

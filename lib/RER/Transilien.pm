@@ -34,35 +34,36 @@ sub new {
         content => 'Attention, les horaires affichés sont théoriques. '
         . 'Renseignez-vous en gare pour vérifier si votre train est à l’heure '
         . 'et n’est pas supprimé.');
-    my $warn_sncf_stations_only = RER::Message->new(
-        priority => 'medium',
-        content => 'Pour le moment, les horaires temps réel sont uniquement '
-        . 'disponibles pour les portions du réseau exploitées par la SNCF '
-        . '(lignes C, D, E, H, J, K, L, N, P, R, U et certaines gares des '
-        . 'lignes A et B).');
 
-    # Si la gare choisie est desservie par l'API Temps Réel SNCF, alors on
+    # Si la gare choisie est desservie par l'API Temps Réel PRIM, alors on
     # peut utiliser l’API temps réel et le GTFS ensemble.
-    if (defined $gare_from->transilien_api_search_key) {
-        my $real_time_data = eval { $ds[0]->get_next_trains($gare_from); };
+    my $real_time_data = eval { $ds[0]->get_next_trains($gare_from); };
 
-        if ($@) {
-            push @messages, $warn_no_real_time_times;
-            @data = @{$ds[1]->get_next_trains($gare_from)};
-        }
-        else {
-            @data = @{$ds[1]->complete_train_info($gare_from, $real_time_data)};
-        }
-    }
-    else {
+    if ($@) {
+        my $err = $@;
         push @messages, $warn_no_real_time_times;
-        push @messages, $warn_sncf_stations_only;
+        push @messages, RER::Message->new(priority => 'high', content => "$err");
         @data = @{$ds[1]->get_next_trains($gare_from)};
     }
+    else {
+        @data = @{$ds[1]->complete_train_info($gare_from, $real_time_data)};
+    }
+
+    # Sort trains by departure time
+    @data = sort { DateTime->compare($a->time, $b->time) } @data;
+    # Remove any trains in the future
+    @data = grep { $_->time >= DateTime->now } @data;
+    # Remove any trains that terminate at this station
+    @data = grep {
+        !defined($_->terminus) ||
+            ($_->terminus->code ne $gare_from->code)
+        } @data;
+    # Remove any trains that do not stop at this station
+    @data = grep { $_->is_stopping } @data;
 
     return RER::Results->new(
         from => $gare_from,
-        trains => [map { train_to_json($_) } (grep { $_->is_stopping } @data)],
+        trains => [map { train_to_json($_) } @data],
         messages => \@messages
     );
 }
@@ -87,9 +88,15 @@ sub format_time_info {
     return 'Supprimé' if $train->status eq 'S';
     return "À l'approche" if $train->status eq 'P';
     return 'À quai' if $train->status eq 'Q';
-    return '--:--' unless defined ($train->due_time // $train->real_time);
 
-    return ($train->real_time // $train->due_time)->strftime('%H:%M');
+    my $time = $train->real_time // $train->due_time;
+    if (defined $time) {
+        my $d = $time->clone()->set_time_zone('Europe/Paris');
+        return $d->strftime('%H:%M');
+    }
+    else {
+        return '--:--';
+    }
 }
 
 =head2 format_delay
@@ -159,7 +166,12 @@ sub train_to_json
 
     return undef unless defined $train;
 
-    my $terminus_name = ($train->terminus) ? $train->terminus->name : "?";
+    my $terminus_name;
+    if ($train->is_stopping) {
+        $terminus_name = ($train->terminus) ? $train->terminus->name : "?";
+    } else {
+        $terminus_name = "Train sans arrêt";
+    }
 
     my $dessertes;
     if (defined $train->stations) {

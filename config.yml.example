@@ -38,12 +38,7 @@ plugins:
     username: "rer-web"
     password: "secret"
 
-# SNCF API settings
-
-# sncf_url: http://api.transilien.com
-sncf_username: 'username'
-sncf_password: 'password'
-
+# PRIM API settings
 prim_token: 'token'
 
 # RRD path
