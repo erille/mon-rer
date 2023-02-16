@@ -8,7 +8,7 @@ use utf8;
 use 5.010;
 
 our @attributes = qw(number code platform status line
-                     real_time due_time terminus stations);
+                     real_time due_time terminus stations is_stopping);
 
 sub number    { $_[0]->{number} = $_[1] || $_[0]->{number}; }
 sub code      { $_[0]->{code} = $_[1] || $_[0]->{code}; }
@@ -19,6 +19,12 @@ sub due_time  { $_[0]->{due_time} = $_[1] || $_[0]->{due_time}; }
 sub terminus  { $_[0]->{terminus} = $_[1] || $_[0]->{terminus}; }
 sub stations  { $_[0]->{stations} = $_[1] || $_[0]->{stations}; }
 sub line      { $_[0]->{line} = $_[1] || $_[0]->{line}; }
+sub is_stopping { $_[0]->{is_stopping} = $_[1] || $_[0]->{is_stopping}; }
+
+sub time {
+    my ($train) = @_;
+    $train->real_time // $train->due_time;
+}
 
 sub merge {
     my ($self, $obj) = @_;
@@ -51,6 +57,8 @@ sub new {
     foreach my $attr (@attributes) {
         $self->{$attr} = $args{$attr};
     }
+
+    $self->{is_stopping} //= 1;
 
     return bless $self, __PACKAGE__;
 }

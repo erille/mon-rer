@@ -121,6 +121,45 @@ sub parse_datetime {
     };
 }
 
+sub is_sncf {
+    my ($vehicle_journey) = @_;
+
+    return $vehicle_journey->{'OperatorRef'}{'value'} eq
+        'SNCF_ACCES_CLOUD:Operator::SNCF:';
+}
+
+sub is_vehicle_stopping {
+    my ($vehicle_journey) = @_;
+
+    my $monitored_call = $vehicle_journey->{'MonitoredCall'};
+
+    # NOTE: This is a speculative implementation, based not on information
+    # found in the spec, but on an e-mail discussion I had with the PRIM
+    # maintainers. I didn’t see the “PlatformTraversal” attribute anywhere yet
+    # in my responses.
+
+    if (exists $monitored_call->{'PlatformTraversal'}) {
+        # A true value means that the train is not stopping at the station.
+        return ! $monitored_call->{'PlatformTraversal'};
+    }
+    elsif (is_sncf($vehicle_journey)) {
+        # SNCF will signal non-stop trains with equal expected arrival
+        # and departure times
+        my ($arrival, $departure) =
+            map { parse_datetime($monitored_call->{$_}) } qw(
+                ExpectedArrivalTime ExpectedDepartureTime);
+
+        if (defined $arrival and defined $departure) {
+            return ($departure > $arrival);
+        } else {
+            return 1;
+        }
+    }
+    else {
+        return 1;
+    }
+}
+
 sub train_from_vehicle_journey {
     my ($vehicle_journey) = @_;
 
@@ -142,6 +181,7 @@ sub train_from_vehicle_journey {
         due_time => parse_datetime($due_time),
         terminus => $terminus,
         line => RER::Line::from_prim_id($vehicle_journey->{'LineRef'}{'value'}),
+        is_stopping => is_vehicle_stopping($vehicle_journey),
     );
 }
 
