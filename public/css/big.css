@@ -26,7 +26,26 @@ div#listetrains.no-retard-flip div.group-left span.retard-train { display: none;
 
 div#listetrains.retard-flip div.group-left span.numero-train.no-flip { display: inline-block; }
 
-span.destination-train { font-size: 160%; }
+div#listetrains div.group-left .mission-train img { margin-bottom: -4px; height: 1.1em; }
+
+div.group div.destination-et-voie {
+    display: flex;
+    justify-content: space-between;
+    height: 2.3em;
+    align-items: center;
+}
+span.destination-train {
+    flex: auto;
+    display: inline-block;
+    height: 1.3em;
+    line-break: anywhere;
+    overflow: hidden;
+    font-size: 160%;
+}
+span.conteneur-voie { flex: none; margin-right: 0.2em; }
+
+
+span.destination-train {}
 div.force-height { min-height: 2.5em; }
 
 @media screen and (min-width: 600px)  { body { font-size: 14pt; } }

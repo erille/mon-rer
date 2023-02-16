@@ -4,11 +4,24 @@ div#haut { padding: 0.9em 0.9em 1.0em 0.7em; }
 
 div.group { display: inline; }
 
-span.mission-train:after, 
-	span.retard-train:before { color: white; content: " • "; }
+span.mission-train:after,
+  span.retard-train:before { color: white; content: " • "; }
 span.destination-train { font-size: 140%; }
 div#line_filter ul:before { content: "Lignes : "; }
 
 br.after-mission-train { display:none; }
 
 .no-data { display: none; }
+
+div#listetrains div.group-left .mission-train img { height: 1.1em; }
+span.conteneur-voie { font-size: 80%; }
+div.group div.destination-et-voie { display: flex; }
+span.destination-train {
+    flex: auto;
+    display: inline-block;
+    height: 1.3em;
+    line-break: anywhere;
+    overflow: hidden;
+    font-size: 160%;
+}
+span.conteneur-voie { flex: none; margin-right: 5px; }

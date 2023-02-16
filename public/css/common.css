@@ -125,9 +125,11 @@ span.voie {
     letter-spacing: -2px;
 }
 
-div.train span.heure-train { font-size: 125%; }
-div.train.delayed span.heure-train { font-size: 100%; }
-div.train.canceled span.heure-train { font-size: 90%; }
+div.train span.heure-train { font-size: 125%; color: #ff4; }
+div.train.delayed span.heure-train { font-size: 100%; color: orange; }
+div.train.canceled span.heure-train { font-size: 90%; color: orange; }
+div.train span.heure-train.approche { text-decoration: blink; line-height: 0.9; }
+
 
 span.destination-train img {
     position: relative;
@@ -158,18 +160,6 @@ div.train div.desserte-train p {
     -webkit-transition-duration: 0.9s;
     -webkit-transition-timing-function: linear;
 }
-
-div.train div.heure-train.approche { text-decoration: blink; line-height: 0.9; }
-
-div.train.delayed:nth-child(2n)   { background-color: #a05522; }
-div.train.delayed:nth-child(2n+1) { background-color: #b63; }
-div.train.canceled { background-color: #b44; }
-
-div.train.delayed div.desserte-train,
-div.train.delayed span.numero-train { color: #d9a45a; }
-div.train.canceled div.desserte-train,
-div.train.canceled span.numero-train { color: #e89090; }
-
 
 span.numero-train { color: #679fd2; }
 

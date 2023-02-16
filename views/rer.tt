@@ -168,7 +168,15 @@
           if (train_object.mission != null) {
               elem_mission.classList.remove('no-data');
               elem_mission.textContent = train_object.mission;
+          } else if (train_object.ligne && train_object.ligne == 'TER') {
+              elem_mission.classList.remove('no-data');
+              elem_mission.textContent = '';
+              elem_mission.appendChild(make_img_line_node(train_object.ligne));
+          } else {
+              elem_mission.classList.add('no-data');
+              elem_mission.textContent = '';
           }
+
           elem_numero.textContent = train_object.numero;
 
           if (train_object.retard != null
@@ -185,7 +193,7 @@
           elem_time.textContent = train_object.time;
 
           elem_destination.textContent = '';
-          if (train_object.ligne) {
+          if (train_object.ligne && train_object.ligne != 'TER') {
               elem_destination.appendChild(make_img_line_node(train_object.ligne));
               elem_destination.appendChild(document.createTextNode(' '));
           }
