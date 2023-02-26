@@ -62,7 +62,7 @@ sub new {
 
     return RER::Results->new(
         from => $gare_from,
-        trains => [map { train_to_json($_) } @data],
+        trains => [map { train_to_json($_) } (grep { $_->is_stopping } @data)],
         messages => \@messages
     );
 }
