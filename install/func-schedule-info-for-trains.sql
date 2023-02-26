@@ -27,9 +27,12 @@ WITH dates(date) AS (
    UNION SELECT (rt)::date
    UNION SELECT (rt + INTERVAL '6 HOURS')::date
 ), train_numbers_set AS (
-  SELECT unnest(train_numbers) AS train_number
+  SELECT row_number() OVER () AS "row_number",
+         train_number.train_number
+    FROM unnest(train_numbers) AS train_number(train_number)
 ), today_trips AS (
-  SELECT dates.date,
+  SELECT train_numbers_set."row_number",
+         dates.date,
          trips.trip_id,
          trips.trip_headsign,
          trips.trip_short_name,
@@ -38,11 +41,14 @@ WITH dates(date) AS (
          JOIN LATERAL today_services(dates.date) AS services ON TRUE
          JOIN raw.trips ON (trips.service_id = services.service_id)
          JOIN train_numbers_set
-             ON (train_numbers_set.train_number = trips.trip_short_name)
+             ON (trips.trip_short_name = train_numbers_set.train_number
+                 OR trips.trip_short_name LIKE train_numbers_set.train_number || '-%'
+                 OR trips.trip_short_name LIKE '%-' || train_numbers_set.train_number)
          JOIN raw.routes ON (trips.route_id = routes.route_id)
    WHERE routes.route_type = 2
 ), timetable AS (
-  SELECT today_trips.date,
+  SELECT today_trips."row_number",
+         today_trips.date,
          routes.route_short_name AS "line",
          times.trip_id,
          today_trips.trip_headsign AS "train_name",
@@ -67,7 +73,8 @@ WITH dates(date) AS (
      AND rt - interval '6 hours' <= today_trips.date + times.due_time
      AND today_trips.date + times.due_time <= rt + interval '6 hours'
 ), info AS (
-  SELECT timetable.line,
+  SELECT timetable."row_number",
+         timetable.line,
          timetable.train_name,
          timetable.train_number,
          extra_info.direction,
@@ -100,13 +107,14 @@ WITH dates(date) AS (
 )
 SELECT info.line,
        info.train_name,
-       train_number_from_direction(info.line,
-                                   train_numbers_set.train_number,
-                                   info.direction) AS "train_number",
+       train_number_from_direction(
+         info.line,
+         COALESCE(info.train_number, train_numbers_set.train_number),
+         info.direction) AS "train_number",
        info.due_time,
        info.next_stops,
        info.destination
   FROM train_numbers_set
-       LEFT JOIN info ON (train_numbers_set.train_number = info.train_number)
- ORDER BY array_position(train_numbers, train_numbers_set.train_number);
+  LEFT JOIN info ON (train_numbers_set."row_number" = info."row_number")
+  ORDER BY train_numbers_set."row_number"
 $$
