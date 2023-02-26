@@ -18,9 +18,9 @@ sub transilien_api_search_key {
 our @attributes = qw(code name uic lines transilien_api_search_key);
 
 sub new {
-    my ($self, %args) = @_;
+    my ($class, %args) = @_;
 
-    $self = {};
+    my $self = {};
 
     return undef if ! exists $args{code} || ! defined $args{code};
     return undef if ! exists $args{uic} || ! defined $args{uic};

@@ -44,9 +44,9 @@ sub merge {
 }
 
 sub new {
-    my ($self, %args) = @_;
+    my ($class, %args) = @_;
 
-    $self = {};
+    my $self = {};
 
     foreach my $attr (@attributes) {
         $self->{$attr} = $args{$attr};
