@@ -38,8 +38,13 @@ sub get_next_trains {
     my %urlparams = ('MonitoringRef' => $search_key);
 
     my $api_json = $self->do_request($search_key);
+    my $trains = parse_result(decode_json($api_json));
 
-    return parse_result($api_json);
+    if (wantarray) {
+        return ($trains, $api_json);
+    } else {
+        return $trains;
+    }
 }
 
 sub do_request {
@@ -69,7 +74,7 @@ sub do_request {
         die "Error $code: $message";
     }
 
-    return decode_json($response->decoded_content);
+    return $response->decoded_content;
 }
 
 # Careful, the trains are NOT necessarily sorted by departure time!
