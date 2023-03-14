@@ -9,6 +9,39 @@
 -- \set rt 'timestamp with time zone ''2021-07-28 00:01:00'''
 -- \set train_numbers 'ARRAY[''155903'', ''150524'', ''155905'', ''155977'', ''155027'', ''129600-129601'']'
 
+DROP FUNCTION IF EXISTS adjacent_train_numbers;
+
+CREATE OR REPLACE FUNCTION adjacent_train_numbers(train_number TEXT)
+  RETURNS SETOF TEXT
+  LANGUAGE SQL
+AS $$
+  WITH other_train_number(other_number) AS (
+    SELECT
+      CASE
+      WHEN train_number ~ '^[0-9]+$'
+        THEN CASE
+      WHEN train_number ~ '[02468]$'
+        THEN train_number ||
+            '-' ||
+        SUBSTRING(train_number FOR 5) ||
+        TRANSLATE(SUBSTRING(train_number FROM 6 FOR 1), '02468', '13579')
+      WHEN train_number ~ '[13579]$'
+        THEN SUBSTRING(train_number FOR 5) ||
+        TRANSLATE(SUBSTRING(train_number FROM 6 FOR 1), '13579', '02468') ||
+            '-' ||
+        train_number
+      END
+      END
+  )
+  SELECT train_number
+  UNION ALL
+  SELECT other_number
+  FROM other_train_number
+  WHERE other_number IS NOT NULL
+$$
+IMMUTABLE
+ROWS 2;
+
 DROP FUNCTION IF EXISTS schedule_info_for_trains;
 
 CREATE OR REPLACE FUNCTION schedule_info_for_trains(rt TIMESTAMP WITH TIME ZONE,
@@ -28,8 +61,14 @@ WITH dates(date) AS (
    UNION SELECT (rt + INTERVAL '6 HOURS')::date
 ), train_numbers_set AS (
   SELECT row_number() OVER () AS "row_number",
-         train_number.train_number
+         train_number.train_number,
+         adjacent.adjacent_train_numbers
     FROM unnest(train_numbers) AS train_number(train_number)
+         JOIN LATERAL (
+           SELECT array_agg(adjacent_train_number)
+             FROM adjacent_train_numbers(train_number.train_number)
+                    AS adjacent(adjacent_train_number)
+         ) AS adjacent(adjacent_train_numbers) ON TRUE
 ), today_trips AS (
   SELECT train_numbers_set."row_number",
          dates.date,
@@ -40,10 +79,13 @@ WITH dates(date) AS (
     FROM dates
          JOIN LATERAL today_services(dates.date) AS services ON TRUE
          JOIN raw.trips ON (trips.service_id = services.service_id)
-         JOIN train_numbers_set
-             ON (trips.trip_short_name = train_numbers_set.train_number
-                 OR trips.trip_short_name LIKE train_numbers_set.train_number || '-%'
-                 OR trips.trip_short_name LIKE '%-' || train_numbers_set.train_number)
+         JOIN (
+           SELECT "row_number",
+                  adjacent.train_number
+             FROM train_numbers_set,
+                  unnest(adjacent_train_numbers) AS adjacent(train_number)
+         ) AS train_numbers_set
+             ON (trips.trip_short_name = train_numbers_set.train_number)
          JOIN raw.routes ON (trips.route_id = routes.route_id)
    WHERE routes.route_type = 2
 ), timetable AS (
