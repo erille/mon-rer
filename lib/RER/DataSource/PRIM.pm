@@ -170,7 +170,14 @@ sub train_from_vehicle_journey {
     my $sncf_number = $vehicle_journey->{'TrainNumbers'}{'TrainNumberRef'}[0]{'value'};
     my $ratp_number = $vehicle_journey->{'VehicleJourneyName'}[0]{'value'};
 
-    my $terminus = RER::Gares::find(prim_key_arr => $vehicle_journey->{'DestinationRef'}{'value'});
+    my $terminus = RER::Gares::find(
+        prim_key_arr => $vehicle_journey->{'DestinationRef'}{'value'}
+    );
+    $terminus //= RER::Gare->new(
+        code => '',
+        uic => 0,
+        name => $vehicle_journey->{'DestinationName'}[0]{'value'}
+    );
 
     return RER::Train->new(
         number => $sncf_number // $ratp_number,
