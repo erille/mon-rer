@@ -15,7 +15,7 @@ use RER::Cache;
 use RER::Transilien;
 use RER::Results;
 use RER::Gares;
-use RER::DataSource::Transilien;
+use RER::DataSource::PRIM;
 use RER::DataSource::TransilienGTFS;
 use Storable qw(dclone);
 
@@ -129,10 +129,7 @@ get '/json' => sub {
     my $code = $station->code;
     my $line = params->{'l'};
 
-    my $ds  = RER::DataSource::Transilien->new(
-        url         => config->{'sncf_url'},
-        username    => config->{'sncf_username'},
-        password    => config->{'sncf_password'});
+    my $ds = RER::DataSource::PRIM->new(api_token => config->{'prim_token'});
     my $ds2 = RER::DataSource::TransilienGTFS->new(dbh => database);
 
     my $ret = cache_get_hash($station->code);

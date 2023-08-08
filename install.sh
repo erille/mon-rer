@@ -79,6 +79,7 @@ fi
 # Obtain GTFS data
 #
 get_and_extract_gtfs
+get_prim
 LAST_UPDATE=`$STAT "${GTFS_PATH}"`
 
 psql -X --quiet -f - -U "$db_superuser" <<-EOF
