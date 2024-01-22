@@ -34,8 +34,8 @@ engines:
 plugins:
   Database:
     driver: "Pg"
-    database: "sncf_gtfs"
-    username: "rer-web"
+    database: "rer_web"
+    username: "rer_web"
     password: "secret"
 
 # PRIM API settings
