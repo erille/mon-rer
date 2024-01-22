@@ -72,7 +72,7 @@ if [ "$no_confirm" != "yes" ]; then
     echo " * Normal usage role:       ${BOLD}$db_normal_role${NORMAL}"
     echo
     echo "Press ENTER to start, or Ctrl-C to cancel."
-    read
+    read REPLY
 fi
 
 #
