@@ -22,3 +22,11 @@ ALTER TABLE valid_transilien_api_uics
   ADD CONSTRAINT valid_transilien_api_uics_pkey PRIMARY KEY (uic8),
   ADD CONSTRAINT valid_transilien_api_uics_uic8_check
       CHECK (uic8_is_valid(uic8));
+
+CREATE INDEX "idx_station_codes_pa_id" ON "station_codes" (pa_id);
+
+CREATE INDEX "idx_transco_icar_station_ids"
+  ON "transco_icar" ((zdlr_id::INTEGER), zde_mode, pa_id, zdlr_id);
+
+CREATE INDEX "idx_valid_transilien_api_uics_uic7"
+  ON "valid_transilien_api_uics" ((SUBSTRING("uic8" FROM 1 FOR 7)));

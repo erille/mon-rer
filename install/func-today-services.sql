@@ -32,4 +32,5 @@ SELECT COALESCE(c.service_id, cd.service_id) AS service_id
         END
         AND exception_type IS DISTINCT FROM 2);
 $$
+STABLE
 ROWS 150;

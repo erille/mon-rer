@@ -13,3 +13,5 @@
 
 CREATE INDEX "idx_stop_times_stop_id"
   ON raw.stop_times (stop_id, trip_id);
+
+CREATE INDEX "idx_trips_short_name_route_id" ON raw.trips (trip_short_name, route_id);

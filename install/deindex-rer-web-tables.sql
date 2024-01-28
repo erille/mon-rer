@@ -14,3 +14,9 @@ ALTER TABLE station_lines
 ALTER TABLE valid_transilien_api_uics
   DROP CONSTRAINT valid_transilien_api_uics_pkey,
   DROP CONSTRAINT valid_transilien_api_uics_uic8_check;
+
+DROP INDEX "idx_station_codes_pa_id";
+
+DROP INDEX "idx_transco_icar_station_ids";
+
+DROP INDEX "idx_valid_transilien_api_uics_uic7";

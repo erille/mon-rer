@@ -15,6 +15,7 @@ CREATE EXTENSION unaccent;
 \i install/import-rer-web-data.sql
 \i install/func-basic-functions.sql
 \i install/index-gtfs-tables.sql
+\i install/index-prim-tables.sql
 \i install/index-rer-web-tables.sql
 \i install/func-train-direction.sql
 \i install/func-today-services.sql

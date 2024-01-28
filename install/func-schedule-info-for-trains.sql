@@ -160,3 +160,4 @@ SELECT info.line,
   LEFT JOIN info ON (train_numbers_set."row_number" = info."row_number")
   ORDER BY train_numbers_set."row_number"
 $$
+STABLE;
