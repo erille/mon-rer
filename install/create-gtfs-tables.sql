@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS raw.agency (
   agency_timezone TEXT,
   agency_lang TEXT,
   agency_phone TEXT,
-  agency_email TEXT);
+  agency_email TEXT,
+  agency_fare_url TEXT);
 
 CREATE TABLE IF NOT EXISTS raw.calendar (
   service_id TEXT NOT NULL PRIMARY KEY,
