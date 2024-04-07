@@ -76,8 +76,8 @@ WITH dates(date) AS (
          trips.trip_headsign,
          trips.trip_short_name,
          trips.route_id
-    FROM dates
-         JOIN LATERAL today_services(dates.date) AS services ON TRUE
+    FROM dates,
+         today_services(dates.date) AS services
          JOIN raw.trips ON (trips.service_id = services.service_id)
          JOIN (
            SELECT "row_number",
