@@ -7,41 +7,6 @@
  */
 
 /*
- * Ces fonctions permettent de calculer la clef de contrôle pour un code UIC.
- * C'est une formule de Luhn appliquée sur les chiffres du code UIC à partir
- * du troisième.
- */
-
-CREATE OR REPLACE FUNCTION check_digit(digit_string TEXT)
-  RETURNS INTEGER
-  LANGUAGE SQL
-AS $$
-  WITH weighted_digits AS (
-    SELECT 2 - (row_number() OVER () % 2) AS weight,
-           digit::int
-      FROM regexp_split_to_table(reverse(digit_string), '') AS digits(digit)
-  ), coefficients(c) AS (
-    SELECT CASE
-           WHEN weight * digit >= 10 THEN 1 + ((weight * digit) % 10)
-           ELSE weight * digit
-           END
-      FROM weighted_digits
-  )
-  SELECT (10 - (SUM(c) % 10)) % 10 AS check_digit
-  FROM coefficients;
-$$
-IMMUTABLE;
-
-CREATE OR REPLACE FUNCTION uic8_is_valid(uic8 TEXT)
-  RETURNS BOOLEAN
-  LANGUAGE SQL
-AS $$
-  SELECT (uic8 ~ '^[0-9]{8}$'
-          AND check_digit(SUBSTRING(uic8 FROM 3)) = 0);
-$$
-IMMUTABLE;
-
-/*
  * Étant donné un nom de train extrait de la base de données et un numéro
  * de train, si ce numéro est dans le style RATP, alors renvoie les quatre
  * premiers caractères ; sinon, renvoie le nom original.

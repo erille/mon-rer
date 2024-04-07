@@ -31,7 +31,7 @@ ok($ds = RER::DataSource::TransilienGTFS->new(dbh => database));
 my $data;
 ok($data = $ds->get_info_for_trains(
        DateTime->new(year => 2022, month => 4, day => 1, hour => 14, minute => 0),
-       RER::Gare->new(name => "Juvisy", uic => 8754524, code => 'JY', lines => [qw(C D)] ),
+       RER::Gare->new(name => "Juvisy", code => 'JY', lines => [qw(C D)] ),
        ['148228']));
 isa_ok($data, 'ARRAY');
 is(scalar @$data, 1, 'Array contains one element');

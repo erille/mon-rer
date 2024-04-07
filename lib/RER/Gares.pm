@@ -40,7 +40,7 @@ sub get_last_update {
 sub get_stations
 {
     my $sth = database->prepare(q{
-        SELECT code, name, uic
+        SELECT code, name
           FROM station_codes
                JOIN station_names ON (station_codes.pa_id = station_names.pa_id)
          ORDER BY name});
@@ -52,16 +52,8 @@ sub find
 {
     my ($key, $value) = @_;
 
-    if ($key eq 'uic') {
-        # les codes UIC ont deux variétés : ceux à 7 chiffres et ceux à 8.
-        # ceux à 8 chiffres ont un chiffre de contrôle (superflu) qu'on
-        # enlève, parce qu'on ne stocke que 7 chiffres dans la BDD.
-        $value = substr($value, 0, 7);
-    }
-
     my $data = database->selectrow_hashref(q{
-       SELECT code, uic, name, lines,
-              transilien_api_search_key, prim_api_search_key
+       SELECT code, name, lines, prim_api_search_key
          FROM find_station_by_key(?, ?)},
        {},
        $key, $value);

@@ -13,13 +13,11 @@ BEGIN { use_ok('RER::Train'); use_ok('RER::Gare'); }
 
 ok(my $gare_by = RER::Gare->new(
 	code => 'BY',
-	uic  => 8754519,
 	name => 'Brétigny')
 );
 
 ok(my $gare_mpu = RER::Gare->new(
 	code => 'MPU',
-	uic  => 8754519,
 	name => 'Massy Palaiseau RER C')
 );
 

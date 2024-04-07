@@ -49,7 +49,7 @@ sub new {
 
 =head2 pg_row_to_station
 
-Transforme un triplet (code, UIC, nom), exprimé sous la forme d’une chaîne de
+Transforme un couple (code, nom), exprimé sous la forme d’une chaîne de
 caractères dont le séparateur est le caractère U+001F, en un objet RER::Gare.
 
 Si la chaîne est undef, renvoie undef.
@@ -60,11 +60,10 @@ sub pg_row_to_station {
     my ($str) = @_;
 
     if (defined $str) {
-        my ($code, $uic, $name) = split "\x1f", $str;
+        my ($code, $name) = split "\x1f", $str;
 
         return RER::Gare->new(
             code => $code,
-            uic  => $uic,
             name => $name
         );
     }

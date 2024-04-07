@@ -181,7 +181,6 @@ sub train_from_vehicle_journey {
     }
     $terminus //= RER::Gare->new(
         code => '',
-        uic => 0,
         name => $vehicle_journey->{'DestinationName'}[0]{'value'}
     );
 

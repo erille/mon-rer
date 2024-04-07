@@ -38,13 +38,11 @@ my @r2_messages = (
 
 my $from_station_1 = RER::Gare->new(
     code => 'JY',
-    uic  => 8754524,
     name => 'Juvisy',
     lines => [ qw(C D) ],
 );
 my $from_station_2 = RER::Gare->new(
     code => 'LDU',
-    uic  => 8738221,
     name => 'La Défense',
     lines => [ qw(A L U) ],
 );

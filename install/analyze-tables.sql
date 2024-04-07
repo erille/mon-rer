@@ -9,4 +9,3 @@ ANALYZE station_codes;
 ANALYZE station_names;
 ANALYZE station_lines;
 ANALYZE transco_icar;
-ANALYZE valid_transilien_api_uics;

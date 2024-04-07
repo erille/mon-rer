@@ -180,7 +180,7 @@ sub train_to_json
     my $dessertes;
     if (defined $train->stations) {
         my @arr_dessertes = map {
-            $_ ? ($_->name || $_->uic) : "Gare non trouvée"
+            $_ ? ($_->name) : "Gare non trouvée"
         } @{$train->stations};
         $dessertes = join " \x{2022} ", @arr_dessertes;
     }

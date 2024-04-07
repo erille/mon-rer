@@ -69,10 +69,10 @@ SELECT timetable.line,
        extra_info.destination
   FROM timetable
        JOIN LATERAL (
-         SELECT DISTINCT array_agg(E'\x1F0\x1F' || names.name)
+         SELECT DISTINCT array_agg(E'\x1F' || names.name)
                            OVER w
                            AS next_stops,
-                         last_value(E'\x1F0\x1F' || names.name)
+                         last_value(E'\x1F' || names.name)
                            OVER w
                            AS destination,
                          train_direction(line,

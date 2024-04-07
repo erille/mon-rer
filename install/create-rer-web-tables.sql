@@ -19,8 +19,7 @@ CREATE TABLE IF NOT EXISTS metadata (
 
 CREATE TABLE station_codes (
   pa_id INTEGER NOT NULL,
-  code  TEXT NOT NULL,
-  uic   TEXT NOT NULL
+  code  TEXT NOT NULL
 );
 
 CREATE TABLE station_names (
@@ -59,11 +58,3 @@ CREATE TABLE IF NOT EXISTS transco_icar (
   zdlr_nom TEXT NOT NULL,
   lda_id TEXT NOT NULL,
   zde_associee TEXT);
-
-/*
- * Contient la liste blanche des codes UIC8 utilisables pour interroger l’API
- * Temps Réel Transilien.
- */
-
-CREATE TABLE IF NOT EXISTS valid_transilien_api_uics (
-  uic8 TEXT);

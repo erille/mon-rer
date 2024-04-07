@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Test::More tests => 22;
+use Test::More tests => 16;
 
 use FindBin;
 use Cwd qw(realpath);
@@ -28,20 +28,10 @@ isa_ok($station, 'RER::Gare');
 is($station->code, 'CLX');
 is($station->name, "Châtelet – Les Halles");
 is(ord(substr($station->name, 2)), 0xe2);
-is($station->uic,  '8775860');
-
-$station = RER::Gares::find(uic => '8775860');
-isa_ok($station, 'RER::Gare');
 
 is($station->code, 'CLX');
 is($station->name, 'Châtelet – Les Halles');
-is($station->uic,  '8775860');
 is_deeply($station->lines, [ qw(A B D) ], 'CLX lines is [A, B, D]');
-
-$station = RER::Gares::find(uic => '87393009');
-isa_ok($station, 'RER::Gare');
-is($station->name, 'Versailles Chantiers');
-is($station->uic,  '8739300');
 
 $station = RER::Gares::find(code => 'prout');
 is($station, undef, 'Invalid station yields undef');

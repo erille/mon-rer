@@ -27,10 +27,10 @@ CREATE OR REPLACE VIEW stop_id_station_names AS (
          JOIN station_names ON (stop_id_pa_ids.pa_id = station_names.pa_id)
 );
 
-/* Cette vue fait l’association stop_id GTFS vers codes trigramme et UIC */
+/* Cette vue fait l’association stop_id GTFS vers codes TR3 */
 
 CREATE OR REPLACE VIEW stop_id_station_codes AS (
-  SELECT stop_id, stop_id_pa_ids.pa_id, code, uic
+  SELECT stop_id, stop_id_pa_ids.pa_id, code
     FROM stop_id_pa_ids
          JOIN station_codes ON (stop_id_pa_ids.pa_id = station_codes.pa_id)
 );
