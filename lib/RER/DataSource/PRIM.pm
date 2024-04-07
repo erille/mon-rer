@@ -100,7 +100,6 @@ sub get_trains_in_result {
 sub status_from_vehicle_journey {
     my ($call) = @_;
 
-    my $at_stop = $call->{'VehicleAtStop'};
     my $arrival_status = $call->{'DepartureStatus'} // $call->{'ArrivalStatus'};
 
     my %status_to_letter = (
@@ -183,7 +182,7 @@ sub train_from_vehicle_journey {
         number => $sncf_number // $ratp_number,
         code => $vehicle_journey->{'JourneyNote'}[0]{'value'},
         platform => $call->{'ArrivalPlatformName'}{'value'},
-        status => status_from_vehicle_journey($vehicle_journey->{'MonitoredCall'}),
+        status => status_from_vehicle_journey($call),
         real_time => parse_datetime($real_time),
         due_time => parse_datetime($due_time),
         terminus => $terminus,

@@ -51,7 +51,7 @@ sub new {
 
     # Sort trains by departure time
     @data = sort { DateTime->compare($a->time, $b->time) } @data;
-    # Remove any trains in the future
+    # Remove any trains in the past
     @data = grep { $_->time >= DateTime->now } @data;
     # Remove any trains that terminate at this station
     @data = grep {
