@@ -66,6 +66,8 @@ CREATE TABLE IF NOT EXISTS raw.stop_times (
   trip_id TEXT NOT NULL,
   arrival_time INTERVAL,
   departure_time INTERVAL,
+  start_pickup_drop_off_window TEXT,
+  end_pickup_drop_off_window TEXT,
   stop_id TEXT NOT NULL,
   stop_sequence INTEGER NOT NULL,
   pickup_type INTEGER,
@@ -73,6 +75,8 @@ CREATE TABLE IF NOT EXISTS raw.stop_times (
   local_zone_id TEXT,
   stop_headsign TEXT,
   timepoint INTEGER,
+  pickup_booking_rule_id TEXT,
+  drop_off_booking_rule_id TEXT,
   PRIMARY KEY (trip_id, stop_sequence));
 
 CREATE TABLE IF NOT EXISTS raw.transfers (
