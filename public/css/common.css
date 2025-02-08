@@ -177,7 +177,7 @@ input#s2 {
     color: white;
     border: solid #777 1px;
     background-color: #333;
-    padding: 0.2em 0.1em;
+    padding: 0.3em 0.15em;
     margin-left: 0.2em;
 }
 
@@ -335,9 +335,9 @@ div#footer {
     position: relative;
     display: inline-block;
     text-align: center;
-    margin: 0 3px;
+    margin: 0 4px;
     color: white; background: #555; padding: 4px;
-    min-width: 2.5em; line-height: 1.7em;
+    min-width: 2.5em; line-height: 2.2em;
     border-radius: 4px;
     box-shadow: 0 4px 0 0 #333;
     vertical-align: middle;
