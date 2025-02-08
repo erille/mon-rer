@@ -145,7 +145,7 @@ span.destination-train img {
 div.train div.desserte-train {
     padding: 0;
 
-    color: #679fd2;
+    color: #86b3de;
 
     height: 1.3em;
     line-height: 1.5em;
@@ -166,7 +166,7 @@ div.train div.desserte-train p {
     -webkit-transition-timing-function: linear;
 }
 
-span.numero-train { color: #679fd2; }
+span.numero-train { color: #86b3de; }
 
 
 input#s2 {
