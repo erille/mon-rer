@@ -268,7 +268,7 @@
           }
       }
 
-      function get_data(obj) {
+      function get_data(obj, is_station_change) {
           if (obj.readyState == 4 && obj.status == 200) {
               var text = obj.responseText;
               var info = JSON.parse(text);
@@ -294,7 +294,9 @@
 
               dataRetryCount = 0;
 
-              init_filtres(info.from.lines);
+              if (is_station_change) {
+                  init_filters(info.from.lines);
+              }
               set_cookie('station', info.from.code);
           }
           else if (obj.readyState == 4 && obj.status == 503) {
@@ -364,19 +366,13 @@
           xmlHttp.open("GET", url, true);
           xmlHttp.send();
 
-          xmlHttp.onreadystatechange = function() { get_data(xmlHttp); };
+          xmlHttp.onreadystatechange = function() { get_data(xmlHttp, b); };
       }
 
+      function init_filters(lines) {
+          show_more_options(lines.length > 1);
 
-      function init_filtres(lignes) {
           flt = document.getElementById("line_filter");
-
-          if (lignes.length <= 1) {
-              show_more_options(false);
-              return;
-          } else {
-              show_more_options(true);
-          }
 
           while (flt.childNodes.length > 0)
               flt.removeChild(flt.childNodes[0]);
@@ -394,18 +390,18 @@
           li_0.appendChild(li_0_p);
           flt_ul.appendChild(li_0);
 
-          for (var i = 0; i < lignes.length; i++) {
+          for (var i = 0; i < lines.length; i++) {
               var li = document.createElement("li");
               li.className = "button";
-              li.title = "Ligne " + lignes[i] + " seulement";
+              li.title = "Ligne " + lines[i] + " seulement";
               var p = document.createElement("p");
-              var img = make_img_line_node(lignes[i]);
+              var img = make_img_line_node(lines[i]);
               img.alt = li.title;
 
-              if (lignes[i] == originLineFilter)
+              if (lines[i] == originLineFilter)
                   li.className = "button pressed";
 
-              li.onclick = function(l) { return function() { change_line_filter(l) } }(lignes[i]);
+              li.onclick = function(l) { return function() { change_line_filter(l) } }(lines[i]);
 
               p.appendChild(img);
               li.appendChild(p);
@@ -415,8 +411,6 @@
           flt.appendChild(flt_ul);
           flt.style.display = "inline-block";
       }
-
-
 
       function init_scroll() {
           for (var i = 0; i < 2; i++) {
