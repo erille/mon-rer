@@ -6,9 +6,11 @@ use Dancer ':syntax';
 use Dancer::Plugin::Database;
 
 use RER::Gare;
+
 use DBI;
 use DateTime;
 use DateTime::Format::Strptime;
+use Memoize;
 
 use strict;
 use warnings;
@@ -71,6 +73,8 @@ sub find
         return undef;
     }
 }
+
+memoize('find');
 
 sub get_autocomp
 {

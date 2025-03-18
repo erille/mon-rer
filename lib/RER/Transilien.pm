@@ -13,6 +13,8 @@ use RER::Results;
 use RER::Gares;
 use Dancer qw(:syntax config debug error);
 
+use Memoize;
+
 
 sub new {
     my %param = @_;
@@ -38,6 +40,8 @@ sub new {
     # Si la gare choisie est desservie par l'API Temps Réel PRIM, alors on
     # peut utiliser l’API temps réel et le GTFS ensemble.
     my $real_time_data = eval { $ds[0]->get_next_trains($gare_from); };
+
+    Memoize::flush_cache('RER::Gares::find');
 
     if ($@) {
         my $err = $@;
