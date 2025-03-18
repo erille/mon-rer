@@ -169,9 +169,16 @@ sub train_from_vehicle_journey {
     my $sncf_number = $vehicle_journey->{'TrainNumbers'}{'TrainNumberRef'}[0]{'value'};
     my $ratp_number = $vehicle_journey->{'VehicleJourneyName'}[0]{'value'};
 
-    my $terminus = RER::Gares::find(
-        prim_key_arr => $vehicle_journey->{'DestinationRef'}{'value'}
-    );
+    my $terminus;
+    my $terminus_ref = $vehicle_journey->{'DestinationRef'}{'value'};
+    if (defined $terminus_ref) {
+        if ($terminus_ref =~ /^STIF:StopPoint:/) {
+            $terminus = RER::Gares::find(prim_key_arr => $terminus_ref);
+        }
+        elsif ($terminus_ref =~ /^STIF:StopArea:/) {
+            $terminus = RER::Gares::find(prim_key_zda => $terminus_ref);
+        }
+    }
     $terminus //= RER::Gare->new(
         code => '',
         uic => 0,
