@@ -120,11 +120,11 @@ sub parse_datetime {
     };
 }
 
-sub is_sncf {
+sub is_ratp {
     my ($vehicle_journey) = @_;
 
-    return $vehicle_journey->{'OperatorRef'}{'value'} eq
-        'SNCF_ACCES_CLOUD:Operator::SNCF:';
+    return (exists $vehicle_journey->{'OperatorRef'}{'value'} and
+            $vehicle_journey->{'OperatorRef'}{'value'} =~ /^RATP/);
 }
 
 sub is_vehicle_stopping {
@@ -141,7 +141,7 @@ sub is_vehicle_stopping {
         # A true value means that the train is not stopping at the station.
         return ! $monitored_call->{'PlatformTraversal'};
     }
-    elsif (is_sncf($vehicle_journey)) {
+    elsif (not is_ratp($vehicle_journey)) {
         # SNCF will signal non-stop trains with equal expected arrival
         # and departure times
         my ($arrival, $departure) =

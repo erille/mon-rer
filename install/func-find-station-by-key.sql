@@ -21,7 +21,7 @@ WITH stations_by_key(key, value) AS (
          prim_relations."ZdAId" AS zda_id,
          prim_relations."ArRId" AS arr_id,
          valid_transilien_api_uics.uic8 AS transilien_key,
-         'STIF:StopPoint:Q:' || prim_relations."ZdAId" || ':' AS prim_key_zda,
+         'STIF:StopArea:SP:' || prim_relations."ZdAId" || ':' AS prim_key_zda,
          'STIF:StopPoint:Q:' || prim_relations."ArRId" || ':' AS prim_key_arr
     FROM station_codes
          LEFT JOIN valid_transilien_api_uics
