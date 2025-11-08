@@ -109,8 +109,7 @@ WITH dates(date) AS (
             WHERE stop_times.trip_id = today_trips.trip_id
          ) AS times ON TRUE
          JOIN raw.routes ON (today_trips.route_id = routes.route_id)
-         JOIN raw.stops ON (times.stop_id = stops.stop_id)
-         JOIN stop_id_station_codes ON (stops.stop_id = stop_id_station_codes.stop_id)
+         JOIN stop_id_station_codes ON (times.stop_id = stop_id_station_codes.stop_id)
    WHERE stop_id_station_codes.code = station_code
      AND rt - interval '6 hours' <= today_trips.date + times.due_time
      AND today_trips.date + times.due_time <= rt + interval '6 hours'

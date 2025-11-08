@@ -1,15 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS raw;
 
-CREATE TABLE IF NOT EXISTS raw.agency (
-  agency_id TEXT NOT NULL PRIMARY KEY,
-  agency_name TEXT,
-  agency_url TEXT,
-  agency_timezone TEXT,
-  agency_lang TEXT,
-  agency_phone TEXT,
-  agency_email TEXT,
-  agency_fare_url TEXT,
-  ticketing_deep_link_id TEXT);
+/* On ne crée de tables que pour les fichiers de tables GTFS que nous
+ * utilisons. */
 
 CREATE TABLE IF NOT EXISTS raw.calendar (
   service_id TEXT NOT NULL PRIMARY KEY,
@@ -40,11 +32,6 @@ CREATE TABLE IF NOT EXISTS raw.routes (
   route_color TEXT,
   route_text_color TEXT,
   route_sort_order INTEGER);
-
-CREATE TABLE IF NOT EXISTS raw.stop_extensions (
-  object_id TEXT NOT NULL,
-  object_system TEXT NOT NULL,
-  object_code TEXT NOT NULL);
 
 CREATE TABLE IF NOT EXISTS raw.stops (
   stop_id TEXT NOT NULL PRIMARY KEY,
@@ -78,13 +65,6 @@ CREATE TABLE IF NOT EXISTS raw.stop_times (
   pickup_booking_rule_id TEXT,
   drop_off_booking_rule_id TEXT,
   PRIMARY KEY (trip_id, stop_sequence));
-
-CREATE TABLE IF NOT EXISTS raw.transfers (
-  from_stop_id TEXT NOT NULL,
-  to_stop_id TEXT NOT NULL,
-  transfer_type INTEGER NOT NULL,
-  min_transfer_time INTEGER NOT NULL,
-  PRIMARY KEY (from_stop_id, to_stop_id));
 
 CREATE TABLE IF NOT EXISTS raw.trips (
   route_id TEXT NOT NULL,
