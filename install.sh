@@ -82,7 +82,7 @@ get_and_extract_gtfs
 get_prim
 LAST_UPDATE=`$STAT "${GTFS_PATH}"`
 
-psql -X --quiet -f - -U "$db_superuser" <<-EOF
+psql -X --quiet -f - -U "$db_superuser" -v ON_ERROR_STOP=1 <<-EOF
 CREATE DATABASE "$db_name" WITH
     TEMPLATE = template0
     LC_COLLATE = 'fr_FR.UTF-8'
