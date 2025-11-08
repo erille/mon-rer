@@ -50,6 +50,7 @@ LAST_UPDATE=`$STAT "${GTFS_PATH}"`
 
 echo_status "Updating database"
 psql -X --quiet "$db_name" "$db_updater_role" \
+     -v ON_ERROR_STOP=1 \
      -f install/update.sql \
      -c "INSERT INTO metadata (key, value)
              VALUES ('dmaj', ${LAST_UPDATE})
@@ -58,6 +59,6 @@ psql -X --quiet "$db_name" "$db_updater_role" \
 if [ $? -eq 0 ]; then
     echo_status "Update completed successfully"
 else
-    echo "Database creation failed!" >&2
+    echo "Database update failed!" >&2
     exit 1
 fi

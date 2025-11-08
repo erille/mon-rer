@@ -1,6 +1,5 @@
 /* Utilisé pour l’installation. */
-
-BEGIN;
+/* Attention : À utiliser dans une transaction ! */
 
 CREATE EXTENSION unaccent;
 
@@ -10,13 +9,7 @@ CREATE EXTENSION unaccent;
 \i install/create-rer-web-views.sql
 \i install/create-cache-tables.sql
 \i install/create-stats-tables.sql
-\i install/import-gtfs-data.sql
-\i install/import-prim-data.sql
-\i install/import-rer-web-data.sql
 \i install/func-basic-functions.sql
-\i install/index-gtfs-tables.sql
-\i install/index-prim-tables.sql
-\i install/index-rer-web-tables.sql
 \i install/func-train-direction.sql
 \i install/func-today-services.sql
 \i install/func-autocomplete-stations.sql
@@ -24,4 +17,6 @@ CREATE EXTENSION unaccent;
 \i install/func-next-scheduled-trains.sql
 \i install/func-schedule-info-for-trains.sql
 
-COMMIT;
+\i install/import-all-data.sql
+
+\i install/analyze-tables.sql

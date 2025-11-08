@@ -82,13 +82,15 @@ get_and_extract_gtfs
 get_prim
 LAST_UPDATE=`$STAT "${GTFS_PATH}"`
 
-psql -X --quiet -f - -U "$db_superuser" <<-EOF
+psql -X --quiet -f - -U "$db_superuser" -v ON_ERROR_STOP=1 <<-EOF
 CREATE DATABASE "$db_name" WITH
     TEMPLATE = template0
     LC_COLLATE = 'fr_FR.UTF-8'
     LC_CTYPE = 'fr_FR.UTF-8';
 
 \c "$db_name"
+
+BEGIN;
 
 REVOKE ALL ON SCHEMA PUBLIC FROM PUBLIC;
 
@@ -121,6 +123,8 @@ GRANT USAGE ON SCHEMA raw, public TO "$db_normal_role";
 GRANT INSERT ON stat_events TO "$db_normal_role";
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON cache TO "$db_normal_role";
+
+COMMIT;
 EOF
 
 if [ $? -eq 0 ]; then

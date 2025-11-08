@@ -1,0 +1,12 @@
+ANALYZE raw.calendar;
+ANALYZE raw.calendar_dates;
+ANALYZE raw.routes;
+ANALYZE raw.stop_times;
+ANALYZE raw.trips;
+ANALYZE prim_relations;
+ANALYZE prim_zda;
+ANALYZE station_codes;
+ANALYZE station_names;
+ANALYZE station_lines;
+ANALYZE transco_icar;
+ANALYZE valid_transilien_api_uics;
