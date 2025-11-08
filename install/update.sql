@@ -13,3 +13,5 @@ BEGIN;
 COMMIT;
 
 \i install/rotate-logs.sql
+
+\i install/analyze-tables.sql

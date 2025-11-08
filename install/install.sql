@@ -18,3 +18,5 @@ CREATE EXTENSION unaccent;
 \i install/func-schedule-info-for-trains.sql
 
 \i install/import-all-data.sql
+
+\i install/analyze-tables.sql
