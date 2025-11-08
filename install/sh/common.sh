@@ -41,11 +41,8 @@ download() {
         FreeBSD)
             fetch -o "$1" "$2"
             ;;
-        Linux)
-            wget -O "$1" -N "$2"
-            ;;
         *)
-            wget -O "$1" -N "$2"
+            curl --progress-bar -o "$1" "$2"
             ;;
     esac
 }
