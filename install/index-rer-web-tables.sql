@@ -20,3 +20,6 @@ CREATE INDEX "idx_station_codes_pa_id" ON "station_codes" (pa_id);
 
 CREATE INDEX "idx_transco_icar_station_ids"
   ON "transco_icar" ((zdlr_id::INTEGER), zde_mode, pa_id, zdlr_id);
+
+CREATE INDEX "idx_transco_icar_station_ids_2"
+  ON "transco_icar" (zde_mode, zdlr_id, lda_id, pa_id);

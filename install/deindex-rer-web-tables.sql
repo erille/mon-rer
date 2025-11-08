@@ -13,3 +13,5 @@ ALTER TABLE station_lines
 DROP INDEX "idx_station_codes_pa_id";
 
 DROP INDEX "idx_transco_icar_station_ids";
+
+DROP INDEX "idx_transco_icar_station_ids_2";

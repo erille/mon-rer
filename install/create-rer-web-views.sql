@@ -6,28 +6,18 @@
 /* Notre identifiant central est le pa_id. */
 
 CREATE OR REPLACE VIEW stop_id_pa_ids AS (
-  WITH ids AS (
-    SELECT DISTINCT pa_id,
-                    'IDFM:monomodalStopPlace:' || zdlr_id AS stop_id_zdlr,
-                    'IDFM:' || lda_id AS stop_id_lda
-      FROM transco_icar
-     WHERE zde_mode = 'TRAIN'
-  )
-  SELECT stop_id_zdlr AS stop_id, pa_id
-    FROM ids
-   UNION SELECT stop_id_lda, pa_id
-           FROM ids
+  SELECT 'IDFM:monomodalStopPlace:' || zdlr_id AS stop_id,
+         pa_id
+    FROM transco_icar
+   WHERE zde_mode = 'TRAIN'
+   UNION
+  SELECT 'IDFM:' || lda_id AS stop_id,
+         pa_id
+    FROM transco_icar
+   WHERE zde_mode = 'TRAIN'
 );
 
-/* Cette vue fait l’association stop_id GTFS -> nom de gare. */
-
-CREATE OR REPLACE VIEW stop_id_station_names AS (
-  SELECT stop_id, name
-    FROM stop_id_pa_ids
-         JOIN station_names ON (stop_id_pa_ids.pa_id = station_names.pa_id)
-);
-
-/* Cette vue fait l’association stop_id GTFS vers codes TR3 */
+/* Cette vue fait l’association stop_id GTFS vers codes TR3. */
 
 CREATE OR REPLACE VIEW stop_id_station_codes AS (
   SELECT stop_id, stop_id_pa_ids.pa_id, code

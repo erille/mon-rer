@@ -60,10 +60,11 @@ WITH dates(date) AS (
    UNION SELECT (rt)::date
    UNION SELECT (rt + INTERVAL '6 HOURS')::date
 ), train_numbers_set AS (
-  SELECT row_number() OVER () AS "row_number",
+  SELECT row_number,
          train_number.train_number,
          adjacent.adjacent_train_numbers
-    FROM unnest(train_numbers) AS train_number(train_number)
+    FROM unnest(train_numbers) WITH ORDINALITY
+           AS train_number(train_number, row_number)
          JOIN LATERAL (
            SELECT array_agg(adjacent_train_number)
              FROM adjacent_train_numbers(train_number.train_number)
@@ -96,7 +97,7 @@ WITH dates(date) AS (
          today_trips.trip_headsign AS "train_name",
          today_trips.trip_short_name AS "train_number",
          today_trips.date + times.due_time AS "due_time",
-         stop_id_station_codes.pa_id AS "stop_pa_id",
+         stop_id_pa_ids.pa_id AS "stop_pa_id",
          times.stop_id,
          times.stop_sequence
     FROM today_trips
@@ -109,8 +110,8 @@ WITH dates(date) AS (
             WHERE stop_times.trip_id = today_trips.trip_id
          ) AS times ON TRUE
          JOIN raw.routes ON (today_trips.route_id = routes.route_id)
-         JOIN stop_id_station_codes ON (times.stop_id = stop_id_station_codes.stop_id)
-   WHERE stop_id_station_codes.code = station_code
+         JOIN stop_id_pa_ids ON (times.stop_id = stop_id_pa_ids.stop_id)
+   WHERE stop_id_pa_ids.pa_id = (SELECT pa_id FROM station_codes WHERE code = station_code)
      AND rt - interval '6 hours' <= today_trips.date + times.due_time
      AND today_trips.date + times.due_time <= rt + interval '6 hours'
 ), info AS (
@@ -118,22 +119,13 @@ WITH dates(date) AS (
          timetable.line,
          timetable.train_name,
          timetable.train_number,
-         extra_info.direction,
+         train_direction(line, stop_pa_id, next_stops[1].pa_id) AS direction,
          timetable.due_time,
-         extra_info.next_stops,
-         extra_info.destination
+         (SELECT array_agg(E'\x1F' || unnest.name) FROM unnest(next_stops)) AS next_stops,
+         E'\x1F' || next_stops[array_upper(next_stops, 1)].name AS destination
     FROM timetable
          JOIN LATERAL (
-           SELECT DISTINCT array_agg(E'\x1F' || names.name)
-                             OVER w
-                             AS next_stops,
-                           last_value(E'\x1F' || names.name)
-                             OVER w
-                             AS destination,
-                           train_direction(line,
-                                           stop_pa_id,
-                                           first_value(stop_id_pa_ids.pa_id) OVER w)
-                             AS direction
+           SELECT array_agg(names ORDER BY stop_times.stop_sequence) AS next_stops
              FROM raw.stop_times
                   LEFT JOIN stop_id_pa_ids
                       ON (stop_times.stop_id = stop_id_pa_ids.stop_id)
@@ -141,10 +133,7 @@ WITH dates(date) AS (
                       ON (stop_id_pa_ids.pa_id = names.pa_id)
             WHERE stop_times.trip_id = timetable.trip_id
               AND stop_times.stop_sequence > timetable.stop_sequence
-           WINDOW w AS (ORDER BY stop_sequence
-                        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
-            LIMIT 1
-         ) AS extra_info ON TRUE
+         ) AS next_stops ON TRUE
 )
 SELECT info.line,
        info.train_name,
