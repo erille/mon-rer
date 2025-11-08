@@ -13,13 +13,9 @@ CREATE OR REPLACE FUNCTION find_station_by_key(key TEXT, value TEXT)
   RETURNS TABLE (code TEXT, name TEXT, lines TEXT[], prim_api_search_key TEXT)
   LANGUAGE SQL
 AS $$
-WITH input_query(key, value) AS (
-  VALUES (find_station_by_key.key, find_station_by_key.value)
-), station_search_keys AS (
+WITH station_search_keys AS (
   SELECT station_codes.pa_id,
          station_codes.code,
-         prim_relations."ZdAId" AS zda_id,
-         prim_relations."ArRId" AS arr_id,
          'STIF:StopArea:SP:' || prim_relations."ZdAId" || ':' AS prim_key_zda,
          'STIF:StopPoint:Q:' || prim_relations."ArRId" || ':' AS prim_key_arr
     FROM station_codes
@@ -31,10 +27,6 @@ WITH input_query(key, value) AS (
                  AND prim_zda."ZdAType" = 'railStation')
          JOIN prim_relations
              ON (prim_relations."ZdAId" = prim_zda."ZdAId")
-), station_lines_agg AS (
-  SELECT pa_id, array_agg(line ORDER BY line) AS lines
-    FROM station_lines
-   GROUP BY pa_id
 ), found_pa AS (
   SELECT pa_id, code, prim_key_zda
     FROM station_search_keys
@@ -48,13 +40,13 @@ WITH input_query(key, value) AS (
 )
 SELECT found_pa.code,
        station_names.name,
-       station_lines_agg.lines,
+       (SELECT array_agg(line ORDER BY line)
+          FROM station_lines
+         WHERE pa_id = found_pa.pa_id) AS lines,
        found_pa.prim_key_zda AS "prim_api_search_key"
   FROM found_pa
        JOIN station_names
-           ON (found_pa.pa_id = station_names.pa_id)
-       LEFT JOIN station_lines_agg
-           ON (found_pa.pa_id = station_lines_agg.pa_id);
+           ON (found_pa.pa_id = station_names.pa_id);
 $$
 STABLE
 ROWS 1;

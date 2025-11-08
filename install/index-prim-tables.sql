@@ -5,3 +5,9 @@
 
 CREATE INDEX "idx_prim_relations_arrid_zdaid"
   ON "prim_relations" (('STIF:StopPoint:Q:' || "ArRId" || ':'), "ZdAId");
+
+CREATE INDEX "idx_prim_relations_zdaid"
+  ON "prim_relations" ("ZdAId");
+
+CREATE INDEX "idx_prim_zda_zdatype_zdaid"
+  ON "prim_zda" ("ZdAType", "ZdAId");
