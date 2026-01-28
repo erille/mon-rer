@@ -41,8 +41,8 @@ sub do_file {
 
     open my $fh, '<:encoding(utf8)', $filename or die "$filename: $!\n";
 
-    my $input_columns = $csv_in->getline($fh);
-    my $mapping = assign_columns($columns, $input_columns);
+    my @input_columns = $csv_in->header($fh, { munge => "none" });
+    my $mapping = assign_columns($columns, \@input_columns);
 
     $csv_out->say(*STDOUT, $columns);
     while (my $row = $csv_in->getline($fh)) {
@@ -59,6 +59,7 @@ sub usage {
 
 sub main {
     binmode *STDOUT, ':encoding(utf8)';
+    binmode *STDERR, ':encoding(utf8)';
     if (scalar @ARGV == 0 or $ARGV[0] eq "--help") {
         usage();
         exit(2);

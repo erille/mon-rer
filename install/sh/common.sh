@@ -5,13 +5,13 @@ GTFS_EXTRACT_DIR="input/sncf_gtfs"
 GTFS_PATH="${GTFS_DOWNLOAD_DIR}/export-TN-GTFS-LAST.zip"
 GTFS_URL='https://eu.ftp.opendatasoft.com/sncf/gtfs/transilien-gtfs.zip'
 
-GTFS_PREPROCESS='bin/preprocess-sncf-gtfs.pl'
+PREPROCESS_CSV='bin/preprocess-csv.pl'
 
 PRIM_DOWNLOAD_DIR="input/prim"
 PRIM_RELATIONS_URL='https://data.iledefrance-mobilites.fr/api/explore/v2.1/catalog/datasets/relations/exports/csv?lang=fr&timezone=Europe%2FBerlin&use_labels=true&delimiter=%3B'
-PRIM_RELATIONS_PATH="${PRIM_DOWNLOAD_DIR}/relations.csv"
+PRIM_RELATIONS_PATH="${PRIM_DOWNLOAD_DIR}/orig/relations.csv"
 PRIM_ZDA_URL='https://data.iledefrance-mobilites.fr/api/explore/v2.1/catalog/datasets/zones-d-arrets/exports/csv?lang=fr&timezone=Europe%2FBerlin&use_labels=true&delimiter=%3B'
-PRIM_ZDA_PATH="${PRIM_DOWNLOAD_DIR}/zda.csv"
+PRIM_ZDA_PATH="${PRIM_DOWNLOAD_DIR}/orig/zda.csv"
 
 
 # Make sure this doesn't break on anything else than Linux
@@ -52,25 +52,34 @@ download() {
 
 echo_status() { echo "${BOLD}${BLUE} :: ${NORMAL}${BOLD}$@${NORMAL}"; }
 
-gtfs_preprocess() {
-    BASENAME=$1
-    shift;
+preprocess() {
+    DATA_DIR=$1
+    BASENAME=$2
+    shift 2;
     CSV_COLUMNS=$@
 
-    $GTFS_PREPROCESS \
-        "${GTFS_EXTRACT_DIR}/orig/$BASENAME" \
+    $PREPROCESS_CSV \
+        "${DATA_DIR}/orig/${BASENAME}" \
         $CSV_COLUMNS \
-        > "${GTFS_EXTRACT_DIR}/$BASENAME" || exit 1
+        > "${DATA_DIR}/${BASENAME}" || exit 1
+}
+
+gtfs_preprocess() {
+    preprocess "${GTFS_EXTRACT_DIR}" $@
+}
+
+prim_preprocess() {
+    preprocess "${PRIM_DOWNLOAD_DIR}" $@
 }
 
 get_and_extract_gtfs() {
     echo_status "Obtaining SNCF GTFS data"
-    mkdir -p -- "${GTFS_DOWNLOAD_DIR}/orig/"
+    mkdir -p -- "${GTFS_DOWNLOAD_DIR}/orig"
     download "$GTFS_PATH" "$GTFS_URL" || exit 1
 
     echo_status "Unzipping SNCF GTFS data"
     rm -rf -- "${GTFS_DOWNLOAD_DIR}/orig/"*.txt "${GTFS_DOWNLOAD_DIR}"/*.txt
-    unzip -jd "${GTFS_EXTRACT_DIR}/orig/" "${GTFS_PATH}" || exit 1
+    unzip -jd "${GTFS_EXTRACT_DIR}/orig" "${GTFS_PATH}" || exit 1
 
     echo_status "Preprocessing SNCF GTFS data"
 
@@ -93,7 +102,15 @@ get_and_extract_gtfs() {
 
 get_prim() {
     echo_status "Obtaining PRIM data"
-    mkdir -p -- "${PRIM_DOWNLOAD_DIR}"
+    mkdir -p -- "${PRIM_DOWNLOAD_DIR}/orig"
+    rm -rf -- "${PRIM_DOWNLOAD_DIR}/orig/"*.csv
+
     download "$PRIM_RELATIONS_PATH" "$PRIM_RELATIONS_URL" || exit 1
     download "$PRIM_ZDA_PATH" "$PRIM_ZDA_URL" || exit 1
+
+    echo_status "Preprocessing PRIM data"
+
+    prim_preprocess relations.csv ZdAId ArRId
+
+    prim_preprocess zda.csv ZdAId ZdAType
 }
