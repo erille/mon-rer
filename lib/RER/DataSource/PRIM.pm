@@ -184,10 +184,13 @@ sub train_from_vehicle_journey {
         name => $vehicle_journey->{'DestinationName'}[0]{'value'}
     );
 
+    my $platform = $call->{'ArrivalPlatformName'}{'value'};
+    $platform = undef if $platform eq 'unknown';
+
     return RER::Train->new(
         number => $sncf_number // $ratp_number,
         code => $vehicle_journey->{'JourneyNote'}[0]{'value'},
-        platform => $call->{'ArrivalPlatformName'}{'value'},
+        platform => $platform,
         status => status_from_vehicle_journey($call),
         real_time => parse_datetime($real_time),
         due_time => parse_datetime($due_time),
