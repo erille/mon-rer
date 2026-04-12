@@ -446,7 +446,6 @@ pa_id,line,line_index,increasing_index_is_outbound
 109,C,1550,t
 267,C,1770,t
 260,C,1830,t
-350,C,1530,t
 233,C,1410,t
 238,V,,
 2,C,1240,t
@@ -477,7 +476,6 @@ pa_id,line,line_index,increasing_index_is_outbound
 186,C,1460,t
 210,C,1610,t
 17,C,1150,t
-307,C,1510,t
 37,V,,
 324,C,1620,t
 77,C,1780,t
@@ -494,7 +492,6 @@ pa_id,line,line_index,increasing_index_is_outbound
 292,C,1250,t
 363,C,1280,t
 41,C,1230,t
-329,C,1520,t
 202,C,1650,t
 66,V,,
 428,C,1120,t
@@ -515,7 +512,6 @@ pa_id,line,line_index,increasing_index_is_outbound
 137,C,1680,t
 8,C,1740,t
 371,C,1200,t
-368,C,1540,t
 252,E,,
 17,E,,
 1604,E,,
