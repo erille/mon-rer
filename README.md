@@ -52,7 +52,7 @@ Optional:
 - `HOST`: bind host, default `0.0.0.0`
 - `PORT`: bind port, default `8000`
 - `LOG_LEVEL`: logging level, default `INFO`
-- `DEFAULT_STATION`: default station code, default `EVC`
+- `DEFAULT_STATION`: default station code, default `GDS`
 - `CACHE_TTL_SECONDS`: upstream cache TTL, default `20`
 - `REQUEST_TIMEOUT_SECONDS`: upstream request timeout, default `8`
 - `MAX_DEPARTURES`: number of departures to display, default `6`
