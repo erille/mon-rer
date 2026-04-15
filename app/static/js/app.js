@@ -1,5 +1,5 @@
 const FAVORITE_STATIONS_STORAGE_KEY = "idf-trains.favorite-stations";
-const DEFAULT_THEME = "moderne";
+const DEFAULT_THEME = "standard";
 const DEFAULT_LANGUAGE = "en";
 const LINE_COLORS = {
   A: "#e5412f",

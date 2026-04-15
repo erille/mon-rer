@@ -21,7 +21,7 @@ def test_root_renders_selected_station() -> None:
     assert "Favorite stations" in response.text
     assert "Template:" in response.text
     assert "data-lang-link=\"fr\"" in response.text
-    assert "theme-moderne" in response.text
+    assert "theme-standard" in response.text
     assert "Evry" in response.text or "Évry" in response.text
 
 
@@ -31,6 +31,12 @@ def test_root_renders_standard_theme_when_requested() -> None:
     assert "theme-standard" in response.text
     assert "standard-board" in response.text
     assert "Template:" in response.text
+
+
+def test_root_renders_modern_theme_when_requested() -> None:
+    response = client.get("/?s=EVC&theme=moderne")
+    assert response.status_code == 200
+    assert "theme-moderne" in response.text
 
 
 def test_root_renders_french_when_requested() -> None:

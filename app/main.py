@@ -35,9 +35,9 @@ idfm_client = IdfmApiClient(settings.idfm_api_token, settings.request_timeout_se
 schedule_index = ScheduleIndex()
 departure_service = DepartureService(settings, stations, idfm_client, schedule_index)
 templates = Jinja2Templates(directory="app/templates")
-templates.env.globals["asset_version"] = "20260415-stdfix-2"
-DEFAULT_THEME = "moderne"
-SUPPORTED_THEMES = {DEFAULT_THEME, "standard"}
+templates.env.globals["asset_version"] = "20260415-standard-default-1"
+DEFAULT_THEME = "standard"
+SUPPORTED_THEMES = {DEFAULT_THEME, "moderne"}
 
 
 @asynccontextmanager
@@ -59,8 +59,8 @@ def line_filter_from_query(line: str | None, legacy_line: str | None) -> str | N
     return (line or legacy_line or "").strip().upper() or None
 
 
-def resolve_theme(theme: str | None, theme_cookie: str | None) -> str:
-    candidate = (theme or theme_cookie or DEFAULT_THEME).strip().lower()
+def resolve_theme(theme: str | None) -> str:
+    candidate = (theme or DEFAULT_THEME).strip().lower()
     return candidate if candidate in SUPPORTED_THEMES else DEFAULT_THEME
 
 
@@ -74,12 +74,11 @@ async def index(
     s: str | None = Query(default=None),
     station: str | None = Cookie(default=None),
     theme: str | None = Query(default=None),
-    theme_cookie: str | None = Cookie(default=None, alias="theme"),
     lang: str | None = Query(default=None),
     lang_cookie: str | None = Cookie(default=None, alias="lang"),
 ) -> HTMLResponse:
     station_code = s or station or settings.default_station
-    selected_theme = resolve_theme(theme, theme_cookie)
+    selected_theme = resolve_theme(theme)
     selected_language = resolve_language(lang, lang_cookie)
     language_pack = get_language_pack(selected_language)
     selected_station = stations.find_by_code(station_code)
@@ -109,7 +108,6 @@ async def index(
             status_code=404,
         )
         response.set_cookie("lang", selected_language, max_age=60 * 60 * 24 * 28, httponly=False)
-        response.set_cookie("theme", selected_theme, max_age=60 * 60 * 24 * 28, httponly=False)
         return response
 
     response = templates.TemplateResponse(
@@ -128,7 +126,6 @@ async def index(
     )
     response.set_cookie("lang", selected_language, max_age=60 * 60 * 24 * 28, httponly=False)
     response.set_cookie("station", selected_station.primary_code, max_age=60 * 60 * 24 * 28, httponly=False)
-    response.set_cookie("theme", selected_theme, max_age=60 * 60 * 24 * 28, httponly=False)
     return response
 
 

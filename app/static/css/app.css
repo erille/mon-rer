@@ -548,6 +548,7 @@ a {
 .footer {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 1rem;
   padding: 1.25rem 0 0.5rem;
   font-size: 0.92rem;
@@ -561,17 +562,29 @@ a {
   flex-wrap: wrap;
 }
 
+.footer > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  line-height: 1;
+}
+
 .footer-theme a {
   text-decoration: none;
   opacity: 0.75;
 }
 
+.footer-current-theme {
+  color: var(--accent);
+  font-weight: 700;
+}
+
 .footer-language .language-switcher {
-  padding: 0.2rem 0.3rem;
+  padding: 0.15rem 0.25rem;
 }
 
 .footer-language .language-link {
-  padding: 0.25rem 0.45rem;
+  padding: 0.2rem 0.4rem;
 }
 
 .footer-theme a.is-active,

@@ -450,6 +450,10 @@ body.theme-standard {
   font-size: 0.85rem;
 }
 
+.theme-standard .footer > span {
+  min-height: 1.9rem;
+}
+
 .theme-standard .footer-language .language-switcher {
   border-color: #4a4a4a;
   background: #2b2b2b;
@@ -465,6 +469,10 @@ body.theme-standard {
 .theme-standard .footer-theme a:hover {
   color: #fff159;
   background: #4f4f4f;
+}
+
+.theme-standard .footer-current-theme {
+  color: #fff159;
 }
 
 @media (max-width: 920px) {
