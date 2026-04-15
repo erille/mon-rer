@@ -226,6 +226,10 @@ a {
   gap: 0.45rem;
 }
 
+.search-results[hidden] {
+  display: none !important;
+}
+
 .search-result-row,
 .favorite-station-item {
   display: flex;
