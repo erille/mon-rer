@@ -1,0 +1,5741 @@
+[
+  {
+    "pa_id": 105,
+    "codes": [
+      "ABL"
+    ],
+    "primary_code": "ABL",
+    "name": "Ablon",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46387:"
+  },
+  {
+    "pa_id": 191,
+    "codes": [
+      "GCR"
+    ],
+    "primary_code": "GCR",
+    "name": "Achères Grand Cormier",
+    "lines": [
+      "A",
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47915:"
+  },
+  {
+    "pa_id": 96,
+    "codes": [
+      "ACW"
+    ],
+    "primary_code": "ACW",
+    "name": "Achères-Ville",
+    "lines": [
+      "A",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46647:"
+  },
+  {
+    "pa_id": 216,
+    "codes": [
+      "ANY"
+    ],
+    "primary_code": "ANY",
+    "name": "Andrésy",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47916:"
+  },
+  {
+    "pa_id": 515,
+    "codes": [
+      "ATW"
+    ],
+    "primary_code": "ATW",
+    "name": "Antony",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43066:"
+  },
+  {
+    "pa_id": 510,
+    "codes": [
+      "ARK"
+    ],
+    "primary_code": "ARK",
+    "name": "Arcueil – Cachan",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43067:"
+  },
+  {
+    "pa_id": 272,
+    "codes": [
+      "ARW"
+    ],
+    "primary_code": "ARW",
+    "name": "Argenteuil",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47875:"
+  },
+  {
+    "pa_id": 152,
+    "codes": [
+      "ARP"
+    ],
+    "primary_code": "ARP",
+    "name": "Arpajon",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43068:"
+  },
+  {
+    "pa_id": 276,
+    "codes": [
+      "AEE"
+    ],
+    "primary_code": "AEE",
+    "name": "Asnières-sur-Seine",
+    "lines": [
+      "J",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43069:"
+  },
+  {
+    "pa_id": 35,
+    "codes": [
+      "ATH"
+    ],
+    "primary_code": "ATH",
+    "name": "Athis-Mons",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46395:"
+  },
+  {
+    "pa_id": 483,
+    "codes": [
+      "AUU"
+    ],
+    "primary_code": "AUU",
+    "name": "Auber",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45873:"
+  },
+  {
+    "pa_id": 198,
+    "codes": [
+      "AEH"
+    ],
+    "primary_code": "AEH",
+    "name": "Aubergenville Élisabethville",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43070:"
+  },
+  {
+    "pa_id": 32,
+    "codes": [
+      "AB"
+    ],
+    "primary_code": "AB",
+    "name": "Aulnay-sous-Bois",
+    "lines": [
+      "B",
+      "K"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43071:"
+  },
+  {
+    "pa_id": 179,
+    "codes": [
+      "AUW"
+    ],
+    "primary_code": "AUW",
+    "name": "Auvers-sur-Oise",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47918:"
+  },
+  {
+    "pa_id": 181,
+    "codes": [
+      "AVF"
+    ],
+    "primary_code": "AVF",
+    "name": "Avenue Foch",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45437:"
+  },
+  {
+    "pa_id": 182,
+    "codes": [
+      "AHM"
+    ],
+    "primary_code": "AHM",
+    "name": "Avenue Henri Martin",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45447:"
+  },
+  {
+    "pa_id": 36,
+    "codes": [
+      "APK"
+    ],
+    "primary_code": "APK",
+    "name": "Avenue du Président Kennedy",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45419:"
+  },
+  {
+    "pa_id": 376,
+    "codes": [
+      "RSY"
+    ],
+    "primary_code": "RSY",
+    "name": "Aéroport Charles de Gaulle 1",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:462398:"
+  },
+  {
+    "pa_id": 149,
+    "codes": [
+      "RYR"
+    ],
+    "primary_code": "RYR",
+    "name": "Aéroport Charles de Gaulle 2 TGV",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:473364:"
+  },
+  {
+    "pa_id": 162,
+    "codes": [
+      "BXN"
+    ],
+    "primary_code": "BXN",
+    "name": "Bagneaux-sur-Loing",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47119:"
+  },
+  {
+    "pa_id": 511,
+    "codes": [
+      "BGK"
+    ],
+    "primary_code": "BGK",
+    "name": "Bagneux",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44493:"
+  },
+  {
+    "pa_id": 10,
+    "codes": [
+      "BUR"
+    ],
+    "primary_code": "BUR",
+    "name": "Ballancourt",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43087:"
+  },
+  {
+    "pa_id": 266,
+    "codes": [
+      "BLU"
+    ],
+    "primary_code": "BLU",
+    "name": "Bellevue",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43088:"
+  },
+  {
+    "pa_id": 201,
+    "codes": [
+      "BSW"
+    ],
+    "primary_code": "BSW",
+    "name": "Belloy – Saint-Martin",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47524:"
+  },
+  {
+    "pa_id": 9,
+    "codes": [
+      "BSR"
+    ],
+    "primary_code": "BSR",
+    "name": "Bessancourt",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43090:"
+  },
+  {
+    "pa_id": 232,
+    "codes": [
+      "BYS"
+    ],
+    "primary_code": "BYS",
+    "name": "Beynes",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46857:"
+  },
+  {
+    "pa_id": 316,
+    "codes": [
+      "BFM"
+    ],
+    "primary_code": "BFM",
+    "name": "Bibliothèque François Mitterrand",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45301:"
+  },
+  {
+    "pa_id": 37,
+    "codes": [
+      "BIS"
+    ],
+    "primary_code": "BIS",
+    "name": "Bièvres",
+    "lines": [
+      "V"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43091:"
+  },
+  {
+    "pa_id": 133,
+    "codes": [
+      "BWI"
+    ],
+    "primary_code": "BWI",
+    "name": "Boigneville",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43092:"
+  },
+  {
+    "pa_id": 263,
+    "codes": [
+      "BCO"
+    ],
+    "primary_code": "BCO",
+    "name": "Bois-Colombes",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:51238:"
+  },
+  {
+    "pa_id": 247,
+    "codes": [
+      "BJR"
+    ],
+    "primary_code": "BJR",
+    "name": "Bois-le-Roi",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47654:"
+  },
+  {
+    "pa_id": 123,
+    "codes": [
+      "BKR"
+    ],
+    "primary_code": "BKR",
+    "name": "Boissise-le-Roi",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45763:"
+  },
+  {
+    "pa_id": 503,
+    "codes": [
+      "BXR"
+    ],
+    "primary_code": "BXR",
+    "name": "Boissy Saint-Léger",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43094:"
+  },
+  {
+    "pa_id": 242,
+    "codes": [
+      "BLA"
+    ],
+    "primary_code": "BLA",
+    "name": "Boissy-l’Aillerie",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46801:"
+  },
+  {
+    "pa_id": 99,
+    "codes": [
+      "BDY"
+    ],
+    "primary_code": "BDY",
+    "name": "Bondy",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43096:"
+  },
+  {
+    "pa_id": 330,
+    "codes": [
+      "BNR"
+    ],
+    "primary_code": "BNR",
+    "name": "Bonnières",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46984:"
+  },
+  {
+    "pa_id": 452,
+    "codes": [
+      "BRN"
+    ],
+    "primary_code": "BRN",
+    "name": "Boran-sur-Oise",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411332:"
+  },
+  {
+    "pa_id": 48,
+    "codes": [
+      "BOF"
+    ],
+    "primary_code": "BOF",
+    "name": "Bouffémont – Moisselles",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47517:"
+  },
+  {
+    "pa_id": 382,
+    "codes": [
+      "BGV"
+    ],
+    "primary_code": "BGV",
+    "name": "Bougival",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47790:"
+  },
+  {
+    "pa_id": 218,
+    "codes": [
+      "BWR"
+    ],
+    "primary_code": "BWR",
+    "name": "Boulainvilliers",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45453:"
+  },
+  {
+    "pa_id": 323,
+    "codes": [
+      "BSO"
+    ],
+    "primary_code": "BSO",
+    "name": "Bouray",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47905:"
+  },
+  {
+    "pa_id": 512,
+    "codes": [
+      "BQQ"
+    ],
+    "primary_code": "BQQ",
+    "name": "Bourg-la-Reine",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43097:"
+  },
+  {
+    "pa_id": 97,
+    "codes": [
+      "BOM"
+    ],
+    "primary_code": "BOM",
+    "name": "Bourron-Marlotte – Grez",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47124:"
+  },
+  {
+    "pa_id": 70,
+    "codes": [
+      "BXI"
+    ],
+    "primary_code": "BXI",
+    "name": "Boussy-Saint-Antoine",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47924:"
+  },
+  {
+    "pa_id": 135,
+    "codes": [
+      "BJN"
+    ],
+    "primary_code": "BJN",
+    "name": "Boutigny",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47895:"
+  },
+  {
+    "pa_id": 25,
+    "codes": [
+      "BRW"
+    ],
+    "primary_code": "BRW",
+    "name": "Breuillet Village",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43099:"
+  },
+  {
+    "pa_id": 77,
+    "codes": [
+      "BIH"
+    ],
+    "primary_code": "BIH",
+    "name": "Breuillet – Bruyères le Chatel",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47925:"
+  },
+  {
+    "pa_id": 318,
+    "codes": [
+      "BNY"
+    ],
+    "primary_code": "BNY",
+    "name": "Brunoy",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58873:"
+  },
+  {
+    "pa_id": 43,
+    "codes": [
+      "BRK"
+    ],
+    "primary_code": "BRK",
+    "name": "Bruyères-sur-Oise",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47533:"
+  },
+  {
+    "pa_id": 487,
+    "codes": [
+      "BQA"
+    ],
+    "primary_code": "BQA",
+    "name": "Bry-sur-Marne",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43101:"
+  },
+  {
+    "pa_id": 108,
+    "codes": [
+      "BY"
+    ],
+    "primary_code": "BY",
+    "name": "Brétigny",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43098:"
+  },
+  {
+    "pa_id": 29,
+    "codes": [
+      "BVA"
+    ],
+    "primary_code": "BVA",
+    "name": "Bréval",
+    "lines": [
+      "TER"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43100:"
+  },
+  {
+    "pa_id": 101,
+    "codes": [
+      "BQV"
+    ],
+    "primary_code": "BQV",
+    "name": "Buno – Gironville",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43102:"
+  },
+  {
+    "pa_id": 523,
+    "codes": [
+      "BVJ"
+    ],
+    "primary_code": "BVJ",
+    "name": "Bures-sur-Yvette",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43103:"
+  },
+  {
+    "pa_id": 493,
+    "codes": [
+      "BXG"
+    ],
+    "primary_code": "BXG",
+    "name": "Bussy-Saint-Georges",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58874:"
+  },
+  {
+    "pa_id": 155,
+    "codes": [
+      "BEC"
+    ],
+    "primary_code": "BEC",
+    "name": "Bécon-les-Bruyères",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47923:"
+  },
+  {
+    "pa_id": 351,
+    "codes": [
+      "CYP"
+    ],
+    "primary_code": "CYP",
+    "name": "Cergy Préfecture",
+    "lines": [
+      "A",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44559:"
+  },
+  {
+    "pa_id": 94,
+    "codes": [
+      "CYC"
+    ],
+    "primary_code": "CYC",
+    "name": "Cergy Saint-Christophe",
+    "lines": [
+      "A",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47897:"
+  },
+  {
+    "pa_id": 62,
+    "codes": [
+      "CJV"
+    ],
+    "primary_code": "CJV",
+    "name": "Cergy le Haut",
+    "lines": [
+      "A",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43104:"
+  },
+  {
+    "pa_id": 258,
+    "codes": [
+      "CEJ"
+    ],
+    "primary_code": "CEJ",
+    "name": "Cernay",
+    "lines": [
+      "C",
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43105:"
+  },
+  {
+    "pa_id": 143,
+    "codes": [
+      "CES"
+    ],
+    "primary_code": "CES",
+    "name": "Cesson",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:42516:"
+  },
+  {
+    "pa_id": 437,
+    "codes": [
+      "NC9"
+    ],
+    "primary_code": "NC9",
+    "name": "Chailly – Boissy-le-Châtel",
+    "lines": [],
+    "stop_area_ref": null
+  },
+  {
+    "pa_id": 14,
+    "codes": [
+      "CHK"
+    ],
+    "primary_code": "CHK",
+    "name": "Chamarande",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47927:"
+  },
+  {
+    "pa_id": 49,
+    "codes": [
+      "CEG"
+    ],
+    "primary_code": "CEG",
+    "name": "Champ de Courses d’Enghien",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46477:"
+  },
+  {
+    "pa_id": 325,
+    "codes": [
+      "CPM"
+    ],
+    "primary_code": "CPM",
+    "name": "Champ de Mars Tour Eiffel",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58757:"
+  },
+  {
+    "pa_id": 148,
+    "codes": [
+      "CPO"
+    ],
+    "primary_code": "CPO",
+    "name": "Champagne-sur-Oise",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47590:"
+  },
+  {
+    "pa_id": 341,
+    "codes": [
+      "CME"
+    ],
+    "primary_code": "CME",
+    "name": "Champagne-sur-Seine",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43106:"
+  },
+  {
+    "pa_id": 142,
+    "codes": [
+      "CPK"
+    ],
+    "primary_code": "CPK",
+    "name": "Champbenoist – Poigny",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47174:"
+  },
+  {
+    "pa_id": 500,
+    "codes": [
+      "CGJ"
+    ],
+    "primary_code": "CGJ",
+    "name": "Champigny",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58270:"
+  },
+  {
+    "pa_id": 1080,
+    "codes": [
+      "CSY"
+    ],
+    "primary_code": "CSY",
+    "name": "Champigny-sur-Yonne",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411461:"
+  },
+  {
+    "pa_id": 84,
+    "codes": [
+      "CJN"
+    ],
+    "primary_code": "CJN",
+    "name": "Changis – Saint-Jean",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47928:"
+  },
+  {
+    "pa_id": 146,
+    "codes": [
+      "CVF"
+    ],
+    "primary_code": "CVF",
+    "name": "Chanteloup-les-Vignes",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47929:"
+  },
+  {
+    "pa_id": 427,
+    "codes": [
+      "CLY"
+    ],
+    "primary_code": "CLY",
+    "name": "Chantilly-Gouvieux",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411428:"
+  },
+  {
+    "pa_id": 20,
+    "codes": [
+      "CPW"
+    ],
+    "primary_code": "CPW",
+    "name": "Chaponval",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47591:"
+  },
+  {
+    "pa_id": 482,
+    "codes": [
+      "CGP"
+    ],
+    "primary_code": "CGP",
+    "name": "Charles-de-Gaulle – Étoile",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58759:"
+  },
+  {
+    "pa_id": 18,
+    "codes": [
+      "CHR"
+    ],
+    "primary_code": "CHR",
+    "name": "Chars",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47930:"
+  },
+  {
+    "pa_id": 1093,
+    "codes": [
+      "CH"
+    ],
+    "primary_code": "CH",
+    "name": "Chartres",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411507:"
+  },
+  {
+    "pa_id": 312,
+    "codes": [
+      "CJR"
+    ],
+    "primary_code": "CJR",
+    "name": "Chartrettes",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43107:"
+  },
+  {
+    "pa_id": 462,
+    "codes": [
+      "ND0"
+    ],
+    "primary_code": "ND0",
+    "name": "Chauffry",
+    "lines": [],
+    "stop_area_ref": null
+  },
+  {
+    "pa_id": 409,
+    "codes": [
+      "CEV"
+    ],
+    "primary_code": "CEV",
+    "name": "Chaumont-en-Vexin",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411345:"
+  },
+  {
+    "pa_id": 326,
+    "codes": [
+      "CWJ"
+    ],
+    "primary_code": "CWJ",
+    "name": "Chaville Rive Droite",
+    "lines": [
+      "L",
+      "U"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43241:"
+  },
+  {
+    "pa_id": 275,
+    "codes": [
+      "CVI"
+    ],
+    "primary_code": "CVI",
+    "name": "Chaville Rive Gauche",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43108:"
+  },
+  {
+    "pa_id": 41,
+    "codes": [
+      "CHV"
+    ],
+    "primary_code": "CHV",
+    "name": "Chaville Vélizy",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47883:"
+  },
+  {
+    "pa_id": 280,
+    "codes": [
+      "CSG"
+    ],
+    "primary_code": "CSG",
+    "name": "Chelles – Gournay",
+    "lines": [
+      "E",
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58879:"
+  },
+  {
+    "pa_id": 245,
+    "codes": [
+      "CHQ"
+    ],
+    "primary_code": "CHQ",
+    "name": "Chemin d’Antony",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46035:"
+  },
+  {
+    "pa_id": 350,
+    "codes": [
+      "CAZ"
+    ],
+    "primary_code": "CAZ",
+    "name": "Chilly-Mazarin",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:43109:"
+  },
+  {
+    "pa_id": 160,
+    "codes": [
+      "CLR"
+    ],
+    "primary_code": "CLR",
+    "name": "Choisy-le-Roi",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43110:"
+  },
+  {
+    "pa_id": 460,
+    "codes": [
+      "CTH"
+    ],
+    "primary_code": "CTH",
+    "name": "Château-Thierry",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411378:"
+  },
+  {
+    "pa_id": 446,
+    "codes": [
+      "CLX"
+    ],
+    "primary_code": "CLX",
+    "name": "Châtelet – Les Halles",
+    "lines": [
+      "A",
+      "B",
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45102:"
+  },
+  {
+    "pa_id": 479,
+    "codes": [
+      "NC5"
+    ],
+    "primary_code": "NC5",
+    "name": "Châtou – Croissy",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:53783:"
+  },
+  {
+    "pa_id": 405,
+    "codes": [
+      "CYZ"
+    ],
+    "primary_code": "CYZ",
+    "name": "Chézy-sur-Marne",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411381:"
+  },
+  {
+    "pa_id": 507,
+    "codes": [
+      "CUF"
+    ],
+    "primary_code": "CUF",
+    "name": "Cité Universitaire",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:473843:"
+  },
+  {
+    "pa_id": 352,
+    "codes": [
+      "CMA"
+    ],
+    "primary_code": "CMA",
+    "name": "Clamart",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43111:"
+  },
+  {
+    "pa_id": 68,
+    "codes": [
+      "CLL"
+    ],
+    "primary_code": "CLL",
+    "name": "Clichy – Levallois",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43112:"
+  },
+  {
+    "pa_id": 57,
+    "codes": [
+      "CGW"
+    ],
+    "primary_code": "CGW",
+    "name": "Coignières",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47932:"
+  },
+  {
+    "pa_id": 212,
+    "codes": [
+      "CBK"
+    ],
+    "primary_code": "CBK",
+    "name": "Colombes",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43113:"
+  },
+  {
+    "pa_id": 110,
+    "codes": [
+      "CBV"
+    ],
+    "primary_code": "CBV",
+    "name": "Combs-la-Ville – Quincy",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45771:"
+  },
+  {
+    "pa_id": 380,
+    "codes": [
+      "COJ"
+    ],
+    "primary_code": "COJ",
+    "name": "Compans",
+    "lines": [
+      "K"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46731:"
+  },
+  {
+    "pa_id": 273,
+    "codes": [
+      "CFD"
+    ],
+    "primary_code": "CFD",
+    "name": "Conflans-Fin-d’Oise",
+    "lines": [
+      "A",
+      "J",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43114:"
+  },
+  {
+    "pa_id": 71,
+    "codes": [
+      "CSH"
+    ],
+    "primary_code": "CSH",
+    "name": "Conflans-Sainte-Honorine",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47447:"
+  },
+  {
+    "pa_id": 398,
+    "codes": [
+      "COE"
+    ],
+    "primary_code": "COE",
+    "name": "Corbeil-Essonnes",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43115:"
+  },
+  {
+    "pa_id": 95,
+    "codes": [
+      "CPA"
+    ],
+    "primary_code": "CPA",
+    "name": "Cormeilles-en-Parisis",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43116:"
+  },
+  {
+    "pa_id": 44,
+    "codes": [
+      "CYQ"
+    ],
+    "primary_code": "CYQ",
+    "name": "Couilly – Saint-Germain – Quincy",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47327:"
+  },
+  {
+    "pa_id": 58,
+    "codes": [
+      "CO"
+    ],
+    "primary_code": "CO",
+    "name": "Coulommiers",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43117:"
+  },
+  {
+    "pa_id": 388,
+    "codes": [
+      "KOU"
+    ],
+    "primary_code": "KOU",
+    "name": "Courbevoie",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43118:"
+  },
+  {
+    "pa_id": 526,
+    "codes": [
+      "CVW"
+    ],
+    "primary_code": "CVW",
+    "name": "Courcelle-sur-Yvette",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47052:"
+  },
+  {
+    "pa_id": 436,
+    "codes": [
+      "CL"
+    ],
+    "primary_code": "CL",
+    "name": "Creil",
+    "lines": [
+      "D",
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411440:"
+  },
+  {
+    "pa_id": 248,
+    "codes": [
+      "CQQ"
+    ],
+    "primary_code": "CQQ",
+    "name": "Crouy-sur-Ourcq",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47491:"
+  },
+  {
+    "pa_id": 31,
+    "codes": [
+      "CLC"
+    ],
+    "primary_code": "CLC",
+    "name": "Crécy-la-Chapelle",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47894:"
+  },
+  {
+    "pa_id": 441,
+    "codes": [
+      "CYV"
+    ],
+    "primary_code": "CYV",
+    "name": "Crépy-en-Valois",
+    "lines": [
+      "K"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411396:"
+  },
+  {
+    "pa_id": 111,
+    "codes": [
+      "PPD"
+    ],
+    "primary_code": "PPD",
+    "name": "Créteil Pompadour",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46286:"
+  },
+  {
+    "pa_id": 322,
+    "codes": [
+      "DAM"
+    ],
+    "primary_code": "DAM",
+    "name": "Dammartin – Juilly – Saint-Mard",
+    "lines": [
+      "K"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46736:"
+  },
+  {
+    "pa_id": 506,
+    "codes": [
+      "DFR"
+    ],
+    "primary_code": "DFR",
+    "name": "Denfert-Rochereau",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:473890:"
+  },
+  {
+    "pa_id": 115,
+    "codes": [
+      "DEU"
+    ],
+    "primary_code": "DEU",
+    "name": "Deuil – Montmagny",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:473159:"
+  },
+  {
+    "pa_id": 184,
+    "codes": [
+      "DMO"
+    ],
+    "primary_code": "DMO",
+    "name": "Domont",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43120:"
+  },
+  {
+    "pa_id": 411,
+    "codes": [
+      "DDI"
+    ],
+    "primary_code": "DDI",
+    "name": "Dordives",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58955:"
+  },
+  {
+    "pa_id": 277,
+    "codes": [
+      "D"
+    ],
+    "primary_code": "D",
+    "name": "Dourdan",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43121:"
+  },
+  {
+    "pa_id": 260,
+    "codes": [
+      "DA"
+    ],
+    "primary_code": "DA",
+    "name": "Dourdan la Forêt",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47095:"
+  },
+  {
+    "pa_id": 366,
+    "codes": [
+      "DRN"
+    ],
+    "primary_code": "DRN",
+    "name": "Drancy",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43122:"
+  },
+  {
+    "pa_id": 407,
+    "codes": [
+      "DX"
+    ],
+    "primary_code": "DX",
+    "name": "Dreux",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411492:"
+  },
+  {
+    "pa_id": 50,
+    "codes": [
+      "EN"
+    ],
+    "primary_code": "EN",
+    "name": "Enghien-les-Bains",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43075:"
+  },
+  {
+    "pa_id": 69,
+    "codes": [
+      "ERM"
+    ],
+    "primary_code": "ERM",
+    "name": "Ermont Halte",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47920:"
+  },
+  {
+    "pa_id": 298,
+    "codes": [
+      "ERE",
+      "ERT"
+    ],
+    "primary_code": "ERE",
+    "name": "Ermont – Eaubonne",
+    "lines": [
+      "C",
+      "H",
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47898:"
+  },
+  {
+    "pa_id": 370,
+    "codes": [
+      "EY"
+    ],
+    "primary_code": "EY",
+    "name": "Esbly",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47322:"
+  },
+  {
+    "pa_id": 302,
+    "codes": [
+      "ESO"
+    ],
+    "primary_code": "ESO",
+    "name": "Essonnes – Robinson",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45759:"
+  },
+  {
+    "pa_id": 168,
+    "codes": [
+      "FMP"
+    ],
+    "primary_code": "FMP",
+    "name": "Faremoutiers – Pommeuse",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47199:"
+  },
+  {
+    "pa_id": 448,
+    "codes": [
+      "FFY"
+    ],
+    "primary_code": "FFY",
+    "name": "Ferrières Fontenay",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411488:"
+  },
+  {
+    "pa_id": 516,
+    "codes": [
+      "FMN"
+    ],
+    "primary_code": "FMN",
+    "name": "Fontaine Michalon",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43124:"
+  },
+  {
+    "pa_id": 192,
+    "codes": [
+      "FPO"
+    ],
+    "primary_code": "FPO",
+    "name": "Fontaine-le-Port",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43123:"
+  },
+  {
+    "pa_id": 200,
+    "codes": [
+      "FON"
+    ],
+    "primary_code": "FON",
+    "name": "Fontainebleau – Avon",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47911:"
+  },
+  {
+    "pa_id": 529,
+    "codes": [
+      "FNR"
+    ],
+    "primary_code": "FNR",
+    "name": "Fontenay-aux-Roses",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43125:"
+  },
+  {
+    "pa_id": 40,
+    "codes": [
+      "FAF"
+    ],
+    "primary_code": "FAF",
+    "name": "Fontenay-le-Fleury",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47884:"
+  },
+  {
+    "pa_id": 495,
+    "codes": [
+      "FSB"
+    ],
+    "primary_code": "FSB",
+    "name": "Fontenay-sous-Bois",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47238:"
+  },
+  {
+    "pa_id": 189,
+    "codes": [
+      "FPB"
+    ],
+    "primary_code": "FPB",
+    "name": "Franconville – Le Plessis-Bouchard",
+    "lines": [
+      "C",
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43126:"
+  },
+  {
+    "pa_id": 332,
+    "codes": [
+      "FPN"
+    ],
+    "primary_code": "FPN",
+    "name": "Frépillon",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47580:"
+  },
+  {
+    "pa_id": 209,
+    "codes": [
+      "GN"
+    ],
+    "primary_code": "GN",
+    "name": "Gagny",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43044:"
+  },
+  {
+    "pa_id": 136,
+    "codes": [
+      "GAQ"
+    ],
+    "primary_code": "GAQ",
+    "name": "Garancières – La Queue",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47903:"
+  },
+  {
+    "pa_id": 113,
+    "codes": [
+      "GMC"
+    ],
+    "primary_code": "GMC",
+    "name": "Garches – Marnes-la-Coquette",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47770:"
+  },
+  {
+    "pa_id": 395,
+    "codes": [
+      "GGV"
+    ],
+    "primary_code": "GGV",
+    "name": "Gargenville",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43129:"
+  },
+  {
+    "pa_id": 11,
+    "codes": [
+      "GAJ"
+    ],
+    "primary_code": "GAJ",
+    "name": "Garges – Sarcelles",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43251:"
+  },
+  {
+    "pa_id": 337,
+    "codes": [
+      "GZA"
+    ],
+    "primary_code": "GZA",
+    "name": "Gazeran",
+    "lines": [
+      "TER"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46832:"
+  },
+  {
+    "pa_id": 147,
+    "codes": [
+      "GEN"
+    ],
+    "primary_code": "GEN",
+    "name": "Gennevilliers",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43130:"
+  },
+  {
+    "pa_id": 508,
+    "codes": [
+      "GTL"
+    ],
+    "primary_code": "GTL",
+    "name": "Gentilly",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45877:"
+  },
+  {
+    "pa_id": 525,
+    "codes": [
+      "GIF"
+    ],
+    "primary_code": "GIF",
+    "name": "Gif-sur-Yvette",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47888:"
+  },
+  {
+    "pa_id": 454,
+    "codes": [
+      "GIS"
+    ],
+    "primary_code": "GIS",
+    "name": "Gisors",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:59301:"
+  },
+  {
+    "pa_id": 353,
+    "codes": [
+      "GOU"
+    ],
+    "primary_code": "GOU",
+    "name": "Goussainville",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47876:"
+  },
+  {
+    "pa_id": 283,
+    "codes": [
+      "GBG"
+    ],
+    "primary_code": "GBG",
+    "name": "Grand Bourg",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45860:"
+  },
+  {
+    "pa_id": 329,
+    "codes": [
+      "GBI"
+    ],
+    "primary_code": "GBI",
+    "name": "Gravigny – Balizy",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:47934:"
+  },
+  {
+    "pa_id": 122,
+    "codes": [
+      "GZ"
+    ],
+    "primary_code": "GZ",
+    "name": "Gretz-Armainvilliers",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43131:"
+  },
+  {
+    "pa_id": 173,
+    "codes": [
+      "GGG"
+    ],
+    "primary_code": "GGG",
+    "name": "Grigny Centre",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43132:"
+  },
+  {
+    "pa_id": 165,
+    "codes": [
+      "GNX"
+    ],
+    "primary_code": "GNX",
+    "name": "Gros Noyer Saint-Prix",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46482:"
+  },
+  {
+    "pa_id": 188,
+    "codes": [
+      "GRL"
+    ],
+    "primary_code": "GRL",
+    "name": "Groslay",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43133:"
+  },
+  {
+    "pa_id": 339,
+    "codes": [
+      "GCM"
+    ],
+    "primary_code": "GCM",
+    "name": "Guérard – La Celle-sur-Morin",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47205:"
+  },
+  {
+    "pa_id": 220,
+    "codes": [
+      "HSL"
+    ],
+    "primary_code": "HSL",
+    "name": "Haussmann – Saint-Lazare",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58718:"
+  },
+  {
+    "pa_id": 314,
+    "codes": [
+      "HRY"
+    ],
+    "primary_code": "HRY",
+    "name": "Herblay",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47603:"
+  },
+  {
+    "pa_id": 225,
+    "codes": [
+      "HOA"
+    ],
+    "primary_code": "HOA",
+    "name": "Houdan",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47935:"
+  },
+  {
+    "pa_id": 378,
+    "codes": [
+      "HAR"
+    ],
+    "primary_code": "HAR",
+    "name": "Houilles – Carrières-sur-Seine",
+    "lines": [
+      "A",
+      "J",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43082:"
+  },
+  {
+    "pa_id": 141,
+    "codes": [
+      "HER"
+    ],
+    "primary_code": "HER",
+    "name": "Héricy",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47145:"
+  },
+  {
+    "pa_id": 389,
+    "codes": [
+      "IGY"
+    ],
+    "primary_code": "IGY",
+    "name": "Igny",
+    "lines": [
+      "V"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43083:"
+  },
+  {
+    "pa_id": 246,
+    "codes": [
+      "INV"
+    ],
+    "primary_code": "INV",
+    "name": "Invalides",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:470540:"
+  },
+  {
+    "pa_id": 392,
+    "codes": [
+      "IAC"
+    ],
+    "primary_code": "IAC",
+    "name": "Isles – Armentières – Congis",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47484:"
+  },
+  {
+    "pa_id": 33,
+    "codes": [
+      "IPO"
+    ],
+    "primary_code": "IPO",
+    "name": "Issou – Porcheville",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46975:"
+  },
+  {
+    "pa_id": 292,
+    "codes": [
+      "ISY"
+    ],
+    "primary_code": "ISY",
+    "name": "Issy",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43084:"
+  },
+  {
+    "pa_id": 215,
+    "codes": [
+      "ISP"
+    ],
+    "primary_code": "ISP",
+    "name": "Issy Val de Seine",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:462357:"
+  },
+  {
+    "pa_id": 185,
+    "codes": [
+      "IV"
+    ],
+    "primary_code": "IV",
+    "name": "Ivry-sur-Seine",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46366:"
+  },
+  {
+    "pa_id": 363,
+    "codes": [
+      "JVL"
+    ],
+    "primary_code": "JVL",
+    "name": "Javel",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45346:"
+  },
+  {
+    "pa_id": 1087,
+    "codes": [
+      "JOI"
+    ],
+    "primary_code": "JOI",
+    "name": "Joigny",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411467:"
+  },
+  {
+    "pa_id": 497,
+    "codes": [
+      "JVR"
+    ],
+    "primary_code": "JVR",
+    "name": "Joinville-le-Pont",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43135:"
+  },
+  {
+    "pa_id": 426,
+    "codes": [
+      "JOY"
+    ],
+    "primary_code": "JOY",
+    "name": "Jouy",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411498:"
+  },
+  {
+    "pa_id": 66,
+    "codes": [
+      "JAS"
+    ],
+    "primary_code": "JAS",
+    "name": "Jouy-en-Josas",
+    "lines": [
+      "V"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43136:"
+  },
+  {
+    "pa_id": 112,
+    "codes": [
+      "JY"
+    ],
+    "primary_code": "JY",
+    "name": "Juvisy",
+    "lines": [
+      "C",
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45739:"
+  },
+  {
+    "pa_id": 290,
+    "codes": [
+      "JUZ"
+    ],
+    "primary_code": "JUZ",
+    "name": "Juziers",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43137:"
+  },
+  {
+    "pa_id": 374,
+    "codes": [
+      "LBJ"
+    ],
+    "primary_code": "LBJ",
+    "name": "La Barre Ormesson",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46470:"
+  },
+  {
+    "pa_id": 404,
+    "codes": [
+      "BBN"
+    ],
+    "primary_code": "BBN",
+    "name": "La Borne Blanche",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411418:"
+  },
+  {
+    "pa_id": 119,
+    "codes": [
+      "LCB"
+    ],
+    "primary_code": "LCB",
+    "name": "La Celle-Saint-Cloud",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47880:"
+  },
+  {
+    "pa_id": 83,
+    "codes": [
+      "ALC"
+    ],
+    "primary_code": "ALC",
+    "name": "La Courneuve – Aubervilliers",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43140:"
+  },
+  {
+    "pa_id": 514,
+    "codes": [
+      "XBY"
+    ],
+    "primary_code": "XBY",
+    "name": "La Croix de Berny",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46007:"
+  },
+  {
+    "pa_id": 252,
+    "codes": [
+      "GAW",
+      "LDU"
+    ],
+    "primary_code": "GAW",
+    "name": "La Défense",
+    "lines": [
+      "A",
+      "E",
+      "L",
+      "U"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:470549:"
+  },
+  {
+    "pa_id": 207,
+    "codes": [
+      "LFA"
+    ],
+    "primary_code": "LFA",
+    "name": "La Ferté-Alais",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43142:"
+  },
+  {
+    "pa_id": 447,
+    "codes": [
+      "LFM"
+    ],
+    "primary_code": "LFM",
+    "name": "La Ferté-Milon",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411372:"
+  },
+  {
+    "pa_id": 121,
+    "codes": [
+      "LFJ"
+    ],
+    "primary_code": "LFJ",
+    "name": "La Ferté-sous-Jouarre",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43246:"
+  },
+  {
+    "pa_id": 145,
+    "codes": [
+      "FMY"
+    ],
+    "primary_code": "FMY",
+    "name": "La Frette – Montigny",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43143:"
+  },
+  {
+    "pa_id": 100,
+    "codes": [
+      "LGK"
+    ],
+    "primary_code": "LGK",
+    "name": "La Garenne-Colombes",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47412:"
+  },
+  {
+    "pa_id": 131,
+    "codes": [
+      "GPA"
+    ],
+    "primary_code": "GPA",
+    "name": "La Grande-Paroisse",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43144:"
+  },
+  {
+    "pa_id": 524,
+    "codes": [
+      "HAQ"
+    ],
+    "primary_code": "HAQ",
+    "name": "La Hacquinière",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47046:"
+  },
+  {
+    "pa_id": 265,
+    "codes": [
+      "NG"
+    ],
+    "primary_code": "NG",
+    "name": "La Norville – Saint-Germain-lès-Arpajon",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47939:"
+  },
+  {
+    "pa_id": 279,
+    "codes": [
+      "LPN"
+    ],
+    "primary_code": "LPN",
+    "name": "La Plaine – Stade de France",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43145:"
+  },
+  {
+    "pa_id": 501,
+    "codes": [
+      "LVZ"
+    ],
+    "primary_code": "LVZ",
+    "name": "La Varenne – Chennevières",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43146:"
+  },
+  {
+    "pa_id": 295,
+    "codes": [
+      "VYL"
+    ],
+    "primary_code": "VYL",
+    "name": "La Verrière",
+    "lines": [
+      "N",
+      "U"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43147:"
+  },
+  {
+    "pa_id": 431,
+    "codes": [
+      "VWT"
+    ],
+    "primary_code": "VWT",
+    "name": "La Villetertre",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411348:"
+  },
+  {
+    "pa_id": 1092,
+    "codes": [
+      "VTP"
+    ],
+    "primary_code": "VTP",
+    "name": "La Villette Saint-Prest",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411504:"
+  },
+  {
+    "pa_id": 240,
+    "codes": [
+      "LGY"
+    ],
+    "primary_code": "LGY",
+    "name": "Lagny – Thorigny",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:427872:"
+  },
+  {
+    "pa_id": 509,
+    "codes": [
+      "LJA"
+    ],
+    "primary_code": "LJA",
+    "name": "Laplace",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43607:"
+  },
+  {
+    "pa_id": 345,
+    "codes": [
+      "LYO"
+    ],
+    "primary_code": "LYO",
+    "name": "Lardy",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43149:"
+  },
+  {
+    "pa_id": 1088,
+    "codes": [
+      "LAR"
+    ],
+    "primary_code": "LAR",
+    "name": "Laroche – Migennes",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411479:"
+  },
+  {
+    "pa_id": 213,
+    "codes": [
+      "BAM"
+    ],
+    "primary_code": "BAM",
+    "name": "Le Blanc-Mesnil",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46163:"
+  },
+  {
+    "pa_id": 256,
+    "codes": [
+      "LBT"
+    ],
+    "primary_code": "LBT",
+    "name": "Le Bourget",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43231:"
+  },
+  {
+    "pa_id": 396,
+    "codes": [
+      "BFX"
+    ],
+    "primary_code": "BFX",
+    "name": "Le Bras de Fer",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45850:"
+  },
+  {
+    "pa_id": 381,
+    "codes": [
+      "CGG"
+    ],
+    "primary_code": "CGG",
+    "name": "Le Chénay Gagny",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43127:"
+  },
+  {
+    "pa_id": 103,
+    "codes": [
+      "CEX"
+    ],
+    "primary_code": "CEX",
+    "name": "Le Coudray-Monceaux",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45824:"
+  },
+  {
+    "pa_id": 521,
+    "codes": [
+      "GUW"
+    ],
+    "primary_code": "GUW",
+    "name": "Le Guichet",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43232:"
+  },
+  {
+    "pa_id": 67,
+    "codes": [
+      "WEE"
+    ],
+    "primary_code": "WEE",
+    "name": "Le Mée",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45784:"
+  },
+  {
+    "pa_id": 499,
+    "codes": [
+      "PXO"
+    ],
+    "primary_code": "PXO",
+    "name": "Le Parc de Saint-Maur",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43234:"
+  },
+  {
+    "pa_id": 229,
+    "codes": [
+      "LPE"
+    ],
+    "primary_code": "LPE",
+    "name": "Le Perray",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43235:"
+  },
+  {
+    "pa_id": 445,
+    "codes": [
+      "PLB"
+    ],
+    "primary_code": "PLB",
+    "name": "Le Plessis-Belleville",
+    "lines": [
+      "K"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411405:"
+  },
+  {
+    "pa_id": 383,
+    "codes": [
+      "IBM"
+    ],
+    "primary_code": "IBM",
+    "name": "Le Plessis-Chenet",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45820:"
+  },
+  {
+    "pa_id": 287,
+    "codes": [
+      "RVM"
+    ],
+    "primary_code": "RVM",
+    "name": "Le Raincy – Villemomble – Montfermeil",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47901:"
+  },
+  {
+    "pa_id": 243,
+    "codes": [
+      "LSD"
+    ],
+    "primary_code": "LSD",
+    "name": "Le Stade",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43236:"
+  },
+  {
+    "pa_id": 251,
+    "codes": [
+      "VDO"
+    ],
+    "primary_code": "VDO",
+    "name": "Le Val d’Or",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:422065:"
+  },
+  {
+    "pa_id": 208,
+    "codes": [
+      "VD"
+    ],
+    "primary_code": "VD",
+    "name": "Le Vert de Maisons",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:464040:"
+  },
+  {
+    "pa_id": 478,
+    "codes": [
+      "NC4"
+    ],
+    "primary_code": "NC4",
+    "name": "Le Vésinet-Centre",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:53784:"
+  },
+  {
+    "pa_id": 477,
+    "codes": [
+      "VPQ"
+    ],
+    "primary_code": "VPQ",
+    "name": "Le Vésinet – Le Pecq",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43237:"
+  },
+  {
+    "pa_id": 231,
+    "codes": [
+      "LAD"
+    ],
+    "primary_code": "LAD",
+    "name": "Les Ardoines",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43227:"
+  },
+  {
+    "pa_id": 517,
+    "codes": [
+      "BQC"
+    ],
+    "primary_code": "BQC",
+    "name": "Les Baconnets",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43228:"
+  },
+  {
+    "pa_id": 328,
+    "codes": [
+      "BXP"
+    ],
+    "primary_code": "BXP",
+    "name": "Les Boullereaux Champigny",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58267:"
+  },
+  {
+    "pa_id": 76,
+    "codes": [
+      "KVE"
+    ],
+    "primary_code": "KVE",
+    "name": "Les Clairières de Verneuil",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:54249:"
+  },
+  {
+    "pa_id": 367,
+    "codes": [
+      "LSI"
+    ],
+    "primary_code": "LSI",
+    "name": "Les Essarts-le-Roi",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43229:"
+  },
+  {
+    "pa_id": 397,
+    "codes": [
+      "LEG"
+    ],
+    "primary_code": "LEG",
+    "name": "Les Grésillons",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43230:"
+  },
+  {
+    "pa_id": 348,
+    "codes": [
+      "LMU"
+    ],
+    "primary_code": "LMU",
+    "name": "Les Mureaux",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47881:"
+  },
+  {
+    "pa_id": 30,
+    "codes": [
+      "LNX"
+    ],
+    "primary_code": "LNX",
+    "name": "Les Noues",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47968:"
+  },
+  {
+    "pa_id": 334,
+    "codes": [
+      "LSW"
+    ],
+    "primary_code": "LSW",
+    "name": "Les Saules",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46298:"
+  },
+  {
+    "pa_id": 24,
+    "codes": [
+      "LWA"
+    ],
+    "primary_code": "LWA",
+    "name": "Les Vallées",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47969:"
+  },
+  {
+    "pa_id": 15,
+    "codes": [
+      "LYV"
+    ],
+    "primary_code": "LYV",
+    "name": "Les Yvris – Noisy-le-Grand",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58288:"
+  },
+  {
+    "pa_id": 425,
+    "codes": [
+      "LQK"
+    ],
+    "primary_code": "LQK",
+    "name": "Liancourt-Saint-Pierre",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411342:"
+  },
+  {
+    "pa_id": 166,
+    "codes": [
+      "LIU"
+    ],
+    "primary_code": "LIU",
+    "name": "Lieusaint – Moissy",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47669:"
+  },
+  {
+    "pa_id": 60,
+    "codes": [
+      "LIM"
+    ],
+    "primary_code": "LIM",
+    "name": "Limay",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43151:"
+  },
+  {
+    "pa_id": 343,
+    "codes": [
+      "LYQ"
+    ],
+    "primary_code": "LYQ",
+    "name": "Livry-sur-Seine",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45804:"
+  },
+  {
+    "pa_id": 150,
+    "codes": [
+      "LZO"
+    ],
+    "primary_code": "LZO",
+    "name": "Lizy-sur-Ourcq",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47486:"
+  },
+  {
+    "pa_id": 491,
+    "codes": [
+      "LQN"
+    ],
+    "primary_code": "LQN",
+    "name": "Lognes",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43152:"
+  },
+  {
+    "pa_id": 368,
+    "codes": [
+      "LJU"
+    ],
+    "primary_code": "LJU",
+    "name": "Longjumeau",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:47059:"
+  },
+  {
+    "pa_id": 336,
+    "codes": [
+      "LON"
+    ],
+    "primary_code": "LON",
+    "name": "Longueville",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47914:"
+  },
+  {
+    "pa_id": 139,
+    "codes": [
+      "LFC"
+    ],
+    "primary_code": "LFC",
+    "name": "Louveciennes",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:473506:"
+  },
+  {
+    "pa_id": 342,
+    "codes": [
+      "LOV"
+    ],
+    "primary_code": "LOV",
+    "name": "Louvres",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44628:"
+  },
+  {
+    "pa_id": 520,
+    "codes": [
+      "LZV"
+    ],
+    "primary_code": "LZV",
+    "name": "Lozère",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:474069:"
+  },
+  {
+    "pa_id": 504,
+    "codes": [
+      "LXJ"
+    ],
+    "primary_code": "LXJ",
+    "name": "Luxembourg",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43833:"
+  },
+  {
+    "pa_id": 241,
+    "codes": [
+      "LUZ"
+    ],
+    "primary_code": "LUZ",
+    "name": "Luzarches",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47528:"
+  },
+  {
+    "pa_id": 107,
+    "codes": [
+      "IAP"
+    ],
+    "primary_code": "IAP",
+    "name": "L’Isle-Adam – Parmain",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47589:"
+  },
+  {
+    "pa_id": 300,
+    "codes": [
+      "ELW"
+    ],
+    "primary_code": "ELW",
+    "name": "L’Étang-la-Ville",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47937:"
+  },
+  {
+    "pa_id": 171,
+    "codes": [
+      "MGT"
+    ],
+    "primary_code": "MGT",
+    "name": "Magenta",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58572:"
+  },
+  {
+    "pa_id": 1090,
+    "codes": [
+      "MTN"
+    ],
+    "primary_code": "MTN",
+    "name": "Maintenon",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:59302:"
+  },
+  {
+    "pa_id": 303,
+    "codes": [
+      "MFA"
+    ],
+    "primary_code": "MFA",
+    "name": "Maisons-Alfort – Alfortville",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43154:"
+  },
+  {
+    "pa_id": 138,
+    "codes": [
+      "MLF"
+    ],
+    "primary_code": "MLF",
+    "name": "Maisons-Laffitte",
+    "lines": [
+      "A",
+      "J",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:473109:"
+  },
+  {
+    "pa_id": 362,
+    "codes": [
+      "MSN"
+    ],
+    "primary_code": "MSN",
+    "name": "Maisse",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43156:"
+  },
+  {
+    "pa_id": 59,
+    "codes": [
+      "MAL"
+    ],
+    "primary_code": "MAL",
+    "name": "Malesherbes",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411485:"
+  },
+  {
+    "pa_id": 88,
+    "codes": [
+      "MTQ"
+    ],
+    "primary_code": "MTQ",
+    "name": "Mantes Station",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46965:"
+  },
+  {
+    "pa_id": 176,
+    "codes": [
+      "MTE"
+    ],
+    "primary_code": "MTE",
+    "name": "Mantes-la-Jolie",
+    "lines": [
+      "J",
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43157:"
+  },
+  {
+    "pa_id": 424,
+    "codes": [
+      "MBR"
+    ],
+    "primary_code": "MBR",
+    "name": "Marchezais – Broué",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411495:"
+  },
+  {
+    "pa_id": 237,
+    "codes": [
+      "MPJ"
+    ],
+    "primary_code": "MPJ",
+    "name": "Mareil-Marly",
+    "lines": [],
+    "stop_area_ref": null
+  },
+  {
+    "pa_id": 278,
+    "codes": [
+      "MJM"
+    ],
+    "primary_code": "MJM",
+    "name": "Mareil-sur-Mauldre",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46884:"
+  },
+  {
+    "pa_id": 414,
+    "codes": [
+      "MAQ"
+    ],
+    "primary_code": "MAQ",
+    "name": "Mareuil-sur-Ourcq",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411375:"
+  },
+  {
+    "pa_id": 402,
+    "codes": [
+      "MLB"
+    ],
+    "primary_code": "MLB",
+    "name": "Marles-en-Brie",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43247:"
+  },
+  {
+    "pa_id": 87,
+    "codes": [
+      "MLR"
+    ],
+    "primary_code": "MLR",
+    "name": "Marly-le-Roi",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43248:"
+  },
+  {
+    "pa_id": 464,
+    "codes": [
+      "MVC"
+    ],
+    "primary_code": "MVC",
+    "name": "Marne-la-Vallée – Chessy",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43239:"
+  },
+  {
+    "pa_id": 137,
+    "codes": [
+      "MSX"
+    ],
+    "primary_code": "MSX",
+    "name": "Marolles-en-Hurepoix",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43159:"
+  },
+  {
+    "pa_id": 109,
+    "codes": [
+      "MP",
+      "MPU"
+    ],
+    "primary_code": "MP",
+    "name": "Massy – Palaiseau",
+    "lines": [
+      "B",
+      "C",
+      "V"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58774:"
+  },
+  {
+    "pa_id": 309,
+    "codes": [
+      "MVP",
+      "MVW"
+    ],
+    "primary_code": "MVP",
+    "name": "Massy – Verrières",
+    "lines": [
+      "B",
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47940:"
+  },
+  {
+    "pa_id": 222,
+    "codes": [
+      "MAE"
+    ],
+    "primary_code": "MAE",
+    "name": "Maule",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46886:"
+  },
+  {
+    "pa_id": 261,
+    "codes": [
+      "MRK"
+    ],
+    "primary_code": "MRK",
+    "name": "Maurecourt",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43160:"
+  },
+  {
+    "pa_id": 304,
+    "codes": [
+      "MEA"
+    ],
+    "primary_code": "MEA",
+    "name": "Meaux",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43161:"
+  },
+  {
+    "pa_id": 132,
+    "codes": [
+      "MEL"
+    ],
+    "primary_code": "MEL",
+    "name": "Melun",
+    "lines": [
+      "D",
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47909:"
+  },
+  {
+    "pa_id": 194,
+    "codes": [
+      "MNY"
+    ],
+    "primary_code": "MNY",
+    "name": "Mennecy",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47899:"
+  },
+  {
+    "pa_id": 158,
+    "codes": [
+      "MDN"
+    ],
+    "primary_code": "MDN",
+    "name": "Meudon",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43162:"
+  },
+  {
+    "pa_id": 2,
+    "codes": [
+      "MFY"
+    ],
+    "primary_code": "MFY",
+    "name": "Meudon Val Fleury",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43163:"
+  },
+  {
+    "pa_id": 81,
+    "codes": [
+      "MHD"
+    ],
+    "primary_code": "MHD",
+    "name": "Meulan – Hardricourt",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46897:"
+  },
+  {
+    "pa_id": 357,
+    "codes": [
+      "MY"
+    ],
+    "primary_code": "MY",
+    "name": "Mitry – Claye",
+    "lines": [
+      "B",
+      "K"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43164:"
+  },
+  {
+    "pa_id": 453,
+    "codes": [
+      "MS"
+    ],
+    "primary_code": "MS",
+    "name": "Montargis",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411482:"
+  },
+  {
+    "pa_id": 187,
+    "codes": [
+      "MTU"
+    ],
+    "primary_code": "MTU",
+    "name": "Montereau",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47910:"
+  },
+  {
+    "pa_id": 319,
+    "codes": [
+      "MLM"
+    ],
+    "primary_code": "MLM",
+    "name": "Montfort-l’Amaury – Méré",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46850:"
+  },
+  {
+    "pa_id": 163,
+    "codes": [
+      "KRW"
+    ],
+    "primary_code": "KRW",
+    "name": "Montgeron – Crosne",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47684:"
+  },
+  {
+    "pa_id": 235,
+    "codes": [
+      "MKU"
+    ],
+    "primary_code": "MKU",
+    "name": "Montgeroult – Courcelles",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44161:"
+  },
+  {
+    "pa_id": 153,
+    "codes": [
+      "MKN"
+    ],
+    "primary_code": "MKN",
+    "name": "Montigny-sur-Loing",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47125:"
+  },
+  {
+    "pa_id": 270,
+    "codes": [
+      "MBP"
+    ],
+    "primary_code": "MBP",
+    "name": "Montigny – Beauchamp",
+    "lines": [
+      "C",
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43166:"
+  },
+  {
+    "pa_id": 373,
+    "codes": [
+      "MFL"
+    ],
+    "primary_code": "MFL",
+    "name": "Montreuil",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43167:"
+  },
+  {
+    "pa_id": 85,
+    "codes": [
+      "MYD"
+    ],
+    "primary_code": "MYD",
+    "name": "Montry – Condé",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47325:"
+  },
+  {
+    "pa_id": 311,
+    "codes": [
+      "MSO"
+    ],
+    "primary_code": "MSO",
+    "name": "Montsoult – Maffliers",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43168:"
+  },
+  {
+    "pa_id": 23,
+    "codes": [
+      "MOR"
+    ],
+    "primary_code": "MOR",
+    "name": "Moret – Veneux-les-Sablons",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47130:"
+  },
+  {
+    "pa_id": 190,
+    "codes": [
+      "MRT"
+    ],
+    "primary_code": "MRT",
+    "name": "Mormant",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47184:"
+  },
+  {
+    "pa_id": 151,
+    "codes": [
+      "MOF"
+    ],
+    "primary_code": "MOF",
+    "name": "Mortcerf",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47942:"
+  },
+  {
+    "pa_id": 259,
+    "codes": [
+      "MJW"
+    ],
+    "primary_code": "MJW",
+    "name": "Moulin-Galant",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45761:"
+  },
+  {
+    "pa_id": 306,
+    "codes": [
+      "MXK"
+    ],
+    "primary_code": "MXK",
+    "name": "Mouroux",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47943:"
+  },
+  {
+    "pa_id": 372,
+    "codes": [
+      "MDS"
+    ],
+    "primary_code": "MDS",
+    "name": "Musée d’Orsay",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45705:"
+  },
+  {
+    "pa_id": 268,
+    "codes": [
+      "MLV"
+    ],
+    "primary_code": "MLV",
+    "name": "Mériel",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47585:"
+  },
+  {
+    "pa_id": 221,
+    "codes": [
+      "MWO"
+    ],
+    "primary_code": "MWO",
+    "name": "Méry-sur-Oise",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47582:"
+  },
+  {
+    "pa_id": 282,
+    "codes": [
+      "NAN"
+    ],
+    "primary_code": "NAN",
+    "name": "Nangis",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47158:"
+  },
+  {
+    "pa_id": 471,
+    "codes": [
+      "NAF"
+    ],
+    "primary_code": "NAF",
+    "name": "Nanterre Préfecture",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43169:"
+  },
+  {
+    "pa_id": 183,
+    "codes": [
+      "NC7",
+      "NUN"
+    ],
+    "primary_code": "NC7",
+    "name": "Nanterre Université",
+    "lines": [
+      "A",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43170:"
+  },
+  {
+    "pa_id": 481,
+    "codes": [
+      "NC3"
+    ],
+    "primary_code": "NC3",
+    "name": "Nanterre Ville",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43171:"
+  },
+  {
+    "pa_id": 1604,
+    "codes": [
+      "NLF"
+    ],
+    "primary_code": "NLF",
+    "name": "Nanterre – La Folie",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:487011:"
+  },
+  {
+    "pa_id": 444,
+    "codes": [
+      "NH"
+    ],
+    "primary_code": "NH",
+    "name": "Nanteuil-le-Haudoin",
+    "lines": [
+      "K"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411390:"
+  },
+  {
+    "pa_id": 244,
+    "codes": [
+      "NAU"
+    ],
+    "primary_code": "NAU",
+    "name": "Nanteuil – Saâcy",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47482:"
+  },
+  {
+    "pa_id": 484,
+    "codes": [
+      "NTN"
+    ],
+    "primary_code": "NTN",
+    "name": "Nation",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:473875:"
+  },
+  {
+    "pa_id": 1,
+    "codes": [
+      "NSP"
+    ],
+    "primary_code": "NSP",
+    "name": "Nemours – Saint-Pierre",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43245:"
+  },
+  {
+    "pa_id": 17,
+    "codes": [
+      "NPT"
+    ],
+    "primary_code": "NPT",
+    "name": "Neuilly Porte Maillot",
+    "lines": [
+      "C",
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:415093:"
+  },
+  {
+    "pa_id": 486,
+    "codes": [
+      "NYP"
+    ],
+    "primary_code": "NYP",
+    "name": "Neuilly-Plaisance",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43172:"
+  },
+  {
+    "pa_id": 297,
+    "codes": [
+      "NUE"
+    ],
+    "primary_code": "NUE",
+    "name": "Neuville Université",
+    "lines": [
+      "A",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47879:"
+  },
+  {
+    "pa_id": 466,
+    "codes": [
+      "NAA"
+    ],
+    "primary_code": "NAA",
+    "name": "Nogent-L’Artaud – Charly",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411384:"
+  },
+  {
+    "pa_id": 496,
+    "codes": [
+      "NGM"
+    ],
+    "primary_code": "NGM",
+    "name": "Nogent-sur-Marne",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47886:"
+  },
+  {
+    "pa_id": 157,
+    "codes": [
+      "NLP"
+    ],
+    "primary_code": "NLP",
+    "name": "Nogent – Le Perreux",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46552:"
+  },
+  {
+    "pa_id": 126,
+    "codes": [
+      "NO"
+    ],
+    "primary_code": "NO",
+    "name": "Nointel – Mours",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47530:"
+  },
+  {
+    "pa_id": 490,
+    "codes": [
+      "NSL"
+    ],
+    "primary_code": "NSL",
+    "name": "Noisiel",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44199:"
+  },
+  {
+    "pa_id": 488,
+    "codes": [
+      "NYG"
+    ],
+    "primary_code": "NYG",
+    "name": "Noisy-le-Grand Mont d’Est",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:474082:"
+  },
+  {
+    "pa_id": 385,
+    "codes": [
+      "NIO"
+    ],
+    "primary_code": "NIO",
+    "name": "Noisy-le-Roi",
+    "lines": [],
+    "stop_area_ref": null
+  },
+  {
+    "pa_id": 180,
+    "codes": [
+      "NSY"
+    ],
+    "primary_code": "NSY",
+    "name": "Noisy-le-Sec",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44201:"
+  },
+  {
+    "pa_id": 489,
+    "codes": [
+      "NYC"
+    ],
+    "primary_code": "NYC",
+    "name": "Noisy – Champs",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58937:"
+  },
+  {
+    "pa_id": 46,
+    "codes": [
+      "NZL"
+    ],
+    "primary_code": "NZL",
+    "name": "Nézel – Aulnay",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47944:"
+  },
+  {
+    "pa_id": 299,
+    "codes": [
+      "OBP"
+    ],
+    "primary_code": "OBP",
+    "name": "Orangis Bois de l’Épine",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:48489:"
+  },
+  {
+    "pa_id": 22,
+    "codes": [
+      "OGB"
+    ],
+    "primary_code": "OGB",
+    "name": "Orgerus – Béhoust",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47921:"
+  },
+  {
+    "pa_id": 233,
+    "codes": [
+      "OY"
+    ],
+    "primary_code": "OY",
+    "name": "Orly Ville",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46299:"
+  },
+  {
+    "pa_id": 430,
+    "codes": [
+      "ORM"
+    ],
+    "primary_code": "ORM",
+    "name": "Ormoy-Villers",
+    "lines": [
+      "K"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411387:"
+  },
+  {
+    "pa_id": 465,
+    "codes": [
+      "ORY"
+    ],
+    "primary_code": "ORY",
+    "name": "Orry-la-Ville – Coye",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411421:"
+  },
+  {
+    "pa_id": 522,
+    "codes": [
+      "ORS"
+    ],
+    "primary_code": "ORS",
+    "name": "Orsay-Ville",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43086:"
+  },
+  {
+    "pa_id": 129,
+    "codes": [
+      "OSN"
+    ],
+    "primary_code": "OSN",
+    "name": "Osny",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:51494:"
+  },
+  {
+    "pa_id": 249,
+    "codes": [
+      "OZF"
+    ],
+    "primary_code": "OZF",
+    "name": "Ozoir-la-Ferrière",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:462901:"
+  },
+  {
+    "pa_id": 518,
+    "codes": [
+      "PAX"
+    ],
+    "primary_code": "PAX",
+    "name": "Palaiseau",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47009:"
+  },
+  {
+    "pa_id": 519,
+    "codes": [
+      "PAW"
+    ],
+    "primary_code": "PAW",
+    "name": "Palaiseau – Villebon",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43175:"
+  },
+  {
+    "pa_id": 178,
+    "codes": [
+      "PAN"
+    ],
+    "primary_code": "PAN",
+    "name": "Pantin",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43176:"
+  },
+  {
+    "pa_id": 513,
+    "codes": [
+      "PCX"
+    ],
+    "primary_code": "PCX",
+    "name": "Parc de Sceaux",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43177:"
+  },
+  {
+    "pa_id": 64,
+    "codes": [
+      "PEX"
+    ],
+    "primary_code": "PEX",
+    "name": "Parc des Expositions",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47878:"
+  },
+  {
+    "pa_id": 140,
+    "codes": [
+      "PAZ",
+      "PZB"
+    ],
+    "primary_code": "PAZ",
+    "name": "Paris Austerlitz",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43072:"
+  },
+  {
+    "pa_id": 16,
+    "codes": [
+      "PE"
+    ],
+    "primary_code": "PE",
+    "name": "Paris Est",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:470519:"
+  },
+  {
+    "pa_id": 196,
+    "codes": [
+      "PAA",
+      "PLY"
+    ],
+    "primary_code": "PAA",
+    "name": "Paris Gare de Lyon",
+    "lines": [
+      "A",
+      "D",
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:470195:"
+  },
+  {
+    "pa_id": 72,
+    "codes": [
+      "PMP",
+      "PVA"
+    ],
+    "primary_code": "PMP",
+    "name": "Paris Montparnasse",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43238:"
+  },
+  {
+    "pa_id": 63,
+    "codes": [
+      "GDS",
+      "PNB",
+      "PNO"
+    ],
+    "primary_code": "GDS",
+    "name": "Paris Nord",
+    "lines": [
+      "B",
+      "D",
+      "H",
+      "K"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:462394:"
+  },
+  {
+    "pa_id": 204,
+    "codes": [
+      "PSL"
+    ],
+    "primary_code": "PSL",
+    "name": "Paris Saint-Lazare",
+    "lines": [
+      "J",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58566:"
+  },
+  {
+    "pa_id": 125,
+    "codes": [
+      "PRR"
+    ],
+    "primary_code": "PRR",
+    "name": "Pereire Levallois",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44314:"
+  },
+  {
+    "pa_id": 288,
+    "codes": [
+      "PEB"
+    ],
+    "primary_code": "PEB",
+    "name": "Persan – Beaumont",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43178:"
+  },
+  {
+    "pa_id": 238,
+    "codes": [
+      "PJ"
+    ],
+    "primary_code": "PJ",
+    "name": "Petit Jouy – Les Loges",
+    "lines": [
+      "V"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:57674:"
+  },
+  {
+    "pa_id": 307,
+    "codes": [
+      "PV"
+    ],
+    "primary_code": "PV",
+    "name": "Petit Vaux",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:47945:"
+  },
+  {
+    "pa_id": 355,
+    "codes": [
+      "PRF"
+    ],
+    "primary_code": "PRF",
+    "name": "Pierrefitte – Stains",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43179:"
+  },
+  {
+    "pa_id": 400,
+    "codes": [
+      "PRY"
+    ],
+    "primary_code": "PRY",
+    "name": "Pierrelaye",
+    "lines": [
+      "C",
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43180:"
+  },
+  {
+    "pa_id": 331,
+    "codes": [
+      "PG"
+    ],
+    "primary_code": "PG",
+    "name": "Plaisir – Grignon",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47885:"
+  },
+  {
+    "pa_id": 308,
+    "codes": [
+      "PIE"
+    ],
+    "primary_code": "PIE",
+    "name": "Plaisir – Les Clayes",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43181:"
+  },
+  {
+    "pa_id": 356,
+    "codes": [
+      "PSY"
+    ],
+    "primary_code": "PSY",
+    "name": "Poissy",
+    "lines": [
+      "A",
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47874:"
+  },
+  {
+    "pa_id": 130,
+    "codes": [
+      "PTC"
+    ],
+    "primary_code": "PTC",
+    "name": "Pont Cardinet",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45493:"
+  },
+  {
+    "pa_id": 390,
+    "codes": [
+      "PRU"
+    ],
+    "primary_code": "PRU",
+    "name": "Pont de Rungis Aéroport d’Orly",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47907:"
+  },
+  {
+    "pa_id": 26,
+    "codes": [
+      "PDM"
+    ],
+    "primary_code": "PDM",
+    "name": "Pont de l’Alma",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:415091:"
+  },
+  {
+    "pa_id": 106,
+    "codes": [
+      "BVI"
+    ],
+    "primary_code": "BVI",
+    "name": "Pont du Garigliano",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58798:"
+  },
+  {
+    "pa_id": 338,
+    "codes": [
+      "PPT"
+    ],
+    "primary_code": "PPT",
+    "name": "Pont-Petit",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47595:"
+  },
+  {
+    "pa_id": 1081,
+    "codes": [
+      "PUY"
+    ],
+    "primary_code": "PUY",
+    "name": "Pont-sur-Yonne",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411458:"
+  },
+  {
+    "pa_id": 193,
+    "codes": [
+      "POP"
+    ],
+    "primary_code": "POP",
+    "name": "Ponthierry – Pringy",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45812:"
+  },
+  {
+    "pa_id": 161,
+    "codes": [
+      "PSE"
+    ],
+    "primary_code": "PSE",
+    "name": "Pontoise",
+    "lines": [
+      "C",
+      "H",
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44411:"
+  },
+  {
+    "pa_id": 13,
+    "codes": [
+      "POA"
+    ],
+    "primary_code": "POA",
+    "name": "Porchefontaine",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43183:"
+  },
+  {
+    "pa_id": 505,
+    "codes": [
+      "PWR"
+    ],
+    "primary_code": "PWR",
+    "name": "Port Royal",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44500:"
+  },
+  {
+    "pa_id": 393,
+    "codes": [
+      "PKY"
+    ],
+    "primary_code": "PKY",
+    "name": "Porte de Clichy",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44514:"
+  },
+  {
+    "pa_id": 34,
+    "codes": [
+      "PRQ"
+    ],
+    "primary_code": "PRQ",
+    "name": "Presles – Courcelles",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47946:"
+  },
+  {
+    "pa_id": 169,
+    "codes": [
+      "PRO"
+    ],
+    "primary_code": "PRO",
+    "name": "Provins",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47181:"
+  },
+  {
+    "pa_id": 418,
+    "codes": [
+      "PYO"
+    ],
+    "primary_code": "PYO",
+    "name": "Précy-sur-Oise",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411326:"
+  },
+  {
+    "pa_id": 92,
+    "codes": [
+      "PTX"
+    ],
+    "primary_code": "PTX",
+    "name": "Puteaux",
+    "lines": [
+      "L",
+      "U"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43184:"
+  },
+  {
+    "pa_id": 118,
+    "codes": [
+      "RBT"
+    ],
+    "primary_code": "RBT",
+    "name": "Rambouillet",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:427870:"
+  },
+  {
+    "pa_id": 128,
+    "codes": [
+      "RIS"
+    ],
+    "primary_code": "RIS",
+    "name": "Ris Orangis",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47948:"
+  },
+  {
+    "pa_id": 530,
+    "codes": [
+      "RNS"
+    ],
+    "primary_code": "RNS",
+    "name": "Robinson",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43186:"
+  },
+  {
+    "pa_id": 47,
+    "codes": [
+      "ROB"
+    ],
+    "primary_code": "ROB",
+    "name": "Roissy-en-Brie",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46568:"
+  },
+  {
+    "pa_id": 19,
+    "codes": [
+      "RPA"
+    ],
+    "primary_code": "RPA",
+    "name": "Rosa Parks",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58498:"
+  },
+  {
+    "pa_id": 116,
+    "codes": [
+      "RBI"
+    ],
+    "primary_code": "RBI",
+    "name": "Rosny Bois Perrier",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:42356:"
+  },
+  {
+    "pa_id": 223,
+    "codes": [
+      "RSB"
+    ],
+    "primary_code": "RSB",
+    "name": "Rosny-sous-Bois",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47877:"
+  },
+  {
+    "pa_id": 214,
+    "codes": [
+      "RSS"
+    ],
+    "primary_code": "RSS",
+    "name": "Rosny-sur-Seine",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:479059:"
+  },
+  {
+    "pa_id": 480,
+    "codes": [
+      "RUR"
+    ],
+    "primary_code": "RUR",
+    "name": "Rueil-Malmaison",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58875:"
+  },
+  {
+    "pa_id": 391,
+    "codes": [
+      "RF"
+    ],
+    "primary_code": "RF",
+    "name": "Rungis la Fraternelle",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44787:"
+  },
+  {
+    "pa_id": 399,
+    "codes": [
+      "SCW"
+    ],
+    "primary_code": "SCW",
+    "name": "Saint-Chéron",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47952:"
+  },
+  {
+    "pa_id": 206,
+    "codes": [
+      "SCD"
+    ],
+    "primary_code": "SCD",
+    "name": "Saint-Cloud",
+    "lines": [
+      "L",
+      "U"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43196:"
+  },
+  {
+    "pa_id": 254,
+    "codes": [
+      "XCS"
+    ],
+    "primary_code": "XCS",
+    "name": "Saint-Colombe Septveilles",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47171:"
+  },
+  {
+    "pa_id": 324,
+    "codes": [
+      "SCR"
+    ],
+    "primary_code": "SCR",
+    "name": "Saint-Cyr",
+    "lines": [
+      "C",
+      "N",
+      "U"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46990:"
+  },
+  {
+    "pa_id": 93,
+    "codes": [
+      "SDE"
+    ],
+    "primary_code": "SDE",
+    "name": "Saint-Denis",
+    "lines": [
+      "D",
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:412743:"
+  },
+  {
+    "pa_id": 164,
+    "codes": [
+      "XFA"
+    ],
+    "primary_code": "XFA",
+    "name": "Saint-Fargeau",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45814:"
+  },
+  {
+    "pa_id": 476,
+    "codes": [
+      "SXR"
+    ],
+    "primary_code": "SXR",
+    "name": "Saint-Germain-en-Laye",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43198:"
+  },
+  {
+    "pa_id": 321,
+    "codes": [
+      "BEL"
+    ],
+    "primary_code": "BEL",
+    "name": "Saint-Germain-en-Laye Bel Air – Fourqueux",
+    "lines": [],
+    "stop_area_ref": null
+  },
+  {
+    "pa_id": 6,
+    "codes": [
+      "SGM"
+    ],
+    "primary_code": "SGM",
+    "name": "Saint-Germain-en-Laye Grande Ceinture",
+    "lines": [],
+    "stop_area_ref": null
+  },
+  {
+    "pa_id": 82,
+    "codes": [
+      "SGT"
+    ],
+    "primary_code": "SGT",
+    "name": "Saint-Gratien",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43201:"
+  },
+  {
+    "pa_id": 1085,
+    "codes": [
+      "SJX"
+    ],
+    "primary_code": "SJX",
+    "name": "Saint-Julien-du-Sault",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411473:"
+  },
+  {
+    "pa_id": 419,
+    "codes": [
+      "SLT"
+    ],
+    "primary_code": "SLT",
+    "name": "Saint-Leu-d’Esserent",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411329:"
+  },
+  {
+    "pa_id": 104,
+    "codes": [
+      "SLF"
+    ],
+    "primary_code": "SLF",
+    "name": "Saint-Leu-la-Forêt",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:48964:"
+  },
+  {
+    "pa_id": 172,
+    "codes": [
+      "SF"
+    ],
+    "primary_code": "SF",
+    "name": "Saint-Mammès",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47953:"
+  },
+  {
+    "pa_id": 8,
+    "codes": [
+      "SME"
+    ],
+    "primary_code": "SME",
+    "name": "Saint-Martin d’Étampes",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47115:"
+  },
+  {
+    "pa_id": 498,
+    "codes": [
+      "XMC"
+    ],
+    "primary_code": "XMC",
+    "name": "Saint-Maur – Créteil",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44801:"
+  },
+  {
+    "pa_id": 293,
+    "codes": [
+      "SHO"
+    ],
+    "primary_code": "SHO",
+    "name": "Saint-Michel-sur-Orge",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43202:"
+  },
+  {
+    "pa_id": 90,
+    "codes": [
+      "SHL",
+      "XND"
+    ],
+    "primary_code": "SHL",
+    "name": "Saint-Michel – Notre-Dame",
+    "lines": [
+      "B",
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44877:"
+  },
+  {
+    "pa_id": 286,
+    "codes": [
+      "SNB"
+    ],
+    "primary_code": "SNB",
+    "name": "Saint-Nom-la-Bretèche Forêt de Marly",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47954:"
+  },
+  {
+    "pa_id": 428,
+    "codes": [
+      "SOS"
+    ],
+    "primary_code": "SOS",
+    "name": "Saint-Ouen",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43203:"
+  },
+  {
+    "pa_id": 89,
+    "codes": [
+      "SOA"
+    ],
+    "primary_code": "SOA",
+    "name": "Saint-Ouen-l’Aumône",
+    "lines": [
+      "C",
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47599:"
+  },
+  {
+    "pa_id": 65,
+    "codes": [
+      "LIE"
+    ],
+    "primary_code": "LIE",
+    "name": "Saint-Ouen-l’Aumône Liesse",
+    "lines": [
+      "C",
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43150:"
+  },
+  {
+    "pa_id": 91,
+    "codes": [
+      "XOA"
+    ],
+    "primary_code": "XOA",
+    "name": "Saint-Ouen-l’Aumône Quartier de l’Église",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47955:"
+  },
+  {
+    "pa_id": 1091,
+    "codes": [
+      "SPI"
+    ],
+    "primary_code": "SPI",
+    "name": "Saint-Piat",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411501:"
+  },
+  {
+    "pa_id": 75,
+    "codes": [
+      "SQY"
+    ],
+    "primary_code": "SQY",
+    "name": "Saint-Quentin en Yvelines",
+    "lines": [
+      "C",
+      "N",
+      "U"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:461504:"
+  },
+  {
+    "pa_id": 443,
+    "codes": [
+      "NC8"
+    ],
+    "primary_code": "NC8",
+    "name": "Saint-Rémy-la-Vanne",
+    "lines": [],
+    "stop_area_ref": null
+  },
+  {
+    "pa_id": 527,
+    "codes": [
+      "SNM"
+    ],
+    "primary_code": "SNM",
+    "name": "Saint-Rémy-lès-Chevreuse",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47889:"
+  },
+  {
+    "pa_id": 422,
+    "codes": [
+      "SSJ"
+    ],
+    "primary_code": "SSJ",
+    "name": "Saint-Siméon",
+    "lines": [],
+    "stop_area_ref": null
+  },
+  {
+    "pa_id": 202,
+    "codes": [
+      "SXG"
+    ],
+    "primary_code": "SXG",
+    "name": "Sainte-Geneviève-des-Bois",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43188:"
+  },
+  {
+    "pa_id": 250,
+    "codes": [
+      "SNN"
+    ],
+    "primary_code": "SNN",
+    "name": "Sannois",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43189:"
+  },
+  {
+    "pa_id": 344,
+    "codes": [
+      "XPY"
+    ],
+    "primary_code": "XPY",
+    "name": "Santeuil – Le Perchay",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47949:"
+  },
+  {
+    "pa_id": 305,
+    "codes": [
+      "SLL"
+    ],
+    "primary_code": "SLL",
+    "name": "Sarcelles Saint-Brice",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43190:"
+  },
+  {
+    "pa_id": 364,
+    "codes": [
+      "SVL"
+    ],
+    "primary_code": "SVL",
+    "name": "Sartrouville",
+    "lines": [
+      "A",
+      "J",
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43191:"
+  },
+  {
+    "pa_id": 335,
+    "codes": [
+      "ZTN"
+    ],
+    "primary_code": "ZTN",
+    "name": "Savigny-le-Temple – Nandy",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47665:"
+  },
+  {
+    "pa_id": 394,
+    "codes": [
+      "SAO"
+    ],
+    "primary_code": "SAO",
+    "name": "Savigny-sur-Orge",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43192:"
+  },
+  {
+    "pa_id": 528,
+    "codes": [
+      "SKX"
+    ],
+    "primary_code": "SKX",
+    "name": "Sceaux",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:59206:"
+  },
+  {
+    "pa_id": 1082,
+    "codes": [
+      "SES"
+    ],
+    "primary_code": "SES",
+    "name": "Sens",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411452:"
+  },
+  {
+    "pa_id": 387,
+    "codes": [
+      "SXE"
+    ],
+    "primary_code": "SXE",
+    "name": "Sermaise",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47950:"
+  },
+  {
+    "pa_id": 54,
+    "codes": [
+      "SWY"
+    ],
+    "primary_code": "SWY",
+    "name": "Seugy",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47951:"
+  },
+  {
+    "pa_id": 284,
+    "codes": [
+      "BDE"
+    ],
+    "primary_code": "BDE",
+    "name": "Sevran Beaudottes",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43193:"
+  },
+  {
+    "pa_id": 347,
+    "codes": [
+      "SEV"
+    ],
+    "primary_code": "SEV",
+    "name": "Sevran – Livry",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43194:"
+  },
+  {
+    "pa_id": 86,
+    "codes": [
+      "SPP"
+    ],
+    "primary_code": "SPP",
+    "name": "Souppes – Château-Landon",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47118:"
+  },
+  {
+    "pa_id": 51,
+    "codes": [
+      "SFD"
+    ],
+    "primary_code": "SFD",
+    "name": "Stade de France Saint-Denis",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43204:"
+  },
+  {
+    "pa_id": 502,
+    "codes": [
+      "ZUB"
+    ],
+    "primary_code": "ZUB",
+    "name": "Sucy – Bonneuil",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58792:"
+  },
+  {
+    "pa_id": 320,
+    "codes": [
+      "MVH"
+    ],
+    "primary_code": "MVH",
+    "name": "Suresnes Mont Valérien",
+    "lines": [
+      "L",
+      "U"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43205:"
+  },
+  {
+    "pa_id": 360,
+    "codes": [
+      "SUR"
+    ],
+    "primary_code": "SUR",
+    "name": "Survilliers – Fosses",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47958:"
+  },
+  {
+    "pa_id": 55,
+    "codes": [
+      "SVR"
+    ],
+    "primary_code": "SVR",
+    "name": "Sèvres Rive Gauche",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43195:"
+  },
+  {
+    "pa_id": 281,
+    "codes": [
+      "VDV"
+    ],
+    "primary_code": "VDV",
+    "name": "Sèvres – Ville-d’Avray",
+    "lines": [
+      "L",
+      "U"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47767:"
+  },
+  {
+    "pa_id": 74,
+    "codes": [
+      "TAE"
+    ],
+    "primary_code": "TAE",
+    "name": "Tacoignières – Richebourg",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47959:"
+  },
+  {
+    "pa_id": 38,
+    "codes": [
+      "TVY"
+    ],
+    "primary_code": "TVY",
+    "name": "Taverny",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43206:"
+  },
+  {
+    "pa_id": 369,
+    "codes": [
+      "TNT"
+    ],
+    "primary_code": "TNT",
+    "name": "Thieux – Nantouillet",
+    "lines": [
+      "K"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47960:"
+  },
+  {
+    "pa_id": 12,
+    "codes": [
+      "TMR"
+    ],
+    "primary_code": "TMR",
+    "name": "Thomery",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47961:"
+  },
+  {
+    "pa_id": 80,
+    "codes": [
+      "TPA"
+    ],
+    "primary_code": "TPA",
+    "name": "Thun le Paradis",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46902:"
+  },
+  {
+    "pa_id": 492,
+    "codes": [
+      "TOC"
+    ],
+    "primary_code": "TOC",
+    "name": "Torcy",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43207:"
+  },
+  {
+    "pa_id": 219,
+    "codes": [
+      "TOU"
+    ],
+    "primary_code": "TOU",
+    "name": "Tournan",
+    "lines": [
+      "E",
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43208:"
+  },
+  {
+    "pa_id": 61,
+    "codes": [
+      "TVO"
+    ],
+    "primary_code": "TVO",
+    "name": "Trappes",
+    "lines": [
+      "N",
+      "U"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43209:"
+  },
+  {
+    "pa_id": 429,
+    "codes": [
+      "TRH"
+    ],
+    "primary_code": "TRH",
+    "name": "Trie-Château",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:411338:"
+  },
+  {
+    "pa_id": 5,
+    "codes": [
+      "TSS"
+    ],
+    "primary_code": "TSS",
+    "name": "Triel-sur-Seine",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46926:"
+  },
+  {
+    "pa_id": 134,
+    "codes": [
+      "TLP"
+    ],
+    "primary_code": "TLP",
+    "name": "Trilport",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47962:"
+  },
+  {
+    "pa_id": 3,
+    "codes": [
+      "US"
+    ],
+    "primary_code": "US",
+    "name": "Us",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47922:"
+  },
+  {
+    "pa_id": 52,
+    "codes": [
+      "VAI"
+    ],
+    "primary_code": "VAI",
+    "name": "Vaires – Torcy",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43211:"
+  },
+  {
+    "pa_id": 291,
+    "codes": [
+      "VDF",
+      "VFR"
+    ],
+    "primary_code": "VDF",
+    "name": "Val de Fontenay",
+    "lines": [
+      "A",
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47900:"
+  },
+  {
+    "pa_id": 269,
+    "codes": [
+      "VDA"
+    ],
+    "primary_code": "VDA",
+    "name": "Val d’Argenteuil",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43212:"
+  },
+  {
+    "pa_id": 494,
+    "codes": [
+      "VDE"
+    ],
+    "primary_code": "VDE",
+    "name": "Val d’Europe",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43213:"
+  },
+  {
+    "pa_id": 224,
+    "codes": [
+      "VMD"
+    ],
+    "primary_code": "VMD",
+    "name": "Valmondois",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47588:"
+  },
+  {
+    "pa_id": 228,
+    "codes": [
+      "VMK"
+    ],
+    "primary_code": "VMK",
+    "name": "Vanves – Malakoff",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43214:"
+  },
+  {
+    "pa_id": 294,
+    "codes": [
+      "VBO"
+    ],
+    "primary_code": "VBO",
+    "name": "Vauboyen",
+    "lines": [
+      "V"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43215:"
+  },
+  {
+    "pa_id": 301,
+    "codes": [
+      "VCX"
+    ],
+    "primary_code": "VCX",
+    "name": "Vaucelles",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47963:"
+  },
+  {
+    "pa_id": 296,
+    "codes": [
+      "VCN"
+    ],
+    "primary_code": "VCN",
+    "name": "Vaucresson",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43216:"
+  },
+  {
+    "pa_id": 114,
+    "codes": [
+      "VXS"
+    ],
+    "primary_code": "VXS",
+    "name": "Vaux-sur-Seine",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43217:"
+  },
+  {
+    "pa_id": 386,
+    "codes": [
+      "VNL"
+    ],
+    "primary_code": "VNL",
+    "name": "Verneuil-l’Étang",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47187:"
+  },
+  {
+    "pa_id": 455,
+    "codes": [
+      "VN"
+    ],
+    "primary_code": "VN",
+    "name": "Vernon – Giverny",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:59038:"
+  },
+  {
+    "pa_id": 98,
+    "codes": [
+      "VSS"
+    ],
+    "primary_code": "VSS",
+    "name": "Vernou-sur-Seine",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43218:"
+  },
+  {
+    "pa_id": 375,
+    "codes": [
+      "VET"
+    ],
+    "primary_code": "VET",
+    "name": "Vernouillet – Verneuil",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47964:"
+  },
+  {
+    "pa_id": 210,
+    "codes": [
+      "VC"
+    ],
+    "primary_code": "VC",
+    "name": "Versailles Chantiers",
+    "lines": [
+      "C",
+      "N",
+      "U",
+      "V"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43219:"
+  },
+  {
+    "pa_id": 371,
+    "codes": [
+      "VRG"
+    ],
+    "primary_code": "VRG",
+    "name": "Versailles Château Rive Gauche",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43220:"
+  },
+  {
+    "pa_id": 124,
+    "codes": [
+      "VRD"
+    ],
+    "primary_code": "VRD",
+    "name": "Versailles Rive Droite",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:44602:"
+  },
+  {
+    "pa_id": 177,
+    "codes": [
+      "VGL"
+    ],
+    "primary_code": "VGL",
+    "name": "Vert Galant",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46222:"
+  },
+  {
+    "pa_id": 144,
+    "codes": [
+      "VMS"
+    ],
+    "primary_code": "VMS",
+    "name": "Viarmes",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47525:"
+  },
+  {
+    "pa_id": 205,
+    "codes": [
+      "VGS"
+    ],
+    "primary_code": "VGS",
+    "name": "Vigneux-sur-Seine",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45735:"
+  },
+  {
+    "pa_id": 56,
+    "codes": [
+      "VBV"
+    ],
+    "primary_code": "VBV",
+    "name": "Villabé",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47904:"
+  },
+  {
+    "pa_id": 346,
+    "codes": [
+      "VW"
+    ],
+    "primary_code": "VW",
+    "name": "Villaines",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47522:"
+  },
+  {
+    "pa_id": 199,
+    "codes": [
+      "VSG"
+    ],
+    "primary_code": "VSG",
+    "name": "Villeneuve Saint-Georges",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45067:"
+  },
+  {
+    "pa_id": 255,
+    "codes": [
+      "VTV"
+    ],
+    "primary_code": "VTV",
+    "name": "Villeneuve Triage",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46304:"
+  },
+  {
+    "pa_id": 1063,
+    "codes": [
+      "VVG"
+    ],
+    "primary_code": "VVG",
+    "name": "Villeneuve-la-Guyard",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411464:"
+  },
+  {
+    "pa_id": 186,
+    "codes": [
+      "VRI"
+    ],
+    "primary_code": "VRI",
+    "name": "Villeneuve-le-Roi",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46307:"
+  },
+  {
+    "pa_id": 1084,
+    "codes": [
+      "VYE"
+    ],
+    "primary_code": "VYE",
+    "name": "Villeneuve-sur-Yonne",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411476:"
+  },
+  {
+    "pa_id": 211,
+    "codes": [
+      "VSW"
+    ],
+    "primary_code": "VSW",
+    "name": "Villennes-sur-Seine",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47966:"
+  },
+  {
+    "pa_id": 79,
+    "codes": [
+      "VII"
+    ],
+    "primary_code": "VII",
+    "name": "Villeparisis – Mitry-le-Neuf",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46725:"
+  },
+  {
+    "pa_id": 27,
+    "codes": [
+      "VPN"
+    ],
+    "primary_code": "VPN",
+    "name": "Villepinte",
+    "lines": [
+      "B"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58793:"
+  },
+  {
+    "pa_id": 271,
+    "codes": [
+      "VEP"
+    ],
+    "primary_code": "VEP",
+    "name": "Villepreux – Les Clayes",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43221:"
+  },
+  {
+    "pa_id": 349,
+    "codes": [
+      "VIB"
+    ],
+    "primary_code": "VIB",
+    "name": "Villiers le Bel – Gonesse – Arnouville",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43222:"
+  },
+  {
+    "pa_id": 120,
+    "codes": [
+      "VBB"
+    ],
+    "primary_code": "VBB",
+    "name": "Villiers-Montbarbin",
+    "lines": [
+      "P"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:58581:"
+  },
+  {
+    "pa_id": 377,
+    "codes": [
+      "VSM"
+    ],
+    "primary_code": "VSM",
+    "name": "Villiers-sur-Marne – Le Plessis-Trévise",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43223:"
+  },
+  {
+    "pa_id": 257,
+    "codes": [
+      "VEH"
+    ],
+    "primary_code": "VEH",
+    "name": "Villiers – Neauphle – Pontchartrain",
+    "lines": [
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46847:"
+  },
+  {
+    "pa_id": 485,
+    "codes": [
+      "VNC"
+    ],
+    "primary_code": "VNC",
+    "name": "Vincennes",
+    "lines": [
+      "A"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43224:"
+  },
+  {
+    "pa_id": 175,
+    "codes": [
+      "VFD"
+    ],
+    "primary_code": "VFD",
+    "name": "Viroflay Rive Droite",
+    "lines": [
+      "L"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46689:"
+  },
+  {
+    "pa_id": 227,
+    "codes": [
+      "VFG"
+    ],
+    "primary_code": "VFG",
+    "name": "Viroflay Rive Gauche",
+    "lines": [
+      "C",
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:462388:"
+  },
+  {
+    "pa_id": 253,
+    "codes": [
+      "VWC"
+    ],
+    "primary_code": "VWC",
+    "name": "Viry-Châtillon",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43225:"
+  },
+  {
+    "pa_id": 236,
+    "codes": [
+      "VY"
+    ],
+    "primary_code": "VY",
+    "name": "Vitry-sur-Seine",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:46375:"
+  },
+  {
+    "pa_id": 4,
+    "codes": [
+      "VOM"
+    ],
+    "primary_code": "VOM",
+    "name": "Vosves",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47967:"
+  },
+  {
+    "pa_id": 365,
+    "codes": [
+      "VUN"
+    ],
+    "primary_code": "VUN",
+    "name": "Vulaines-sur-Seine – Samoreau",
+    "lines": [
+      "R"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47136:"
+  },
+  {
+    "pa_id": 358,
+    "codes": [
+      "YES"
+    ],
+    "primary_code": "YES",
+    "name": "Yerres",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43226:"
+  },
+  {
+    "pa_id": 262,
+    "codes": [
+      "ECZ"
+    ],
+    "primary_code": "ECZ",
+    "name": "Écouen – Ézanville",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43073:"
+  },
+  {
+    "pa_id": 267,
+    "codes": [
+      "ELY"
+    ],
+    "primary_code": "ELY",
+    "name": "Égly",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:415484:"
+  },
+  {
+    "pa_id": 234,
+    "codes": [
+      "EM"
+    ],
+    "primary_code": "EM",
+    "name": "Émerainville – Pontault-Combault",
+    "lines": [
+      "E"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43074:"
+  },
+  {
+    "pa_id": 1089,
+    "codes": [
+      "EPN"
+    ],
+    "primary_code": "EPN",
+    "name": "Épernon",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411511:"
+  },
+  {
+    "pa_id": 21,
+    "codes": [
+      "EYO"
+    ],
+    "primary_code": "EYO",
+    "name": "Épinay-sur-Orge",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43076:"
+  },
+  {
+    "pa_id": 379,
+    "codes": [
+      "EYS"
+    ],
+    "primary_code": "EYS",
+    "name": "Épinay-sur-Seine",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43077:"
+  },
+  {
+    "pa_id": 472,
+    "codes": [
+      "EPV"
+    ],
+    "primary_code": "EPV",
+    "name": "Épinay – Villetaneuse",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43078:"
+  },
+  {
+    "pa_id": 264,
+    "codes": [
+      "EPL"
+    ],
+    "primary_code": "EPL",
+    "name": "Épluches",
+    "lines": [
+      "H"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47596:"
+  },
+  {
+    "pa_id": 195,
+    "codes": [
+      "EPO"
+    ],
+    "primary_code": "EPO",
+    "name": "Épône – Mézières",
+    "lines": [
+      "J",
+      "N"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47882:"
+  },
+  {
+    "pa_id": 167,
+    "codes": [
+      "ERA"
+    ],
+    "primary_code": "ERA",
+    "name": "Éragny – Neuville",
+    "lines": [
+      "J"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43079:"
+  },
+  {
+    "pa_id": 217,
+    "codes": [
+      "ETP"
+    ],
+    "primary_code": "ETP",
+    "name": "Étampes",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43080:"
+  },
+  {
+    "pa_id": 1083,
+    "codes": [
+      "EYV"
+    ],
+    "primary_code": "EYV",
+    "name": "Étigny – Véron",
+    "lines": [],
+    "stop_area_ref": "STIF:StopArea:SP:411455:"
+  },
+  {
+    "pa_id": 42,
+    "codes": [
+      "ETY"
+    ],
+    "primary_code": "ETY",
+    "name": "Étrechy",
+    "lines": [
+      "C"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:43081:"
+  },
+  {
+    "pa_id": 340,
+    "codes": [
+      "EVR"
+    ],
+    "primary_code": "EVR",
+    "name": "Évry",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:45745:"
+  },
+  {
+    "pa_id": 170,
+    "codes": [
+      "EVC"
+    ],
+    "primary_code": "EVC",
+    "name": "Évry – Courcouronnes",
+    "lines": [
+      "D"
+    ],
+    "stop_area_ref": "STIF:StopArea:SP:47906:"
+  }
+]
