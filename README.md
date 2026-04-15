@@ -1,95 +1,123 @@
-# RER::Web
+# rer-web
 
-![Screenshot](http://x0r.fr/blogstuff/rer-web.png)
+Modern rewrite of the legacy departures board for Ile-de-France Mobilites train data.
 
-This web app is yet another variation on the "how can I possibly display the
-timetable for the 6 next trains in any way I can imagine" theme.  This project
-started an AJAX and Javascript exercise for myself, but a handful of people
-have convinced me to make this public.  Only this time, it tries to be classy.
-It is primarily intended for display on medium (tablet/desktop) or large
-screens (TVs), while trying not to break too badly on cellphones.
+## Stack
 
-See it in action at [http://monrer.fr/] [1].
+- Python 3.12+
+- FastAPI
+- Jinja templates
+- Vanilla JavaScript
+- Docker for deployment
 
-# Dependencies
+## What Changed
 
-You will need the following Perl modules:
+The old Perl/Dancer + PostgreSQL + GTFS import pipeline has been replaced with a smaller FastAPI app that is easier to run and maintain.
 
- * DateTime
- * DateTime::Format::Strptime
- * DateTime::Format::Pg
- * DBI
- * DBD::Pg
- * Dancer
- * Dancer::Plugin::Database
- * LWP::Protocol::https
- * JSON::XS
- * RRD::Simple
- * Text::CSV
- * Template::Plugin::Decode
- * XML::Simple
- * YAML
+Preserved behavior:
 
-You will also need PostgreSQL. No other DBMSes are supported. Sorry, but I’ve
-had too many issues with MySQL so I can’t recommend anything but PostgreSQL.
+- station selection with `/?s=CODE`
+- live departures board
+- station autocomplete
+- line filtering
+- saved station cookie
+- compatibility endpoints: `/json` and `/autocomp`
 
-# Installing
+Improvements:
 
-Obtain an API token for the [remote API this site uses][4] to fetch the real-time
-timetable data.
+- typed configuration from environment variables
+- explicit handling for invalid token, rate limits, upstream failures, and empty results
+- health endpoint at `/health`
+- simpler deployment with Docker
+- cleaner responsive UI
+- structured Python service layer and tests
 
-Copy `config.yml.example` to `config.yml` and edit it to suit your needs.
+## Important Migration Assumptions
 
-Log into an account with superuser access on PostgreSQL and create two
-database roles.  The first one is used for normal operation and the second one
-is used by update scripts:
+- The rewrite intentionally removes the legacy PostgreSQL + GTFS schedule database to avoid the largest operational burden in the original project.
+- The app still shows planned and expected departure times from the live IDFM payload when available.
+- Downstream stopping patterns from the old GTFS enrichment are not rebuilt in this version, so `dessertes` currently falls back to `Desserte indisponible`.
+- A compact station dataset is bundled from the legacy repository data. A small number of stations in that snapshot do not have a usable real-time stop-area reference and will return a clear message instead of departures.
+- Line reference mapping is bundled from the SNCF GTFS routes dataset so line badges and filters still work without keeping a live GTFS database.
 
-    postgres=# CREATE ROLE "rer_web" LOGIN PASSWORD 'secret';
-    postgres=# CREATE ROLE "rer_web_update" LOGIN PASSWORD 'secret';
+## Environment Variables
 
-Finally, run `sh ./install.sh`. This install script will create a database,
-download the [GTFS-formatted timetable data] [5] from SNCF's website, import
-it into the database, import a custom-made station database, and grant the
-necessary privileges to the previously-defined users.
+Required:
 
-**Note**: if you use different user accounts or wish a different database
-name, type `sh ./install.sh -h` to see how to alter these options.
+- `IDFM_API_TOKEN`: API token for `prim.iledefrance-mobilites.fr`
 
-**Note 2**: SNCF update their data once a week. In order to refresh the data,
-run `./update.sh`. You can run the script in a weekly cron job if you
-configure the appropriate credentials for the `rer_web_update` user in a
-`.pgpass` file.
+Optional:
 
-# Deployment
+- `APP_ENV`: application environment, default `development`
+- `HOST`: bind host, default `0.0.0.0`
+- `PORT`: bind port, default `8000`
+- `LOG_LEVEL`: logging level, default `INFO`
+- `DEFAULT_STATION`: default station code, default `EVC`
+- `CACHE_TTL_SECONDS`: upstream cache TTL, default `20`
+- `REQUEST_TIMEOUT_SECONDS`: upstream request timeout, default `8`
+- `MAX_DEPARTURES`: number of departures to display, default `6`
 
-Deploy this as you would any Perl Dancer application.  If you really
-have no idea how to do this, read the [Dancer::Deployment Perldoc page] [2].
+See `.env.example`.
 
-# License
+## Local Run
 
-This program is licensed under the 3-clause BSD license.
+1. Copy `.env.example` to `.env`.
+2. Set `IDFM_API_TOKEN` in `.env`.
+3. Install dependencies:
 
-This program uses the following datasets supplied by Île-de-France Mobilités,
-under the [Licence Mobilités] (in French):
+```bash
+python -m pip install -e .[dev]
+```
 
- * [Prochains passages – Requête unitaire][4]
+4. Start the app:
 
-This program also uses the following datasets supplied by SNCF under its [Open
-Data License] [3] (in French):
+```bash
+python -m app
+```
 
- * [Horaires des lignes Transilien] [5]
+Open `http://127.0.0.1:8000`.
 
-This program also contains a custom database derived from the following datasets,
-also supplied by SNCF under [the same terms] [3]:
+For auto-reload during development:
 
- * [Gares et points d'arrêts du réseau Transilien] [6]
- * [Lignes par gare en Île-de-France] [7]
+```bash
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
 
-[1]: http://monrer.fr
-[2]: https://metacpan.org/module/Dancer::Deployment
-[3]: http://sncf-data.s3.amazonaws.com/assets/licence-sncf-opendata-eda896b0e6b60d3277a61e548cdb8cb5.pdf
-[4]: https://prim.iledefrance-mobilites.fr/fr/donnees-dynamiques/idfm-ivtr-requete_unitaire
-[5]: https://ressources.data.sncf.com/explore/dataset/sncf-transilien-gtfs/information/
-[6]: https://ressources.data.sncf.com/explore/dataset/sncf-gares-et-arrets-transilien-ile-de-france/
-[7]: https://ressources.data.sncf.com/explore/dataset/sncf-lignes-par-gares-idf/
-[Licence Mobilités]: https://cloud.fabmob.io/s/eYWWJBdM3fQiFNm
+## Docker
+
+Build and run with Docker Compose:
+
+```bash
+docker compose up --build -d
+```
+
+Or plain Docker:
+
+```bash
+docker build -t rer-web .
+docker run --env-file .env -p 8000:8000 --restart unless-stopped rer-web
+```
+
+The container binds to `HOST` and `PORT` from the environment. For a standard reverse proxy setup, keep `HOST=0.0.0.0` and proxy to the configured `PORT`.
+
+## Endpoints
+
+- `/`: HTML app
+- `/json`: legacy-compatible departures JSON
+- `/api/departures`: canonical departures JSON
+- `/autocomp`: legacy-compatible station autocomplete JSON
+- `/api/stations/autocomplete`: canonical station autocomplete JSON
+- `/health`: health check
+
+## Tests
+
+```bash
+python -m pytest
+```
+
+## Footer Credits
+
+The footer now shows:
+
+- `ketah.info`
+- `Original author: https://x0r.fr`

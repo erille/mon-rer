@@ -1,5 +1,0 @@
-\copy raw.calendar from 'input/sncf_gtfs/calendar.txt' (format csv, header)
-\copy raw.calendar_dates from 'input/sncf_gtfs/calendar_dates.txt' (format csv, header)
-\copy raw.routes from 'input/sncf_gtfs/routes.txt' (format csv, header)
-\copy raw.stop_times from 'input/sncf_gtfs/stop_times.txt' (format csv, header)
-\copy raw.trips from 'input/sncf_gtfs/trips.txt' (format csv, header)
