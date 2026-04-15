@@ -201,6 +201,10 @@ class DepartureService:
         if not number:
             number = self._extract_nested_value(journey.get("VehicleJourneyName")) or "Unknown"
 
+        destination = self._destination_name(station, journey)
+        if destination is None or destination.lower().endswith("(terminus)"):
+            return None
+
         reference_time = expected_time or planned_time or datetime.now(UTC)
         remaining_stops = self._schedules.get_remaining_stops(station.primary_code, number, reference_time, line)
 
@@ -208,7 +212,7 @@ class DepartureService:
             mission=mission,
             numero=number,
             time=format_display_time(status, expected_time or planned_time, at_stop),
-            destination=self._destination_name(station, journey),
+            destination=destination,
             dessertes=" • ".join(remaining_stops) if remaining_stops else "Desserte indisponible",
             platform=normalize_platform(
                 self._extract_nested_value([call.get("DeparturePlatformName"), call.get("ArrivalPlatformName")])
@@ -221,11 +225,11 @@ class DepartureService:
             expected_time=(expected_time or planned_time).isoformat() if (expected_time or planned_time) else None,
         )
 
-    def _destination_name(self, station: StationRecord, journey: dict[str, Any]) -> str:
+    def _destination_name(self, station: StationRecord, journey: dict[str, Any]) -> str | None:
         destination_ref = (journey.get("DestinationRef") or {}).get("value")
         destination_station = self._stations.find_by_stop_area_ref(destination_ref)
         if destination_station and destination_station.primary_code == station.primary_code:
-            return f"{destination_station.name} (terminus)"
+            return None
         if destination_station:
             return destination_station.name
         return self._extract_nested_value(journey.get("DestinationName")) or "Destination inconnue"
