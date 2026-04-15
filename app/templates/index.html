@@ -33,7 +33,10 @@
       <section class="controls-panel">
         <div class="controls-copy">
           <p class="section-kicker">Station</p>
-          <h2 id="station-title">{{ selected_station.name }}</h2>
+          <div class="station-heading">
+            <h2 id="station-title">{{ selected_station.name }}</h2>
+            <button id="station-favorite-toggle" class="favorite-toggle station-favorite-toggle" type="button" aria-label="Toggle favorite station" title="Toggle favorite station">★</button>
+          </div>
           <p class="section-text">Live departures board with line filters, saved station selection, and explicit upstream error handling.</p>
         </div>
 
@@ -45,10 +48,10 @@
 
         <div class="favorites-wrap">
           <div class="filters-header">
-            <span class="field-label">Favorite lines</span>
+            <span class="field-label">Favorite stations</span>
           </div>
-          <div id="favorite-lines" class="favorite-lines"></div>
-          <p id="favorite-lines-empty" class="section-text compact">Click the star next to a line to pin it here for quick access.</p>
+          <div id="favorite-stations" class="favorite-stations"></div>
+          <p id="favorite-stations-empty" class="section-text compact">Click the star next to a station to pin it here for quick access.</p>
         </div>
 
         <div class="filters-wrap">

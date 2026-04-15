@@ -18,6 +18,7 @@ def test_root_renders_selected_station() -> None:
     response = client.get("/?s=EVC")
     assert response.status_code == 200
     assert "IDF Trains by Ketah" in response.text
+    assert "Favorite stations" in response.text
     assert "Evry" in response.text or "Évry" in response.text
 
 

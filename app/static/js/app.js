@@ -1,10 +1,41 @@
 const APP_NAME = "IDF Trains by Ketah";
-const FAVORITES_STORAGE_KEY = "idf-trains.favorite-lines";
+const FAVORITE_STATIONS_STORAGE_KEY = "idf-trains.favorite-stations";
 const appData = window.__APP_DATA__;
+
+function findStation(code) {
+  return appData.stations.find((station) => station.codes.includes(code));
+}
+
+function normalizeStationCode(code) {
+  return findStation(code)?.codes[0] || null;
+}
+
+function sortStationCodesByName(codes) {
+  return [...codes].sort((leftCode, rightCode) => {
+    const leftStation = findStation(leftCode);
+    const rightStation = findStation(rightCode);
+    return (leftStation?.name || leftCode).localeCompare(rightStation?.name || rightCode);
+  });
+}
+
+function loadFavoriteStations() {
+  try {
+    const raw = window.localStorage.getItem(FAVORITE_STATIONS_STORAGE_KEY);
+    if (!raw) {
+      return [];
+    }
+
+    return sortStationCodesByName(
+      [...new Set(JSON.parse(raw).map((code) => normalizeStationCode(code)).filter(Boolean))]
+    );
+  } catch {
+    return [];
+  }
+}
 
 const state = {
   currentLines: [],
-  favoriteLines: loadFavoriteLines(),
+  favoriteStations: loadFavoriteStations(),
   refreshTimer: null,
   searchIndex: -1,
   searchResults: [],
@@ -17,31 +48,20 @@ const elements = {
   board: document.getElementById("board"),
   clearFilter: document.getElementById("clear-filter"),
   clock: document.getElementById("clock"),
-  favoriteLines: document.getElementById("favorite-lines"),
-  favoriteLinesEmpty: document.getElementById("favorite-lines-empty"),
+  favoriteStations: document.getElementById("favorite-stations"),
+  favoriteStationsEmpty: document.getElementById("favorite-stations-empty"),
   lineFilters: document.getElementById("line-filters"),
   messages: document.getElementById("messages"),
   refreshState: document.getElementById("refresh-state"),
   refreshTime: document.getElementById("refresh-time"),
   searchInput: document.getElementById("station-search"),
   searchResults: document.getElementById("search-results"),
+  stationFavoriteToggle: document.getElementById("station-favorite-toggle"),
   stationTitle: document.getElementById("station-title"),
 };
 
-function loadFavoriteLines() {
-  try {
-    const raw = window.localStorage.getItem(FAVORITES_STORAGE_KEY);
-    if (!raw) {
-      return [];
-    }
-    return JSON.parse(raw).filter((line) => typeof line === "string");
-  } catch {
-    return [];
-  }
-}
-
-function saveFavoriteLines() {
-  window.localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(state.favoriteLines));
+function saveFavoriteStations() {
+  window.localStorage.setItem(FAVORITE_STATIONS_STORAGE_KEY, JSON.stringify(state.favoriteStations));
 }
 
 function setCookie(name, value) {
@@ -57,27 +77,45 @@ function normalize(text) {
     .trim();
 }
 
-function findStation(code) {
-  return state.stations.find((station) => station.codes.includes(code));
-}
-
 function iconPathForLine(line) {
   return line ? `${appData.staticBase}img/rer${line}.svg` : null;
 }
 
-function isFavoriteLine(line) {
-  return state.favoriteLines.includes(line);
+function isFavoriteStation(code) {
+  const normalizedCode = normalizeStationCode(code);
+  return Boolean(normalizedCode && state.favoriteStations.includes(normalizedCode));
 }
 
-function toggleFavoriteLine(line) {
-  if (isFavoriteLine(line)) {
-    state.favoriteLines = state.favoriteLines.filter((item) => item !== line);
-  } else {
-    state.favoriteLines = [...state.favoriteLines, line].sort();
+function toggleFavoriteStation(code) {
+  const normalizedCode = normalizeStationCode(code);
+  if (!normalizedCode) {
+    return;
   }
-  saveFavoriteLines();
-  renderFavoriteLines();
-  renderLineFilters(state.currentLines);
+
+  if (state.favoriteStations.includes(normalizedCode)) {
+    state.favoriteStations = state.favoriteStations.filter((item) => item !== normalizedCode);
+  } else {
+    state.favoriteStations = sortStationCodesByName([...state.favoriteStations, normalizedCode]);
+  }
+
+  saveFavoriteStations();
+  renderFavoriteStations();
+  renderSearchResults(state.searchResults);
+  updateStationFavoriteToggle();
+}
+
+function updateStationFavoriteToggle() {
+  const station = findStation(state.selectedStationCode);
+  if (!station) {
+    return;
+  }
+
+  const active = isFavoriteStation(station.codes[0]);
+  elements.stationFavoriteToggle.className = `favorite-toggle station-favorite-toggle ${active ? "active" : ""}`.trim();
+  elements.stationFavoriteToggle.title = active
+    ? `Remove ${station.name} from favorites`
+    : `Add ${station.name} to favorites`;
+  elements.stationFavoriteToggle.setAttribute("aria-label", elements.stationFavoriteToggle.title);
 }
 
 function updateClock() {
@@ -93,40 +131,46 @@ function setRefreshState(text, mode = "ok") {
   elements.refreshState.className = `status-pill ${mode}`;
 }
 
-function renderFavoriteLines() {
-  elements.favoriteLines.innerHTML = "";
-  const hasFavorites = state.favoriteLines.length > 0;
-  elements.favoriteLinesEmpty.hidden = hasFavorites;
+function renderFavoriteStations() {
+  elements.favoriteStations.innerHTML = "";
 
-  for (const line of state.favoriteLines) {
+  state.favoriteStations = sortStationCodesByName(
+    state.favoriteStations.filter((code) => Boolean(findStation(code)))
+  );
+
+  const favorites = state.favoriteStations.map((code) => findStation(code)).filter(Boolean);
+  elements.favoriteStationsEmpty.hidden = favorites.length > 0;
+
+  for (const station of favorites) {
+    const row = document.createElement("div");
+    row.className = "favorite-station-item";
+
     const button = document.createElement("button");
-    const available = state.currentLines.includes(line);
     button.type = "button";
-    button.className = `favorite-chip ${state.selectedLine === line ? "active" : ""} ${available ? "" : "disabled"}`.trim();
-    button.title = available ? `Filter departures to line ${line}` : `${line} is not available at this station`;
-    button.disabled = !available;
-
-    const icon = document.createElement("img");
-    icon.className = "train-line-icon";
-    icon.src = iconPathForLine(line);
-    icon.alt = line;
-    button.append(icon);
+    button.className = `favorite-station-button ${state.selectedStationCode === station.codes[0] ? "active" : ""}`;
+    button.title = `Open ${station.name}`;
 
     const label = document.createElement("span");
-    label.textContent = line;
+    label.textContent = station.name;
     button.append(label);
 
-    button.addEventListener("click", () => {
-      if (!available) {
-        return;
-      }
-      state.selectedLine = state.selectedLine === line ? null : line;
-      renderFavoriteLines();
-      renderLineFilters(state.currentLines);
-      refreshBoard(true);
-    });
+    const meta = document.createElement("span");
+    meta.className = "favorite-station-meta";
+    meta.textContent = station.codes.join(", ");
+    button.append(meta);
 
-    elements.favoriteLines.append(button);
+    button.addEventListener("click", () => selectStation(station.codes[0]));
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "favorite-toggle active";
+    toggle.textContent = "★";
+    toggle.title = `Remove ${station.name} from favorites`;
+    toggle.setAttribute("aria-label", toggle.title);
+    toggle.addEventListener("click", () => toggleFavoriteStation(station.codes[0]));
+
+    row.append(button, toggle);
+    elements.favoriteStations.append(row);
   }
 }
 
@@ -136,9 +180,6 @@ function renderLineFilters(lines) {
   elements.clearFilter.hidden = !(state.selectedLine || state.currentLines.length > 1);
 
   for (const line of state.currentLines) {
-    const wrap = document.createElement("div");
-    wrap.className = "line-action";
-
     const button = document.createElement("button");
     button.type = "button";
     button.className = `line-button ${state.selectedLine === line ? "active" : ""}`;
@@ -156,21 +197,11 @@ function renderLineFilters(lines) {
 
     button.addEventListener("click", () => {
       state.selectedLine = state.selectedLine === line ? null : line;
-      renderFavoriteLines();
       renderLineFilters(state.currentLines);
       refreshBoard(true);
     });
 
-    const favoriteToggle = document.createElement("button");
-    favoriteToggle.type = "button";
-    favoriteToggle.className = `favorite-toggle ${isFavoriteLine(line) ? "active" : ""}`;
-    favoriteToggle.title = isFavoriteLine(line) ? `Remove ${line} from favorites` : `Add ${line} to favorites`;
-    favoriteToggle.setAttribute("aria-label", favoriteToggle.title);
-    favoriteToggle.textContent = "★";
-    favoriteToggle.addEventListener("click", () => toggleFavoriteLine(line));
-
-    wrap.append(button, favoriteToggle);
-    elements.lineFilters.append(wrap);
+    elements.lineFilters.append(button);
   }
 }
 
@@ -310,7 +341,8 @@ function renderBoard(board) {
   elements.stationTitle.textContent = board.from.name;
   document.title = `${board.from.name} | ${APP_NAME}`;
   renderLineFilters(board.from.lines || station?.lines || []);
-  renderFavoriteLines();
+  renderFavoriteStations();
+  updateStationFavoriteToggle();
   renderMessages(board.messages || []);
 
   elements.board.innerHTML = "";
@@ -392,6 +424,8 @@ function selectStation(stationCode, pushState = true) {
   setCookie("station", state.selectedStationCode);
   elements.searchInput.value = station.name;
   renderSearchResults([]);
+  renderFavoriteStations();
+  updateStationFavoriteToggle();
 
   const url = new URL(window.location.href);
   url.searchParams.set("s", state.selectedStationCode);
@@ -430,7 +464,7 @@ function searchStations(query) {
     .map(([, station]) => station);
 }
 
-function renderSearchResults(results) {
+function renderSearchResults(results = state.searchResults) {
   state.searchResults = results;
   state.searchIndex = results.length ? 0 : -1;
   elements.searchResults.innerHTML = "";
@@ -441,6 +475,9 @@ function renderSearchResults(results) {
   }
 
   results.forEach((station, index) => {
+    const row = document.createElement("div");
+    row.className = "search-result-row";
+
     const item = document.createElement("button");
     item.type = "button";
     item.className = `search-item ${index === state.searchIndex ? "active" : ""}`;
@@ -470,7 +507,19 @@ function renderSearchResults(results) {
     item.append(lines);
 
     item.addEventListener("click", () => selectStation(station.codes[0]));
-    elements.searchResults.append(item);
+
+    const favoriteToggle = document.createElement("button");
+    favoriteToggle.type = "button";
+    favoriteToggle.className = `favorite-toggle ${isFavoriteStation(station.codes[0]) ? "active" : ""}`.trim();
+    favoriteToggle.textContent = "★";
+    favoriteToggle.title = isFavoriteStation(station.codes[0])
+      ? `Remove ${station.name} from favorites`
+      : `Add ${station.name} to favorites`;
+    favoriteToggle.setAttribute("aria-label", favoriteToggle.title);
+    favoriteToggle.addEventListener("click", () => toggleFavoriteStation(station.codes[0]));
+
+    row.append(item, favoriteToggle);
+    elements.searchResults.append(row);
   });
 
   elements.searchResults.hidden = false;
@@ -481,7 +530,7 @@ function moveSearchSelection(delta) {
     return;
   }
   state.searchIndex = (state.searchIndex + delta + state.searchResults.length) % state.searchResults.length;
-  [...elements.searchResults.children].forEach((child, index) => {
+  [...elements.searchResults.querySelectorAll(".search-item")].forEach((child, index) => {
     child.classList.toggle("active", index === state.searchIndex);
   });
 }
@@ -489,9 +538,12 @@ function moveSearchSelection(delta) {
 function bindEvents() {
   elements.clearFilter.addEventListener("click", () => {
     state.selectedLine = null;
-    renderFavoriteLines();
     renderLineFilters(state.currentLines);
     refreshBoard(true);
+  });
+
+  elements.stationFavoriteToggle.addEventListener("click", () => {
+    toggleFavoriteStation(state.selectedStationCode);
   });
 
   elements.searchInput.addEventListener("input", (event) => {
@@ -535,7 +587,8 @@ function init() {
     state.currentLines = station.lines;
     renderLineFilters(station.lines);
   }
-  renderFavoriteLines();
+  renderFavoriteStations();
+  updateStationFavoriteToggle();
   window.history.replaceState({ stationCode: state.selectedStationCode }, "", window.location.href);
   refreshBoard(true);
 }
