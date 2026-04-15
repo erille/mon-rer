@@ -1,0 +1,13 @@
+<nav class="language-switcher" aria-label="{{ ui.language_label }}">
+  {% for code, option in language_options.items() %}
+    <a
+      href="{{ request.url.include_query_params(lang=code) | string }}"
+      data-lang-link="{{ code }}"
+      class="language-link {% if lang == code %}is-active{% endif %}"
+      title="{{ ui.language_label }}: {{ option.native_name }}"
+    >
+      <span class="language-emoji" aria-hidden="true">{{ option.emoji }}</span>
+      <span class="language-code">{{ option.label }}</span>
+    </a>
+  {% endfor %}
+</nav>

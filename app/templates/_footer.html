@@ -1,12 +1,12 @@
 <footer class="footer">
   <span class="footer-theme">
-    Template:
+    {{ ui.template_label }}:
     <a
       href="{{ request.url.include_query_params(theme='moderne') | string }}"
       data-theme-link="moderne"
       class="{% if theme == 'moderne' %}is-active{% endif %}"
     >
-      Moderne
+      {{ ui.theme_moderne }}
     </a>
     -
     <a
@@ -14,10 +14,10 @@
       data-theme-link="standard"
       class="{% if theme == 'standard' %}is-active{% endif %}"
     >
-      Standard
+      {{ ui.theme_standard }}
     </a>
   </span>
   <span><a href="https://ketah.info" rel="noreferrer" target="_blank">ketah.info</a></span>
-  <span>Original author: <a href="https://x0r.fr" rel="noreferrer" target="_blank">https://x0r.fr</a></span>
-  <span>Data: <a href="https://prim.iledefrance-mobilites.fr" rel="noreferrer" target="_blank">Ile-de-France Mobilites</a></span>
+  <span>{{ ui.original_author }}: <a href="https://x0r.fr" rel="noreferrer" target="_blank">https://x0r.fr</a></span>
+  <span>{{ ui.data_label }}: <a href="https://prim.iledefrance-mobilites.fr" rel="noreferrer" target="_blank">Ile-de-France Mobilites</a></span>
 </footer>

@@ -11,7 +11,7 @@ client = TestClient(app)
 def test_root_redirects_without_station_param() -> None:
     response = client.get("/", follow_redirects=False)
     assert response.status_code == 302
-    assert response.headers["location"].startswith("/?s=")
+    assert response.headers["location"] == "/?s=GDS"
 
 
 def test_root_renders_selected_station() -> None:
@@ -20,6 +20,7 @@ def test_root_renders_selected_station() -> None:
     assert "IDF Trains by Ketah" in response.text
     assert "Favorite stations" in response.text
     assert "Template:" in response.text
+    assert "data-lang-link=\"fr\"" in response.text
     assert "theme-moderne" in response.text
     assert "Evry" in response.text or "Évry" in response.text
 
@@ -30,6 +31,14 @@ def test_root_renders_standard_theme_when_requested() -> None:
     assert "theme-standard" in response.text
     assert "standard-board" in response.text
     assert "Template:" in response.text
+
+
+def test_root_renders_french_when_requested() -> None:
+    response = client.get("/?s=GDS&lang=fr")
+    assert response.status_code == 200
+    assert "Langue" in response.text
+    assert "Gares favorites" in response.text
+    assert "Prochains départs" in response.text or "Prochains departs" in response.text
 
 
 def test_autocomplete_returns_station_matches() -> None:

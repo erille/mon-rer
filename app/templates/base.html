@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ lang | default('en') }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Live departures for Ile-de-France trains">
+    <meta name="description" content="{{ ui.meta_description | default('Live departures for Ile-de-France trains') }}">
     <title>{% block title %}IDF Trains by Ketah{% endblock %}</title>
     <link rel="icon" href="{{ request.url_for('static', path='favicon.ico') }}">
     <link rel="apple-touch-icon" href="{{ request.url_for('static', path='favicon-apple.png') }}">
     <link rel="stylesheet" href="{{ request.url_for('static', path='css/app.css') }}">
     {% block head_extra %}{% endblock %}
   </head>
-  <body class="{% block body_class %}theme-{{ theme | default('moderne') }}{% endblock %}">
+  <body class="{% block body_class %}theme-{{ theme | default('moderne') }} lang-{{ lang | default('en') }}{% endblock %}">
     {% block body %}{% endblock %}
   </body>
 </html>

@@ -28,6 +28,12 @@ body.theme-standard {
   margin-bottom: 1rem;
 }
 
+.theme-standard .standard-top-side {
+  display: grid;
+  justify-items: end;
+  gap: 0.75rem;
+}
+
 .theme-standard .standard-kicker,
 .theme-standard .field-label,
 .theme-standard .section-kicker {
@@ -48,6 +54,21 @@ body.theme-standard {
   border-radius: 16px;
   border: 2px solid rgba(255, 255, 255, 0.9);
   background: #1328a6;
+}
+
+.theme-standard .language-switcher {
+  border-color: rgba(173, 218, 255, 0.22);
+  background: rgba(10, 39, 70, 0.9);
+}
+
+.theme-standard .language-link {
+  color: #b6d2ef;
+}
+
+.theme-standard .language-link:hover,
+.theme-standard .language-link.is-active {
+  color: #fff159;
+  background: rgba(15, 75, 134, 0.98);
 }
 
 .theme-standard .standard-clock-label {
@@ -360,6 +381,10 @@ body.theme-standard {
 
   .theme-standard .standard-top-panel {
     gap: 0.8rem;
+  }
+
+  .theme-standard .standard-top-side {
+    justify-items: start;
   }
 
   .theme-standard .station-row {

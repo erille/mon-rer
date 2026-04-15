@@ -8,6 +8,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from app.config import get_settings
+from app.i18n import (
+    DEFAULT_LANGUAGE,
+    LANGUAGE_OPTIONS,
+    get_language_pack,
+    resolve_language,
+)
 from app.logging_config import configure_logging
 from app.models import AutocompleteSuggestion, DepartureBoard
 from app.services.departures import DepartureService
@@ -68,9 +74,13 @@ async def index(
     station: str | None = Cookie(default=None),
     theme: str | None = Query(default=None),
     theme_cookie: str | None = Cookie(default=None, alias="theme"),
+    lang: str | None = Query(default=None),
+    lang_cookie: str | None = Cookie(default=None, alias="lang"),
 ) -> HTMLResponse:
     station_code = s or station or settings.default_station
     selected_theme = resolve_theme(theme, theme_cookie)
+    selected_language = resolve_language(lang, lang_cookie)
+    language_pack = get_language_pack(selected_language)
     selected_station = stations.find_by_code(station_code)
     if s is None:
         if selected_station is None:
@@ -78,6 +88,8 @@ async def index(
         redirect_url = f"/?s={selected_station.primary_code}"
         if selected_theme != DEFAULT_THEME:
             redirect_url = f"{redirect_url}&theme={selected_theme}"
+        if selected_language != DEFAULT_LANGUAGE:
+            redirect_url = f"{redirect_url}&lang={selected_language}"
         return RedirectResponse(url=redirect_url, status_code=302)
     if selected_station is None:
         response = templates.TemplateResponse(
@@ -85,13 +97,17 @@ async def index(
             "error.html",
             {
                 "request": request,
-                "message": "The requested station code was not found.",
+                "message": language_pack["station_not_found_message"],
                 "status_code": 404,
                 "selected_station": stations.default_station(settings.default_station),
+                "lang": selected_language,
+                "ui": language_pack,
+                "language_options": LANGUAGE_OPTIONS,
                 "theme": selected_theme,
             },
             status_code=404,
         )
+        response.set_cookie("lang", selected_language, max_age=60 * 60 * 24 * 28, httponly=False)
         response.set_cookie("theme", selected_theme, max_age=60 * 60 * 24 * 28, httponly=False)
         return response
 
@@ -103,9 +119,13 @@ async def index(
             "selected_station": selected_station,
             "stations": [station.to_autocomplete().model_dump() for station in stations.stations],
             "default_station": settings.default_station,
+            "lang": selected_language,
+            "ui": language_pack,
+            "language_options": LANGUAGE_OPTIONS,
             "theme": selected_theme,
         },
     )
+    response.set_cookie("lang", selected_language, max_age=60 * 60 * 24 * 28, httponly=False)
     response.set_cookie("station", selected_station.primary_code, max_age=60 * 60 * 24 * 28, httponly=False)
     response.set_cookie("theme", selected_theme, max_age=60 * 60 * 24 * 28, httponly=False)
     return response

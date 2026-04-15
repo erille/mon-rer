@@ -1,6 +1,6 @@
-const APP_NAME = "IDF Trains by Ketah";
 const FAVORITE_STATIONS_STORAGE_KEY = "idf-trains.favorite-stations";
 const DEFAULT_THEME = "moderne";
+const DEFAULT_LANGUAGE = "en";
 const LINE_COLORS = {
   A: "#e5412f",
   B: "#4e89d8",
@@ -20,8 +20,21 @@ const LINE_COLORS = {
   T12: "#d19f12",
   T13: "#7dc8c3",
 };
+
 const appData = window.__APP_DATA__;
 const appTheme = appData.theme || DEFAULT_THEME;
+const appLang = appData.lang || DEFAULT_LANGUAGE;
+const appStrings = appData.strings || {};
+const appLocale = appStrings.locale || "en-GB";
+const appName = appStrings.title || "IDF Trains by Ketah";
+
+function formatString(template, values = {}) {
+  return String(template).replace(/\{(\w+)\}/g, (_, key) => values[key] ?? "");
+}
+
+function t(key, values = {}) {
+  return formatString(appStrings[key] || key, values);
+}
 
 function findStation(code) {
   return appData.stations.find((station) => station.codes.includes(code));
@@ -71,6 +84,7 @@ const elements = {
   clock: document.getElementById("clock"),
   favoriteStations: document.getElementById("favorite-stations"),
   favoriteStationsEmpty: document.getElementById("favorite-stations-empty"),
+  languageLinks: [...document.querySelectorAll("[data-lang-link]")],
   lineFilters: document.getElementById("line-filters"),
   messages: document.getElementById("messages"),
   refreshState: document.getElementById("refresh-state"),
@@ -143,8 +157,8 @@ function updateStationFavoriteToggle() {
   const active = isFavoriteStation(station.codes[0]);
   elements.stationFavoriteToggle.className = `favorite-toggle station-favorite-toggle ${active ? "active" : ""}`.trim();
   elements.stationFavoriteToggle.title = active
-    ? `Remove ${station.name} from favorites`
-    : `Add ${station.name} to favorites`;
+    ? t("remove_station_from_favorites", { station: station.name })
+    : t("add_station_to_favorites", { station: station.name });
   elements.stationFavoriteToggle.setAttribute("aria-label", elements.stationFavoriteToggle.title);
 }
 
@@ -154,13 +168,26 @@ function updateThemeLinks() {
     const url = new URL(window.location.href);
     url.searchParams.set("s", state.selectedStationCode);
     url.searchParams.set("theme", nextTheme);
+    url.searchParams.set("lang", appLang);
     link.href = url.toString();
     link.classList.toggle("is-active", nextTheme === appTheme);
   }
 }
 
+function updateLanguageLinks() {
+  for (const link of elements.languageLinks) {
+    const nextLanguage = link.dataset.langLink;
+    const url = new URL(window.location.href);
+    url.searchParams.set("s", state.selectedStationCode);
+    url.searchParams.set("theme", appTheme);
+    url.searchParams.set("lang", nextLanguage);
+    link.href = url.toString();
+    link.classList.toggle("is-active", nextLanguage === appLang);
+  }
+}
+
 function updateClock() {
-  elements.clock.textContent = new Date().toLocaleTimeString("fr-FR", {
+  elements.clock.textContent = new Date().toLocaleTimeString(appLocale, {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
@@ -189,7 +216,7 @@ function renderFavoriteStations() {
     const button = document.createElement("button");
     button.type = "button";
     button.className = `favorite-station-button ${state.selectedStationCode === station.codes[0] ? "active" : ""}`;
-    button.title = `Open ${station.name}`;
+    button.title = t("open_station", { station: station.name });
 
     const label = document.createElement("span");
     label.textContent = station.name;
@@ -206,7 +233,7 @@ function renderFavoriteStations() {
     toggle.type = "button";
     toggle.className = "favorite-toggle active";
     toggle.textContent = "★";
-    toggle.title = `Remove ${station.name} from favorites`;
+    toggle.title = t("remove_station_from_favorites", { station: station.name });
     toggle.setAttribute("aria-label", toggle.title);
     toggle.addEventListener("click", () => toggleFavoriteStation(station.codes[0]));
 
@@ -224,7 +251,7 @@ function renderLineFilters(lines) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = `line-button ${state.selectedLine === line ? "active" : ""}`;
-    button.title = `Filter departures to line ${line}`;
+    button.title = t("filter_line", { line });
 
     const icon = document.createElement("img");
     icon.className = "train-line-icon";
@@ -251,7 +278,7 @@ function formatRefreshTime(value) {
     return "--";
   }
   const date = new Date(value);
-  return `Updated ${date.toLocaleTimeString("fr-FR", {
+  return `${t("updated_prefix")} ${date.toLocaleTimeString(appLocale, {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
@@ -265,7 +292,7 @@ function renderMessages(messages) {
     card.className = `message-card ${message.priority || "medium"}`;
 
     const label = document.createElement("strong");
-    label.textContent = (message.priority || "info").toUpperCase();
+    label.textContent = t(`priority_${message.priority || "info"}`).toUpperCase();
     card.append(label);
 
     const content = document.createElement("p");
@@ -282,7 +309,7 @@ function createStopsMarquee(text) {
 
   const label = document.createElement("span");
   label.className = "train-stops-label";
-  label.textContent = "Stops";
+  label.textContent = t("stops");
   section.append(label);
 
   const marquee = document.createElement("div");
@@ -352,7 +379,7 @@ function renderDepartureCard(train) {
   }
 
   const missionLabel = document.createElement("span");
-  missionLabel.textContent = train.mission || train.ligne || "Train";
+  missionLabel.textContent = train.mission || train.ligne || t("train");
   mission.append(missionLabel);
 
   const time = document.createElement("div");
@@ -369,7 +396,7 @@ function renderDepartureCard(train) {
 
   const meta = document.createElement("p");
   meta.className = "train-meta";
-  meta.textContent = `No. ${train.numero}${train.expected_time ? ` • ${new Date(train.expected_time).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}` : ""}`;
+  meta.textContent = `${t("train_number_prefix")} ${train.numero}${train.expected_time ? ` • ${new Date(train.expected_time).toLocaleTimeString(appLocale, { hour: "2-digit", minute: "2-digit" })}` : ""}`;
   card.append(meta);
 
   card.append(createStopsMarquee(train.dessertes));
@@ -387,14 +414,14 @@ function renderDepartureCard(train) {
   if (train.platform) {
     const badge = document.createElement("span");
     badge.className = "badge";
-    badge.textContent = `Platform ${train.platform}`;
+    badge.textContent = `${t("platform")} ${train.platform}`;
     bottom.append(badge);
   }
 
   if (train.planned_time && train.expected_time && train.planned_time !== train.expected_time) {
     const badge = document.createElement("span");
     badge.className = "badge";
-    badge.textContent = `Planned ${new Date(train.planned_time).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}`;
+    badge.textContent = `${t("planned")} ${new Date(train.planned_time).toLocaleTimeString(appLocale, { hour: "2-digit", minute: "2-digit" })}`;
     bottom.append(badge);
   }
 
@@ -411,7 +438,7 @@ function renderDepartureRow(train) {
 
   const missionCode = document.createElement("span");
   missionCode.className = "station-row-mission-code";
-  missionCode.textContent = train.mission || train.ligne || "Train";
+  missionCode.textContent = train.mission || train.ligne || t("train");
   mission.append(missionCode);
 
   const missionNumber = document.createElement("span");
@@ -455,7 +482,7 @@ function renderDepartureRow(train) {
   if (train.planned_time && train.expected_time && train.planned_time !== train.expected_time) {
     const badge = document.createElement("span");
     badge.className = "badge";
-    badge.textContent = `Planned ${new Date(train.planned_time).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}`;
+    badge.textContent = `${t("planned")} ${new Date(train.planned_time).toLocaleTimeString(appLocale, { hour: "2-digit", minute: "2-digit" })}`;
     meta.append(badge);
   }
 
@@ -466,7 +493,7 @@ function renderDepartureRow(train) {
   const platform = document.createElement("div");
   platform.className = "station-row-platform";
   platform.textContent = train.platform || "·";
-  platform.title = train.platform ? `Platform ${train.platform}` : "Platform unavailable";
+  platform.title = train.platform ? `${t("platform")} ${train.platform}` : t("platform_unavailable");
 
   row.append(mission, time, line, main, platform);
   return row;
@@ -478,8 +505,8 @@ function renderEmptyState() {
     emptyRow.className = "station-row station-row-empty";
     emptyRow.innerHTML = `
       <div class="station-row-empty-copy">
-        <strong>No departures</strong>
-        <span>The upstream feed returned no upcoming departures for this selection.</span>
+        <strong>${t("no_departures")}</strong>
+        <span>${t("empty_board_message")}</span>
       </div>
     `;
     return emptyRow;
@@ -488,9 +515,9 @@ function renderEmptyState() {
   const emptyCard = document.createElement("article");
   emptyCard.className = "train-card";
   emptyCard.innerHTML = `
-    <div class="train-top"><div class="train-mission"><span>No departures</span></div></div>
-    <h3 class="train-destination">Nothing to show right now</h3>
-    <p class="train-meta">The upstream feed returned no upcoming departures for this selection.</p>
+    <div class="train-top"><div class="train-mission"><span>${t("no_departures")}</span></div></div>
+    <h3 class="train-destination">${t("nothing_to_show")}</h3>
+    <p class="train-meta">${t("empty_board_message")}</p>
   `;
   return emptyCard;
 }
@@ -498,7 +525,7 @@ function renderEmptyState() {
 function renderBoard(board) {
   const station = findStation(board.from.code) || findStation(state.selectedStationCode);
   elements.stationTitle.textContent = board.from.name;
-  document.title = `${board.from.name} | ${APP_NAME}`;
+  document.title = `${board.from.name} | ${appName}`;
   renderLineFilters(board.from.lines || station?.lines || []);
   renderFavoriteStations();
   updateStationFavoriteToggle();
@@ -515,7 +542,7 @@ function renderBoard(board) {
   }
 
   elements.refreshTime.textContent = formatRefreshTime(board.refreshed_at);
-  setRefreshState("Live", "ok");
+  setRefreshState(t("live"), "ok");
 }
 
 async function fetchBoard() {
@@ -529,7 +556,7 @@ async function fetchBoard() {
   });
 
   if (!response.ok) {
-    let message = `Request failed (${response.status})`;
+    let message = t("request_failed", { status: response.status });
     try {
       const body = await response.json();
       if (body.error) {
@@ -554,13 +581,13 @@ async function refreshBoard(resetTimer) {
     window.clearTimeout(state.refreshTimer);
   }
 
-  setRefreshState("Refreshing", "ok");
+  setRefreshState(t("refreshing"), "ok");
   try {
     const board = await fetchBoard();
     renderBoard(board);
   } catch (error) {
     renderMessages([{ priority: "high", content: error.message }]);
-    setRefreshState("Error", "error");
+    setRefreshState(t("error"), "error");
   } finally {
     queueRefresh();
   }
@@ -588,6 +615,7 @@ function selectStation(stationCode, pushState = true) {
     window.history.replaceState({ stationCode: state.selectedStationCode }, "", url);
   }
 
+  updateLanguageLinks();
   updateThemeLinks();
   refreshBoard(true);
 }
@@ -667,8 +695,8 @@ function renderSearchResults(results = state.searchResults) {
     favoriteToggle.className = `favorite-toggle ${isFavoriteStation(station.codes[0]) ? "active" : ""}`.trim();
     favoriteToggle.textContent = "★";
     favoriteToggle.title = isFavoriteStation(station.codes[0])
-      ? `Remove ${station.name} from favorites`
-      : `Add ${station.name} to favorites`;
+      ? t("remove_station_from_favorites", { station: station.name })
+      : t("add_station_to_favorites", { station: station.name });
     favoriteToggle.setAttribute("aria-label", favoriteToggle.title);
     favoriteToggle.addEventListener("click", () => toggleFavoriteStation(station.codes[0]));
 
@@ -744,6 +772,7 @@ function init() {
   renderFavoriteStations();
   updateStationFavoriteToggle();
   window.history.replaceState({ stationCode: state.selectedStationCode }, "", window.location.href);
+  updateLanguageLinks();
   updateThemeLinks();
   refreshBoard(true);
 }

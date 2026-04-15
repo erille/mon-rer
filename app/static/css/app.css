@@ -68,6 +68,12 @@ a {
   margin-bottom: 1.5rem;
 }
 
+.topbar-side {
+  display: grid;
+  justify-items: end;
+  gap: 0.8rem;
+}
+
 .eyebrow,
 .section-kicker,
 .field-label,
@@ -133,6 +139,42 @@ a {
   display: grid;
   gap: 0.3rem;
   min-width: 180px;
+}
+
+.language-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.language-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--muted);
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.language-link:hover,
+.language-link.is-active {
+  color: var(--text);
+  background: rgba(255, 179, 71, 0.16);
+}
+
+.language-emoji {
+  line-height: 1;
+}
+
+.language-code {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
 }
 
 .clock-value,
@@ -550,5 +592,9 @@ a {
 
   .clock-card {
     min-width: 0;
+  }
+
+  .topbar-side {
+    justify-items: start;
   }
 }

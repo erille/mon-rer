@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}Station not found | IDF Trains by Ketah{% endblock %}
+{% block title %}{{ ui.station_not_found_title }} | {{ ui.title }}{% endblock %}
 
 {% block body %}
   <div class="error-page">
     <div class="error-card">
       <p class="section-kicker">{{ status_code }}</p>
-      <h1>Station not found</h1>
+      <h1>{{ ui.station_not_found_title }}</h1>
       <p>{{ message }}</p>
-      <p><a href="/?s={{ selected_station.primary_code }}{% if theme == 'standard' %}&theme=standard{% endif %}">Open {{ selected_station.name }}</a></p>
+      <p><a href="/?s={{ selected_station.primary_code }}{% if theme == 'standard' %}&theme=standard{% endif %}{% if lang != 'en' %}&lang={{ lang }}{% endif %}">{{ ui.open_station_link.format(station=selected_station.name) }}</a></p>
     </div>
   </div>
 {% endblock %}
