@@ -35,6 +35,7 @@ idfm_client = IdfmApiClient(settings.idfm_api_token, settings.request_timeout_se
 schedule_index = ScheduleIndex()
 departure_service = DepartureService(settings, stations, idfm_client, schedule_index)
 templates = Jinja2Templates(directory="app/templates")
+templates.env.globals["asset_version"] = "20260415-stdfix-1"
 DEFAULT_THEME = "moderne"
 SUPPORTED_THEMES = {DEFAULT_THEME, "standard"}
 

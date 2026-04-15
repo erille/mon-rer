@@ -27,7 +27,6 @@
         <h1 class="title">{{ ui.title }}</h1>
       </div>
       <div class="topbar-side">
-        {% include "_language_switcher.html" %}
         <div class="clock-card">
           <span class="clock-label">{{ ui.local_time }}</span>
           <span class="clock-value" id="clock">--:--:--</span>
@@ -93,5 +92,5 @@
     <div class="noscript-banner">{{ ui.noscript_banner }}</div>
   </noscript>
 
-  <script src="{{ request.url_for('static', path='js/app.js') }}" defer></script>
+  <script src="{{ request.url_for('static', path='js/app.js') }}?v={{ asset_version }}" defer></script>
 {% endblock %}
