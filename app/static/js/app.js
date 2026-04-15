@@ -3,13 +3,13 @@ const DEFAULT_THEME = "moderne";
 const DEFAULT_LANGUAGE = "en";
 const LINE_COLORS = {
   A: "#e5412f",
-  B: "#4e89d8",
+  B: "#5a9ddb",
   C: "#f0c33b",
   D: "#19984f",
   E: "#d25ba6",
-  H: "#8356a3",
+  H: "#b07b31",
   J: "#b79b5b",
-  K: "#8d97a1",
+  K: "#a6aa2a",
   L: "#ffce00",
   N: "#00a7de",
   P: "#8fc73f",
@@ -126,6 +126,79 @@ function lineColor(line) {
 
 function shouldScrollMarquee(text) {
   return text.includes("•") && text.length > 34 && text !== "Desserte indisponible";
+}
+
+function parseIsoDate(value) {
+  return value ? new Date(value) : null;
+}
+
+function formatBoardTime(value) {
+  return value
+    ? value.toLocaleTimeString(appLocale, {
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : "--:--";
+}
+
+function formatDelayDelta(minutes) {
+  if (minutes === 0) {
+    return t("on_time");
+  }
+
+  const sign = minutes > 0 ? "+" : "-";
+  const absolute = Math.abs(minutes);
+  const hours = Math.floor(absolute / 60);
+  const remainder = absolute % 60;
+  if (!hours) {
+    return `${sign}${remainder} min`;
+  }
+  return `${sign}${hours} h ${String(remainder).padStart(2, "0")}`;
+}
+
+function standardRowTime(train) {
+  if (train.status === "S") {
+    return train.time;
+  }
+
+  const expected = parseIsoDate(train.expected_time);
+  if (expected) {
+    return formatBoardTime(expected);
+  }
+
+  return train.time;
+}
+
+function standardRowStatus(train) {
+  const expected = parseIsoDate(train.expected_time);
+  const planned = parseIsoDate(train.planned_time);
+
+  if (train.status === "S") {
+    return t("cancelled");
+  }
+
+  if (train.time === "A quai") {
+    return t("at_platform");
+  }
+
+  if (expected && planned) {
+    const minutes = Math.round((expected.getTime() - planned.getTime()) / 60000);
+    return formatDelayDelta(minutes);
+  }
+
+  if (train.retard === "on time") {
+    return t("on_time");
+  }
+
+  if (train.retard) {
+    return train.retard;
+  }
+
+  if (train.status === "R") {
+    return t("delayed");
+  }
+
+  return t("on_time");
 }
 
 function isFavoriteStation(code) {
@@ -459,6 +532,7 @@ function renderDepartureCard(train) {
 function renderDepartureRow(train, index) {
   const row = document.createElement("article");
   row.className = `station-row ${index % 2 === 0 ? "tone-a" : "tone-b"} ${train.status === "S" ? "cancelled" : ""} ${train.status === "R" ? "delayed" : ""}`.trim();
+  const displayTime = standardRowTime(train);
 
   const mission = document.createElement("div");
   mission.className = "station-row-mission";
@@ -470,12 +544,12 @@ function renderDepartureRow(train, index) {
 
   const status = document.createElement("span");
   status.className = "station-row-status";
-  status.textContent = train.retard || train.numero;
+  status.textContent = standardRowStatus(train);
   mission.append(status);
 
   const time = document.createElement("div");
-  time.className = `station-row-time ${train.time.length > 6 ? "small" : ""}`;
-  time.textContent = train.time;
+  time.className = `station-row-time ${displayTime.length > 6 ? "small" : ""}`;
+  time.textContent = displayTime;
 
   const line = document.createElement("div");
   line.className = "station-row-line";
