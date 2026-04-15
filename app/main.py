@@ -18,6 +18,7 @@ from app.services.idfm import (
     UpstreamRateLimitError,
     UpstreamUnavailableError,
 )
+from app.services.schedules import ScheduleIndex
 from app.services.stations import StationCatalog
 
 settings = get_settings()
@@ -25,7 +26,8 @@ configure_logging(settings.log_level)
 
 stations = StationCatalog()
 idfm_client = IdfmApiClient(settings.idfm_api_token, settings.request_timeout_seconds)
-departure_service = DepartureService(settings, stations, idfm_client)
+schedule_index = ScheduleIndex()
+departure_service = DepartureService(settings, stations, idfm_client, schedule_index)
 templates = Jinja2Templates(directory="app/templates")
 
 
@@ -33,6 +35,7 @@ templates = Jinja2Templates(directory="app/templates")
 async def lifespan(_: FastAPI):
     yield
     await idfm_client.close()
+    schedule_index.close()
 
 
 app = FastAPI(title="rer-web", lifespan=lifespan)

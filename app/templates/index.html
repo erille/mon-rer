@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ selected_station.name }} | rer-web{% endblock %}
+{% block title %}{{ selected_station.name }} | IDF Trains by Ketah{% endblock %}
 
 {% block body %}
   <script>
@@ -21,7 +21,7 @@
     <header class="topbar">
       <div>
         <p class="eyebrow">Ile-de-France departures</p>
-        <h1 class="title">rer-web</h1>
+        <h1 class="title">IDF Trains by Ketah</h1>
       </div>
       <div class="clock-card">
         <span class="clock-label">Local time</span>
@@ -41,6 +41,14 @@
           <label class="field-label" for="station-search">Search by name or code</label>
           <input id="station-search" class="search-input" type="text" autocomplete="off" value="{{ selected_station.name }}" placeholder="Evry, Chatelet, EVC...">
           <div id="search-results" class="search-results" hidden></div>
+        </div>
+
+        <div class="favorites-wrap">
+          <div class="filters-header">
+            <span class="field-label">Favorite lines</span>
+          </div>
+          <div id="favorite-lines" class="favorite-lines"></div>
+          <p id="favorite-lines-empty" class="section-text compact">Click the star next to a line to pin it here for quick access.</p>
         </div>
 
         <div class="filters-wrap">

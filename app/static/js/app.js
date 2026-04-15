@@ -1,18 +1,24 @@
+const APP_NAME = "IDF Trains by Ketah";
+const FAVORITES_STORAGE_KEY = "idf-trains.favorite-lines";
 const appData = window.__APP_DATA__;
 
 const state = {
-  stations: appData.stations,
-  selectedStationCode: appData.selectedStationCode,
-  selectedLine: null,
+  currentLines: [],
+  favoriteLines: loadFavoriteLines(),
   refreshTimer: null,
   searchIndex: -1,
   searchResults: [],
+  selectedLine: null,
+  selectedStationCode: appData.selectedStationCode,
+  stations: appData.stations,
 };
 
 const elements = {
   board: document.getElementById("board"),
   clearFilter: document.getElementById("clear-filter"),
   clock: document.getElementById("clock"),
+  favoriteLines: document.getElementById("favorite-lines"),
+  favoriteLinesEmpty: document.getElementById("favorite-lines-empty"),
   lineFilters: document.getElementById("line-filters"),
   messages: document.getElementById("messages"),
   refreshState: document.getElementById("refresh-state"),
@@ -21,6 +27,22 @@ const elements = {
   searchResults: document.getElementById("search-results"),
   stationTitle: document.getElementById("station-title"),
 };
+
+function loadFavoriteLines() {
+  try {
+    const raw = window.localStorage.getItem(FAVORITES_STORAGE_KEY);
+    if (!raw) {
+      return [];
+    }
+    return JSON.parse(raw).filter((line) => typeof line === "string");
+  } catch {
+    return [];
+  }
+}
+
+function saveFavoriteLines() {
+  window.localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(state.favoriteLines));
+}
 
 function setCookie(name, value) {
   const expires = new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toUTCString();
@@ -43,6 +65,21 @@ function iconPathForLine(line) {
   return line ? `${appData.staticBase}img/rer${line}.svg` : null;
 }
 
+function isFavoriteLine(line) {
+  return state.favoriteLines.includes(line);
+}
+
+function toggleFavoriteLine(line) {
+  if (isFavoriteLine(line)) {
+    state.favoriteLines = state.favoriteLines.filter((item) => item !== line);
+  } else {
+    state.favoriteLines = [...state.favoriteLines, line].sort();
+  }
+  saveFavoriteLines();
+  renderFavoriteLines();
+  renderLineFilters(state.currentLines);
+}
+
 function updateClock() {
   elements.clock.textContent = new Date().toLocaleTimeString("fr-FR", {
     hour: "2-digit",
@@ -56,31 +93,84 @@ function setRefreshState(text, mode = "ok") {
   elements.refreshState.className = `status-pill ${mode}`;
 }
 
-function renderLineFilters(lines) {
-  elements.lineFilters.innerHTML = "";
-  if (!lines || lines.length <= 1) {
-    elements.clearFilter.hidden = true;
-    return;
-  }
+function renderFavoriteLines() {
+  elements.favoriteLines.innerHTML = "";
+  const hasFavorites = state.favoriteLines.length > 0;
+  elements.favoriteLinesEmpty.hidden = hasFavorites;
 
-  elements.clearFilter.hidden = false;
-  for (const line of lines) {
+  for (const line of state.favoriteLines) {
     const button = document.createElement("button");
+    const available = state.currentLines.includes(line);
     button.type = "button";
-    button.className = `line-chip ${state.selectedLine === line ? "active" : ""}`;
-    button.title = `Filter to line ${line}`;
+    button.className = `favorite-chip ${state.selectedLine === line ? "active" : ""} ${available ? "" : "disabled"}`.trim();
+    button.title = available ? `Filter departures to line ${line}` : `${line} is not available at this station`;
+    button.disabled = !available;
 
     const icon = document.createElement("img");
+    icon.className = "train-line-icon";
     icon.src = iconPathForLine(line);
     icon.alt = line;
     button.append(icon);
 
+    const label = document.createElement("span");
+    label.textContent = line;
+    button.append(label);
+
     button.addEventListener("click", () => {
+      if (!available) {
+        return;
+      }
       state.selectedLine = state.selectedLine === line ? null : line;
-      renderLineFilters(lines);
+      renderFavoriteLines();
+      renderLineFilters(state.currentLines);
       refreshBoard(true);
     });
-    elements.lineFilters.append(button);
+
+    elements.favoriteLines.append(button);
+  }
+}
+
+function renderLineFilters(lines) {
+  state.currentLines = lines || [];
+  elements.lineFilters.innerHTML = "";
+  elements.clearFilter.hidden = !(state.selectedLine || state.currentLines.length > 1);
+
+  for (const line of state.currentLines) {
+    const wrap = document.createElement("div");
+    wrap.className = "line-action";
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `line-button ${state.selectedLine === line ? "active" : ""}`;
+    button.title = `Filter departures to line ${line}`;
+
+    const icon = document.createElement("img");
+    icon.className = "train-line-icon";
+    icon.src = iconPathForLine(line);
+    icon.alt = line;
+    button.append(icon);
+
+    const label = document.createElement("span");
+    label.textContent = line;
+    button.append(label);
+
+    button.addEventListener("click", () => {
+      state.selectedLine = state.selectedLine === line ? null : line;
+      renderFavoriteLines();
+      renderLineFilters(state.currentLines);
+      refreshBoard(true);
+    });
+
+    const favoriteToggle = document.createElement("button");
+    favoriteToggle.type = "button";
+    favoriteToggle.className = `favorite-toggle ${isFavoriteLine(line) ? "active" : ""}`;
+    favoriteToggle.title = isFavoriteLine(line) ? `Remove ${line} from favorites` : `Add ${line} to favorites`;
+    favoriteToggle.setAttribute("aria-label", favoriteToggle.title);
+    favoriteToggle.textContent = "★";
+    favoriteToggle.addEventListener("click", () => toggleFavoriteLine(line));
+
+    wrap.append(button, favoriteToggle);
+    elements.lineFilters.append(wrap);
   }
 }
 
@@ -112,6 +202,38 @@ function renderMessages(messages) {
 
     elements.messages.append(card);
   }
+}
+
+function createStopsMarquee(text) {
+  const section = document.createElement("div");
+  section.className = "train-stops";
+
+  const label = document.createElement("span");
+  label.className = "train-stops-label";
+  label.textContent = "Stops";
+  section.append(label);
+
+  const marquee = document.createElement("div");
+  marquee.className = "marquee";
+
+  const track = document.createElement("div");
+  track.className = "marquee-track";
+
+  const primary = document.createElement("span");
+  primary.textContent = text;
+  track.append(primary);
+
+  const shouldScroll = text.includes("•") && text.length > 34 && text !== "Desserte indisponible";
+  if (shouldScroll) {
+    const secondary = document.createElement("span");
+    secondary.textContent = text;
+    track.append(secondary);
+    track.classList.add("is-scrolling");
+  }
+
+  marquee.append(track);
+  section.append(marquee);
+  return section;
 }
 
 function renderDepartureCard(train) {
@@ -153,10 +275,7 @@ function renderDepartureCard(train) {
   meta.textContent = `No. ${train.numero}${train.expected_time ? ` • ${new Date(train.expected_time).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}` : ""}`;
   card.append(meta);
 
-  const detail = document.createElement("p");
-  detail.className = "train-meta";
-  detail.textContent = train.dessertes;
-  card.append(detail);
+  card.append(createStopsMarquee(train.dessertes));
 
   const bottom = document.createElement("div");
   bottom.className = "train-bottom";
@@ -189,8 +308,9 @@ function renderDepartureCard(train) {
 function renderBoard(board) {
   const station = findStation(board.from.code) || findStation(state.selectedStationCode);
   elements.stationTitle.textContent = board.from.name;
-  document.title = `${board.from.name} | rer-web`;
+  document.title = `${board.from.name} | ${APP_NAME}`;
   renderLineFilters(board.from.lines || station?.lines || []);
+  renderFavoriteLines();
   renderMessages(board.messages || []);
 
   elements.board.innerHTML = "";
@@ -369,8 +489,8 @@ function moveSearchSelection(delta) {
 function bindEvents() {
   elements.clearFilter.addEventListener("click", () => {
     state.selectedLine = null;
-    const station = findStation(state.selectedStationCode);
-    renderLineFilters(station?.lines || []);
+    renderFavoriteLines();
+    renderLineFilters(state.currentLines);
     refreshBoard(true);
   });
 
@@ -412,8 +532,10 @@ function init() {
   bindEvents();
   const station = findStation(state.selectedStationCode);
   if (station) {
+    state.currentLines = station.lines;
     renderLineFilters(station.lines);
   }
+  renderFavoriteLines();
   window.history.replaceState({ stationCode: state.selectedStationCode }, "", window.location.href);
   refreshBoard(true);
 }

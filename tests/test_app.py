@@ -17,7 +17,7 @@ def test_root_redirects_without_station_param() -> None:
 def test_root_renders_selected_station() -> None:
     response = client.get("/?s=EVC")
     assert response.status_code == 200
-    assert "rer-web" in response.text
+    assert "IDF Trains by Ketah" in response.text
     assert "Evry" in response.text or "Évry" in response.text
 
 

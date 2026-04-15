@@ -11,6 +11,7 @@ from app.config import Settings
 from app.models import BoardMessage, DepartureBoard, DepartureItem
 from app.services.cache import TTLCache
 from app.services.idfm import IdfmApiClient
+from app.services.schedules import ScheduleIndex
 from app.services.stations import StationCatalog, StationRecord
 
 logger = logging.getLogger("rer_web.departures")
@@ -101,10 +102,17 @@ def train_class(status: str) -> str:
 
 
 class DepartureService:
-    def __init__(self, settings: Settings, stations: StationCatalog, idfm: IdfmApiClient) -> None:
+    def __init__(
+        self,
+        settings: Settings,
+        stations: StationCatalog,
+        idfm: IdfmApiClient,
+        schedules: ScheduleIndex,
+    ) -> None:
         self._settings = settings
         self._stations = stations
         self._idfm = idfm
+        self._schedules = schedules
         self._cache: TTLCache[dict[str, Any]] = TTLCache(settings.cache_ttl_seconds)
         self._line_refs = json.loads((DATA_DIR / "line_refs.json").read_text(encoding="utf-8"))
 
@@ -193,12 +201,15 @@ class DepartureService:
         if not number:
             number = self._extract_nested_value(journey.get("VehicleJourneyName")) or "Unknown"
 
+        reference_time = expected_time or planned_time or datetime.now(UTC)
+        remaining_stops = self._schedules.get_remaining_stops(station.primary_code, number, reference_time, line)
+
         return DepartureItem(
             mission=mission,
             numero=number,
             time=format_display_time(status, expected_time or planned_time, at_stop),
             destination=self._destination_name(station, journey),
-            dessertes="Desserte indisponible",
+            dessertes=" • ".join(remaining_stops) if remaining_stops else "Desserte indisponible",
             platform=normalize_platform(
                 self._extract_nested_value([call.get("DeparturePlatformName"), call.get("ArrivalPlatformName")])
             ),
