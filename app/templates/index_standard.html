@@ -2,6 +2,10 @@
 
 {% block title %}{{ selected_station.name }} | IDF Trains by Ketah{% endblock %}
 
+{% block head_extra %}
+  <link rel="stylesheet" href="{{ request.url_for('static', path='css/standard.css') }}">
+{% endblock %}
+
 {% block body %}
   <script>
     window.__APP_DATA__ = {{ {
@@ -16,29 +20,26 @@
     } | tojson }};
   </script>
 
-  <div class="page-shell">
-    <div class="background-grid"></div>
-
-    <header class="topbar">
+  <div class="standard-shell">
+    <header class="standard-top-panel">
       <div>
-        <p class="eyebrow">Ile-de-France departures</p>
-        <h1 class="title">IDF Trains by Ketah</h1>
+        <p class="standard-kicker">Ile-de-France departures</p>
+        <h1 class="standard-title">IDF Trains by Ketah</h1>
       </div>
-      <div class="clock-card">
-        <span class="clock-label">Local time</span>
-        <span class="clock-value" id="clock">--:--:--</span>
+      <div class="standard-clock-panel">
+        <span class="standard-clock-label">Local time</span>
+        <span class="standard-clock-value" id="clock">--:--:--</span>
       </div>
     </header>
 
-    <main class="layout">
-      <section class="controls-panel">
-        <div class="controls-copy">
-          <p class="section-kicker">Station</p>
-          <div class="station-heading">
+    <main class="standard-layout">
+      <section class="standard-panel standard-search-panel">
+        <div class="standard-panel-heading">
+          <span class="field-label">Departure</span>
+          <div class="standard-station-heading">
             <h2 id="station-title">{{ selected_station.name }}</h2>
             <button id="station-favorite-toggle" class="favorite-toggle station-favorite-toggle" type="button" aria-label="Toggle favorite station" title="Toggle favorite station">★</button>
           </div>
-          <p class="section-text">Live departures board with line filters, saved station selection, and explicit upstream error handling.</p>
         </div>
 
         <div class="search-wrap">
@@ -46,38 +47,38 @@
           <input id="station-search" class="search-input" type="text" autocomplete="off" value="{{ selected_station.name }}" placeholder="Evry, Chatelet, EVC...">
           <div id="search-results" class="search-results" hidden></div>
         </div>
+      </section>
 
-        <div class="favorites-wrap">
-          <div class="filters-header">
-            <span class="field-label">Favorite stations</span>
+      <section class="standard-panel standard-favorites-panel">
+        <div class="standard-panel-heading">
+          <span class="field-label">Favorite stations</span>
+        </div>
+        <div id="favorite-stations" class="favorite-stations"></div>
+        <p id="favorite-stations-empty" class="section-text compact">Click the star next to a station to pin it here for quick access.</p>
+      </section>
+
+      <section class="standard-panel standard-board-panel">
+        <div class="standard-board-header">
+          <div>
+            <p class="section-kicker">Board</p>
+            <h2>Next departures</h2>
           </div>
-          <div id="favorite-stations" class="favorite-stations"></div>
-          <p id="favorite-stations-empty" class="section-text compact">Click the star next to a station to pin it here for quick access.</p>
+          <div class="standard-board-meta">
+            <span id="refresh-state" class="status-pill">Refreshing</span>
+            <span id="refresh-time" class="refresh-time">--</span>
+          </div>
         </div>
 
-        <div class="filters-wrap">
+        <div class="standard-filter-row">
           <div class="filters-header">
             <span class="field-label">Lines</span>
             <button id="clear-filter" class="ghost-button" type="button">Show all</button>
           </div>
           <div id="line-filters" class="line-filters"></div>
         </div>
-      </section>
-
-      <section class="board-panel">
-        <div class="panel-header">
-          <div>
-            <p class="section-kicker">Board</p>
-            <h2>Next departures</h2>
-          </div>
-          <div class="panel-meta">
-            <span id="refresh-state" class="status-pill">Refreshing</span>
-            <span id="refresh-time" class="refresh-time">--</span>
-          </div>
-        </div>
 
         <div id="messages" class="messages"></div>
-        <div id="board" class="board-grid"></div>
+        <div id="board" class="standard-board"></div>
       </section>
     </main>
 

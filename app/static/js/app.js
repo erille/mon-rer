@@ -1,6 +1,27 @@
 const APP_NAME = "IDF Trains by Ketah";
 const FAVORITE_STATIONS_STORAGE_KEY = "idf-trains.favorite-stations";
+const DEFAULT_THEME = "moderne";
+const LINE_COLORS = {
+  A: "#e5412f",
+  B: "#4e89d8",
+  C: "#f0c33b",
+  D: "#19984f",
+  E: "#d25ba6",
+  H: "#8356a3",
+  J: "#b79b5b",
+  K: "#8d97a1",
+  L: "#ffce00",
+  N: "#00a7de",
+  P: "#8fc73f",
+  R: "#ef7d00",
+  U: "#cb8f00",
+  T4: "#c05f8d",
+  T11: "#b56ca9",
+  T12: "#d19f12",
+  T13: "#7dc8c3",
+};
 const appData = window.__APP_DATA__;
+const appTheme = appData.theme || DEFAULT_THEME;
 
 function findStation(code) {
   return appData.stations.find((station) => station.codes.includes(code));
@@ -58,6 +79,7 @@ const elements = {
   searchResults: document.getElementById("search-results"),
   stationFavoriteToggle: document.getElementById("station-favorite-toggle"),
   stationTitle: document.getElementById("station-title"),
+  themeLinks: [...document.querySelectorAll("[data-theme-link]")],
 };
 
 function saveFavoriteStations() {
@@ -79,6 +101,14 @@ function normalize(text) {
 
 function iconPathForLine(line) {
   return line ? `${appData.staticBase}img/rer${line}.svg` : null;
+}
+
+function lineColor(line) {
+  return LINE_COLORS[line] || "#1f9a52";
+}
+
+function shouldScrollMarquee(text) {
+  return text.includes("•") && text.length > 34 && text !== "Desserte indisponible";
 }
 
 function isFavoriteStation(code) {
@@ -116,6 +146,17 @@ function updateStationFavoriteToggle() {
     ? `Remove ${station.name} from favorites`
     : `Add ${station.name} to favorites`;
   elements.stationFavoriteToggle.setAttribute("aria-label", elements.stationFavoriteToggle.title);
+}
+
+function updateThemeLinks() {
+  for (const link of elements.themeLinks) {
+    const nextTheme = link.dataset.themeLink;
+    const url = new URL(window.location.href);
+    url.searchParams.set("s", state.selectedStationCode);
+    url.searchParams.set("theme", nextTheme);
+    link.href = url.toString();
+    link.classList.toggle("is-active", nextTheme === appTheme);
+  }
 }
 
 function updateClock() {
@@ -254,8 +295,33 @@ function createStopsMarquee(text) {
   primary.textContent = text;
   track.append(primary);
 
-  const shouldScroll = text.includes("•") && text.length > 34 && text !== "Desserte indisponible";
-  if (shouldScroll) {
+  if (shouldScrollMarquee(text)) {
+    const secondary = document.createElement("span");
+    secondary.textContent = text;
+    track.append(secondary);
+    track.classList.add("is-scrolling");
+  }
+
+  marquee.append(track);
+  section.append(marquee);
+  return section;
+}
+
+function createStandardStopsMarquee(text) {
+  const section = document.createElement("div");
+  section.className = "station-row-stops";
+
+  const marquee = document.createElement("div");
+  marquee.className = "station-row-marquee";
+
+  const track = document.createElement("div");
+  track.className = "station-row-marquee-track";
+
+  const primary = document.createElement("span");
+  primary.textContent = text;
+  track.append(primary);
+
+  if (shouldScrollMarquee(text)) {
     const secondary = document.createElement("span");
     secondary.textContent = text;
     track.append(secondary);
@@ -336,6 +402,99 @@ function renderDepartureCard(train) {
   return card;
 }
 
+function renderDepartureRow(train) {
+  const row = document.createElement("article");
+  row.className = `station-row ${train.status === "S" ? "cancelled" : ""} ${train.status === "R" ? "delayed" : ""}`.trim();
+
+  const mission = document.createElement("div");
+  mission.className = "station-row-mission";
+
+  const missionCode = document.createElement("span");
+  missionCode.className = "station-row-mission-code";
+  missionCode.textContent = train.mission || train.ligne || "Train";
+  mission.append(missionCode);
+
+  const missionNumber = document.createElement("span");
+  missionNumber.className = "station-row-number";
+  missionNumber.textContent = train.numero;
+  mission.append(missionNumber);
+
+  const time = document.createElement("div");
+  time.className = `station-row-time ${train.time.length > 6 ? "small" : ""}`;
+  time.textContent = train.time;
+
+  const line = document.createElement("div");
+  line.className = "station-row-line";
+  if (train.ligne) {
+    const badge = document.createElement("span");
+    badge.className = "standard-line-badge";
+    badge.style.setProperty("--line-color", lineColor(train.ligne));
+    badge.textContent = train.ligne;
+    line.append(badge);
+  }
+
+  const main = document.createElement("div");
+  main.className = "station-row-main";
+
+  const destination = document.createElement("h3");
+  destination.className = "station-row-destination";
+  destination.textContent = train.destination;
+  main.append(destination);
+  main.append(createStandardStopsMarquee(train.dessertes));
+
+  const meta = document.createElement("div");
+  meta.className = "station-row-meta";
+
+  if (train.retard) {
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.textContent = train.retard;
+    meta.append(badge);
+  }
+
+  if (train.planned_time && train.expected_time && train.planned_time !== train.expected_time) {
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.textContent = `Planned ${new Date(train.planned_time).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}`;
+    meta.append(badge);
+  }
+
+  if (meta.childElementCount) {
+    main.append(meta);
+  }
+
+  const platform = document.createElement("div");
+  platform.className = "station-row-platform";
+  platform.textContent = train.platform || "·";
+  platform.title = train.platform ? `Platform ${train.platform}` : "Platform unavailable";
+
+  row.append(mission, time, line, main, platform);
+  return row;
+}
+
+function renderEmptyState() {
+  if (appTheme === "standard") {
+    const emptyRow = document.createElement("article");
+    emptyRow.className = "station-row station-row-empty";
+    emptyRow.innerHTML = `
+      <div class="station-row-empty-copy">
+        <strong>No departures</strong>
+        <span>The upstream feed returned no upcoming departures for this selection.</span>
+      </div>
+    `;
+    return emptyRow;
+  }
+
+  const emptyCard = document.createElement("article");
+  emptyCard.className = "train-card";
+  emptyCard.innerHTML = `
+    <div class="train-top"><div class="train-mission"><span>No departures</span></div></div>
+    <h3 class="train-destination">Nothing to show right now</h3>
+    <p class="train-meta">The upstream feed returned no upcoming departures for this selection.</p>
+  `;
+  return emptyCard;
+}
+
 function renderBoard(board) {
   const station = findStation(board.from.code) || findStation(state.selectedStationCode);
   elements.stationTitle.textContent = board.from.name;
@@ -346,19 +505,13 @@ function renderBoard(board) {
   renderMessages(board.messages || []);
 
   elements.board.innerHTML = "";
+  const renderer = appTheme === "standard" ? renderDepartureRow : renderDepartureCard;
   for (const train of board.trains) {
-    elements.board.append(renderDepartureCard(train));
+    elements.board.append(renderer(train));
   }
 
   if (!board.trains.length) {
-    const emptyCard = document.createElement("article");
-    emptyCard.className = "train-card";
-    emptyCard.innerHTML = `
-      <div class="train-top"><div class="train-mission"><span>No departures</span></div></div>
-      <h3 class="train-destination">Nothing to show right now</h3>
-      <p class="train-meta">The upstream feed returned no upcoming departures for this selection.</p>
-    `;
-    elements.board.append(emptyCard);
+    elements.board.append(renderEmptyState());
   }
 
   elements.refreshTime.textContent = formatRefreshTime(board.refreshed_at);
@@ -435,6 +588,7 @@ function selectStation(stationCode, pushState = true) {
     window.history.replaceState({ stationCode: state.selectedStationCode }, "", url);
   }
 
+  updateThemeLinks();
   refreshBoard(true);
 }
 
@@ -590,6 +744,7 @@ function init() {
   renderFavoriteStations();
   updateStationFavoriteToggle();
   window.history.replaceState({ stationCode: state.selectedStationCode }, "", window.location.href);
+  updateThemeLinks();
   refreshBoard(true);
 }
 

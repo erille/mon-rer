@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Station not found | rer-web{% endblock %}
+{% block title %}Station not found | IDF Trains by Ketah{% endblock %}
 
 {% block body %}
   <div class="error-page">
@@ -8,7 +8,7 @@
       <p class="section-kicker">{{ status_code }}</p>
       <h1>Station not found</h1>
       <p>{{ message }}</p>
-      <p><a href="/?s={{ selected_station.primary_code }}">Open {{ selected_station.name }}</a></p>
+      <p><a href="/?s={{ selected_station.primary_code }}{% if theme == 'standard' %}&theme=standard{% endif %}">Open {{ selected_station.name }}</a></p>
     </div>
   </div>
 {% endblock %}

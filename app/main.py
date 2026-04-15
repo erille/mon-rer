@@ -29,6 +29,8 @@ idfm_client = IdfmApiClient(settings.idfm_api_token, settings.request_timeout_se
 schedule_index = ScheduleIndex()
 departure_service = DepartureService(settings, stations, idfm_client, schedule_index)
 templates = Jinja2Templates(directory="app/templates")
+DEFAULT_THEME = "moderne"
+SUPPORTED_THEMES = {DEFAULT_THEME, "standard"}
 
 
 @asynccontextmanager
@@ -50,6 +52,11 @@ def line_filter_from_query(line: str | None, legacy_line: str | None) -> str | N
     return (line or legacy_line or "").strip().upper() or None
 
 
+def resolve_theme(theme: str | None, theme_cookie: str | None) -> str:
+    candidate = (theme or theme_cookie or DEFAULT_THEME).strip().lower()
+    return candidate if candidate in SUPPORTED_THEMES else DEFAULT_THEME
+
+
 def render_api_error(status_code: int, message: str) -> JSONResponse:
     return JSONResponse(status_code=status_code, content={"error": message})
 
@@ -59,15 +66,21 @@ async def index(
     request: Request,
     s: str | None = Query(default=None),
     station: str | None = Cookie(default=None),
+    theme: str | None = Query(default=None),
+    theme_cookie: str | None = Cookie(default=None, alias="theme"),
 ) -> HTMLResponse:
     station_code = s or station or settings.default_station
+    selected_theme = resolve_theme(theme, theme_cookie)
     selected_station = stations.find_by_code(station_code)
     if s is None:
         if selected_station is None:
             selected_station = stations.default_station(settings.default_station)
-        return RedirectResponse(url=f"/?s={selected_station.primary_code}", status_code=302)
+        redirect_url = f"/?s={selected_station.primary_code}"
+        if selected_theme != DEFAULT_THEME:
+            redirect_url = f"{redirect_url}&theme={selected_theme}"
+        return RedirectResponse(url=redirect_url, status_code=302)
     if selected_station is None:
-        return templates.TemplateResponse(
+        response = templates.TemplateResponse(
             request,
             "error.html",
             {
@@ -75,21 +88,26 @@ async def index(
                 "message": "The requested station code was not found.",
                 "status_code": 404,
                 "selected_station": stations.default_station(settings.default_station),
+                "theme": selected_theme,
             },
             status_code=404,
         )
+        response.set_cookie("theme", selected_theme, max_age=60 * 60 * 24 * 28, httponly=False)
+        return response
 
     response = templates.TemplateResponse(
         request,
-        "index.html",
+        "index_standard.html" if selected_theme == "standard" else "index.html",
         {
             "request": request,
             "selected_station": selected_station,
             "stations": [station.to_autocomplete().model_dump() for station in stations.stations],
             "default_station": settings.default_station,
+            "theme": selected_theme,
         },
     )
     response.set_cookie("station", selected_station.primary_code, max_age=60 * 60 * 24 * 28, httponly=False)
+    response.set_cookie("theme", selected_theme, max_age=60 * 60 * 24 * 28, httponly=False)
     return response
 
 

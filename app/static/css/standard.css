@@ -1,0 +1,401 @@
+body.theme-standard {
+  background:
+    radial-gradient(circle at top, rgba(32, 98, 176, 0.22), transparent 28%),
+    linear-gradient(180deg, #02070d 0%, #051120 55%, #06172b 100%);
+  color: #f5fbff;
+}
+
+.theme-standard .standard-shell {
+  width: min(1180px, calc(100vw - 2rem));
+  margin: 0 auto;
+  padding: 1.25rem 0 1.5rem;
+}
+
+.theme-standard .standard-top-panel,
+.theme-standard .standard-panel {
+  border: 1px solid rgba(163, 214, 255, 0.18);
+  border-radius: 18px;
+  background: rgba(3, 20, 37, 0.94);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+
+.theme-standard .standard-top-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.theme-standard .standard-kicker,
+.theme-standard .field-label,
+.theme-standard .section-kicker {
+  color: #7ec6ff;
+}
+
+.theme-standard .standard-title {
+  margin: 0.35rem 0 0;
+  font-size: clamp(1.9rem, 3vw, 3.2rem);
+  line-height: 0.95;
+}
+
+.theme-standard .standard-clock-panel {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 200px;
+  padding: 0.65rem 0.9rem;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: #1328a6;
+}
+
+.theme-standard .standard-clock-label {
+  color: rgba(255, 255, 255, 0.72);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+}
+
+.theme-standard .standard-clock-value {
+  font-family: "Consolas", "SFMono-Regular", monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff26e;
+}
+
+.theme-standard .standard-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: 1rem;
+}
+
+.theme-standard .standard-panel {
+  padding: 1rem 1.1rem;
+}
+
+.theme-standard .standard-board-panel {
+  grid-column: 1 / -1;
+}
+
+.theme-standard .standard-panel-heading,
+.theme-standard .standard-board-header,
+.theme-standard .standard-board-meta,
+.theme-standard .filters-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+}
+
+.theme-standard .standard-station-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.theme-standard .standard-station-heading h2,
+.theme-standard .standard-board-header h2 {
+  margin: 0.2rem 0 0;
+  font-size: 1.55rem;
+}
+
+.theme-standard .search-wrap,
+.theme-standard .favorite-stations,
+.theme-standard .standard-filter-row {
+  margin-top: 0.8rem;
+}
+
+.theme-standard .search-wrap {
+  position: relative;
+}
+
+.theme-standard .search-input,
+.theme-standard .search-item,
+.theme-standard .favorite-station-button,
+.theme-standard .line-button,
+.theme-standard .ghost-button,
+.theme-standard .favorite-toggle,
+.theme-standard .status-pill {
+  border-radius: 10px;
+  border-color: rgba(173, 218, 255, 0.18);
+  background: rgba(10, 39, 70, 0.95);
+}
+
+.theme-standard .search-input {
+  font-size: 1.05rem;
+  background: rgba(7, 36, 67, 0.95);
+}
+
+.theme-standard .search-results {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  z-index: 4;
+  padding: 0.3rem;
+  border-radius: 14px;
+  background: rgba(2, 18, 33, 0.98);
+  border: 1px solid rgba(163, 214, 255, 0.18);
+}
+
+.theme-standard .search-item:hover,
+.theme-standard .search-item.active,
+.theme-standard .favorite-station-button.active,
+.theme-standard .line-button.active,
+.theme-standard .ghost-button:hover,
+.theme-standard .favorite-toggle.active,
+.theme-standard .status-pill.ok {
+  background: rgba(15, 75, 134, 0.98);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.theme-standard .favorite-stations {
+  display: grid;
+}
+
+.theme-standard .favorite-station-item {
+  width: 100%;
+}
+
+.theme-standard .favorite-station-button {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.theme-standard .favorite-station-meta,
+.theme-standard .search-item-codes,
+.theme-standard .section-text,
+.theme-standard .refresh-time,
+.theme-standard .footer {
+  color: #b6d2ef;
+}
+
+.theme-standard .standard-filter-row {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.theme-standard .line-filters {
+  gap: 0.55rem;
+}
+
+.theme-standard .line-button {
+  padding: 0.5rem 0.75rem;
+}
+
+.theme-standard .messages {
+  margin: 0.9rem 0 1rem;
+}
+
+.theme-standard .message-card {
+  background: rgba(9, 38, 66, 0.95);
+}
+
+.theme-standard .standard-board {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.theme-standard .station-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 130px) 96px 68px minmax(0, 1fr) 62px;
+  gap: 0.9rem;
+  align-items: center;
+  min-height: 92px;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #08549d 0%, #0e5ea7 100%);
+}
+
+.theme-standard .station-row.delayed,
+.theme-standard .station-row.cancelled {
+  background: linear-gradient(180deg, #6a2230 0%, #7a2b2f 100%);
+}
+
+.theme-standard .station-row-mission {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.theme-standard .station-row-mission-code {
+  font-size: 1.35rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.theme-standard .station-row-number {
+  font-size: 0.95rem;
+  color: rgba(222, 238, 255, 0.82);
+}
+
+.theme-standard .station-row-time {
+  color: #fff159;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.theme-standard .station-row-time.small {
+  font-size: 1.5rem;
+}
+
+.theme-standard .station-row-line {
+  display: flex;
+  justify-content: center;
+}
+
+.theme-standard .standard-line-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 0.55rem;
+  background: var(--line-color, #1f9a52);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.theme-standard .station-row-main {
+  min-width: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.theme-standard .station-row-destination {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.6vw, 2.45rem);
+  line-height: 1;
+}
+
+.theme-standard .station-row-stops {
+  min-width: 0;
+}
+
+.theme-standard .station-row-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent);
+}
+
+.theme-standard .station-row-marquee-track {
+  display: inline-flex;
+  gap: 2rem;
+  min-width: 100%;
+  white-space: nowrap;
+}
+
+.theme-standard .station-row-marquee-track.is-scrolling {
+  animation: marquee-slide 18s linear infinite;
+}
+
+.theme-standard .station-row-marquee-track span {
+  color: rgba(221, 239, 255, 0.88);
+  font-size: 1rem;
+}
+
+.theme-standard .station-row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.theme-standard .station-row-platform {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.4rem;
+  border-radius: 0.4rem;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  background: rgba(7, 36, 67, 0.65);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.theme-standard .station-row-empty {
+  display: block;
+  background: rgba(7, 36, 67, 0.85);
+}
+
+.theme-standard .station-row-empty-copy {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.theme-standard .badge {
+  background: rgba(2, 21, 38, 0.55);
+}
+
+.theme-standard .footer {
+  padding-top: 1rem;
+}
+
+.theme-standard .footer-theme a.is-active,
+.theme-standard .footer-theme a:hover {
+  color: #fff159;
+}
+
+@media (max-width: 920px) {
+  .theme-standard .standard-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .theme-standard .standard-shell {
+    width: min(100vw - 1rem, 100%);
+    padding-top: 0.6rem;
+  }
+
+  .theme-standard .standard-top-panel,
+  .theme-standard .standard-panel,
+  .theme-standard .standard-board-header,
+  .theme-standard .filters-header,
+  .theme-standard .standard-panel-heading {
+    display: grid;
+  }
+
+  .theme-standard .standard-top-panel {
+    gap: 0.8rem;
+  }
+
+  .theme-standard .station-row {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "mission time platform"
+      "line line line"
+      "main main main";
+  }
+
+  .theme-standard .station-row-mission {
+    grid-area: mission;
+  }
+
+  .theme-standard .station-row-time {
+    grid-area: time;
+    font-size: 1.55rem;
+  }
+
+  .theme-standard .station-row-line {
+    grid-area: line;
+    justify-content: flex-start;
+  }
+
+  .theme-standard .station-row-main {
+    grid-area: main;
+  }
+
+  .theme-standard .station-row-platform {
+    grid-area: platform;
+    min-width: 3rem;
+    min-height: 3rem;
+    font-size: 1.6rem;
+  }
+
+  .theme-standard .station-row-destination {
+    font-size: 1.65rem;
+  }
+}
