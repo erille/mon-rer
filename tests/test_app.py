@@ -17,9 +17,9 @@ def test_root_redirects_without_station_param() -> None:
 def test_root_renders_selected_station() -> None:
     response = client.get("/?s=EVC")
     assert response.status_code == 200
-    assert "IDF Trains by Ketah" in response.text
+    assert "IDF Trains" in response.text
     assert "Favorite stations" in response.text
-    assert "Template:" in response.text
+    assert "Template:" not in response.text
     assert "data-lang-link=\"fr\"" in response.text
     assert "theme-standard" in response.text
     assert "Evry" in response.text or "Évry" in response.text
@@ -30,7 +30,7 @@ def test_root_renders_standard_theme_when_requested() -> None:
     assert response.status_code == 200
     assert "theme-standard" in response.text
     assert "standard-board" in response.text
-    assert "Template:" in response.text
+    assert "Template:" not in response.text
 
 
 def test_root_renders_modern_theme_when_requested() -> None:

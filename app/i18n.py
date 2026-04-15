@@ -12,7 +12,7 @@ TRANSLATIONS = {
     "en": {
         "meta_description": "Live departures for Ile-de-France trains",
         "topbar_kicker": "Ile-de-France departures",
-        "title": "IDF Trains by Ketah",
+        "title": "IDF Trains",
         "local_time": "Local time",
         "station": "Station",
         "departure": "Departure",
@@ -66,7 +66,7 @@ TRANSLATIONS = {
     "fr": {
         "meta_description": "Prochains départs des trains d'Île-de-France",
         "topbar_kicker": "Départs Île-de-France",
-        "title": "IDF Trains by Ketah",
+        "title": "IDF Trains",
         "local_time": "Heure locale",
         "station": "Gare",
         "departure": "Départ",

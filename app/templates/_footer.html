@@ -1,18 +1,4 @@
 <footer class="footer">
-  <span class="footer-theme">
-    {{ ui.template_label }}:
-    {% if theme == 'standard' %}
-      <strong class="footer-current-theme">{{ ui.theme_standard }}</strong>
-    {% else %}
-      <a
-        href="{{ request.url.include_query_params(theme='standard') | string }}"
-        data-theme-link="standard"
-        class="is-active"
-      >
-        {{ ui.theme_standard }}
-      </a>
-    {% endif %}
-  </span>
   <span class="footer-language">
     {{ ui.language_label }}:
     {% include "_language_switcher.html" %}
