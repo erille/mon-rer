@@ -31,55 +31,46 @@
       <div class="standard-top-side">
         {% include "_language_switcher.html" %}
         <div class="standard-clock-panel">
-          <span class="standard-clock-label">{{ ui.local_time }}</span>
-          <span class="standard-clock-value" id="clock">--:--:--</span>
+          <span class="standard-clock-main" id="clock-main">--:--</span>
+          <span class="standard-clock-seconds" id="clock-seconds">--</span>
         </div>
       </div>
     </header>
 
-    <main class="standard-layout">
-      <section class="standard-panel standard-search-panel">
-        <div class="standard-panel-heading">
-          <span class="field-label">{{ ui.departure }}</span>
-          <div class="standard-station-heading">
-            <h2 id="station-title">{{ selected_station.name }}</h2>
-            <button id="station-favorite-toggle" class="favorite-toggle station-favorite-toggle" type="button" aria-label="Toggle favorite station" title="Toggle favorite station">★</button>
+    <main class="standard-main">
+      <section class="standard-panel standard-controls-panel">
+        <div class="standard-search-row">
+          <button id="station-search-trigger" class="standard-select-trigger" type="button" aria-label="{{ ui.search_label }}" title="{{ ui.search_label }}">⌄</button>
+          <label class="standard-inline-label" for="station-search">{{ ui.departure }} :</label>
+          <div class="standard-search-field">
+            <input id="station-search" class="search-input standard-search-input" type="text" autocomplete="off" value="{{ selected_station.name }}" placeholder="{{ ui.search_placeholder }}">
+            <div id="search-results" class="search-results" hidden></div>
           </div>
+          <button id="station-favorite-toggle" class="favorite-toggle station-favorite-toggle" type="button" aria-label="Toggle favorite station" title="Toggle favorite station">★</button>
         </div>
 
-        <div class="search-wrap">
-          <label class="field-label" for="station-search">{{ ui.search_label }}</label>
-          <input id="station-search" class="search-input" type="text" autocomplete="off" value="{{ selected_station.name }}" placeholder="{{ ui.search_placeholder }}">
-          <div id="search-results" class="search-results" hidden></div>
+        <div class="standard-favorites-row">
+          <span class="standard-inline-label">{{ ui.favorite_stations }} :</span>
+          <div id="favorite-stations" class="favorite-stations"></div>
+          <p id="favorite-stations-empty" class="section-text compact">{{ ui.favorite_stations_empty }}</p>
         </div>
-      </section>
 
-      <section class="standard-panel standard-favorites-panel">
-        <div class="standard-panel-heading">
-          <span class="field-label">{{ ui.favorite_stations }}</span>
+        <div class="standard-lines-row">
+          <span class="standard-inline-label">{{ ui.show_lines }} :</span>
+          <button id="clear-filter" class="ghost-button standard-all-lines" type="button">{{ ui.show_all }}</button>
+          <div id="line-filters" class="line-filters"></div>
         </div>
-        <div id="favorite-stations" class="favorite-stations"></div>
-        <p id="favorite-stations-empty" class="section-text compact">{{ ui.favorite_stations_empty }}</p>
       </section>
 
       <section class="standard-panel standard-board-panel">
-        <div class="standard-board-header">
-          <div>
-            <p class="section-kicker">{{ ui.board }}</p>
-            <h2>{{ ui.next_departures }}</h2>
+        <div class="standard-board-status">
+          <div class="standard-board-heading">
+            <span class="section-kicker">{{ ui.next_departures }}</span>
           </div>
           <div class="standard-board-meta">
             <span id="refresh-state" class="status-pill">{{ ui.refreshing }}</span>
             <span id="refresh-time" class="refresh-time">--</span>
           </div>
-        </div>
-
-        <div class="standard-filter-row">
-          <div class="filters-header">
-            <span class="field-label">{{ ui.lines }}</span>
-            <button id="clear-filter" class="ghost-button" type="button">{{ ui.show_all }}</button>
-          </div>
-          <div id="line-filters" class="line-filters"></div>
         </div>
 
         <div id="messages" class="messages"></div>

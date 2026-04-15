@@ -1,270 +1,281 @@
 body.theme-standard {
-  background:
-    radial-gradient(circle at top, rgba(32, 98, 176, 0.22), transparent 28%),
-    linear-gradient(180deg, #02070d 0%, #051120 55%, #06172b 100%);
-  color: #f5fbff;
+  background: #1b1b1b;
+  color: #f5f7fb;
 }
 
 .theme-standard .standard-shell {
-  width: min(1180px, calc(100vw - 2rem));
+  width: min(1220px, calc(100vw - 1rem));
   margin: 0 auto;
-  padding: 1.25rem 0 1.5rem;
+  padding: 0.5rem 0 1rem;
 }
 
 .theme-standard .standard-top-panel,
 .theme-standard .standard-panel {
-  border: 1px solid rgba(163, 214, 255, 0.18);
-  border-radius: 18px;
-  background: rgba(3, 20, 37, 0.94);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+  background: #1b1b1b;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .theme-standard .standard-top-panel {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
+  padding: 0 0 0.55rem;
 }
 
-.theme-standard .standard-top-side {
+.theme-standard .standard-top-copy {
   display: grid;
-  justify-items: end;
-  gap: 0.75rem;
+  gap: 0.2rem;
 }
 
-.theme-standard .standard-kicker,
-.theme-standard .field-label,
-.theme-standard .section-kicker {
-  color: #7ec6ff;
+.theme-standard .standard-kicker {
+  margin: 0;
+  color: #9d9d9d;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .theme-standard .standard-title {
-  margin: 0.35rem 0 0;
-  font-size: clamp(1.9rem, 3vw, 3.2rem);
-  line-height: 0.95;
+  margin: 0;
+  font-size: clamp(1.5rem, 2.7vw, 2.35rem);
+  line-height: 1;
+  color: #ffffff;
 }
 
-.theme-standard .standard-clock-panel {
-  display: grid;
-  gap: 0.2rem;
-  min-width: 200px;
-  padding: 0.65rem 0.9rem;
-  border-radius: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  background: #1328a6;
+.theme-standard .standard-top-side {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
 }
 
 .theme-standard .language-switcher {
-  border-color: rgba(173, 218, 255, 0.22);
-  background: rgba(10, 39, 70, 0.9);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  border-radius: 0.4rem;
+  border: 1px solid #4a4a4a;
+  background: #2b2b2b;
 }
 
 .theme-standard .language-link {
-  color: #b6d2ef;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.3rem;
+  text-decoration: none;
+  color: #d6d6d6;
 }
 
 .theme-standard .language-link:hover,
 .theme-standard .language-link.is-active {
+  background: #4f4f4f;
   color: #fff159;
-  background: rgba(15, 75, 134, 0.98);
 }
 
-.theme-standard .standard-clock-label {
-  color: rgba(255, 255, 255, 0.72);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.72rem;
+.theme-standard .standard-clock-panel {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  padding: 0.45rem 0.7rem 0.4rem;
+  border-radius: 0 0 0.95rem 0.95rem;
+  border: 4px solid #ffffff;
+  border-top-width: 0;
+  background: #1120b8;
+  color: #ffffff;
 }
 
-.theme-standard .standard-clock-value {
+.theme-standard .standard-clock-main,
+.theme-standard .standard-clock-seconds {
   font-family: "Consolas", "SFMono-Regular", monospace;
-  font-size: 2rem;
   font-weight: 700;
-  color: #fff26e;
+  line-height: 1;
+  color: #ffffff;
 }
 
-.theme-standard .standard-layout {
+.theme-standard .standard-clock-main {
+  font-size: 2.1rem;
+}
+
+.theme-standard .standard-clock-seconds {
+  font-size: 1.1rem;
+  color: #ffd743;
+}
+
+.theme-standard .standard-main {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  gap: 1rem;
+  gap: 0.55rem;
 }
 
-.theme-standard .standard-panel {
-  padding: 1rem 1.1rem;
-}
-
+.theme-standard .standard-controls-panel,
 .theme-standard .standard-board-panel {
-  grid-column: 1 / -1;
+  background: #1b1b1b;
+  padding: 0;
 }
 
-.theme-standard .standard-panel-heading,
-.theme-standard .standard-board-header,
-.theme-standard .standard-board-meta,
-.theme-standard .filters-header {
+.theme-standard .standard-search-row,
+.theme-standard .standard-favorites-row,
+.theme-standard .standard-lines-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.9rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
-.theme-standard .standard-station-heading {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.theme-standard .standard-favorites-row,
+.theme-standard .standard-lines-row {
+  margin-top: 0.45rem;
 }
 
-.theme-standard .standard-station-heading h2,
-.theme-standard .standard-board-header h2 {
-  margin: 0.2rem 0 0;
-  font-size: 1.55rem;
+.theme-standard .standard-inline-label {
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-.theme-standard .search-wrap,
-.theme-standard .favorite-stations,
-.theme-standard .standard-filter-row {
-  margin-top: 0.8rem;
-}
-
-.theme-standard .search-wrap {
-  position: relative;
-}
-
-.theme-standard .search-input,
-.theme-standard .search-item,
-.theme-standard .favorite-station-button,
+.theme-standard .standard-select-trigger,
+.theme-standard .standard-search-input,
+.theme-standard .station-favorite-toggle,
 .theme-standard .line-button,
 .theme-standard .ghost-button,
 .theme-standard .favorite-toggle,
-.theme-standard .status-pill {
-  border-radius: 10px;
-  border-color: rgba(173, 218, 255, 0.18);
-  background: rgba(10, 39, 70, 0.95);
+.theme-standard .favorite-station-button {
+  border: 1px solid #555;
+  border-radius: 0.25rem;
+  background: #5a5a5a;
+  color: #fff;
+  box-shadow: none;
 }
 
-.theme-standard .search-input {
-  font-size: 1.05rem;
-  background: rgba(7, 36, 67, 0.95);
+.theme-standard .standard-select-trigger {
+  width: 2.8rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.theme-standard .standard-search-field {
+  position: relative;
+  flex: 1 1 360px;
+  max-width: 520px;
+}
+
+.theme-standard .standard-search-input {
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.55rem 0.7rem;
+  font-size: 1rem;
+  background: #3b3b3b;
 }
 
 .theme-standard .search-results {
   position: absolute;
-  top: calc(100% + 0.5rem);
+  top: calc(100% + 0.25rem);
   left: 0;
   right: 0;
   z-index: 4;
-  padding: 0.3rem;
-  border-radius: 14px;
-  background: rgba(2, 18, 33, 0.98);
-  border: 1px solid rgba(163, 214, 255, 0.18);
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.35rem;
+  border-radius: 0.3rem;
+  border: 1px solid #555;
+  background: #262626;
+}
+
+.theme-standard .search-item,
+.theme-standard .favorite-station-button {
+  border-radius: 0.25rem;
+  border: 1px solid #666;
+  background: #404040;
+  color: #fff;
 }
 
 .theme-standard .search-item:hover,
 .theme-standard .search-item.active,
 .theme-standard .favorite-station-button.active,
-.theme-standard .line-button.active,
-.theme-standard .ghost-button:hover,
 .theme-standard .favorite-toggle.active,
-.theme-standard .status-pill.ok {
-  background: rgba(15, 75, 134, 0.98);
-  border-color: rgba(255, 255, 255, 0.35);
-}
-
-.theme-standard .favorite-stations {
-  display: grid;
-}
-
-.theme-standard .favorite-station-item {
-  width: 100%;
+.theme-standard .line-button.active,
+.theme-standard .ghost-button:hover {
+  background: #606060;
+  border-color: #9a9a9a;
 }
 
 .theme-standard .favorite-station-button {
-  width: 100%;
-  justify-content: space-between;
+  width: auto;
+  min-height: 2.15rem;
+  padding: 0.4rem 0.65rem;
+  justify-content: center;
+  font-size: 0.92rem;
 }
 
-.theme-standard .favorite-station-meta,
-.theme-standard .search-item-codes,
+.theme-standard .favorite-stations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.theme-standard .favorite-station-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.theme-standard .favorite-station-meta {
+  display: none;
+}
+
+.theme-standard .station-favorite-toggle,
+.theme-standard .favorite-toggle {
+  width: 2.3rem;
+  height: 2.3rem;
+  padding: 0;
+  font-size: 1rem;
+  color: #ffd743;
+}
+
+.theme-standard .favorite-toggle {
+  width: 2rem;
+  height: 2rem;
+}
+
 .theme-standard .section-text,
+.theme-standard .search-item-codes,
 .theme-standard .refresh-time,
 .theme-standard .footer {
-  color: #b6d2ef;
+  color: #b3b3b3;
 }
 
-.theme-standard .standard-filter-row {
-  display: grid;
-  gap: 0.7rem;
+.theme-standard .section-text.compact {
+  margin: 0;
+  font-size: 0.86rem;
 }
 
-.theme-standard .line-filters {
-  gap: 0.55rem;
+.theme-standard .standard-lines-row .line-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.theme-standard .standard-all-lines,
+.theme-standard .line-button {
+  min-height: 2.7rem;
+  padding: 0.45rem 0.6rem;
 }
 
 .theme-standard .line-button {
-  padding: 0.5rem 0.75rem;
-}
-
-.theme-standard .messages {
-  margin: 0.9rem 0 1rem;
-}
-
-.theme-standard .message-card {
-  background: rgba(9, 38, 66, 0.95);
-}
-
-.theme-standard .standard-board {
-  display: grid;
-  gap: 0.55rem;
-}
-
-.theme-standard .station-row {
-  display: grid;
-  grid-template-columns: minmax(110px, 130px) 96px 68px minmax(0, 1fr) 62px;
-  gap: 0.9rem;
+  min-width: 2.7rem;
+  display: inline-flex;
   align-items: center;
-  min-height: 92px;
-  padding: 0.65rem 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 10px;
-  background: linear-gradient(180deg, #08549d 0%, #0e5ea7 100%);
-}
-
-.theme-standard .station-row.delayed,
-.theme-standard .station-row.cancelled {
-  background: linear-gradient(180deg, #6a2230 0%, #7a2b2f 100%);
-}
-
-.theme-standard .station-row-mission {
-  display: grid;
-  gap: 0.2rem;
-}
-
-.theme-standard .station-row-mission-code {
-  font-size: 1.35rem;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-.theme-standard .station-row-number {
-  font-size: 0.95rem;
-  color: rgba(222, 238, 255, 0.82);
-}
-
-.theme-standard .station-row-time {
-  color: #fff159;
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.theme-standard .station-row-time.small {
-  font-size: 1.5rem;
-}
-
-.theme-standard .station-row-line {
-  display: flex;
   justify-content: center;
 }
 
@@ -272,25 +283,143 @@ body.theme-standard {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.15rem;
-  height: 2.15rem;
-  border-radius: 0.55rem;
+  min-width: 1.7rem;
+  height: 1.7rem;
+  padding: 0 0.2rem;
+  border-radius: 0.28rem;
   background: var(--line-color, #1f9a52);
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
+}
+
+.theme-standard .standard-board-panel {
+  overflow: hidden;
+}
+
+.theme-standard .standard-board-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 0 0.3rem;
+}
+
+.theme-standard .standard-board-heading {
+  display: none;
+}
+
+.theme-standard .status-pill {
+  border-radius: 999px;
+  border: 1px solid #565656;
+  background: #3b3b3b;
+  color: #e6e6e6;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.78rem;
+}
+
+.theme-standard .status-pill.ok {
+  background: #3b3b3b;
+  border-color: #565656;
+}
+
+.theme-standard .status-pill.error {
+  background: #632e2e;
+  border-color: #a84c4c;
+}
+
+.theme-standard .messages {
+  margin: 0 0 0.35rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.theme-standard .message-card {
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.2rem;
+  border: 1px solid #6f4d4d;
+  background: #402020;
+}
+
+.theme-standard .standard-board {
+  display: grid;
+  gap: 0;
+}
+
+.theme-standard .station-row {
+  display: grid;
+  grid-template-columns: 88px 96px 48px minmax(0, 1fr) 72px;
+  gap: 0.7rem;
+  align-items: center;
+  min-height: 3.95rem;
+  padding: 0.25rem 0.35rem 0.25rem 0.55rem;
+  border: 0;
+  border-radius: 0;
+}
+
+.theme-standard .station-row.tone-a {
+  background: #1f67ad;
+}
+
+.theme-standard .station-row.tone-b {
+  background: #0f4b81;
+}
+
+.theme-standard .station-row.cancelled,
+.theme-standard .station-row.delayed {
+  background: #8a3d42;
+}
+
+.theme-standard .station-row-mission {
+  display: grid;
+  gap: 0.05rem;
+  align-content: center;
+}
+
+.theme-standard .station-row-mission-code {
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.theme-standard .station-row-status {
+  font-size: 0.7rem;
+  line-height: 1.05;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.theme-standard .station-row-time {
+  color: #fff159;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.theme-standard .station-row-time.small {
+  font-size: 1.6rem;
+}
+
+.theme-standard .station-row-line {
+  display: flex;
+  justify-content: center;
 }
 
 .theme-standard .station-row-main {
   min-width: 0;
   display: grid;
-  gap: 0.25rem;
+  gap: 0.1rem;
+  align-content: center;
 }
 
 .theme-standard .station-row-destination {
   margin: 0;
-  font-size: clamp(1.5rem, 2.6vw, 2.45rem);
+  font-size: clamp(1.4rem, 2.8vw, 2.2rem);
   line-height: 1;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .theme-standard .station-row-stops {
@@ -299,59 +428,52 @@ body.theme-standard {
 
 .theme-standard .station-row-marquee {
   overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent);
 }
 
 .theme-standard .station-row-marquee-track {
   display: inline-flex;
-  gap: 2rem;
+  gap: 1.6rem;
   min-width: 100%;
   white-space: nowrap;
 }
 
 .theme-standard .station-row-marquee-track.is-scrolling {
-  animation: marquee-slide 18s linear infinite;
+  animation: marquee-slide 17s linear infinite;
 }
 
 .theme-standard .station-row-marquee-track span {
-  color: rgba(221, 239, 255, 0.88);
-  font-size: 1rem;
-}
-
-.theme-standard .station-row-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+  color: #8ec2ee;
+  font-size: 0.86rem;
+  font-weight: 600;
 }
 
 .theme-standard .station-row-platform {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 3.4rem;
-  border-radius: 0.4rem;
-  border: 2px solid rgba(255, 255, 255, 0.92);
-  background: rgba(7, 36, 67, 0.65);
-  font-size: 2rem;
+  min-height: 2.85rem;
+  border-radius: 0.15rem;
+  border: 3px solid rgba(255, 255, 255, 0.92);
+  background: rgba(6, 37, 66, 0.32);
+  color: #ffffff;
+  font-size: 1.95rem;
   font-weight: 700;
 }
 
 .theme-standard .station-row-empty {
   display: block;
-  background: rgba(7, 36, 67, 0.85);
+  padding: 0.75rem;
+  background: #2d2d2d;
 }
 
 .theme-standard .station-row-empty-copy {
   display: grid;
-  gap: 0.25rem;
-}
-
-.theme-standard .badge {
-  background: rgba(2, 21, 38, 0.55);
+  gap: 0.2rem;
 }
 
 .theme-standard .footer {
-  padding-top: 1rem;
+  padding-top: 0.75rem;
+  font-size: 0.85rem;
 }
 
 .theme-standard .footer-theme a.is-active,
@@ -360,31 +482,31 @@ body.theme-standard {
 }
 
 @media (max-width: 920px) {
-  .theme-standard .standard-layout {
-    grid-template-columns: 1fr;
+  .theme-standard .standard-shell {
+    width: min(100vw - 0.5rem, 100%);
+  }
+
+  .theme-standard .standard-top-panel {
+    display: grid;
+  }
+
+  .theme-standard .standard-top-side {
+    justify-content: space-between;
+  }
+
+  .theme-standard .station-row {
+    grid-template-columns: 74px 86px 42px minmax(0, 1fr) 64px;
   }
 }
 
 @media (max-width: 760px) {
-  .theme-standard .standard-shell {
-    width: min(100vw - 1rem, 100%);
-    padding-top: 0.6rem;
-  }
-
-  .theme-standard .standard-top-panel,
-  .theme-standard .standard-panel,
-  .theme-standard .standard-board-header,
-  .theme-standard .filters-header,
-  .theme-standard .standard-panel-heading {
-    display: grid;
-  }
-
-  .theme-standard .standard-top-panel {
-    gap: 0.8rem;
-  }
-
   .theme-standard .standard-top-side {
-    justify-items: start;
+    display: grid;
+    justify-content: start;
+  }
+
+  .theme-standard .standard-clock-main {
+    font-size: 1.65rem;
   }
 
   .theme-standard .station-row {
@@ -393,6 +515,9 @@ body.theme-standard {
       "mission time platform"
       "line line line"
       "main main main";
+    gap: 0.4rem 0.7rem;
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
   }
 
   .theme-standard .station-row-mission {
@@ -401,7 +526,7 @@ body.theme-standard {
 
   .theme-standard .station-row-time {
     grid-area: time;
-    font-size: 1.55rem;
+    font-size: 1.45rem;
   }
 
   .theme-standard .station-row-line {
@@ -417,10 +542,10 @@ body.theme-standard {
     grid-area: platform;
     min-width: 3rem;
     min-height: 3rem;
-    font-size: 1.6rem;
+    font-size: 1.55rem;
   }
 
   .theme-standard .station-row-destination {
-    font-size: 1.65rem;
+    font-size: 1.55rem;
   }
 }

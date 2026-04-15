@@ -82,6 +82,8 @@ const elements = {
   board: document.getElementById("board"),
   clearFilter: document.getElementById("clear-filter"),
   clock: document.getElementById("clock"),
+  clockMain: document.getElementById("clock-main"),
+  clockSeconds: document.getElementById("clock-seconds"),
   favoriteStations: document.getElementById("favorite-stations"),
   favoriteStationsEmpty: document.getElementById("favorite-stations-empty"),
   languageLinks: [...document.querySelectorAll("[data-lang-link]")],
@@ -91,6 +93,7 @@ const elements = {
   refreshTime: document.getElementById("refresh-time"),
   searchInput: document.getElementById("station-search"),
   searchResults: document.getElementById("search-results"),
+  searchTrigger: document.getElementById("station-search-trigger"),
   stationFavoriteToggle: document.getElementById("station-favorite-toggle"),
   stationTitle: document.getElementById("station-title"),
   themeLinks: [...document.querySelectorAll("[data-theme-link]")],
@@ -187,11 +190,25 @@ function updateLanguageLinks() {
 }
 
 function updateClock() {
-  elements.clock.textContent = new Date().toLocaleTimeString(appLocale, {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+  const now = new Date();
+  if (elements.clock) {
+    elements.clock.textContent = now.toLocaleTimeString(appLocale, {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  }
+  if (elements.clockMain) {
+    elements.clockMain.textContent = now.toLocaleTimeString(appLocale, {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+  if (elements.clockSeconds) {
+    elements.clockSeconds.textContent = now.toLocaleTimeString(appLocale, {
+      second: "2-digit",
+    });
+  }
 }
 
 function setRefreshState(text, mode = "ok") {
@@ -222,10 +239,12 @@ function renderFavoriteStations() {
     label.textContent = station.name;
     button.append(label);
 
-    const meta = document.createElement("span");
-    meta.className = "favorite-station-meta";
-    meta.textContent = station.codes.join(", ");
-    button.append(meta);
+    if (appTheme !== "standard") {
+      const meta = document.createElement("span");
+      meta.className = "favorite-station-meta";
+      meta.textContent = station.codes.join(", ");
+      button.append(meta);
+    }
 
     button.addEventListener("click", () => selectStation(station.codes[0]));
 
@@ -253,15 +272,23 @@ function renderLineFilters(lines) {
     button.className = `line-button ${state.selectedLine === line ? "active" : ""}`;
     button.title = t("filter_line", { line });
 
-    const icon = document.createElement("img");
-    icon.className = "train-line-icon";
-    icon.src = iconPathForLine(line);
-    icon.alt = line;
-    button.append(icon);
+    if (appTheme === "standard") {
+      const badge = document.createElement("span");
+      badge.className = "standard-line-badge";
+      badge.style.setProperty("--line-color", lineColor(line));
+      badge.textContent = line;
+      button.append(badge);
+    } else {
+      const icon = document.createElement("img");
+      icon.className = "train-line-icon";
+      icon.src = iconPathForLine(line);
+      icon.alt = line;
+      button.append(icon);
 
-    const label = document.createElement("span");
-    label.textContent = line;
-    button.append(label);
+      const label = document.createElement("span");
+      label.textContent = line;
+      button.append(label);
+    }
 
     button.addEventListener("click", () => {
       state.selectedLine = state.selectedLine === line ? null : line;
@@ -429,9 +456,9 @@ function renderDepartureCard(train) {
   return card;
 }
 
-function renderDepartureRow(train) {
+function renderDepartureRow(train, index) {
   const row = document.createElement("article");
-  row.className = `station-row ${train.status === "S" ? "cancelled" : ""} ${train.status === "R" ? "delayed" : ""}`.trim();
+  row.className = `station-row ${index % 2 === 0 ? "tone-a" : "tone-b"} ${train.status === "S" ? "cancelled" : ""} ${train.status === "R" ? "delayed" : ""}`.trim();
 
   const mission = document.createElement("div");
   mission.className = "station-row-mission";
@@ -441,10 +468,10 @@ function renderDepartureRow(train) {
   missionCode.textContent = train.mission || train.ligne || t("train");
   mission.append(missionCode);
 
-  const missionNumber = document.createElement("span");
-  missionNumber.className = "station-row-number";
-  missionNumber.textContent = train.numero;
-  mission.append(missionNumber);
+  const status = document.createElement("span");
+  status.className = "station-row-status";
+  status.textContent = train.retard || train.numero;
+  mission.append(status);
 
   const time = document.createElement("div");
   time.className = `station-row-time ${train.time.length > 6 ? "small" : ""}`;
@@ -468,27 +495,6 @@ function renderDepartureRow(train) {
   destination.textContent = train.destination;
   main.append(destination);
   main.append(createStandardStopsMarquee(train.dessertes));
-
-  const meta = document.createElement("div");
-  meta.className = "station-row-meta";
-
-  if (train.retard) {
-    const badge = document.createElement("span");
-    badge.className = "badge";
-    badge.textContent = train.retard;
-    meta.append(badge);
-  }
-
-  if (train.planned_time && train.expected_time && train.planned_time !== train.expected_time) {
-    const badge = document.createElement("span");
-    badge.className = "badge";
-    badge.textContent = `${t("planned")} ${new Date(train.planned_time).toLocaleTimeString(appLocale, { hour: "2-digit", minute: "2-digit" })}`;
-    meta.append(badge);
-  }
-
-  if (meta.childElementCount) {
-    main.append(meta);
-  }
 
   const platform = document.createElement("div");
   platform.className = "station-row-platform";
@@ -524,7 +530,12 @@ function renderEmptyState() {
 
 function renderBoard(board) {
   const station = findStation(board.from.code) || findStation(state.selectedStationCode);
-  elements.stationTitle.textContent = board.from.name;
+  if (elements.stationTitle) {
+    elements.stationTitle.textContent = board.from.name;
+  }
+  if (elements.searchInput && document.activeElement !== elements.searchInput) {
+    elements.searchInput.value = board.from.name;
+  }
   document.title = `${board.from.name} | ${appName}`;
   renderLineFilters(board.from.lines || station?.lines || []);
   renderFavoriteStations();
@@ -533,8 +544,8 @@ function renderBoard(board) {
 
   elements.board.innerHTML = "";
   const renderer = appTheme === "standard" ? renderDepartureRow : renderDepartureCard;
-  for (const train of board.trains) {
-    elements.board.append(renderer(train));
+  for (const [index, train] of board.trains.entries()) {
+    elements.board.append(renderer(train, index));
   }
 
   if (!board.trains.length) {
@@ -723,6 +734,13 @@ function bindEvents() {
     renderLineFilters(state.currentLines);
     refreshBoard(true);
   });
+
+  if (elements.searchTrigger) {
+    elements.searchTrigger.addEventListener("click", () => {
+      elements.searchInput.focus();
+      elements.searchInput.select();
+    });
+  }
 
   elements.stationFavoriteToggle.addEventListener("click", () => {
     toggleFavoriteStation(state.selectedStationCode);
