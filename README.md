@@ -8,6 +8,10 @@
 
 Modern rewrite of the legacy departures board for Ile-de-France Mobilites train data.
 
+## App Preview
+
+![Mon RER app screenshot](app/static/app_screenshot.png)
+
 ## Stack
 
 - Python 3.12+
