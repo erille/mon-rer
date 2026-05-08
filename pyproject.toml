@@ -7,7 +7,30 @@ name = "rer-web"
 version = "2.0.0"
 description = "Modern self-hosted departures board for Ile-de-France Mobilites train data"
 readme = "README.md"
+license = { file = "LICENSE" }
 requires-python = ">=3.12"
+keywords = [
+  "fastapi",
+  "ile-de-france",
+  "ile-de-france-mobilites",
+  "public-transport",
+  "real-time",
+  "rer",
+  "transilien",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Web Environment",
+  "Framework :: FastAPI",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+  "Topic :: Utilities",
+]
 dependencies = [
   "fastapi>=0.116,<1.0",
   "httpx>=0.28,<1.0",
@@ -22,6 +45,11 @@ dependencies = [
 dev = [
   "pytest>=8.3,<9.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/erille/mon-rer"
+Repository = "https://github.com/erille/mon-rer"
+Issues = "https://github.com/erille/mon-rer/issues"
 
 [tool.setuptools]
 packages = ["app", "app.services"]

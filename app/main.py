@@ -36,6 +36,12 @@ schedule_index = ScheduleIndex()
 departure_service = DepartureService(settings, stations, idfm_client, schedule_index)
 templates = Jinja2Templates(directory="app/templates")
 templates.env.globals["asset_version"] = "20260415-standard-default-1"
+APP_TITLE = "rer-web"
+APP_DESCRIPTION = (
+    "Self-hosted RER and Transilien departures board using live "
+    "Ile-de-France Mobilites data."
+)
+APP_VERSION = "2.0.0"
 DEFAULT_THEME = "standard"
 SUPPORTED_THEMES = {DEFAULT_THEME, "moderne"}
 
@@ -47,7 +53,12 @@ async def lifespan(_: FastAPI):
     schedule_index.close()
 
 
-app = FastAPI(title="rer-web", lifespan=lifespan)
+app = FastAPI(
+    title=APP_TITLE,
+    description=APP_DESCRIPTION,
+    version=APP_VERSION,
+    lifespan=lifespan,
+)
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 

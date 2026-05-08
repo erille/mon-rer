@@ -1,5 +1,11 @@
 # rer-web
 
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.116%2B-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Docker](https://img.shields.io/badge/docker-ready-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)](tests)
+[![License](https://img.shields.io/github/license/erille/mon-rer)](LICENSE)
+
 Modern rewrite of the legacy departures board for Ile-de-France Mobilites train data.
 
 ## Stack
