@@ -10,6 +10,8 @@ Modern rewrite of the legacy departures board for Ile-de-France Mobilites train 
 
 ## App Preview
 
+[Live app](https://train.ketah.info/?s=EVC)
+
 ![Mon RER app screenshot](app/static/app_screenshot.png)
 
 ## Stack
