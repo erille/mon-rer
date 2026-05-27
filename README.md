@@ -6,7 +6,7 @@
 [![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)](tests)
 [![License](https://img.shields.io/github/license/erille/mon-rer)](LICENSE)
 
-Modern rewrite of the legacy departures board for Ile-de-France Mobilites train data.
+Modern rewrite of the legacy departures board for Ile-de-France Mobilites train data app fromo original author: https://x0r.fr.
 
 ## App Preview
 
