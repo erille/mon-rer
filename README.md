@@ -6,7 +6,7 @@
 [![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)](tests)
 [![License](https://img.shields.io/github/license/erille/mon-rer)](LICENSE)
 
-Rewrite of the departures board for Ile-de-France Mobilites train data app https://monrer.fr/?s=EVC. Thanks to original author: https://x0r.fr.
+Rewrite of the departures board for Ile-de-France Mobilites train data app from original author: https://x0r.fr.
 
 ## App Preview
 
